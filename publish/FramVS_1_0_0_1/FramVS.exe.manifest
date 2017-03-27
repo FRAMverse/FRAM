@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asmv1:assemblyIdentity name="FramVS.exe" version="1.0.0.1" publicKeyToken="58b776e43a2d6838" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="FramVS" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="FramVS.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="4" minorVersion="10" buildNumber="0" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="2.0.50727.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="ADODB" version="7.0.3300.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="CrystalDecisions.CrystalReports.Engine" version="10.2.3600.0" publicKeyToken="692FBEA5521E1304" language="neutral" processorArchitecture="msil" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.ReportViewer.Common" version="8.0.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="msil" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.ReportViewer.ProcessingObjectModel" version="8.0.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="msil" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.ReportViewer.WinForms" version="8.0.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="msil" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Vbe.Interop" version="12.0.0.0" publicKeyToken="71E9BCE111E9429C" language="neutral" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="office" version="12.0.0.0" publicKeyToken="71E9BCE111E9429C" language="neutral" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="stdole" version="7.0.3300.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FramVS.exe" size="622592">
+      <assemblyIdentity name="FramVS" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>z22Ltd+yPRkjaE7kajSdcfXM8mg=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Interop.MSComDlg.dll" size="19456">
+      <assemblyIdentity name="Interop.MSComDlg" version="1.2.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>AZz2c4v/6PCzmhM+PVQ1a6j5Yco=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.Office.Interop.Excel.dll" size="1276720">
+      <assemblyIdentity name="Microsoft.Office.Interop.Excel" version="12.0.0.0" publicKeyToken="71E9BCE111E9429C" language="neutral" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>NEVCIGHkg/arl6UuCFNlxV9F4W0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="FramVS.exe.config" size="1618">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>99VuSHbJ31xcs6J/P7Yo+dzXNVE=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=SSV\packejfp" issuerKeyHash="90c440b9949ba01f5293125508f00d52a2a0eaca" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>Gmec9RoooL3GvA+6eGYrJ+pm1ZU=</DigestValue></Reference></SignedInfo><SignatureValue>cM2Yvh/LKfX0Prcti/QW9+QxUvOP42xFI0TSTn0/Z6aALApW+jSIBoa6JzgvqeWb12VxYpQAiVI+0WDrZX4f03bpV5yTtnJkmz0tiB62fWRsbI/CzRNVkIf1IZbxNCG/KGbsDn/6o0N+8bfBvqYfYax2Lb1/AKZyKLc/TPMVSWc=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>pjx+k0ZB1qbx/Hmg6cjZZVrIdRDGAdPBY6qp28hyC8XU3AoXv32ogyH9zg51Czbrb1SF99Inq29GOPz3Mx+pwIh2JefKc8IMJuyi0sxAJ+LIHOJ3Xd4aFS1qL7Ms1kFGhzjiBtokqMnyQ8YWObV/29vQk+QmS6ptWdgnlBLUUm0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="95d566ea272b6678ba0fbcc6bda0281af59c671a" Description="" Url=""><as:assemblyIdentity name="FramVS.exe" version="1.0.0.1" publicKeyToken="58b776e43a2d6838" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=SSV\packejfp</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>TMDENH9Yzx8S1bktzI6JpB4FFZM=</DigestValue></Reference></SignedInfo><SignatureValue>Q7oO3lN6oTRuOo9TR2093EqtHMi7jOOfr9BoIAhrfjwigOSS6QhZPWxuS8k5jzkb9J31qO19g/WrU1e6xS8Z73mTP6oGhG/JJ97Sv/WOBdwQhKPpaRkocNPVKbM7PMoyqmtyO75TSaMQV1vq1uM4N7poSOL//fEx7JjI82NoZOk=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>pjx+k0ZB1qbx/Hmg6cjZZVrIdRDGAdPBY6qp28hyC8XU3AoXv32ogyH9zg51Czbrb1SF99Inq29GOPz3Mx+pwIh2JefKc8IMJuyi0sxAJ+LIHOJ3Xd4aFS1qL7Ms1kFGhzjiBtokqMnyQ8YWObV/29vQk+QmS6ptWdgnlBLUUm0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIByTCCATKgAwIBAgIQDmdvHgEwQ45OB4j30TUOUjANBgkqhkiG9w0BAQUFADAjMSEwHwYDVQQDHhgAUwBTAFYAXABwAGEAYwBrAGUAagBmAHAwHhcNMTAwNTExMTcxNTIyWhcNMTEwNTExMjMxNTIyWjAjMSEwHwYDVQQDHhgAUwBTAFYAXABwAGEAYwBrAGUAagBmAHAwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAKY8fpNGQdam8fx5oOnI2WVayHUQxgHTwWOqqdvIcgvF1NwKF799qIMh/c4OdQs2629UhffSJ6tvRjj89zMfqcCIdiXnynPCDCbsotLMQCfiyBzid13eGhUtai+zLNZBRoc44gbaJKjJ8kPGFjm1f9vb0JPkJkuqbVnYJ5QS1FJtAgMBAAEwDQYJKoZIhvcNAQEFBQADgYEAcgzM0YjYh9eRAKMwYy31w5CLh9FDzixXVskBtMdlU7TCeD9wnYe9IAJmaG4XmhQMvrQb2xABaHkwJQJ8/ZfttOgeVgQCPuSE8fb5tQMDKq7Mau7m9/5Iads2kCtIgN1dgb7tSYLTTrUJffOfM/Cp0bh9nvWHRpe8GvRjaAdbQEg=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

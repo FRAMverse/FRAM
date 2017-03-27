@@ -1,0 +1,619 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B19D91E4-7B4B-453E-9859-A5666F9038A3}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>FramVS.My.MyApplication</StartupObject>
+    <RootNamespace>FramVS</RootNamespace>
+    <AssemblyName>FramVS</AssemblyName>
+    <MyType>WindowsForms</MyType>
+    <ManifestCertificateThumbprint>62C143A2E0C31201C627D7D6DF0A4E8E7B3BC676</ManifestCertificateThumbprint>
+    <ManifestKeyFile>FramVS_1_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <OptionInfer>On</OptionInfer>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>FramVS.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>FramVS.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>JimPacker.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\WINDOWS\assembly\GAC_MSIL\System.Web.Services\2.0.0.0__b03f5f7f11d50a3a\System.Web.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.Office" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Security.AccessControl" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="FVS_AdminPassword.Designer.vb">
+      <DependentUpon>FVS_AdminPassword.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_AdminPassword.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_BPTransfer.Designer.vb">
+      <DependentUpon>FVS_BPTransfer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_BPTransfer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_MultiDelete.Designer.vb">
+      <DependentUpon>FVS_MultiDelete.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_MultiDelete.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_Coweeman.Designer.vb">
+      <DependentUpon>FVS_Coweeman.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_Coweeman.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_VersionChanges.Designer.vb">
+      <DependentUpon>FVS_VersionChanges.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_VersionChanges.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FramCalcs.vb" />
+    <Compile Include="FramOutput.vb" />
+    <Compile Include="FramUtils.vb" />
+    <Compile Include="FVS_BackwardsFram.Designer.vb">
+      <DependentUpon>FVS_BackwardsFram.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_BackwardsFram.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_BackwardsResults.Designer.vb">
+      <DependentUpon>FVS_BackwardsResults.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_BackwardsResults.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_BackwardsTarget.Designer.vb">
+      <DependentUpon>FVS_BackwardsTarget.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_BackwardsTarget.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_BackwardsYearSelect.Designer.vb">
+      <DependentUpon>FVS_BackwardsYearSelect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_BackwardsYearSelect.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_BasePeriodSelect.Designer.vb">
+      <DependentUpon>FVS_BasePeriodSelect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_BasePeriodSelect.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_FisheryMultiGroupSelect.Designer.vb">
+      <DependentUpon>FVS_FisheryMultiGroupSelect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_FisheryMultiGroupSelect.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_FisheryScalerScreen.Designer.vb">
+      <DependentUpon>FVS_FisheryScalerScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_FisheryScalerScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_FishStkCompScreen.Designer.vb">
+      <DependentUpon>FVS_FishStkCompScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_FishStkCompScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_MortalityReport.Designer.vb">
+      <DependentUpon>FVS_MortalityReport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_MortalityReport.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_EditRecordSetInfo.Designer.vb">
+      <DependentUpon>FVS_EditRecordSetInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_EditRecordSetInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_FisheryScalerEdit.Designer.vb">
+      <DependentUpon>FVS_FisheryScalerEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_FisheryScalerEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_FisherySelect.Designer.vb">
+      <DependentUpon>FVS_FisherySelect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_FisherySelect.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_FramUtils.Designer.vb">
+      <DependentUpon>FVS_FramUtils.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_FramUtils.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_InputMenu.Designer.vb">
+      <DependentUpon>FVS_InputMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_InputMenu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_MainMenu.Designer.vb">
+      <DependentUpon>FVS_MainMenu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_MainMenu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_PopStatScreen.Designer.vb">
+      <DependentUpon>FVS_PopStatScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_PopStatScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_RunModel.Designer.vb">
+      <DependentUpon>FVS_RunModel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_RunModel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_MortalityTypeSelection.Designer.vb">
+      <DependentUpon>FVS_MortalityTypeSelection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_MortalityTypeSelection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_NonRetentionEdit.Designer.vb">
+      <DependentUpon>FVS_NonRetentionEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_NonRetentionEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_Output.Designer.vb">
+      <DependentUpon>FVS_Output.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_Output.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_OutputDriver.Designer.vb">
+      <DependentUpon>FVS_OutputDriver.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_OutputDriver.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_OutputDriverSelection.Designer.vb">
+      <DependentUpon>FVS_OutputDriverSelection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_OutputDriverSelection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_PSCCohoERScreen.Designer.vb">
+      <DependentUpon>FVS_PSCCohoERScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_PSCCohoERScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_PSCMaxER.Designer.vb">
+      <DependentUpon>FVS_PSCMaxER.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_PSCMaxER.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_ModelRunSelection.Designer.vb">
+      <DependentUpon>FVS_ModelRunSelection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_ModelRunSelection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_ReportSelection.Designer.vb">
+      <DependentUpon>FVS_ReportSelection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_ReportSelection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_SaveModelRunInputs.Designer.vb">
+      <DependentUpon>FVS_SaveModelRunInputs.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_SaveModelRunInputs.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_ScreenReports.Designer.vb">
+      <DependentUpon>FVS_ScreenReports.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_ScreenReports.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_SelectiveFisheryScreen.Designer.vb">
+      <DependentUpon>FVS_SelectiveFisheryScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_SelectiveFisheryScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_SizeLimitEdit.Designer.vb">
+      <DependentUpon>FVS_SizeLimitEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_SizeLimitEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_StockImpactsPer1000Screen.Designer.vb">
+      <DependentUpon>FVS_StockImpactsPer1000Screen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_StockImpactsPer1000Screen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_StockSelect.designer.vb">
+      <DependentUpon>FVS_StockSelect.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_StockSelect.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_TRunTimeSteps.Designer.vb">
+      <DependentUpon>FVS_TRunTimeSteps.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_TRunTimeSteps.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_Welcome.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_Welcome.Designer.vb">
+      <DependentUpon>FVS_Welcome.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FramVar.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="FVS_StockRecruitEdit.Designer.vb">
+      <DependentUpon>FVS_StockRecruitEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_StockRecruitEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FVS_StockFisheryScalerEdit.Designer.vb">
+      <DependentUpon>FVS_StockFisheryScalerEdit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_StockFisheryScalerEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FVS_AdminPassword.resx">
+      <DependentUpon>FVS_AdminPassword.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_BPTransfer.resx">
+      <DependentUpon>FVS_BPTransfer.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_MultiDelete.resx">
+      <DependentUpon>FVS_MultiDelete.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_Coweeman.resx">
+      <DependentUpon>FVS_Coweeman.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_VersionChanges.resx">
+      <DependentUpon>FVS_VersionChanges.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_BackwardsFram.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_BackwardsFram.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_BackwardsResults.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_BackwardsResults.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_BackwardsTarget.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_BackwardsTarget.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_BackwardsYearSelect.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_BackwardsYearSelect.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_BasePeriodSelect.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_BasePeriodSelect.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_FisheryMultiGroupSelect.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_FisheryMultiGroupSelect.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_FisheryScalerScreen.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_FisheryScalerScreen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_FishStkCompScreen.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_FishStkCompScreen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_MortalityReport.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_MortalityReport.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_EditRecordSetInfo.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_EditRecordSetInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_FisheryScalerEdit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_FisheryScalerEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_FisherySelect.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_FisherySelect.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_FramUtils.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_FramUtils.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_InputMenu.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_InputMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_MainMenu.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_MainMenu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_PopStatScreen.resx">
+      <DependentUpon>FVS_PopStatScreen.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_RunModel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_RunModel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_MortalityTypeSelection.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_MortalityTypeSelection.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_NonRetentionEdit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_NonRetentionEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_Output.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_Output.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_OutputDriver.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_OutputDriver.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_OutputDriverSelection.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_OutputDriverSelection.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_PSCCohoERScreen.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_PSCCohoERScreen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_PSCMaxER.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_PSCMaxER.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_ModelRunSelection.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_ModelRunSelection.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_ReportSelection.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_ReportSelection.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_SaveModelRunInputs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_SaveModelRunInputs.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_ScreenReports.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_ScreenReports.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_SelectiveFisheryScreen.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_SelectiveFisheryScreen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_SizeLimitEdit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_SizeLimitEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_StockImpactsPer1000Screen.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_StockImpactsPer1000Screen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_StockSelect.resx">
+      <DependentUpon>FVS_StockSelect.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_TRunTimeSteps.resx">
+      <DependentUpon>FVS_TRunTimeSteps.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_Welcome.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_Welcome.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_StockRecruitEdit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_StockRecruitEdit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FVS_StockFisheryScalerEdit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FVS_StockFisheryScalerEdit.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="FramVS_1_TemporaryKey.pfx" />
+    <None Include="FramVS_TemporaryKey.pfx" />
+    <None Include="JimPacker.snk" />
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

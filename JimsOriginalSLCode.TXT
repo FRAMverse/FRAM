@@ -1,0 +1,137 @@
+ '- Check if New Size Limit is different from Base Period Size Limit
+                    'ReDim TotalLegalShakers(NumFish, NumSteps)
+                    'ReDim LegalShakers(NumStk, MaxAge, NumFish, NumSteps)
+                    If SizeLimitFix = True Then
+
+                        If MinSizeLimit(Fish, TStep) <> ChinookBaseSizeLimit(Fish, TStep) Then
+                            Dim BaseLegalPop, BaseSubLegalPop, BaseShakers, BaseCatch, NewShakers, NewCatch As Double
+                            Dim BaseSubEncounters, NewSubEncounters, SubEncDiff As Double
+                            ChinookBaseLegProp = True
+                            Call CompLegProp(Stk, Age, Fish, TerminalType)
+                            ChinookBaseLegProp = False
+                            BaseLegalPop = Cohort(Stk, Age, TerminalType, TStep) * BaseLegalProportion
+                            BaseSubLegalPop = Cohort(Stk, Age, TerminalType, TStep) * BaseSubLegalProportion
+                            '- PS Yearling Fish not yet released or recruited to fishery
+                            If NumStk > 50 And Age = 2 And (TStep = 1 Or TStep = 4) And (Stk = 9 Or Stk = 10 Or Stk = 11 Or Stk = 12 Or Stk = 15 Or Stk = 16 Or Stk = 27 Or Stk = 28 Or Stk = 33 Or Stk = 34 Or Stk = 49 Or Stk = 50) Then
+                                BaseSubLegalPop = 0
+                            End If
+
+                            BaseCatch = _
+                               Cohort(Stk, Age, TerminalType, TStep) * _
+                               BaseExploitationRate(Stk, Age, Fish, TStep) * _
+                               FisheryScaler(Fish, TStep) * _
+                               StockFishRateScalers(Stk, Fish, TStep) * _
+                               BaseLegalProportion
+
+                            BaseSubEncounters = FisheryScaler(Fish, TStep) * BaseSubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
+                            NewSubEncounters = FisheryScaler(Fish, TStep) * SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
+
+                            BaseShakers = FisheryScaler(Fish, TStep) * BaseSubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
+                            NewShakers = FisheryScaler(Fish, TStep) * SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
+
+                            If MinSizeLimit(Fish, TStep) < ChinookBaseSizeLimit(Fish, TStep) Then
+
+                                SubEncDiff = (BaseSubEncounters - NewSubEncounters)
+
+                                '- Debug Print to check calculations
+                                If BaseShakers > 0 Or NewShakers > 0 Then
+                                    PrnLine = String.Format("{0,3}{1,3}{2,3}{3,3}", Stk, Age, Fish, TStep)
+                                    PrnLine &= String.Format("{0,10}", BaseShakers.ToString("####0.0000"))
+                                    PrnLine &= String.Format("{0,10}", NewShakers.ToString("####0.0000"))
+                                    PrnLine &= String.Format("{0,10}", BaseSubEncounters.ToString("####0.0000"))
+                                    PrnLine &= String.Format("{0,10}", NewSubEncounters.ToString("####0.0000"))
+                                    PrnLine &= String.Format("{0,10}", SubEncDiff.ToString("####0.0000"))
+                                    PrnLine &= String.Format("{0,10}", BaseCatch.ToString("####0.0000"))
+                                    PrnLine &= String.Format("{0,10}", LandedCatch(Stk, Age, Fish, TStep).ToString("####0.0000"))
+                                    PrnLine &= " " & FisheryName(Fish)
+                                    PrnLine &= " " & StockName(Stk)
+                                    sw.WriteLine(PrnLine)
+                                End If
+
+                                '- Redo Total Fishery Arrays before New SizeLimit Calculations
+                                TotalEncounters(Fish, TStep) -= Encounters(Stk, Age, Fish, TStep)
+                                TotalLandedCatch(Fish, TStep) -= LandedCatch(Stk, Age, Fish, TStep)
+                                '- Only UnMarked (Wild) in Fisheries NumFish+1 to NumFish*2
+                                If (Stk Mod 2) <> 0 Then
+                                    TotalLandedCatch(NumFish + Fish, TStep) -= LandedCatch(Stk, Age, Fish, TStep)
+                                End If
+
+                                '- When SizeLimit is less than Base SizeLimit use difference in BaseEncounters and NewEncounters
+                                '  to increase Landed Catch 
+                                LandedCatch(Stk, Age, Fish, TStep) = BaseCatch + SubEncDiff
+
+                                Encounters(Stk, Age, Fish, TStep) = LandedCatch(Stk, Age, Fish, TStep)
+                                TotalEncounters(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
+
+                                '- Normal Shaker Calculation
+                                Shakers(Stk, Age, Fish, TStep) = FisheryScaler(Fish, TStep) * SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
+
+                                '- Recalculate MSF Impacts after LandedCatch changes
+                                If FisheryFlag(Fish, TStep) = 7 Or FisheryFlag(Fish, TStep) = 8 Then
+                                    '--- Use Selective Incidental Rate on ALL fish encountered
+                                    TotalDropOff(Fish, TStep) -= DropOff(Stk, Age, Fish, TStep)
+                                    DropOff(Stk, Age, Fish, TStep) = MarkSelectiveIncRate(Fish, TStep) * LandedCatch(Stk, Age, Fish, TStep)
+                                    TotalDropOff(Fish, TStep) = TotalDropOff(Fish, TStep) + DropOff(Stk, Age, Fish, TStep)
+                                    '- All Stocks in Marked/UnMarked pairs
+                                    ' first subtracts out old values from array then recomputes and adds new values
+                                    TotalLegalShakers(Fish, TStep) = TotalLegalShakers(Fish, TStep) - LegalShakers(Stk, Age, Fish, TStep)
+                                    If (Stk Mod 2) = 0 Then '--- Marked Fish in Selective
+                                        LegalShakers(Stk, Age, Fish, TStep) = LandedCatch(Stk, Age, Fish, TStep) * MarkSelectiveMarkMisID(Fish, TStep) * MarkSelectiveMortRate(Fish, TStep) 'same as legal marked released
+                                        LandedCatch(Stk, Age, Fish, TStep) = LandedCatch(Stk, Age, Fish, TStep) * (1.0 - MarkSelectiveMarkMisID(Fish, TStep))
+                                        TotalLegalShakers(Fish, TStep) = TotalLegalShakers(Fish, TStep) + LegalShakers(Stk, Age, Fish, TStep)
+                                    Else           '--- UnMarked (Wild) in Selective
+                                        LegalShakers(Stk, Age, Fish, TStep) = LandedCatch(Stk, Age, Fish, TStep) * (1.0 - MarkSelectiveUnMarkMisID(Fish, TStep)) * MarkSelectiveMortRate(Fish, TStep)
+                                        LandedCatch(Stk, Age, Fish, TStep) = LandedCatch(Stk, Age, Fish, TStep) * MarkSelectiveUnMarkMisID(Fish, TStep)
+                                        TotalLegalShakers(Fish, TStep) = TotalLegalShakers(Fish, TStep) + LegalShakers(Stk, Age, Fish, TStep)
+                                    End If
+                                    TotalLandedCatch(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
+                                    '- Only UnMarked (Wild) in Fisheries NumFish+1 to NumFish*2
+                                    If (Stk Mod 2) <> 0 Then
+                                        TotalLandedCatch(NumFish + Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
+                                    End If
+                                Else
+                                    '- Non-MSF Calculations (note: DropOff Done in IncMort Routine)
+                                    TotalLandedCatch(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
+                                    '- Only UnMarked (Wild) in Fisheries NumFish+1 to NumFish*2
+                                    If (Stk Mod 2) <> 0 Then
+                                        TotalLandedCatch(NumFish + Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
+                                    End If
+                                End If
+SkipMSFAdj:
+                            Else
+                                '- When SizeLimit is greater than Base SizeLimit use difference in BaseCatch and New Catch for Shakers
+                                '  This NewCatch does not have the MSF Impacts
+                                NewCatch = _
+                                   Cohort(Stk, Age, TerminalType, TStep) * _
+                                   BaseExploitationRate(Stk, Age, Fish, TStep) * _
+                                   FisheryScaler(Fish, TStep) * _
+                                   StockFishRateScalers(Stk, Fish, TStep) * _
+                                   LegalProportion
+                                Shakers(Stk, Age, Fish, TStep) = BaseShakers + (BaseCatch - NewCatch) * ShakerMortRate(Fish, TStep)
+                            End If
+                        Else
+                            '- Normal Shaker Calculation
+                            Shakers(Stk, Age, Fish, TStep) = FisheryScaler(Fish, TStep) * SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
+                        End If
+
+                    End If
+                    '-=======  END of NEW SIZE LIMIT Calcs  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+                    'If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
+                    '   BYLandedCatch(BY, Stk, BYAge, Fish, TStep) = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, BYAge, Fish, TStep) * BYCohort(BY, Stk, BYAge, TerminalType, TStep) * FisheryScaler(Fish, TStep) * LegalProportion
+                    'End If
+                    ''- MSF Fishery Scaler & Quota
+                    'If FisheryFlag(Fish, TStep) = 7 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 28 Then
+                    '- Retention Fishery Shaker Calculation
+                    If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
+                        Shakers(Stk, Age, Fish, TStep) = FisheryScaler(Fish, TStep) * SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
+                        TotalShakers(Fish, TStep) = TotalShakers(Fish, TStep) + Shakers(Stk, Age, Fish, TStep)
+                    End If
+
+                    '- MSF Shaker Calculation
+                    If FisheryFlag(Fish, TStep) = 7 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 28 Then
+                        MSFShakers(Stk, Age, Fish, TStep) = MSFFisheryScaler(Fish, TStep) * SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
+                        TotalShakers(Fish, TStep) = TotalShakers(Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
+                    End If
+                Next Age
+         Next Stk
