@@ -3596,7 +3596,8 @@ SkipSR:
 
          CmdStr = "SELECT * FROM BackwardsFRAM WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY StockID;"
          Dim BFcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim BFDA As New System.Data.OleDb.OleDbDataAdapter
+            Dim BFDA As New System.Data.OleDb.OleDbDataAdapter
+            Dim i As Integer
          BFDA.SelectCommand = BFcm
          Dim BFcb As New OleDb.OleDbCommandBuilder
          BFcb = New OleDb.OleDbCommandBuilder(BFDA)
@@ -3613,455 +3614,501 @@ SkipSR:
          TransDB.Open()
          BFTrans = TransDB.BeginTransaction
          BFC.Connection = TransDB
-         BFC.Transaction = BFTrans
-         For RecNum = 0 To NumRecs - 1
-            BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
-            "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-            TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(1).ToString & "," & _
-            TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(2).ToString & "," & _
-            TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(3).ToString & "," & _
-            TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(4).ToString & "," & _
-            TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(5).ToString & ")"
-            BFC.ExecuteNonQuery()
-         Next
-         BFTrans.Commit()
-         TransDB.Close()
+            BFC.Transaction = BFTrans
+
+            i = FramDataSet.Tables("BackwardsFRAM").Columns.IndexOf("Comment")
+            For RecNum = 0 To NumRecs - 1
+                If i <> -1 Then
+                    BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag,Comment) " & _
+                    "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(1).ToString & "," & _
+                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(2).ToString & "," & _
+                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(3).ToString & "," & _
+                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(4).ToString & "," & _
+                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(5).ToString & "," & _
+                    Chr(34) & TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(6) & Chr(34) & ")"
+                    Try
+                        BFC.ExecuteNonQuery()
+                    Catch ex As Exception
+                        MsgBox("Please select TransferFile version 4 or higher")
+                        GoTo ExitTransfer
+                    End Try
+                Else
+                    BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
+                    "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(1).ToString & "," & _
+                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(2).ToString & "," & _
+                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(3).ToString & "," & _
+                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(4).ToString & "," & _
+                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(5).ToString & ")"
+                    BFC.ExecuteNonQuery()
+                End If
+            Next
+            BFTrans.Commit()
+            TransDB.Close()
 SkipBF:
 
-         '- Transfer FisheryScalers Table
+            '- Transfer FisheryScalers Table
 
-         CmdStr = "SELECT * FROM FisheryScalers WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY FisheryID, TimeStep;"
-         Dim FScm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim FSDA As New System.Data.OleDb.OleDbDataAdapter
-         FSDA.SelectCommand = FScm
-         Dim FScb As New OleDb.OleDbCommandBuilder
-         FScb = New OleDb.OleDbCommandBuilder(FSDA)
-         If TransferDataSet.Tables.Contains("FisheryScalers") Then
-            TransferDataSet.Tables("FisheryScalers").Clear()
-         End If
-         FSDA.Fill(TransferDataSet, "FisheryScalers")
-         NumRecs = TransferDataSet.Tables("FisheryScalers").Rows.Count
-         '- First Check if this Transfer Database is from "Old" format
-         Dim column As DataColumn
-         For Each column In TransferDataSet.Tables("FisheryScalers").Columns
-            If (column.ColumnName) = "MSFFisheryScaleFactor" Then GoTo FoundNewColumn
-         Next
-         MsgBox("ERROR - You have an Old Format NewModelRunTransfer.Mdb Database" & vbCrLf & _
-                  "You need to get the New Format Database to do Model Run Transfers", MsgBoxStyle.OkOnly)
-         Exit Sub
+            CmdStr = "SELECT * FROM FisheryScalers WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY FisheryID, TimeStep;"
+            Dim FScm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim FSDA As New System.Data.OleDb.OleDbDataAdapter
+            FSDA.SelectCommand = FScm
+            Dim FScb As New OleDb.OleDbCommandBuilder
+            FScb = New OleDb.OleDbCommandBuilder(FSDA)
+            If TransferDataSet.Tables.Contains("FisheryScalers") Then
+                TransferDataSet.Tables("FisheryScalers").Clear()
+            End If
+            FSDA.Fill(TransferDataSet, "FisheryScalers")
+            NumRecs = TransferDataSet.Tables("FisheryScalers").Rows.Count
+            '- First Check if this Transfer Database is from "Old" format
+            Dim column As DataColumn
+            For Each column In TransferDataSet.Tables("FisheryScalers").Columns
+                If (column.ColumnName) = "MSFFisheryScaleFactor" Then GoTo FoundNewColumn
+            Next
+            MsgBox("ERROR - You have an Old Format NewModelRunTransfer.Mdb Database" & vbCrLf & _
+                     "You need to get the New Format Database to do Model Run Transfers", MsgBoxStyle.OkOnly)
+            Exit Sub
 FoundNewColumn:
-         If NumRecs = 0 Then
-            MsgBox("Error in FisheryScalers Table Transfer .. No Records", MsgBoxStyle.OkOnly)
-            GoTo SkipFS
-         End If
-         Dim FSTrans As OleDb.OleDbTransaction
-         Dim FSC As New OleDbCommand
-         TransDB.Open()
-         FSTrans = TransDB.BeginTransaction
-         FSC.Connection = TransDB
-         FSC.Transaction = FSTrans
-         For RecNum = 0 To NumRecs - 1
-            '- MarkSelectiveFlag currently not used ... placeholder after Quota
-            FSC.CommandText = "INSERT INTO FisheryScalers (RunID,FisheryID,TimeStep,FisheryFlag,FisheryScaleFactor,Quota,MSFFisheryScaleFactor,MSFQuota,MarkReleaseRate,MarkMisIDRate,UnMarkMisIDRate,MarkIncidentalRate) " & _
-             "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-             TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(2).ToString & "," & _
-             TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(3).ToString & "," & _
-             TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(4).ToString & "," & _
-             TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(5).ToString & "," & _
-             TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(6).ToString & "," & _
-             TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(7).ToString & "," & _
-             TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(8).ToString & "," & _
-             TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(9).ToString & "," & _
-             TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(10).ToString & "," & _
-             TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(11).ToString & "," & _
-             TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(12).ToString & ")"
-            FSC.ExecuteNonQuery()
-         Next
-         FSTrans.Commit()
-         TransDB.Close()
+            If NumRecs = 0 Then
+                MsgBox("Error in FisheryScalers Table Transfer .. No Records", MsgBoxStyle.OkOnly)
+                GoTo SkipFS
+            End If
+            i = FramDataSet.Tables("FisheryScalers").Columns.IndexOf("Comment")
+            Dim FSTrans As OleDb.OleDbTransaction
+            Dim FSC As New OleDbCommand
+            TransDB.Open()
+            FSTrans = TransDB.BeginTransaction
+            FSC.Connection = TransDB
+            FSC.Transaction = FSTrans
+
+            'MessageBox2: MsgBox("Please select TransferFile version 4 or higher")
+
+            For RecNum = 0 To NumRecs - 1
+                '- MarkSelectiveFlag currently not used ... placeholder after Quota
+                If i <> -1 Then
+                    FSC.CommandText = "INSERT INTO FisheryScalers (RunID,FisheryID,TimeStep,FisheryFlag,FisheryScaleFactor,Quota,MSFFisheryScaleFactor,MSFQuota,MarkReleaseRate,MarkMisIDRate,UnMarkMisIDRate,MarkIncidentalRate,Comment) " & _
+                     "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(2).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(3).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(4).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(5).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(6).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(7).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(8).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(9).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(10).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(11).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(12).ToString & "," & _
+                     Chr(34) & TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(13) & Chr(34) & ")"
+                    Try
+                        FSC.ExecuteNonQuery()
+                    Catch ex As Exception
+                        MsgBox("Please select TransferFile version 4 or higher")
+                        GoTo ExitTransfer
+                    End Try
+                Else
+                    FSC.CommandText = "INSERT INTO FisheryScalers (RunID,FisheryID,TimeStep,FisheryFlag,FisheryScaleFactor,Quota,MSFFisheryScaleFactor,MSFQuota,MarkReleaseRate,MarkMisIDRate,UnMarkMisIDRate,MarkIncidentalRate) " & _
+                     "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(2).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(3).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(4).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(5).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(6).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(7).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(8).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(9).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(10).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(11).ToString & "," & _
+                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(12).ToString & ")"
+                    FSC.ExecuteNonQuery()
+                End If
+            Next
+            FSTrans.Commit()
+            TransDB.Close()
 SkipFS:
 
-         '- Transfer NonRetention Table
+            '- Transfer NonRetention Table
 
-         CmdStr = "SELECT * FROM NonRetention WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY FisheryID, TimeStep;"
-         Dim NRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim NRDA As New System.Data.OleDb.OleDbDataAdapter
-         NRDA.SelectCommand = NRcm
-         Dim NRcb As New OleDb.OleDbCommandBuilder
-         NRcb = New OleDb.OleDbCommandBuilder(NRDA)
-         If TransferDataSet.Tables.Contains("NonRetention") Then
-            TransferDataSet.Tables("NonRetention").Clear()
-         End If
-         NRDA.Fill(TransferDataSet, "NonRetention")
-         NumRecs = TransferDataSet.Tables("NonRetention").Rows.Count
-         If NumRecs = 0 Then
-            MsgBox("Error in NonRetention Table Transfer .. No Records", MsgBoxStyle.OkOnly)
-            GoTo SkipNR
-         End If
-         Dim NRTrans As OleDb.OleDbTransaction
-         Dim NRC As New OleDbCommand
-         TransDB.Open()
-         NRTrans = TransDB.BeginTransaction
-         NRC.Connection = TransDB
-         NRC.Transaction = NRTrans
-         For RecNum = 0 To NumRecs - 1
-            NRC.CommandText = "INSERT INTO NonRetention (RunID,FisheryID,TimeStep,NonRetentionFlag,CNRInput1,CNRInput2,CNRInput3,CNRInput4) " & _
-               "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-               TransferDataSet.Tables("NonRetention").Rows(RecNum)(2).ToString & "," & _
-               TransferDataSet.Tables("NonRetention").Rows(RecNum)(3).ToString & "," & _
-               TransferDataSet.Tables("NonRetention").Rows(RecNum)(4).ToString & "," & _
-               TransferDataSet.Tables("NonRetention").Rows(RecNum)(5).ToString & "," & _
-               TransferDataSet.Tables("NonRetention").Rows(RecNum)(6).ToString & "," & _
-               TransferDataSet.Tables("NonRetention").Rows(RecNum)(7).ToString & "," & _
-               TransferDataSet.Tables("NonRetention").Rows(RecNum)(8).ToString & ")"
-            NRC.ExecuteNonQuery()
-         Next
-         NRTrans.Commit()
-         TransDB.Close()
+            CmdStr = "SELECT * FROM NonRetention WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY FisheryID, TimeStep;"
+            Dim NRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim NRDA As New System.Data.OleDb.OleDbDataAdapter
+            NRDA.SelectCommand = NRcm
+            Dim NRcb As New OleDb.OleDbCommandBuilder
+            NRcb = New OleDb.OleDbCommandBuilder(NRDA)
+            If TransferDataSet.Tables.Contains("NonRetention") Then
+                TransferDataSet.Tables("NonRetention").Clear()
+            End If
+            NRDA.Fill(TransferDataSet, "NonRetention")
+            NumRecs = TransferDataSet.Tables("NonRetention").Rows.Count
+            If NumRecs = 0 Then
+                MsgBox("Error in NonRetention Table Transfer .. No Records", MsgBoxStyle.OkOnly)
+                GoTo SkipNR
+            End If
+            Dim NRTrans As OleDb.OleDbTransaction
+            Dim NRC As New OleDbCommand
+            TransDB.Open()
+            NRTrans = TransDB.BeginTransaction
+            NRC.Connection = TransDB
+            NRC.Transaction = NRTrans
+            For RecNum = 0 To NumRecs - 1
+                NRC.CommandText = "INSERT INTO NonRetention (RunID,FisheryID,TimeStep,NonRetentionFlag,CNRInput1,CNRInput2,CNRInput3,CNRInput4) " & _
+                   "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                   TransferDataSet.Tables("NonRetention").Rows(RecNum)(2).ToString & "," & _
+                   TransferDataSet.Tables("NonRetention").Rows(RecNum)(3).ToString & "," & _
+                   TransferDataSet.Tables("NonRetention").Rows(RecNum)(4).ToString & "," & _
+                   TransferDataSet.Tables("NonRetention").Rows(RecNum)(5).ToString & "," & _
+                   TransferDataSet.Tables("NonRetention").Rows(RecNum)(6).ToString & "," & _
+                   TransferDataSet.Tables("NonRetention").Rows(RecNum)(7).ToString & "," & _
+                   TransferDataSet.Tables("NonRetention").Rows(RecNum)(8).ToString & ")"
+                NRC.ExecuteNonQuery()
+            Next
+            NRTrans.Commit()
+            TransDB.Close()
 SkipNR:
 
-         '- Transfer Stock/Fishery Rate Scalers
+            '- Transfer Stock/Fishery Rate Scalers
 
-         CmdStr = "SELECT * FROM StockFisheryRateScaler WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY StockID, FisheryID, TimeStep"
-         Dim SFRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim SFDA As New System.Data.OleDb.OleDbDataAdapter
-         SFDA.SelectCommand = SFRcm
-         Dim SFRcb As New OleDb.OleDbCommandBuilder
-         SFRcb = New OleDb.OleDbCommandBuilder(SFDA)
-         If TransferDataSet.Tables.Contains("StockFisheryRateScaler") Then
-            TransferDataSet.Tables("StockFisheryRateScaler").Clear()
-         End If
-         SFDA.Fill(TransferDataSet, "StockFisheryRateScaler")
-         NumRecs = TransferDataSet.Tables("StockFisheryRateScaler").Rows.Count
-         Dim SFRTrans As OleDb.OleDbTransaction
-         Dim SFRC As New OleDbCommand
-         TransDB.Open()
-         SFRTrans = TransDB.BeginTransaction
-         SFRC.Connection = TransDB
-         SFRC.Transaction = SFRTrans
-         For RecNum = 0 To NumRecs - 1
-            SFRC.CommandText = "INSERT INTO StockFisheryRateScaler (RunID,StockID,FisheryID,TimeStep,StockFisheryRateScaler) " & _
-             "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-             TransferDataSet.Tables("StockFisheryRateScaler").Rows(RecNum)(1).ToString & "," & _
-             TransferDataSet.Tables("StockFisheryRateScaler").Rows(RecNum)(2).ToString & "," & _
-             TransferDataSet.Tables("StockFisheryRateScaler").Rows(RecNum)(3).ToString & "," & _
-             TransferDataSet.Tables("StockFisheryRateScaler").Rows(RecNum)(4).ToString & ")"
-            SFRC.ExecuteNonQuery()
-         Next
-         SFRTrans.Commit()
-         TransDB.Close()
-         SFDA = Nothing
+            CmdStr = "SELECT * FROM StockFisheryRateScaler WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY StockID, FisheryID, TimeStep"
+            Dim SFRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim SFDA As New System.Data.OleDb.OleDbDataAdapter
+            SFDA.SelectCommand = SFRcm
+            Dim SFRcb As New OleDb.OleDbCommandBuilder
+            SFRcb = New OleDb.OleDbCommandBuilder(SFDA)
+            If TransferDataSet.Tables.Contains("StockFisheryRateScaler") Then
+                TransferDataSet.Tables("StockFisheryRateScaler").Clear()
+            End If
+            SFDA.Fill(TransferDataSet, "StockFisheryRateScaler")
+            NumRecs = TransferDataSet.Tables("StockFisheryRateScaler").Rows.Count
+            Dim SFRTrans As OleDb.OleDbTransaction
+            Dim SFRC As New OleDbCommand
+            TransDB.Open()
+            SFRTrans = TransDB.BeginTransaction
+            SFRC.Connection = TransDB
+            SFRC.Transaction = SFRTrans
+            For RecNum = 0 To NumRecs - 1
+                SFRC.CommandText = "INSERT INTO StockFisheryRateScaler (RunID,StockID,FisheryID,TimeStep,StockFisheryRateScaler) " & _
+                 "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                 TransferDataSet.Tables("StockFisheryRateScaler").Rows(RecNum)(1).ToString & "," & _
+                 TransferDataSet.Tables("StockFisheryRateScaler").Rows(RecNum)(2).ToString & "," & _
+                 TransferDataSet.Tables("StockFisheryRateScaler").Rows(RecNum)(3).ToString & "," & _
+                 TransferDataSet.Tables("StockFisheryRateScaler").Rows(RecNum)(4).ToString & ")"
+                SFRC.ExecuteNonQuery()
+            Next
+            SFRTrans.Commit()
+            TransDB.Close()
+            SFDA = Nothing
 SkipSFR:
 
-         '- Transfer PSCMaxER - Coho Only
+            '- Transfer PSCMaxER - Coho Only
 
-         If SelectSpeciesName = "CHINOOK" Then GoTo SkipPSCER
-         CmdStr = "SELECT * FROM PSCMaxER WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY PSCStockID"
-         Dim PSCcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim PSCDA As New System.Data.OleDb.OleDbDataAdapter
-         PSCDA.SelectCommand = PSCcm
-         Dim PSCcb As New OleDb.OleDbCommandBuilder
-         PSCcb = New OleDb.OleDbCommandBuilder(PSCDA)
-         If TransferDataSet.Tables.Contains("PSCMaxER") Then
-            TransferDataSet.Tables("PSCMaxER").Clear()
-         End If
-         PSCDA.Fill(TransferDataSet, "PSCMaxER")
-         NumRecs = TransferDataSet.Tables("PSCMaxER").Rows.Count
-         If NumRecs = 0 Then
-            MsgBox("Error in PSCMaxER Table Transfer .. No Records", MsgBoxStyle.OkOnly)
-            GoTo SkipPSCER
-         End If
-         Dim PSCTrans As OleDb.OleDbTransaction
-         Dim PSCC As New OleDbCommand
-         TransDB.Open()
-         PSCTrans = TransDB.BeginTransaction
-         PSCC.Connection = TransDB
-         PSCC.Transaction = PSCTrans
-         For RecNum = 0 To NumRecs - 1
-            PSCC.CommandText = "INSERT INTO PSCMaxER (RunID,PSCStockID,PSCMaxER) " & _
-             "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-             TransferDataSet.Tables("PSCMaxER").Rows(RecNum)(1).ToString & "," & _
-             TransferDataSet.Tables("PSCMaxER").Rows(RecNum)(2).ToString & ")"
-            PSCC.ExecuteNonQuery()
-         Next
-         PSCTrans.Commit()
-         TransDB.Close()
-         PSCDA = Nothing
+            If SelectSpeciesName = "CHINOOK" Then GoTo SkipPSCER
+            CmdStr = "SELECT * FROM PSCMaxER WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY PSCStockID"
+            Dim PSCcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim PSCDA As New System.Data.OleDb.OleDbDataAdapter
+            PSCDA.SelectCommand = PSCcm
+            Dim PSCcb As New OleDb.OleDbCommandBuilder
+            PSCcb = New OleDb.OleDbCommandBuilder(PSCDA)
+            If TransferDataSet.Tables.Contains("PSCMaxER") Then
+                TransferDataSet.Tables("PSCMaxER").Clear()
+            End If
+            PSCDA.Fill(TransferDataSet, "PSCMaxER")
+            NumRecs = TransferDataSet.Tables("PSCMaxER").Rows.Count
+            If NumRecs = 0 Then
+                MsgBox("Error in PSCMaxER Table Transfer .. No Records", MsgBoxStyle.OkOnly)
+                GoTo SkipPSCER
+            End If
+            Dim PSCTrans As OleDb.OleDbTransaction
+            Dim PSCC As New OleDbCommand
+            TransDB.Open()
+            PSCTrans = TransDB.BeginTransaction
+            PSCC.Connection = TransDB
+            PSCC.Transaction = PSCTrans
+            For RecNum = 0 To NumRecs - 1
+                PSCC.CommandText = "INSERT INTO PSCMaxER (RunID,PSCStockID,PSCMaxER) " & _
+                 "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                 TransferDataSet.Tables("PSCMaxER").Rows(RecNum)(1).ToString & "," & _
+                 TransferDataSet.Tables("PSCMaxER").Rows(RecNum)(2).ToString & ")"
+                PSCC.ExecuteNonQuery()
+            Next
+            PSCTrans.Commit()
+            TransDB.Close()
+            PSCDA = Nothing
 SkipPSCER:
 
-         '- Size Limits - Chinook Only
+            '- Size Limits - Chinook Only
 
-         If SelectSpeciesName = "COHO" Then GoTo SkipSL
-         CmdStr = "SELECT * FROM SizeLimits WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY FisheryID, TimeStep"
-         Dim SLcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim SLDA As New System.Data.OleDb.OleDbDataAdapter
-         SLDA.SelectCommand = SLcm
-         Dim SLcb As New OleDb.OleDbCommandBuilder
-         SLcb = New OleDb.OleDbCommandBuilder(SLDA)
-         If TransferDataSet.Tables.Contains("SizeLimits") Then
-            TransferDataSet.Tables("SizeLimits").Clear()
-         End If
-         SLDA.Fill(TransferDataSet, "SizeLimits")
-         NumRecs = TransferDataSet.Tables("SizeLimits").Rows.Count
-         If NumRecs = 0 Then
-            MsgBox("Error in SizeLimits Table Transfer .. No Records", MsgBoxStyle.OkOnly)
-            GoTo SkipSL
-         End If
-         Dim SLTrans As OleDb.OleDbTransaction
-         Dim SLC As New OleDbCommand
-         TransDB.Open()
-         SLTrans = TransDB.BeginTransaction
-         SLC.Connection = TransDB
-         SLC.Transaction = SLTrans
-         For RecNum = 0 To NumRecs - 1
-            SLC.CommandText = "INSERT INTO SizeLimits (RunID,FisheryID,TimeStep,MinimumSize,MaximumSize) " & _
-             "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-             TransferDataSet.Tables("SizeLimits").Rows(RecNum)(2).ToString & "," & _
-             TransferDataSet.Tables("SizeLimits").Rows(RecNum)(3).ToString & "," & _
-             TransferDataSet.Tables("SizeLimits").Rows(RecNum)(4).ToString & "," & _
-             TransferDataSet.Tables("SizeLimits").Rows(RecNum)(5).ToString & ")"
-            SLC.ExecuteNonQuery()
-         Next
-         SLTrans.Commit()
-         TransDB.Close()
-         SLDA = Nothing
+            If SelectSpeciesName = "COHO" Then GoTo SkipSL
+            CmdStr = "SELECT * FROM SizeLimits WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY FisheryID, TimeStep"
+            Dim SLcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim SLDA As New System.Data.OleDb.OleDbDataAdapter
+            SLDA.SelectCommand = SLcm
+            Dim SLcb As New OleDb.OleDbCommandBuilder
+            SLcb = New OleDb.OleDbCommandBuilder(SLDA)
+            If TransferDataSet.Tables.Contains("SizeLimits") Then
+                TransferDataSet.Tables("SizeLimits").Clear()
+            End If
+            SLDA.Fill(TransferDataSet, "SizeLimits")
+            NumRecs = TransferDataSet.Tables("SizeLimits").Rows.Count
+            If NumRecs = 0 Then
+                MsgBox("Error in SizeLimits Table Transfer .. No Records", MsgBoxStyle.OkOnly)
+                GoTo SkipSL
+            End If
+            Dim SLTrans As OleDb.OleDbTransaction
+            Dim SLC As New OleDbCommand
+            TransDB.Open()
+            SLTrans = TransDB.BeginTransaction
+            SLC.Connection = TransDB
+            SLC.Transaction = SLTrans
+            For RecNum = 0 To NumRecs - 1
+                SLC.CommandText = "INSERT INTO SizeLimits (RunID,FisheryID,TimeStep,MinimumSize,MaximumSize) " & _
+                 "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                 TransferDataSet.Tables("SizeLimits").Rows(RecNum)(2).ToString & "," & _
+                 TransferDataSet.Tables("SizeLimits").Rows(RecNum)(3).ToString & "," & _
+                 TransferDataSet.Tables("SizeLimits").Rows(RecNum)(4).ToString & "," & _
+                 TransferDataSet.Tables("SizeLimits").Rows(RecNum)(5).ToString & ")"
+                SLC.ExecuteNonQuery()
+            Next
+            SLTrans.Commit()
+            TransDB.Close()
+            SLDA = Nothing
 SkipSL:
 
-         '- Transfer Stock Recruits
+            '- Transfer Stock Recruits
 
-         CmdStr = "SELECT * FROM StockRecruit WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY StockID, Age"
-         Dim SRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim SRDA As New System.Data.OleDb.OleDbDataAdapter
-         SRDA.SelectCommand = SRcm
-         Dim SRcb As New OleDb.OleDbCommandBuilder
-         SRcb = New OleDb.OleDbCommandBuilder(SRDA)
-         If TransferDataSet.Tables.Contains("StockRecruit") Then
-            TransferDataSet.Tables("StockRecruit").Clear()
-         End If
-         SRDA.Fill(TransferDataSet, "StockRecruit")
-         NumRecs = TransferDataSet.Tables("StockRecruit").Rows.Count
-         If NumRecs = 0 Then
-            MsgBox("Error in StockRecruit Table Transfer .. No Records", MsgBoxStyle.OkOnly)
-            GoTo SkipSR
-         End If
-         Dim SRTrans As OleDb.OleDbTransaction
-         Dim SRC As New OleDbCommand
-         TransDB.Open()
-         SRTrans = TransDB.BeginTransaction
-         SRC.Connection = TransDB
-         SRC.Transaction = SRTrans
-         For RecNum = 0 To NumRecs - 1
-            SRC.CommandText = "INSERT INTO StockRecruit (RunID,StockID,Age,RecruitScaleFactor,RecruitCohortSize) " & _
-             "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-             TransferDataSet.Tables("StockRecruit").Rows(RecNum)(2).ToString & "," & _
-             TransferDataSet.Tables("StockRecruit").Rows(RecNum)(3).ToString & "," & _
-             TransferDataSet.Tables("StockRecruit").Rows(RecNum)(4).ToString & "," & _
-             TransferDataSet.Tables("StockRecruit").Rows(RecNum)(5).ToString & ")"
-            SRC.ExecuteNonQuery()
-         Next
-         SRTrans.Commit()
-         TransDB.Close()
-         SRDA = Nothing
+            CmdStr = "SELECT * FROM StockRecruit WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY StockID, Age"
+            Dim SRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim SRDA As New System.Data.OleDb.OleDbDataAdapter
+            SRDA.SelectCommand = SRcm
+            Dim SRcb As New OleDb.OleDbCommandBuilder
+            SRcb = New OleDb.OleDbCommandBuilder(SRDA)
+            If TransferDataSet.Tables.Contains("StockRecruit") Then
+                TransferDataSet.Tables("StockRecruit").Clear()
+            End If
+            SRDA.Fill(TransferDataSet, "StockRecruit")
+            NumRecs = TransferDataSet.Tables("StockRecruit").Rows.Count
+            If NumRecs = 0 Then
+                MsgBox("Error in StockRecruit Table Transfer .. No Records", MsgBoxStyle.OkOnly)
+                GoTo SkipSR
+            End If
+            Dim SRTrans As OleDb.OleDbTransaction
+            Dim SRC As New OleDbCommand
+            TransDB.Open()
+            SRTrans = TransDB.BeginTransaction
+            SRC.Connection = TransDB
+            SRC.Transaction = SRTrans
+            For RecNum = 0 To NumRecs - 1
+                SRC.CommandText = "INSERT INTO StockRecruit (RunID,StockID,Age,RecruitScaleFactor,RecruitCohortSize) " & _
+                 "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                 TransferDataSet.Tables("StockRecruit").Rows(RecNum)(2).ToString & "," & _
+                 TransferDataSet.Tables("StockRecruit").Rows(RecNum)(3).ToString & "," & _
+                 TransferDataSet.Tables("StockRecruit").Rows(RecNum)(4).ToString & "," & _
+                 TransferDataSet.Tables("StockRecruit").Rows(RecNum)(5).ToString & ")"
+                SRC.ExecuteNonQuery()
+            Next
+            SRTrans.Commit()
+            TransDB.Close()
+            SRDA = Nothing
 SkipSR:
 
-         '- Transfer Cohort Run Sizes
+            '- Transfer Cohort Run Sizes
 
-         CmdStr = "SELECT * FROM Cohort WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY StockID, Age, TimeStep"
-         Dim COHcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim COHDA As New System.Data.OleDb.OleDbDataAdapter
-         COHDA.SelectCommand = COHcm
-         Dim COHcb As New OleDb.OleDbCommandBuilder
-         COHcb = New OleDb.OleDbCommandBuilder(COHDA)
-         If TransferDataSet.Tables.Contains("Cohort") Then
-            TransferDataSet.Tables("Cohort").Clear()
-         End If
-         COHDA.Fill(TransferDataSet, "Cohort")
-         NumRecs = TransferDataSet.Tables("Cohort").Rows.Count
-         Dim COHTrans As OleDb.OleDbTransaction
-         Dim COHC As New OleDbCommand
-         TransDB.Open()
-         COHTrans = TransDB.BeginTransaction
-         COHC.Connection = TransDB
-         COHC.Transaction = COHTrans
-         For RecNum = 0 To NumRecs - 1
-            COHC.CommandText = "INSERT INTO Cohort (RunID,StockID,Age,TimeStep,Cohort,MatureCohort,StartCohort,WorkingCohort,MidCohort) " & _
-            "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-            TransferDataSet.Tables("Cohort").Rows(RecNum)(2).ToString & "," & _
-            TransferDataSet.Tables("Cohort").Rows(RecNum)(3).ToString & "," & _
-            TransferDataSet.Tables("Cohort").Rows(RecNum)(4).ToString & "," & _
-            TransferDataSet.Tables("Cohort").Rows(RecNum)(5).ToString & "," & _
-            TransferDataSet.Tables("Cohort").Rows(RecNum)(6).ToString & "," & _
-            TransferDataSet.Tables("Cohort").Rows(RecNum)(7).ToString & "," & _
-            TransferDataSet.Tables("Cohort").Rows(RecNum)(8).ToString & "," & _
-            TransferDataSet.Tables("Cohort").Rows(RecNum)(9).ToString & ")"
-            COHC.ExecuteNonQuery()
-         Next
-         COHTrans.Commit()
-         TransDB.Close()
-         COHDA = Nothing
-
-         '- Transfer Escapement
-
-         CmdStr = "SELECT * FROM Escapement WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY StockID, Age, TimeStep"
-         Dim ESCcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim ESCDA As New System.Data.OleDb.OleDbDataAdapter
-         ESCDA.SelectCommand = ESCcm
-         Dim ESCcb As New OleDb.OleDbCommandBuilder
-         ESCcb = New OleDb.OleDbCommandBuilder(ESCDA)
-         If TransferDataSet.Tables.Contains("Escapement") Then
-            TransferDataSet.Tables("Escapement").Clear()
-         End If
-         ESCDA.Fill(TransferDataSet, "Escapement")
-         NumRecs = TransferDataSet.Tables("Escapement").Rows.Count
-         Dim ESCTrans As OleDb.OleDbTransaction
-         Dim ESCC As New OleDbCommand
-         TransDB.Open()
-         ESCTrans = TransDB.BeginTransaction
-         ESCC.Connection = TransDB
-         ESCC.Transaction = ESCTrans
-         For RecNum = 0 To NumRecs - 1
-            ESCC.CommandText = "INSERT INTO Escapement (RunID,StockID,Age,TimeStep,Escapement) " & _
-            "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-            TransferDataSet.Tables("Escapement").Rows(RecNum)(2).ToString & "," & _
-            TransferDataSet.Tables("Escapement").Rows(RecNum)(3).ToString & "," & _
-            TransferDataSet.Tables("Escapement").Rows(RecNum)(4).ToString & "," & _
-            TransferDataSet.Tables("Escapement").Rows(RecNum)(5).ToString & ")"
-            ESCC.ExecuteNonQuery()
-         Next
-         ESCTrans.Commit()
-         TransDB.Close()
-         ESCDA = Nothing
-
-         '- Transfer FisheryMortality
-
-         CmdStr = "SELECT * FROM FisheryMortality WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY FisheryID, TimeStep"
-         Dim FMcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim FMDA As New System.Data.OleDb.OleDbDataAdapter
-         FMDA.SelectCommand = FMcm
-         Dim FMcb As New OleDb.OleDbCommandBuilder
-         FMcb = New OleDb.OleDbCommandBuilder(FMDA)
-         If TransferDataSet.Tables.Contains("FisheryMortality") Then
-            TransferDataSet.Tables("FisheryMortality").Clear()
-         End If
-         FMDA.Fill(TransferDataSet, "FisheryMortality")
-         NumRecs = TransferDataSet.Tables("FisheryMortality").Rows.Count
-         Dim FMTrans As OleDb.OleDbTransaction
-         Dim FMC As New OleDbCommand
-         TransDB.Open()
-         FMTrans = TransDB.BeginTransaction
-         FMC.Connection = TransDB
-         FMC.Transaction = FMTrans
-         For RecNum = 0 To NumRecs - 1
-            FMC.CommandText = "INSERT INTO FisheryMortality (RunID,FisheryID,TimeStep,TotalLandedCatch,TotalUnMarkedCatch,TotalNonRetention,TotalShakers,TotalDropOff,TotalEncounters) " & _
-               "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-               TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(1).ToString & "," & _
-               TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(2).ToString & "," & _
-               TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(3).ToString & "," & _
-               TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(4).ToString & "," & _
-               TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(5).ToString & "," & _
-               TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(6).ToString & "," & _
-               TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(7).ToString & "," & _
-               TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(8).ToString & ")"
-            FMC.ExecuteNonQuery()
-         Next
-         FMTrans.Commit()
-         TransDB.Close()
-         FMDA = Nothing
-
-         '- Transfer All Mortality Records
-
-         CmdStr = "SELECT * FROM Mortality WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY FisheryID, TimeStep"
-         Dim MRTcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim MRTDA As New System.Data.OleDb.OleDbDataAdapter
-         MRTDA.SelectCommand = MRTcm
-         Dim MRTcb As New OleDb.OleDbCommandBuilder
-         MRTcb = New OleDb.OleDbCommandBuilder(MRTDA)
-         If TransferDataSet.Tables.Contains("Mortality") Then
-            TransferDataSet.Tables("Mortality").Clear()
-         End If
-         MRTDA.Fill(TransferDataSet, "Mortality")
-         NumRecs = TransferDataSet.Tables("Mortality").Rows.Count
-         Dim MRTTrans As OleDb.OleDbTransaction
-         Dim MRTC As New OleDbCommand
-         TransDB.Open()
-         MRTTrans = TransDB.BeginTransaction
-         MRTC.Connection = TransDB
-         MRTC.Transaction = MRTTrans
-         For RecNum = 0 To NumRecs - 1
-            MRTC.CommandText = "INSERT INTO Mortality (RunID,StockID,Age,FisheryID,TimeStep,LandedCatch,NonRetention,Shaker,DropOff,Encounter,MSFLandedCatch,MSFNonRetention,MSFShaker,MSFDropOff,MSFEncounter) " & _
-               "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(2).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(3).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(4).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(5).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(6).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(7).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(8).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(9).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(10).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(11).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(12).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(13).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(14).ToString & "," & _
-               TransferDataSet.Tables("Mortality").Rows(RecNum)(15).ToString & ")"
-            MRTC.ExecuteNonQuery()
-         Next
-         MRTTrans.Commit()
-         TransDB.Close()
-         MRTDA = Nothing
-
-         '==============================================================================================
-         '- (Pete 12/13) Inject transfer database with Target Sublegal:Legal Ratio (SLRatio) 
-         '- and run-specific sublegal encounter rate adjustment (RunEncounterRateAdjustment) content
-
-         '- Transfer Sublegal Ratios
-         CmdStr = "SELECT * FROM SLRatio WHERE RunID = " & RunIDTransfer(TransID).ToString
-         Dim SLRatcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim SLRatDA As New System.Data.OleDb.OleDbDataAdapter
-         SLRatDA.SelectCommand = SLRatcm
-         Dim SLRatcb As New OleDb.OleDbCommandBuilder
-         SLRatcb = New OleDb.OleDbCommandBuilder(SLRatDA)
-         If TransferDataSet.Tables.Contains("SLRatio") Then
-            TransferDataSet.Tables("SLRatio").Clear()
-         End If
-         SLRatDA.Fill(TransferDataSet, "SLRatio")
-         NumRecs = TransferDataSet.Tables("SLRatio").Rows.Count
-         If NumRecs = 0 Then
-            'MsgBox("Error in StockRecruit Table Transfer .. No Records", MsgBoxStyle.OkOnly)
-            GoTo SkipSLRat
-         End If
-         Dim SLRatTrans As OleDb.OleDbTransaction
-         Dim SLRatC As New OleDbCommand
-         TransDB.Open()
-         SLRatTrans = TransDB.BeginTransaction
-         SLRatC.Connection = TransDB
-         SLRatC.Transaction = SLRatTrans
-         For RecNum = 0 To NumRecs - 1
-            SLRatC.CommandText = "INSERT INTO SLRatio (RunID,FisheryID,Age,TimeStep,TargetRatio,RunEncounterRateAdjustment, UpdateWhen, UpdateBy) " & _
+            CmdStr = "SELECT * FROM Cohort WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY StockID, Age, TimeStep"
+            Dim COHcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim COHDA As New System.Data.OleDb.OleDbDataAdapter
+            COHDA.SelectCommand = COHcm
+            Dim COHcb As New OleDb.OleDbCommandBuilder
+            COHcb = New OleDb.OleDbCommandBuilder(COHDA)
+            If TransferDataSet.Tables.Contains("Cohort") Then
+                TransferDataSet.Tables("Cohort").Clear()
+            End If
+            COHDA.Fill(TransferDataSet, "Cohort")
+            NumRecs = TransferDataSet.Tables("Cohort").Rows.Count
+            Dim COHTrans As OleDb.OleDbTransaction
+            Dim COHC As New OleDbCommand
+            TransDB.Open()
+            COHTrans = TransDB.BeginTransaction
+            COHC.Connection = TransDB
+            COHC.Transaction = COHTrans
+            For RecNum = 0 To NumRecs - 1
+                COHC.CommandText = "INSERT INTO Cohort (RunID,StockID,Age,TimeStep,Cohort,MatureCohort,StartCohort,WorkingCohort,MidCohort) " & _
                 "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
-                TransferDataSet.Tables("SLRatio").Rows(RecNum)(1).ToString & "," & _
-                TransferDataSet.Tables("SLRatio").Rows(RecNum)(2).ToString & "," & _
-                TransferDataSet.Tables("SLRatio").Rows(RecNum)(3).ToString & "," & _
-                TransferDataSet.Tables("SLRatio").Rows(RecNum)(4).ToString & "," & _
-                TransferDataSet.Tables("SLRatio").Rows(RecNum)(5).ToString & "," & _
-                "'" & TransferDataSet.Tables("SLRatio").Rows(RecNum)(6).ToString & "'" & "," & _
-                "'" & TransferDataSet.Tables("SLRatio").Rows(RecNum)(7).ToString & "'" & ")"
-            SLRatC.ExecuteNonQuery()
-         Next
-         SLRatTrans.Commit()
-         TransDB.Close()
-         SLRatDA = Nothing
+                TransferDataSet.Tables("Cohort").Rows(RecNum)(2).ToString & "," & _
+                TransferDataSet.Tables("Cohort").Rows(RecNum)(3).ToString & "," & _
+                TransferDataSet.Tables("Cohort").Rows(RecNum)(4).ToString & "," & _
+                TransferDataSet.Tables("Cohort").Rows(RecNum)(5).ToString & "," & _
+                TransferDataSet.Tables("Cohort").Rows(RecNum)(6).ToString & "," & _
+                TransferDataSet.Tables("Cohort").Rows(RecNum)(7).ToString & "," & _
+                TransferDataSet.Tables("Cohort").Rows(RecNum)(8).ToString & "," & _
+                TransferDataSet.Tables("Cohort").Rows(RecNum)(9).ToString & ")"
+                COHC.ExecuteNonQuery()
+            Next
+            COHTrans.Commit()
+            TransDB.Close()
+            COHDA = Nothing
+
+            '- Transfer Escapement
+
+            CmdStr = "SELECT * FROM Escapement WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY StockID, Age, TimeStep"
+            Dim ESCcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim ESCDA As New System.Data.OleDb.OleDbDataAdapter
+            ESCDA.SelectCommand = ESCcm
+            Dim ESCcb As New OleDb.OleDbCommandBuilder
+            ESCcb = New OleDb.OleDbCommandBuilder(ESCDA)
+            If TransferDataSet.Tables.Contains("Escapement") Then
+                TransferDataSet.Tables("Escapement").Clear()
+            End If
+            ESCDA.Fill(TransferDataSet, "Escapement")
+            NumRecs = TransferDataSet.Tables("Escapement").Rows.Count
+            Dim ESCTrans As OleDb.OleDbTransaction
+            Dim ESCC As New OleDbCommand
+            TransDB.Open()
+            ESCTrans = TransDB.BeginTransaction
+            ESCC.Connection = TransDB
+            ESCC.Transaction = ESCTrans
+            For RecNum = 0 To NumRecs - 1
+                ESCC.CommandText = "INSERT INTO Escapement (RunID,StockID,Age,TimeStep,Escapement) " & _
+                "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                TransferDataSet.Tables("Escapement").Rows(RecNum)(2).ToString & "," & _
+                TransferDataSet.Tables("Escapement").Rows(RecNum)(3).ToString & "," & _
+                TransferDataSet.Tables("Escapement").Rows(RecNum)(4).ToString & "," & _
+                TransferDataSet.Tables("Escapement").Rows(RecNum)(5).ToString & ")"
+                ESCC.ExecuteNonQuery()
+            Next
+            ESCTrans.Commit()
+            TransDB.Close()
+            ESCDA = Nothing
+
+            '- Transfer FisheryMortality
+
+            CmdStr = "SELECT * FROM FisheryMortality WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY FisheryID, TimeStep"
+            Dim FMcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim FMDA As New System.Data.OleDb.OleDbDataAdapter
+            FMDA.SelectCommand = FMcm
+            Dim FMcb As New OleDb.OleDbCommandBuilder
+            FMcb = New OleDb.OleDbCommandBuilder(FMDA)
+            If TransferDataSet.Tables.Contains("FisheryMortality") Then
+                TransferDataSet.Tables("FisheryMortality").Clear()
+            End If
+            FMDA.Fill(TransferDataSet, "FisheryMortality")
+            NumRecs = TransferDataSet.Tables("FisheryMortality").Rows.Count
+            Dim FMTrans As OleDb.OleDbTransaction
+            Dim FMC As New OleDbCommand
+            TransDB.Open()
+            FMTrans = TransDB.BeginTransaction
+            FMC.Connection = TransDB
+            FMC.Transaction = FMTrans
+            For RecNum = 0 To NumRecs - 1
+                FMC.CommandText = "INSERT INTO FisheryMortality (RunID,FisheryID,TimeStep,TotalLandedCatch,TotalUnMarkedCatch,TotalNonRetention,TotalShakers,TotalDropOff,TotalEncounters) " & _
+                   "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                   TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(1).ToString & "," & _
+                   TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(2).ToString & "," & _
+                   TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(3).ToString & "," & _
+                   TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(4).ToString & "," & _
+                   TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(5).ToString & "," & _
+                   TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(6).ToString & "," & _
+                   TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(7).ToString & "," & _
+                   TransferDataSet.Tables("FisheryMortality").Rows(RecNum)(8).ToString & ")"
+                FMC.ExecuteNonQuery()
+            Next
+            FMTrans.Commit()
+            TransDB.Close()
+            FMDA = Nothing
+
+            '- Transfer All Mortality Records
+
+            CmdStr = "SELECT * FROM Mortality WHERE RunID = " & RunIDTransfer(TransID).ToString & " ORDER BY FisheryID, TimeStep"
+            Dim MRTcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim MRTDA As New System.Data.OleDb.OleDbDataAdapter
+            MRTDA.SelectCommand = MRTcm
+            Dim MRTcb As New OleDb.OleDbCommandBuilder
+            MRTcb = New OleDb.OleDbCommandBuilder(MRTDA)
+            If TransferDataSet.Tables.Contains("Mortality") Then
+                TransferDataSet.Tables("Mortality").Clear()
+            End If
+            MRTDA.Fill(TransferDataSet, "Mortality")
+            NumRecs = TransferDataSet.Tables("Mortality").Rows.Count
+            Dim MRTTrans As OleDb.OleDbTransaction
+            Dim MRTC As New OleDbCommand
+            TransDB.Open()
+            MRTTrans = TransDB.BeginTransaction
+            MRTC.Connection = TransDB
+            MRTC.Transaction = MRTTrans
+            For RecNum = 0 To NumRecs - 1
+                MRTC.CommandText = "INSERT INTO Mortality (RunID,StockID,Age,FisheryID,TimeStep,LandedCatch,NonRetention,Shaker,DropOff,Encounter,MSFLandedCatch,MSFNonRetention,MSFShaker,MSFDropOff,MSFEncounter) " & _
+                   "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(2).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(3).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(4).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(5).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(6).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(7).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(8).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(9).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(10).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(11).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(12).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(13).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(14).ToString & "," & _
+                   TransferDataSet.Tables("Mortality").Rows(RecNum)(15).ToString & ")"
+                MRTC.ExecuteNonQuery()
+            Next
+            MRTTrans.Commit()
+            TransDB.Close()
+            MRTDA = Nothing
+
+            '==============================================================================================
+            '- (Pete 12/13) Inject transfer database with Target Sublegal:Legal Ratio (SLRatio) 
+            '- and run-specific sublegal encounter rate adjustment (RunEncounterRateAdjustment) content
+
+            '- Transfer Sublegal Ratios
+            CmdStr = "SELECT * FROM SLRatio WHERE RunID = " & RunIDTransfer(TransID).ToString
+            Dim SLRatcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim SLRatDA As New System.Data.OleDb.OleDbDataAdapter
+            SLRatDA.SelectCommand = SLRatcm
+            Dim SLRatcb As New OleDb.OleDbCommandBuilder
+            SLRatcb = New OleDb.OleDbCommandBuilder(SLRatDA)
+            If TransferDataSet.Tables.Contains("SLRatio") Then
+                TransferDataSet.Tables("SLRatio").Clear()
+            End If
+            SLRatDA.Fill(TransferDataSet, "SLRatio")
+            NumRecs = TransferDataSet.Tables("SLRatio").Rows.Count
+            If NumRecs = 0 Then
+                'MsgBox("Error in StockRecruit Table Transfer .. No Records", MsgBoxStyle.OkOnly)
+                GoTo SkipSLRat
+            End If
+            Dim SLRatTrans As OleDb.OleDbTransaction
+            Dim SLRatC As New OleDbCommand
+            TransDB.Open()
+            SLRatTrans = TransDB.BeginTransaction
+            SLRatC.Connection = TransDB
+            SLRatC.Transaction = SLRatTrans
+            For RecNum = 0 To NumRecs - 1
+                SLRatC.CommandText = "INSERT INTO SLRatio (RunID,FisheryID,Age,TimeStep,TargetRatio,RunEncounterRateAdjustment, UpdateWhen, UpdateBy) " & _
+                    "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
+                    TransferDataSet.Tables("SLRatio").Rows(RecNum)(1).ToString & "," & _
+                    TransferDataSet.Tables("SLRatio").Rows(RecNum)(2).ToString & "," & _
+                    TransferDataSet.Tables("SLRatio").Rows(RecNum)(3).ToString & "," & _
+                    TransferDataSet.Tables("SLRatio").Rows(RecNum)(4).ToString & "," & _
+                    TransferDataSet.Tables("SLRatio").Rows(RecNum)(5).ToString & "," & _
+                    "'" & TransferDataSet.Tables("SLRatio").Rows(RecNum)(6).ToString & "'" & "," & _
+                    "'" & TransferDataSet.Tables("SLRatio").Rows(RecNum)(7).ToString & "'" & ")"
+                SLRatC.ExecuteNonQuery()
+            Next
+            SLRatTrans.Commit()
+            TransDB.Close()
+            SLRatDA = Nothing
 SkipSLRat:
 
-         '==============================================================================================
+            '==============================================================================================
 
 
 
-      Next
+        Next
+ExitTransfer:
+        Exit Sub
 
-      Exit Sub
-
-   End Sub
+    End Sub
 
     Sub GetTransferBasePeriodTables()
         '- This SubRoutine is the opposite of the TransferBaseRunTables and reads in a new base period
@@ -4161,7 +4208,7 @@ SkipSLRat:
 
             'populate remaining transfer datasets
 
-           
+
 
             'BaseCohort()
             FramDB.Open()
@@ -4604,7 +4651,7 @@ SkipSLRat:
             BaseSizeLimIDDA.Fill(TransferDataSet, "ChinookBaseSizeLimit")
             BaseSizeLimIDDA = Nothing
 
-            
+
             Dim BaseSizeLimitTrans As OleDb.OleDbTransaction
             Dim BaseSizeLimit As New OleDbCommand
 
@@ -4623,7 +4670,7 @@ SkipSLRat:
                 BaseSizeLimit.ExecuteNonQuery()
             Next
             BaseSizeLimitTrans.Commit()
-            FramDB.Close()            
+            FramDB.Close()
         End If
 
         'import stocks table
@@ -5062,6 +5109,7 @@ SkipSLRat:
                 '    TransBaseID = drd2.GetInt32(1)
                 Dim N As Integer = 1
                 Dim multiBaseID As String
+
                 While drd2.Read()
                     N = N + 1
                 End While
@@ -5115,10 +5163,32 @@ SkipSLRat:
             FramDB.Close()
 
             '- Transfer Backwards FRAM Table
+            Dim j, k As Integer
             NumRecs = TransferDataSet.Tables("BackwardsFRAM").Rows.Count
             If NumRecs = 0 Then
                 GoTo SkipBF
             End If
+
+            'check if comment column exists in TransferDB
+            j = TransferDataSet.Tables("BackwardsFRAM").Columns.IndexOf("Comment")
+            k = FramDataSet.Tables("BackwardsFRAM").Columns.IndexOf("Comment")
+            If k = -1 Then 'add column if it doesn't exist in main FRAM database
+                FramDB.Open()
+                Dim BKFRAMTable As String = "BackwardsFRAM"
+                CmdStr = "SELECT * FROM [" & BKFRAMTable & "];"
+                Dim BKFRAMcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                Dim BKFRAMDA As New System.Data.OleDb.OleDbDataAdapter
+                BKFRAMDA.SelectCommand = BKFRAMcm
+                Dim BKFRAMcb As New OleDb.OleDbCommandBuilder
+                BKFRAMcb = New OleDb.OleDbCommandBuilder(BKFRAMDA)
+                BKFRAMDA.Fill(FramDataSet, "BackwardsFRAM")
+
+                BKFRAMcm.CommandText = "ALTER TABLE " & BKFRAMTable & " ADD " & "Comment" & " " & "String"
+                BKFRAMcm.ExecuteNonQuery()   'executes the SQL code in cmd without querry
+                FramDB.Close()
+            End If
+
+
             Dim BFTrans As OleDb.OleDbTransaction
             Dim BFC As New OleDbCommand
             FramDB.Open()
@@ -5126,16 +5196,32 @@ SkipSLRat:
             BFC.Connection = FramDB
             BFC.Transaction = BFTrans
             For RecNum = 0 To NumRecs - 1
-                '- Check to see if record matches OldRunID being Tranferred in this RunID Loop
-                If OldRunID = TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(0) Then
-                    BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
-                    "VALUES(" & NewRunID.ToString & "," & _
-                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(1).ToString & "," & _
-                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(2).ToString & "," & _
-                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(3).ToString & "," & _
-                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(4).ToString & "," & _
-                    TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(5).ToString & ")"
-                    BFC.ExecuteNonQuery()
+                If j = -1 Then 'Comment column does not exist
+                    '- Check to see if record matches OldRunID being Tranferred in this RunID Loop
+                    If OldRunID = TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(0) Then
+                        BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
+                        "VALUES(" & NewRunID.ToString & "," & _
+                        TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(1).ToString & "," & _
+                        TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(2).ToString & "," & _
+                        TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(3).ToString & "," & _
+                        TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(4).ToString & "," & _
+                        TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(5).ToString & ")"
+                        BFC.ExecuteNonQuery()
+                    End If
+                Else 'comment column exists in TransferDB
+                    
+                    If OldRunID = TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(0) Then
+                        BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag,Comment) " & _
+                        "VALUES(" & NewRunID.ToString & "," & _
+                        TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(1).ToString & "," & _
+                        TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(2).ToString & "," & _
+                        TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(3).ToString & "," & _
+                        TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(4).ToString & "," & _
+                        TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(5).ToString & "," & _
+                        Chr(34) & TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(6).ToString & Chr(34) & ")"
+                        BFC.ExecuteNonQuery()
+                    End If
+
                 End If
             Next
             BFTrans.Commit()
@@ -5144,6 +5230,27 @@ SkipBF:
 
             '- Transfer FisheryScalers Table
             NumRecs = TransferDataSet.Tables("FisheryScalers").Rows.Count
+
+            'check if comment column exists in TransferDB
+            j = TransferDataSet.Tables("FisheryScalers").Columns.IndexOf("Comment")
+            k = FramDataSet.Tables("FisheryScalers").Columns.IndexOf("Comment")
+            If k = -1 Then 'add column if it doesn't exist in main FRAM database
+                FramDB.Open()
+                Dim FisheryScalersTable As String = "FisheryScalers"
+                CmdStr = "SELECT * FROM [" & FisheryScalersTable & "];"
+                Dim FisheryScalerscm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                Dim FisheryScalersDA As New System.Data.OleDb.OleDbDataAdapter
+                FisheryScalersDA.SelectCommand = FisheryScalerscm
+                Dim FisheryScalerscb As New OleDb.OleDbCommandBuilder
+                FisheryScalerscb = New OleDb.OleDbCommandBuilder(FisheryScalersDA)
+                FisheryScalersDA.Fill(FramDataSet, "FisheryScalers")
+
+                FisheryScalerscm.CommandText = "ALTER TABLE " & FisheryScalersTable & " ADD " & "Comment" & " " & "String"
+                FisheryScalerscm.ExecuteNonQuery()   'executes the SQL code in cmd without querry
+                FramDB.Close()
+            End If
+
+
             Dim FSTrans As OleDb.OleDbTransaction
             Dim FSC As New OleDbCommand
 
@@ -5210,20 +5317,39 @@ FoundNewColumn:
             For RecNum = 0 To NumRecs - 1
                 '- Check to see if record matches OldRunID being Tranferred in this RunID Loop
                 If OldRunID = TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(1) Then
-                    FSC.CommandText = "INSERT INTO FisheryScalers (RunID,FisheryID,TimeStep,FisheryFlag,FisheryScaleFactor,Quota,MSFFisheryScaleFactor,MSFQuota,MarkReleaseRate,MarkMisIDRate,UnMarkMisIDRate,MarkIncidentalRate) " & _
-                     "VALUES(" & NewRunID.ToString & "," & _
-                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(2).ToString & "," & _
-                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(3).ToString & "," & _
-                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(4).ToString & "," & _
-                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(5).ToString & "," & _
-                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(6).ToString & "," & _
-                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(7).ToString & "," & _
-                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(8).ToString & "," & _
-                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(9).ToString & "," & _
-                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(10).ToString & "," & _
-                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(11).ToString & "," & _
-                     TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(12).ToString & ")"
-                    FSC.ExecuteNonQuery()
+
+                    If j <> -1 Then
+                        FSC.CommandText = "INSERT INTO FisheryScalers (RunID,FisheryID,TimeStep,FisheryFlag,FisheryScaleFactor,Quota,MSFFisheryScaleFactor,MSFQuota,MarkReleaseRate,MarkMisIDRate,UnMarkMisIDRate,MarkIncidentalRate,Comment) " & _
+                                                 "VALUES(" & NewRunID.ToString & "," & _
+                        TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(2).ToString & "," & _
+                        TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(3).ToString & "," & _
+                        TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(4).ToString & "," & _
+                        TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(5).ToString & "," & _
+                        TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(6).ToString & "," & _
+                        TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(7).ToString & "," & _
+                        TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(8).ToString & "," & _
+                        TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(9).ToString & "," & _
+                        TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(10).ToString & "," & _
+                        TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(11).ToString & "," & _
+                        TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(12).ToString & "," & _
+                        Chr(34) & TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(13).ToString & Chr(34) & ")"
+                        FSC.ExecuteNonQuery()
+                    Else
+                        FSC.CommandText = "INSERT INTO FisheryScalers (RunID,FisheryID,TimeStep,FisheryFlag,FisheryScaleFactor,Quota,MSFFisheryScaleFactor,MSFQuota,MarkReleaseRate,MarkMisIDRate,UnMarkMisIDRate,MarkIncidentalRate) " & _
+                         "VALUES(" & NewRunID.ToString & "," & _
+                         TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(2).ToString & "," & _
+                         TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(3).ToString & "," & _
+                         TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(4).ToString & "," & _
+                         TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(5).ToString & "," & _
+                         TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(6).ToString & "," & _
+                         TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(7).ToString & "," & _
+                         TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(8).ToString & "," & _
+                         TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(9).ToString & "," & _
+                         TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(10).ToString & "," & _
+                         TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(11).ToString & "," & _
+                         TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(12).ToString & ")"
+                        FSC.ExecuteNonQuery()
+                    End If
                 End If
             Next
             FSTrans.Commit()

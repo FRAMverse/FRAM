@@ -51,14 +51,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FramVS.exe" size="1022976">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FramVS.exe" size="1027584">
       <assemblyIdentity name="FramVS" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>cBBxjoJW8+I3fz/llh4zh7eLH0o=</dsig:DigestValue>
+        <dsig:DigestValue>gRRD/wn44KYe/xLTiTFBH7y2g3c=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

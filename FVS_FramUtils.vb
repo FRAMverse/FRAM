@@ -185,35 +185,55 @@ Public Class FVS_FramUtils
    End Sub
 
    Private Sub TransferModelRunButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles TransferModelRunButton.Click
-      Dim TransferDBName, NewTransferDB As String
-        TransferDBName = "NewModelRunTransfer3.mdb"
-      RecordsetSelectionType = 3
-      If Exists(FVSdatabasepath & "\" & TransferDBName) Then
-         Me.Visible = False
-         FVS_ModelRunSelection.ShowDialog()
-         If RecordsetSelectionType = 9 Then
-            MsgBox("Model Run Transfer Cancelled", MsgBoxStyle.OkOnly)
-            Exit Sub
-         End If
-         Me.Refresh()
-         Me.Cursor = Cursors.WaitCursor
-         '- Create Copy of Transfer Database File
-         MDBSaveFileDialog.Filter = "*.mdb|*.mdb"
+        Dim TransferDBName, NewTransferDB, TransferDBNameShort As String
+
+        TransferDBName = ""
+        TransferDBNameShort = ""
+
+        MsgBox("Please select the Transfer Database.")
+        OpenTransferModelRunFileDialog.Filter = "Model Run Transfer Files (*.MDB)|*.MDB|All files (*.*)|*.*"
+        OpenTransferModelRunFileDialog.FilterIndex = 1
+        OpenTransferModelRunFileDialog.RestoreDirectory = True
+        If OpenTransferModelRunFileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            Try
+                TransferDBName = OpenTransferModelRunFileDialog.FileName
+                TransferDBNameShort = System.IO.Path.GetFileName(OpenTransferModelRunFileDialog.FileName)
+            Catch Ex As Exception
+                MessageBox.Show("Cannot read file from disk. Original error: " & Ex.Message)
+            End Try
+        End If
+
+
+
+        RecordsetSelectionType = 3
+        If Exists(TransferDBName) Then
+            Me.Visible = False
+            FVS_ModelRunSelection.ShowDialog()
+            If RecordsetSelectionType = 9 Then
+                MsgBox("Model Run Transfer Cancelled", MsgBoxStyle.OkOnly)
+                Exit Sub
+            End If
+            Me.Refresh()
+            Me.Cursor = Cursors.WaitCursor
+            '- Create Copy of Transfer Database File
+
+
+            MDBSaveFileDialog.Filter = "*.mdb|*.mdb"
 
 NewName:
-         NewTransferDB = ""
-         MDBSaveFileDialog.Filter = "Transfer File Name (*.MDB)|*.MDB|All files (*.*)|*.*"
-         MDBSaveFileDialog.FilterIndex = 1
-            MDBSaveFileDialog.FileName = "NewModelRunTransfer3.Mdb"
-         MDBSaveFileDialog.RestoreDirectory = True
-         If MDBSaveFileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-            Try
-               NewTransferDB = MDBSaveFileDialog.FileName
-            Catch Ex As Exception
-               MessageBox.Show("Cannot read file from disk. Original error: " & Ex.Message)
-            End Try
-         End If
-         If NewTransferDB = "" Then Exit Sub
+            NewTransferDB = ""
+            MDBSaveFileDialog.Filter = "Transfer File Name (*.MDB)|*.MDB|All files (*.*)|*.*"
+            MDBSaveFileDialog.FilterIndex = 1
+            MDBSaveFileDialog.FileName = TransferDBNameShort
+            MDBSaveFileDialog.RestoreDirectory = True
+            If MDBSaveFileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+                Try
+                    NewTransferDB = MDBSaveFileDialog.FileName
+                Catch Ex As Exception
+                    MessageBox.Show("Cannot read file from disk. Original error: " & Ex.Message)
+                End Try
+            End If
+            If NewTransferDB = "" Then Exit Sub
             If NewTransferDB = "NewModelRunTransfer3.Mdb" Then
                 MsgBox("The file 'NewModelRunTransfer3.Mdb' is Reserved" & vbCrLf & _
                        "Please Choose Different Name for Transfer DataBase" & vbCrLf & _
@@ -221,88 +241,88 @@ NewName:
                 GoTo NewName
             End If
 
-         'If Exists(FVSdatabasepath & "\" & NewTransferDB) Then Delete(FVSdatabasepath & "\" & NewTransferDB)
-         'File.Copy(FVSdatabasepath & "\" & TransferDBName, NewTransferDB, True)
-         If Exists(NewTransferDB) Then Delete(NewTransferDB)
-         File.Copy(FVSdatabasepath & "\" & TransferDBName, NewTransferDB, True)
+            'If Exists(FVSdatabasepath & "\" & NewTransferDB) Then Delete(FVSdatabasepath & "\" & NewTransferDB)
+            'File.Copy(FVSdatabasepath & "\" & TransferDBName, NewTransferDB, True)
+            If Exists(NewTransferDB) Then Delete(NewTransferDB)
+            File.Copy(TransferDBName, NewTransferDB, True)
 
 
 
-         '- TransferDB Connection String
-         TransDB.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & NewTransferDB
+            '- TransferDB Connection String
+            TransDB.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & NewTransferDB
 
-         '==============================================================================================
-         '- (Pete 12/13) Part I.  Code that corrects an error in older versions of the Transfer Database
-         '- (Basically an older version included the MSF flag in the FisheryScaler table;
-         '- this presence of this field messed things up severely (alignment wise) when runs were imported/rerun
+            '==============================================================================================
+            '- (Pete 12/13) Part I.  Code that corrects an error in older versions of the Transfer Database
+            '- (Basically an older version included the MSF flag in the FisheryScaler table;
+            '- this presence of this field messed things up severely (alignment wise) when runs were imported/rerun
 
-         ' Open connection to the database
-         TransDB.Open()
-         Dim dbTbl As New DataTable
-         Dim DoesFieldExist As Boolean
-         Dim tblName, fldName As String
-         tblName = "FisheryScalers"
-         fldName = "MarkSelectiveFlag"
-
-
-         ' Get the table definition loaded in a table adapter
-         Dim strSql As String = "Select TOP 1 * from " & tblName
-         Dim dbAdapater As New System.Data.OleDb.OleDbDataAdapter(strSql, TransDB)
-         dbAdapater.Fill(dbTbl)
-
-         ' Get the index of the field name
-         Dim i As Integer = dbTbl.Columns.IndexOf(fldName)
-
-         If i = -1 Then
-            'Field is missing
-            DoesFieldExist = False
-         Else
-            'Field is there
-            DoesFieldExist = True
-         End If
-
-         dbTbl.Dispose()
-         TransDB.Close()
-
-         If DoesFieldExist = True Then
+            ' Open connection to the database
             TransDB.Open()
-            Dim transDBCommand As System.Data.OleDb.OleDbCommand
-            transDBCommand = TransDB.CreateCommand()
-            transDBCommand.CommandText = "ALTER TABLE " & tblName & " DROP COLUMN " & fldName
-            transDBCommand.ExecuteNonQuery()
+            Dim dbTbl As New DataTable
+            Dim DoesFieldExist As Boolean
+            Dim tblName, fldName As String
+            tblName = "FisheryScalers"
+            fldName = "MarkSelectiveFlag"
+
+
+            ' Get the table definition loaded in a table adapter
+            Dim strSql As String = "Select TOP 1 * from " & tblName
+            Dim dbAdapater As New System.Data.OleDb.OleDbDataAdapter(strSql, TransDB)
+            dbAdapater.Fill(dbTbl)
+
+            ' Get the index of the field name
+            Dim i As Integer = dbTbl.Columns.IndexOf(fldName)
+
+            If i = -1 Then
+                'Field is missing
+                DoesFieldExist = False
+            Else
+                'Field is there
+                DoesFieldExist = True
+            End If
+
+            dbTbl.Dispose()
             TransDB.Close()
-         End If
-         '==============================================================================================
 
-         '==============================================================================================
-         '- (Pete 12/13) Part II.  Code that creates the Target Sublegal:Legal Ratio (SLRatio) 
-         '- and run-specific sublegal encounter rate adjustment (RunEncounterRateAdjustment) tables
-         '- needed to use external sublegals in the transfer database
+            If DoesFieldExist = True Then
+                TransDB.Open()
+                Dim transDBCommand As System.Data.OleDb.OleDbCommand
+                transDBCommand = TransDB.CreateCommand()
+                transDBCommand.CommandText = "ALTER TABLE " & tblName & " DROP COLUMN " & fldName
+                transDBCommand.ExecuteNonQuery()
+                TransDB.Close()
+            End If
+            '==============================================================================================
 
-         Dim sql As String       'SQL Query text string
-         sql = "CREATE TABLE SLRatio (RunID INTEGER,FisheryID INTEGER,Age INTEGER,TimeStep INTEGER,TargetRatio DOUBLE,RunEncounterRateAdjustment DOUBLE, UpdateWhen DATETIME, UpdateBy VARCHAR(255))"
-         'create a command
-         Dim my_Command1 As New System.Data.OleDb.OleDbCommand(sql, TransDB)
-         TransDB.Open()
-         'command execute
-         my_Command1.ExecuteNonQuery()
-         TransDB.Close()
+            '==============================================================================================
+            '- (Pete 12/13) Part II.  Code that creates the Target Sublegal:Legal Ratio (SLRatio) 
+            '- and run-specific sublegal encounter rate adjustment (RunEncounterRateAdjustment) tables
+            '- needed to use external sublegals in the transfer database
 
-         '==============================================================================================
+            Dim sql As String       'SQL Query text string
+            sql = "CREATE TABLE SLRatio (RunID INTEGER,FisheryID INTEGER,Age INTEGER,TimeStep INTEGER,TargetRatio DOUBLE,RunEncounterRateAdjustment DOUBLE, UpdateWhen DATETIME, UpdateBy VARCHAR(255))"
+            'create a command
+            Dim my_Command1 As New System.Data.OleDb.OleDbCommand(sql, TransDB)
+            TransDB.Open()
+            'command execute
+            my_Command1.ExecuteNonQuery()
+            TransDB.Close()
+
+            '==============================================================================================
 
 
 
-         Me.Cursor = Cursors.WaitCursor
-         Call TransferModelRunTables()
-         Me.Cursor = Cursors.Default
-         Me.Visible = True
-      Else
-            MsgBox("Can't find NewModelRunTransfer3.MDB file in Current Directory!" & vbCrLf & "Please Make Copy before Model Run Transfer", MsgBoxStyle.OkOnly)
-         Exit Sub
-      End If
-      Me.Cursor = Cursors.Default
+            Me.Cursor = Cursors.WaitCursor
+            Call TransferModelRunTables()
+            Me.Cursor = Cursors.Default
+            Me.Visible = True
+        Else
+            MsgBox("Can't find NewModelRunTransfer.MDB file in Current Directory!" & vbCrLf & "Please Make Copy before Model Run Transfer", MsgBoxStyle.OkOnly)
+            Exit Sub
+        End If
+        Me.Cursor = Cursors.Default
 
-   End Sub
+    End Sub
 
    Private Sub GetModelRunButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles GetModelRunButton.Click
       Dim NewTransferDB As String
@@ -740,5 +760,9 @@ NewName:
         End If
         Me.Visible = True
         Me.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub OpenFileDialog1_FileOk(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles OpenTransferModelRunFileDialog.FileOk
+
     End Sub
 End Class

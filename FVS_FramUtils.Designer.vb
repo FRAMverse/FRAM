@@ -43,6 +43,7 @@ Partial Class FVS_FramUtils
         Me.btn_Chin2s3s = New System.Windows.Forms.Button
         Me.GetBPTransferBtn = New System.Windows.Forms.Button
         Me.TransferBPBtn = New System.Windows.Forms.Button
+        Me.OpenTransferModelRunFileDialog = New System.Windows.Forms.OpenFileDialog
         Me.SuspendLayout()
         '
         'FUTitle
@@ -51,7 +52,7 @@ Partial Class FVS_FramUtils
         Me.FUTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FUTitle.Location = New System.Drawing.Point(344, 18)
         Me.FUTitle.Name = "FUTitle"
-        Me.FUTitle.Size = New System.Drawing.Size(140, 24)
+        Me.FUTitle.Size = New System.Drawing.Size(179, 29)
         Me.FUTitle.TabIndex = 0
         Me.FUTitle.Text = "FRAM Utilities"
         '
@@ -176,7 +177,7 @@ Partial Class FVS_FramUtils
         Me.RecordSetNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetNameLabel.Location = New System.Drawing.Point(155, 711)
         Me.RecordSetNameLabel.Name = "RecordSetNameLabel"
-        Me.RecordSetNameLabel.Size = New System.Drawing.Size(121, 17)
+        Me.RecordSetNameLabel.Size = New System.Drawing.Size(140, 20)
         Me.RecordSetNameLabel.TabIndex = 30
         Me.RecordSetNameLabel.Text = "recordset name"
         '
@@ -187,7 +188,7 @@ Partial Class FVS_FramUtils
         Me.DatabaseNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseNameLabel.Location = New System.Drawing.Point(155, 677)
         Me.DatabaseNameLabel.Name = "DatabaseNameLabel"
-        Me.DatabaseNameLabel.Size = New System.Drawing.Size(119, 17)
+        Me.DatabaseNameLabel.Size = New System.Drawing.Size(136, 20)
         Me.DatabaseNameLabel.TabIndex = 29
         Me.DatabaseNameLabel.Text = "database name"
         '
@@ -197,7 +198,7 @@ Partial Class FVS_FramUtils
         Me.RecordSetTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetTextLabel.Location = New System.Drawing.Point(72, 711)
         Me.RecordSetTextLabel.Name = "RecordSetTextLabel"
-        Me.RecordSetTextLabel.Size = New System.Drawing.Size(67, 13)
+        Me.RecordSetTextLabel.Size = New System.Drawing.Size(84, 17)
         Me.RecordSetTextLabel.TabIndex = 28
         Me.RecordSetTextLabel.Text = "RecordSet"
         '
@@ -207,7 +208,7 @@ Partial Class FVS_FramUtils
         Me.DatabaseTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseTextLabel.Location = New System.Drawing.Point(72, 677)
         Me.DatabaseTextLabel.Name = "DatabaseTextLabel"
-        Me.DatabaseTextLabel.Size = New System.Drawing.Size(61, 13)
+        Me.DatabaseTextLabel.Size = New System.Drawing.Size(77, 17)
         Me.DatabaseTextLabel.TabIndex = 27
         Me.DatabaseTextLabel.Text = "Database"
         '
@@ -255,6 +256,10 @@ Partial Class FVS_FramUtils
         Me.TransferBPBtn.Text = "Transfer Base Period"
         Me.TransferBPBtn.UseVisualStyleBackColor = False
         '
+        'OpenTransferModelRunFileDialog
+        '
+        Me.OpenTransferModelRunFileDialog.FileName = "OpenFileDialog1"
+        '
         'FVS_FramUtils
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -287,25 +292,26 @@ Partial Class FVS_FramUtils
         Me.PerformLayout()
 
     End Sub
-   Friend WithEvents FUTitle As System.Windows.Forms.Label
-   Friend WithEvents RecSetInfoButton As System.Windows.Forms.Button
-   Friend WithEvents ReadCmdButton As System.Windows.Forms.Button
-   Friend WithEvents ReadOUTFileButton As System.Windows.Forms.Button
-   Friend WithEvents FUExitButton As System.Windows.Forms.Button
-   Friend WithEvents CMDFileDialog As System.Windows.Forms.OpenFileDialog
-   Friend WithEvents DelRecSetButton As System.Windows.Forms.Button
-   Friend WithEvents DeleteBPButton As System.Windows.Forms.Button
-   Friend WithEvents CopyRecordsetButton As System.Windows.Forms.Button
-   Friend WithEvents ReadTaaEtrsButton As System.Windows.Forms.Button
-   Friend WithEvents TransferModelRunButton As System.Windows.Forms.Button
-   Friend WithEvents GetModelRunButton As System.Windows.Forms.Button
-   Friend WithEvents RecordSetNameLabel As System.Windows.Forms.Label
-   Friend WithEvents DatabaseNameLabel As System.Windows.Forms.Label
-   Friend WithEvents RecordSetTextLabel As System.Windows.Forms.Label
-   Friend WithEvents DatabaseTextLabel As System.Windows.Forms.Label
-   Friend WithEvents MDBSaveFileDialog As System.Windows.Forms.SaveFileDialog
-   Friend WithEvents CoweemanButton As System.Windows.Forms.Button
+    Friend WithEvents FUTitle As System.Windows.Forms.Label
+    Friend WithEvents RecSetInfoButton As System.Windows.Forms.Button
+    Friend WithEvents ReadCmdButton As System.Windows.Forms.Button
+    Friend WithEvents ReadOUTFileButton As System.Windows.Forms.Button
+    Friend WithEvents FUExitButton As System.Windows.Forms.Button
+    Friend WithEvents CMDFileDialog As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents DelRecSetButton As System.Windows.Forms.Button
+    Friend WithEvents DeleteBPButton As System.Windows.Forms.Button
+    Friend WithEvents CopyRecordsetButton As System.Windows.Forms.Button
+    Friend WithEvents ReadTaaEtrsButton As System.Windows.Forms.Button
+    Friend WithEvents TransferModelRunButton As System.Windows.Forms.Button
+    Friend WithEvents GetModelRunButton As System.Windows.Forms.Button
+    Friend WithEvents RecordSetNameLabel As System.Windows.Forms.Label
+    Friend WithEvents DatabaseNameLabel As System.Windows.Forms.Label
+    Friend WithEvents RecordSetTextLabel As System.Windows.Forms.Label
+    Friend WithEvents DatabaseTextLabel As System.Windows.Forms.Label
+    Friend WithEvents MDBSaveFileDialog As System.Windows.Forms.SaveFileDialog
+    Friend WithEvents CoweemanButton As System.Windows.Forms.Button
     Friend WithEvents btn_Chin2s3s As System.Windows.Forms.Button
     Friend WithEvents GetBPTransferBtn As System.Windows.Forms.Button
     Friend WithEvents TransferBPBtn As System.Windows.Forms.Button
+    Friend WithEvents OpenTransferModelRunFileDialog As System.Windows.Forms.OpenFileDialog
 End Class
