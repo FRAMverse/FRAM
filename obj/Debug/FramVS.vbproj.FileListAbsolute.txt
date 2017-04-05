@@ -1310,3 +1310,8 @@ C:\data\FramVS\program\FRAM GIT Repository\obj\Debug\FramVS.FVS_StockFisheryScal
 C:\data\FramVS\program\FRAM GIT Repository\obj\Debug\FramVS.vbproj.GenerateResource.Cache
 C:\data\FramVS\program\FRAM GIT Repository\obj\Debug\FramVS.exe.manifest
 C:\data\FramVS\program\FRAM GIT Repository\obj\Debug\FramVS.application
+C:\data\FramVS\program\FRAMGITRepository\bin\Debug\FramVS.exe.config
+C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.vbproj.ResolveComReference.cache
+C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.exe
+C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.xml
+C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.pdb

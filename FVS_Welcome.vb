@@ -5,7 +5,7 @@ Public Class FVS_Welcome
 
    Private Sub FVS_Welcome_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        FramVersion = "2.17"
+        FramVersion = "2.18"
       VersionLabel.Text = "Version " & FramVersion
       ReDim VersionNumberChanges(100)
       For Stk As Integer = 0 To 100
@@ -81,6 +81,7 @@ Public Class FVS_Welcome
         VersionNumberChanges(34) = "(2.17) standardize formatting and handling of decimal places for quotas, scalara, and NR; add a RunYear to RunID table"
         VersionNumberChanges(34) = "(2.17) update age 2 from 3 constants for the new base period in FRAMUtils\btn_Chin2s3s_Click "
         VersionNumberChanges(34) = "(2.17) prevent TAMM from overwriting modeling of Nooksack Earlies in B'ham Bay net; use BPER instead" 'AHB 3/15/17
+        VersionNumberChanges(35) = "(2.18) add comment columns to FishScalers and BkFRAM tables updated transfer routines to import and export new columns'AHB 4/5/17"
     End Sub
 
    Private Sub FVS_Continue_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles FVS_Continue.Click
