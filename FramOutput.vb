@@ -3721,7 +3721,7 @@ NextRepFishery:
       PSCFishery(103) = 24 '-Skag R Net	Skagit R Net
       PSCFishery(104) = 24 '-SkgR TsNet	Skagit River Test Net
       PSCFishery(105) = 24 '-SwinCh Net	Swinomish Channel Net
-      PSCFishery(106) = 22 '-Ar 8-1 Spt	WA Area 8.1 Sport (Everett)
+        PSCFishery(106) = 22 '-Ar 8-1 Spt	WA Area 8.1 Sport (Skagit)
       PSCFishery(107) = 22 '-Area 9 Spt	WA Area 9 Sport (Admirality Inlet)
       PSCFishery(108) = 24 '-Skag R Spt	Skagit R Sport
       PSCFishery(109) = 23 '-Ar8A NetNT	WA Area 8A Non-Treaty Net
@@ -3730,7 +3730,7 @@ NextRepFishery:
       PSCFishery(112) = 23 '-Ar8D NetTR	WA Area 8D Treaty Net (Tulalip Bay)
       PSCFishery(113) = 24 '-Stil R Net	Stillaguamish R Net
       PSCFishery(114) = 24 '-Snoh R Net	Snohomish R Net
-      PSCFishery(115) = 22 '-Ar 8-2 Spt	WA Area 8.2 Sport (Skagit Bay)
+        PSCFishery(115) = 22 '-Ar 8-2 Spt	WA Area 8.2 Sport (Everett)
       PSCFishery(116) = 24 '-Stil R Spt	Stillaguamish R Sport
       PSCFishery(117) = 24 '-Snoh R Spt	Snohomish R Sport
       PSCFishery(118) = 22 '-Ar 10  Spt	WA Area 10 Sport (Seattle)
