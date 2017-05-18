@@ -1,0 +1,29 @@
+[33mcommit b1e8ecf6fad6daa61bf6074a128a9fe72770ead3[m
+Author: Angelika Hagen-Breaux <hagenafh@dfw.wa.gov>
+Date:   Mon Apr 24 13:47:34 2017 -0700
+
+    no major changes-result of saving and testing
+    git log
+    git status
+    cd..
+    dir
+
+[33mcommit 902a553fd55b9d3d975bdd9c927e41ad112137f7[m
+Author: Angelika Hagen-Breaux <hagenafh@dfw.wa.gov>
+Date:   Wed Apr 5 12:08:37 2017 -0700
+
+    changed version number to 218
+
+[33mcommit a50eaa58610fa23fba5010a8f16441d20df1624a[m
+Author: Angelika <hagenafh@dfw.wa.gov>
+Date:   Thu Mar 30 16:56:24 2017 -0700
+
+    Added comment column to BkFRAM and FisheryScalers tables. Updated database transfer files to save and transfer additional columns.
+    
+    Signed-off-by: Angelika <hagenafh@dfw.wa.gov>
+
+[33mcommit 492ad45ba58194b0cfe8513c64398be6775e058d[m
+Author: Angelika <hagenafh@dfw.wa.gov>
+Date:   Mon Mar 27 11:51:40 2017 -0700
+
+    First commit

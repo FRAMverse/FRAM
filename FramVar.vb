@@ -254,7 +254,8 @@ Public Module FramVar
     Public SaveTermQuota(,) As Double
     Public SaveCoastalQuota(,) As Double
 
-   '- Backwards FRAM
+    '- Backwards FRAM
+    Public AgeTSCatch(,,) As Double
    Public BackwardsFRAMFlag As Integer
    Public BackwardsTarget() As Double
    Public BackwardsChinook(,) As Double

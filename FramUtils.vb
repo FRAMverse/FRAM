@@ -717,7 +717,8 @@ NewCohoOldFormat:
       Dim RIC As New OleDbCommand
       FramDB.Open()
       FramTrans = FramDB.BeginTransaction
-      RIC.Connection = FramDB
+        RIC.Connection = FramDB
+
       RIC.Transaction = FramTrans
         RIC.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate) " & _
             "VALUES(" & RunIDSelect.ToString & "," & _

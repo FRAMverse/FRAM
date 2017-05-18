@@ -519,6 +519,7 @@ NextStockRecruitr:
             If TRun = 61 Then
                 TRun = 61
             End If
+            'BackwardsFlag(TRun) = 4
 
             If BackwardsFlag(TRun) = 1 Or BackwardsFlag(TRun) = 3 Then '**Pete-Jul 2014** Also enter this block of code if flag = 3
                 '- Check if Combined Terminal Run
@@ -557,8 +558,8 @@ NextTSprAge:
                             Next Age
                         Else
                             '- All Other Stocks
-                            Stk1 = TermStockNum(TRun + 1)
-                            Stk2 = TermStockNum(TRun + 2)
+                            Stk1 = TermStockNum(TRun + 1) 'UM
+                            Stk2 = TermStockNum(TRun + 2) 'M
                             For Age As Integer = 3 To 5
                                 If BackwardsChinook(TRun, Age) = 0 Then
                                     GoTo NextTRunAge
@@ -762,7 +763,8 @@ NextTRun:
 
    Sub SumChinTermRun(ByVal TermRun As Integer, ByVal Stock As Integer, ByVal IterNumbr As Integer)
 
-      Dim StartNum, EndNum, TSum, I, J As Integer
+        Dim StartNum, EndNum, TSum, I, J As Integer
+        ReDim AgeTSCatch(NumChinTermRuns * 3, NumAge + 1, NumSteps)
       '   On Error GoTo BackChinSumErr
       On Error GoTo 0
       If Stock = -1 Then  '- Combined Terminal Run
@@ -798,17 +800,38 @@ NextTRun:
                             TermChinRun(J, Age) = TermChinRun(J, Age) + LandedCatch(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep)
                         Next TStep
                     Next I
-            Next Age
-         Next J
-      Else  '- Individual Stock Terminal Run
+
+                    'Sum catch over preterminal fisheries for a stock, age, and timestep
+                    For TStep = 1 To NumSteps - 1
+                        For Fish = 1 To NumFish - 2 ' exclude esc, fw net & Sport
+                            'if preterminal fishery
+                            Select Case Fish
+                                Case TFish(TSum, 2), TFish(TSum, 3), TFish(TSum, 4), TFish(TSum, 5), TFish(TSum, 6), TFish(TSum, 7), _
+                                    TFish(TSum, 8), TFish(TSum, 9), TFish(TSum, 10)
+                                    Select Case TStep
+                                        Case TTime(TSum, 1), TTime(TSum, 2)
+                                        Case Else
+                                            AgeTSCatch(Stk, Age, TStep) += LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) _
+                                         + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) - MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
+                                    End Select
+                                Case Else
+                                    AgeTSCatch(Stk, Age, TStep) += LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) _
+                                    + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) - MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
+                            End Select
+                        Next Fish
+                    Next TStep
+
+                Next Age
+            Next J
+        Else  '- Individual Stock Terminal Run
             Stk = Stock
-            
-         TSum = TermRunStock(Stock)
-         For Age As Integer = 3 To 5
-            '- Sum Escapement
-            For TStep As Integer = 1 To 3
-               TermChinRun(TermRun, Age) = TermChinRun(TermRun, Age) + Escape(Stk, Age, TStep)
-            Next TStep
+
+            TSum = TermRunStock(Stock)
+            For Age As Integer = 3 To 5
+                '- Sum Escapement
+                For TStep As Integer = 1 To 3
+                    TermChinRun(TermRun, Age) = TermChinRun(TermRun, Age) + Escape(Stk, Age, TStep)
+                Next TStep
                 ' - Sum Terminal Fishery Catches
                 For I = 2 To TFish(TSum, 1)
                     '- Loop through stock specific fisheries
@@ -817,8 +840,31 @@ NextTRun:
                         TermChinRun(TermRun, Age) = TermChinRun(TermRun, Age) + LandedCatch(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep)
                     Next TStep
                 Next I
-         Next Age
-      End If
+                'Sum catch over preterminal fisheries for a stock, age, and timestep
+                For TStep = 1 To NumSteps - 1
+                    For Fish = 1 To NumFish - 2 ' exclude esc, fw net & Sport
+                        'if preterminal fishery
+                        If Fish = 39 Then
+                            Jim = 1
+                        End If
+                        Select Case Fish
+                            Case TFish(TSum, 2), TFish(TSum, 3), TFish(TSum, 4), TFish(TSum, 5), TFish(TSum, 6), TFish(TSum, 7), _
+                                TFish(TSum, 8), TFish(TSum, 9), TFish(TSum, 10)
+                                Select Case TStep
+                                    Case TTime(TSum, 1), TTime(TSum, 2)
+                                    Case Else
+                                        AgeTSCatch(Stk, Age, TStep) += LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) _
+                                     + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) - MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
+                                End Select
+                            Case Else
+                                AgeTSCatch(Stk, Age, TStep) += LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) _
+                                + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) - MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
+                        End Select
+                    Next Fish
+                Next TStep
+
+            Next Age
+        End If
 
         If TermChinRun(TermRun, Age) < 0 Then
             Dim What As Integer
