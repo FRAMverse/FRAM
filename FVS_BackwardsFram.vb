@@ -819,7 +819,7 @@ NextTRun:
                 Next I
          Next Age
       End If
-
+        'Jim = 2
         If TermChinRun(TermRun, Age) < 0 Then
             Dim What As Integer
             What = 1
