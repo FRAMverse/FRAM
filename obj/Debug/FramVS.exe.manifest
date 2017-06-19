@@ -42,7 +42,7 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
-      <assemblyIdentity name="Microsoft.Vbe.Interop" version="14.0.0.0" publicKeyToken="71E9BCE111E9429C" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="Microsoft.Vbe.Interop" version="15.0.0.0" publicKeyToken="71E9BCE111E9429C" language="neutral" processorArchitecture="msil" />
     </dependentAssembly>
   </dependency>
   <dependency>
@@ -58,7 +58,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>DBuuF+5T4/fBe06gJlLCiIWh5FA=</dsig:DigestValue>
+        <dsig:DigestValue>/CsvIiPVQsp4TIOSYXQm2CJAZ1g=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
