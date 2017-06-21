@@ -276,6 +276,7 @@ Public Module FramVar
    Public SurvMultSp() As Double
     Public BackFramSave As Boolean
     Public TermCounter As Integer
+    Public TRun As Integer
     Public xvar As Integer
 
 

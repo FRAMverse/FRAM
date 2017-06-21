@@ -385,8 +385,9 @@ NextStockRecruitr:
          bfsw.WriteLine(PrnLine)
          bfsw.WriteLine(" ")
          PrnLine = "Stk# Age FRAM-TRS Target-TRS ScaleFactor Old-Scalar New-Scalar   Cohort"
-         bfsw.WriteLine(PrnLine)
+            bfsw.WriteLine(PrnLine)
 
+            ReDim AgeTSCatch(NumChinTermRuns * 3, NumAge + 1, NumSteps)
     '********************************************************
     '**Pete-Jul 2014** See full description of coding changes under Check_CHINOOK_TerminalRun()
     '   The goal wiht this block is simply to start the scalar at 1.0 for all stocks for the first pass.
@@ -484,7 +485,7 @@ NextStockRecruitr:
 
       Dim EscScaler, StartCohort, EscDiff, ERTotal, TRunSum As Double
       Dim ChinSurvMultTemp As Double 'Temporary survival multiplier to accomdate spring and fall stock multiplier differences
-      Dim TRun As Integer
+        'Dim TRun As Integer
       Dim Stk1, Stk2, Stk3, Stk4 As Integer
 
       'Pete Jul 2014 -- Code added to allow for exact terminal run target achievement for ALL stocks
@@ -513,143 +514,178 @@ NextStockRecruitr:
         End If
 
       ReDim TermChinRun(NumStk + NumChinTermRuns, 5)
+        If BackFRAMIteration = 1 Then
+            '- Sum Terminal Runs for Flagged Stocks (Combined or Individual)
+            For TRun = 1 To NumStk + NumChinTermRuns '(76 Stocks plus 37 Terminal Runs = 113)
 
-      '- Sum Terminal Runs for Flagged Stocks (Combined or Individual)
-        For TRun = 1 To NumStk + NumChinTermRuns '(76 Stocks plus 37 Terminal Runs = 113)
-            If TRun = 61 Then
-                TRun = 61
-            End If
-            'BackwardsFlag(TRun) = 4
+                If BackwardsFlag(TRun) = 2 Then
+                    '                For Age As Integer = 3 To 5
+                    '                    TermChinRun(TRun, Age) = 0
+                    '                Next Age '**Pete-Jul 2014** Also enter this block of code if flag = 3
+                    '                '- Check if Combined Terminal Run
+                    '                Call SumChinTermRun(TRun, -1, IterNum)
+                    '                '- Divide Combined Target into Stock Components for evaluation on First Pass
+                    '                If IterNum = 1 Then
+                    '                    If TermStockNum(TRun) = -2 Then '- Only Nooksack Spring has 4 stocks
+                    '                        Stk1 = TermStockNum(TRun + 1)
+                    '                        Stk2 = TermStockNum(TRun + 2)
+                    '                        Stk3 = TermStockNum(TRun + 3)
+                    '                        Stk4 = TermStockNum(TRun + 4)
+                    '                        For Age As Integer = 3 To 5
+                    '                            If BackwardsChinook(TRun, Age) = 0 Then
+                    '                                GoTo NextTSprAge
+                    '                            Else
+                    '                                If StockRecruit(Stk1, Age, 1) = 0 And StockRecruit(Stk2, Age, 1) = 0 And StockRecruit(Stk3, Age, 1) = 0 And StockRecruit(Stk4, Age, 1) = 0 Then
+                    '                                    '- StockRecruitrs Zero but Target is Not
+                    '                                    BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age) / 4
+                    '                                    BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age) / 4
+                    '                                    BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age) / 4
+                    '                                    BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age) / 4
+                    '                                    StockRecruit(Stk1, Age, 1) = 1
+                    '                                    StockRecruit(Stk2, Age, 1) = 1
+                    '                                    StockRecruit(Stk3, Age, 1) = 1
+                    '                                    StockRecruit(Stk4, Age, 1) = 1
+                    '                                Else
+                    '                                    '- Divide Target by Ratio of StockRecruitrs ... fix this 2 stocks 2 marks
+                    '                                    BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk1, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1) + StockRecruit(Stk3, Age, 1) + StockRecruit(Stk4, Age, 1)))
+                    '                                    BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk2, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1) + StockRecruit(Stk3, Age, 1) + StockRecruit(Stk4, Age, 1)))
+                    '                                    BackwardsChinook(TRun + 3, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk3, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1) + StockRecruit(Stk3, Age, 1) + StockRecruit(Stk4, Age, 1)))
+                    '                                    BackwardsChinook(TRun + 4, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk4, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1) + StockRecruit(Stk3, Age, 1) + StockRecruit(Stk4, Age, 1)))
+                    '                                End If
+                    '                            End If
+                    'NextTSprAge:
+                    '                        Next Age
+                    '                    Else
+                    '                        '- All Other Stocks
+                    '                        Stk1 = TermStockNum(TRun + 1) 'UM
+                    '                        Stk2 = TermStockNum(TRun + 2) 'M
+                    '                        For Age As Integer = 3 To 5
+                    '                            If BackwardsChinook(TRun, Age) = 0 Then
+                    '                                GoTo NextTRunAge
+                    '                            Else
+                    '                                If StockRecruit(Stk1, Age, 1) = 0 And StockRecruit(Stk2, Age, 1) = 0 Then
+                    '                                    '- StockRecruitrs Zero but Target is Not
+                    '                                    BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age) / 2
+                    '                                    BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age) / 2
+                    '                                    StockRecruit(Stk1, Age, 1) = 1
+                    '                                    StockRecruit(Stk2, Age, 1) = 1
+                    '                                ElseIf StockRecruit(Stk1, Age, 1) = 0 Then
+                    '                                    '- One StockRecruitr is Zero
+                    '                                    BackwardsChinook(TRun + 1, Age) = 0
+                    '                                    BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age)
+                    '                                ElseIf StockRecruit(Stk2, Age, 1) = 0 Then
+                    '                                    '- Other StockRecruitr is Zero
+                    '                                    BackwardsChinook(TRun + 2, Age) = 0
+                    '                                    BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age)
+                    '                                Else
+                    '                                    '- Divide Target by Ratio of StockRecruitrs
+                    '                                    BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk1, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1)))
+                    '                                    BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk2, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1)))
+                    '                                End If
+                    '                            End If
+                    'NextTRunAge:
+                    '                        Next Age
+                    '                    End If
+                    '                End If
+                    '                '- Skip over component stocks when terminal run is flagged (= 1)
+                    '                If TermStockNum(TRun) = -2 Then '- Only Nooksack Spring has 4 stocks
+                    '                    TRun = TRun + 4
+                    '                Else
+                    '                    TRun = TRun + 2
+                    '                End If
 
-            If BackwardsFlag(TRun) = 1 Or BackwardsFlag(TRun) = 3 Then '**Pete-Jul 2014** Also enter this block of code if flag = 3
-                '- Check if Combined Terminal Run
-                If TermStockNum(TRun) < 0 Then  '- Term Runs nums are negative
-                    Call SumChinTermRun(TRun, -1, IterNum)
-                    '- Divide Combined Target into Stock Components for evaluation on First Pass
-                    If IterNum = 1 Then
-                        If TermStockNum(TRun) = -2 Then '- Only Nooksack Spring has 4 stocks
-                            Stk1 = TermStockNum(TRun + 1)
-                            Stk2 = TermStockNum(TRun + 2)
-                            Stk3 = TermStockNum(TRun + 3)
-                            Stk4 = TermStockNum(TRun + 4)
-                            For Age As Integer = 3 To 5
-                                If BackwardsChinook(TRun, Age) = 0 Then
-                                    GoTo NextTSprAge
-                                Else
-                                    If StockRecruit(Stk1, Age, 1) = 0 And StockRecruit(Stk2, Age, 1) = 0 And StockRecruit(Stk3, Age, 1) = 0 And StockRecruit(Stk4, Age, 1) = 0 Then
-                                        '- StockRecruitrs Zero but Target is Not
-                                        BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age) / 4
-                                        BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age) / 4
-                                        BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age) / 4
-                                        BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age) / 4
-                                        StockRecruit(Stk1, Age, 1) = 1
-                                        StockRecruit(Stk2, Age, 1) = 1
-                                        StockRecruit(Stk3, Age, 1) = 1
-                                        StockRecruit(Stk4, Age, 1) = 1
-                                    Else
-                                        '- Divide Target by Ratio of StockRecruitrs ... fix this 2 stocks 2 marks
-                                        BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk1, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1) + StockRecruit(Stk3, Age, 1) + StockRecruit(Stk4, Age, 1)))
-                                        BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk2, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1) + StockRecruit(Stk3, Age, 1) + StockRecruit(Stk4, Age, 1)))
-                                        BackwardsChinook(TRun + 3, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk3, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1) + StockRecruit(Stk3, Age, 1) + StockRecruit(Stk4, Age, 1)))
-                                        BackwardsChinook(TRun + 4, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk4, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1) + StockRecruit(Stk3, Age, 1) + StockRecruit(Stk4, Age, 1)))
-                                    End If
-                                End If
-NextTSprAge:
-                            Next Age
-                        Else
-                            '- All Other Stocks
-                            Stk1 = TermStockNum(TRun + 1) 'UM
-                            Stk2 = TermStockNum(TRun + 2) 'M
-                            For Age As Integer = 3 To 5
-                                If BackwardsChinook(TRun, Age) = 0 Then
-                                    GoTo NextTRunAge
-                                Else
-                                    If StockRecruit(Stk1, Age, 1) = 0 And StockRecruit(Stk2, Age, 1) = 0 Then
-                                        '- StockRecruitrs Zero but Target is Not
-                                        BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age) / 2
-                                        BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age) / 2
-                                        StockRecruit(Stk1, Age, 1) = 1
-                                        StockRecruit(Stk2, Age, 1) = 1
-                                    ElseIf StockRecruit(Stk1, Age, 1) = 0 Then
-                                        '- One StockRecruitr is Zero
-                                        BackwardsChinook(TRun + 1, Age) = 0
-                                        BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age)
-                                    ElseIf StockRecruit(Stk2, Age, 1) = 0 Then
-                                        '- Other StockRecruitr is Zero
-                                        BackwardsChinook(TRun + 2, Age) = 0
-                                        BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age)
-                                    Else
-                                        '- Divide Target by Ratio of StockRecruitrs
-                                        BackwardsChinook(TRun + 1, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk1, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1)))
-                                        BackwardsChinook(TRun + 2, Age) = BackwardsChinook(TRun, Age) * (StockRecruit(Stk2, Age, 1) / (StockRecruit(Stk1, Age, 1) + StockRecruit(Stk2, Age, 1)))
-                                    End If
-                                End If
-NextTRunAge:
-                            Next Age
+                    '****************************************************Start Flag 1 here
+                ElseIf BackwardsFlag(TRun) = 1 Then 'individual stock with flag 1 
+                    Stk = TermStockNum(TRun)
+                    'initialize recruit scalars during first pass; use existing scalars or 1
+                    'If BackFRAMIteration = 1 Then
+                    For Age = 3 To 5
+                        If BackwardsChinook(TRun, Age) <> 0 Then
+                            If StockRecruit(Stk, Age, 1) = 0 Then 'target abundance but no recruit scalar in model run
+                                StockRecruit(Stk, Age, 1) = 1
+                            End If
+                        Else ' no run size target 
+                            StockRecruit(Stk, Age, 1) = 0
                         End If
-                    End If
-                    '- Skip over component stocks when terminal run is flagged (= 1)
-                    If TermStockNum(TRun) = -2 Then '- Only Nooksack Spring has 4 stocks
-                        TRun = TRun + 4
-                    Else
-                        TRun = TRun + 2
-                    End If
-                Else
-                    Call SumChinTermRun(TRun, TermStockNum(TRun), IterNum)
-                End If
-            ElseIf BackwardsFlag(TRun) <> 3 Or BackwardsFlag(TRun) <> 1 Then
-                For Age As Integer = 3 To 5
-                    TermChinRun(TRun, Age) = 0
-                Next Age
-            End If
-        Next TRun
+                    Next Age
+                    ' Call RunCalcs()
+                    'Call SumChinTermRun(TRun, TermStockNum(TRun), IterNum)
+                ElseIf BackFRAMIteration = 2 Or BackFRAMIteration = 4 Or BackFRAMIteration = 6 Then
+                    'use calcualted method to quickly bring terminal run sizes in line with target
+                    For Age = 3 To 5
+                        StockRecruit(Stk, Age, 1) = (BackwardsChinook(TRun, Age) + (AgeTSCatch(Stk, Age, 1) * MaturationRate(Stk, Age, 1) + (AgeTSCatch(Stk, Age, 1) * _
+                                                    (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) + AgeTSCatch(Stk, Age, 2)) * _
+                                                    MaturationRate(Stk, Age, 2) + ((AgeTSCatch(Stk, Age, 1) * (1 - MaturationRate(Stk, Age, 1)) * _
+                                                    (1 - NaturalMortality(Age, 2)) + AgeTSCatch(Stk, Age, 2)) * (1 - MaturationRate(Stk, Age, 2)) * _
+                                                    (1 - NaturalMortality(Age, 3)) + AgeTSCatch(Stk, Age, 3)) * MaturationRate(Stk, Age, 3))) / _
+                                                    ((1 - NaturalMortality(Age, 1)) * MaturationRate(Stk, Age, 1) + (1 - NaturalMortality(Age, 1)) * _
+                                                    (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) * MaturationRate(Stk, Age, 2) + _
+                                                    (1 - NaturalMortality(Age, 1)) * (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) * _
+                                                    (1 - MaturationRate(Stk, Age, 2)) * (1 - NaturalMortality(Age, 3)) * MaturationRate(Stk, Age, 3)) / _
+                                                    BaseCohortSize(Stk, Age)
+                    Next Age
 
-      For TRun = 1 To NumStk + NumChinTermRuns
-         If TermStockNum(TRun) < 0 Then GoTo NextTRun '- skip combined Term Runs
-         TRunSum = TermChinRun(TRun, 3) + TermChinRun(TRun, 4) + TermChinRun(TRun, 5)
-         If TRunSum <> 0 Then
+
+
+
+
+
+
+
+
+                Else 'flag = 0; use existing recruit scalars
+                    For Age As Integer = 3 To 5
+                        TermChinRun(TRun, Age) = 0
+                    Next Age
+                End If
+            Next TRun
+        End If
+        For TRun = 1 To NumStk + NumChinTermRuns
+            If TermStockNum(TRun) < 0 Then GoTo NextTRun '- skip combined Term Runs
+            TRunSum = TermChinRun(TRun, 3) + TermChinRun(TRun, 4) + TermChinRun(TRun, 5)
+            If TRunSum <> 0 Then
                 Stk = TermStockNum(TRun)
-                If Stk = 38 Then
-                    Stk = 38
+                If TRun = 2 Then
+                    Jim = 1
                 End If
-                
-            '- Check Terminal Runs against Target Values and ReSet Stock Recruit Scalers
-            For Age As Integer = 3 To 5
-               '- Output Report
-               If Age <> 2 Then
-                  PrnLine = String.Format("{0,4}", Stk.ToString("###0"))
-                  PrnLine &= String.Format("{0,3}", Age.ToString("##0"))
-                  PrnLine &= String.Format("{0,8}", CLng(TermChinRun(TRun, Age)).ToString("#######0"))
-                  PrnLine &= String.Format("{0,8}", CLng(BackwardsChinook(TRun, Age)).ToString("#######0"))
-                  If TermChinRun(TRun, Age) <> 0 Then
-                     PrnLine &= String.Format("{0,10}", (BackwardsChinook(TRun, Age) / TermChinRun(TRun, Age)).ToString("####0.0000"))
-                  Else
-                     PrnLine &= "         - "
-                  End If
-                  PrnLine &= String.Format("{0,11}", StockRecruit(Stk, Age, 1).ToString("###0.0000  "))
-               End If
 
-               '- Save old scalers and Term Runs
-               BackChinScaler(TRun, Age, IterNum) = StockRecruit(Stk, Age, 1)
-               BackChinEsc(TRun, Age, IterNum) = TermChinRun(TRun, Age)
+                '- Check Terminal Runs against Target Values and ReSet Stock Recruit Scalers
+                For Age As Integer = 3 To 5
+                    '- Output Report
+                    If Age <> 2 Then
+                        PrnLine = String.Format("{0,4}", Stk.ToString("###0"))
+                        PrnLine &= String.Format("{0,3}", Age.ToString("##0"))
+                        PrnLine &= String.Format("{0,8}", CLng(TermChinRun(TRun, Age)).ToString("#######0"))
+                        PrnLine &= String.Format("{0,8}", CLng(BackwardsChinook(TRun, Age)).ToString("#######0"))
+                        If TermChinRun(TRun, Age) <> 0 Then
+                            PrnLine &= String.Format("{0,10}", (BackwardsChinook(TRun, Age) / TermChinRun(TRun, Age)).ToString("####0.0000"))
+                        Else
+                            PrnLine &= "         - "
+                        End If
+                        PrnLine &= String.Format("{0,11}", StockRecruit(Stk, Age, 1).ToString("###0.0000  "))
+                    End If
 
-               'InitialCohort = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
-               '- Reset Stock Scalers
-               If BaseCohortSize(Stk, Age) = 0 Then
-                  StockRecruit(Stk, Age, 1) = 0
-               Else
-                  If IterNum > 1 Then
-                     '- Reset Zero Stocks to Zero (TAMM Effects)
-                     If BackChinScaler(TRun, Age, IterNum - 1) = 0 Then
+                    '- Save old scalers and Term Runs
+                    BackChinScaler(TRun, Age, IterNum) = StockRecruit(Stk, Age, 1)
+                    BackChinEsc(TRun, Age, IterNum) = TermChinRun(TRun, Age)
+
+                    'InitialCohort = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
+                    '- Reset Stock Scalers
+                    If BaseCohortSize(Stk, Age) = 0 Then
                         StockRecruit(Stk, Age, 1) = 0
-                        GoTo NextChinScaler
-                     End If
-                  End If
+                    Else
+                        If IterNum > 1 Then
+                            '- Reset Zero Stocks to Zero (TAMM Effects)
+                            If BackChinScaler(TRun, Age, IterNum - 1) = 0 Then
+                                StockRecruit(Stk, Age, 1) = 0
+                                GoTo NextChinScaler
+                            End If
+                        End If
 
-                  If TermChinRun(TRun, Age) < 0 Then
-                     '- Increase Scalar when Terminal Run is negative
-                     If IterNum = 1 Then
-                        StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
+                        If TermChinRun(TRun, Age) < 0 Then
+                            '- Increase Scalar when Terminal Run is negative
+                            If IterNum = 1 Then
+                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
                             Else
                                 If Stk = 38 Then
                                     Stk = 38
@@ -663,135 +699,150 @@ NextTRunAge:
                                         StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
                                     End If
                                 End If
-                     End If
-                  Else
-                     '- Increase Cohort Size by Term Run Difference times Survival Rate
-                     If StockRecruit(Stk, Age, 1) <> 0 And BackwardsChinook(TRun, Age) <> 0 Then
-                        StartCohort = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
-                        EscDiff = BackwardsChinook(TRun, Age) - TermChinRun(TRun, Age)
-                        PeteScale = BackwardsChinook(TRun, Age) / TermChinRun(TRun, Age) '**Pete-Jul 2014** Compute adjustment factor
-                        If TermChinRun(TRun, Age) < 0 Then 'Special case where negative escapement/T-run is achieved.
-                            PeteScale = 1.5
-                        End If
-                        If Stk = 34 And Age = 5 Then
-                            Dim whazzup As Integer = 5
-                        End If
-                        PeteSclTemp = StockRecruit(Stk, Age, 1) '**Pete-Jul 2014** Temporarily store Recruit Scalar from last pass
-
-                        '- Non-Selective Base Period MatRates
-                        If NumStk = 33 Or NumStk = 38 Then
-                           If Stk >= 25 And Stk <= 26 Then  '- Spring Stocks mature in Time 1
-                              TStep = 1
-                              ChinSurvMultTemp = ChinSurvMult(Age) 'Pete Jul 2014 - fix to address different NM for spring vs. fall stocks (mature timestep-driven)
-                           Else
-                              TStep = 3
-                              ChinSurvMultTemp = ChinSurvMult(Age) 'Pete Jul 2014 - fix to address different NM for spring vs. fall stocks (mature timestep-driven)
-                           End If
-                        Else
-                           If Stk >= 49 And Stk <= 52 Then  '- Spring Stocks mature in Time 1
-                              TStep = 1
-                              ChinSurvMultTemp = ChinSurvMult(Age) 'Pete Jul 2014 - fix to address different NM for spring vs. fall stocks (mature timestep-driven)
-                           Else
-                              TStep = 3
-                              ChinSurvMultTemp = ChinSurvMult(Age) 'Pete Jul 2014 - fix to address different NM for spring vs. fall stocks (mature timestep-driven)
-                           End If
-                        End If
-                        ERTotal = (TermChinRun(TRun, Age) / MaturationRate(Stk, Age, TStep)) / StartCohort
-                        '- Check if estimates are completely out of expected range
-                        If StartCohort < Math.Abs(EscDiff / MaturationRate(Stk, Age, TStep) * (ChinSurvMultTemp + ERTotal)) Then
-                           '- Check for Negative Scaler
-                           If IterNum = 1 Then
-                              If EscDiff > 0 Then
-                                 StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.5
-                              Else
-                                 StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 2
-                              End If
-                           Else
-                              If EscDiff > 0 Then
-                                 If StockRecruit(Stk, Age, 1) < 1 Then
-                                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsChinook(TRun, Age) / TermChinRun(TRun, Age))
-                                 Else
-                                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.3
-                                 End If
-                              Else
-                                 If StockRecruit(Stk, Age, 1) > 2 Then
-                                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsChinook(TRun, Age) / TermChinRun(TRun, Age))
-                                 Else
-                                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 1.8
-                                 End If
-                              End If
-                           End If
-                        Else
-                                    '- Normal Scaling  ********** Main Algorithm of Original Packer Method
-                           StockRecruit(Stk, Age, 1) = (StartCohort + (EscDiff / MaturationRate(Stk, Age, TStep) * (ChinSurvMultTemp + ERTotal))) / BaseCohortSize(Stk, Age)
-
-                            '**Pete-Jul 2014** Enter here and compute using 'brute force' method if flag = 3
-                            If BackwardsFlag(TRun) = 3 Then
-                                StockRecruit(Stk, Age, 1) = PeteScale * PeteSclTemp
                             End If
+                        Else
+                            '- Increase Cohort Size by Term Run Difference times Survival Rate
+                            If StockRecruit(Stk, Age, 1) <> 0 And BackwardsChinook(TRun, Age) <> 0 Then
+                                StartCohort = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
+                                EscDiff = BackwardsChinook(TRun, Age) - TermChinRun(TRun, Age)
+                                PeteScale = BackwardsChinook(TRun, Age) / TermChinRun(TRun, Age) '**Pete-Jul 2014** Compute adjustment factor
+                                If TermChinRun(TRun, Age) < 0 Then 'Special case where negative escapement/T-run is achieved.
+                                    PeteScale = 1.5
+                                End If
+                                If Stk = 34 And Age = 5 Then
+                                    Dim whazzup As Integer = 5
+                                End If
+                                PeteSclTemp = StockRecruit(Stk, Age, 1) '**Pete-Jul 2014** Temporarily store Recruit Scalar from last pass
 
+                                '- Non-Selective Base Period MatRates
+                                If NumStk = 33 Or NumStk = 38 Then
+                                    If Stk >= 25 And Stk <= 26 Then  '- Spring Stocks mature in Time 1
+                                        TStep = 1
+                                        ChinSurvMultTemp = ChinSurvMult(Age) 'Pete Jul 2014 - fix to address different NM for spring vs. fall stocks (mature timestep-driven)
+                                    Else
+                                        TStep = 3
+                                        ChinSurvMultTemp = ChinSurvMult(Age) 'Pete Jul 2014 - fix to address different NM for spring vs. fall stocks (mature timestep-driven)
+                                    End If
+                                Else
+                                    If Stk >= 49 And Stk <= 52 Then  '- Spring Stocks mature in Time 1
+                                        TStep = 1
+                                        ChinSurvMultTemp = ChinSurvMult(Age) 'Pete Jul 2014 - fix to address different NM for spring vs. fall stocks (mature timestep-driven)
+                                    Else
+                                        TStep = 3
+                                        ChinSurvMultTemp = ChinSurvMult(Age) 'Pete Jul 2014 - fix to address different NM for spring vs. fall stocks (mature timestep-driven)
+                                    End If
+                                End If
+                                ERTotal = (TermChinRun(TRun, Age) / MaturationRate(Stk, Age, TStep)) / StartCohort
+                                '- Check if estimates are completely out of expected range
+                                'If StartCohort < Math.Abs(EscDiff / MaturationRate(Stk, Age, TStep) * (ChinSurvMultTemp + ERTotal)) Then
+                                '   '- Check for Negative Scaler
+                                '   If IterNum = 1 Then
+                                '      If EscDiff > 0 Then
+                                '         StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.5
+                                '      Else
+                                '         StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 2
+                                '      End If
+                                '   Else
+                                '      If EscDiff > 0 Then
+                                '         If StockRecruit(Stk, Age, 1) < 1 Then
+                                '            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsChinook(TRun, Age) / TermChinRun(TRun, Age))
+                                '         Else
+                                '            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.3
+                                '         End If
+                                '      Else
+                                '         If StockRecruit(Stk, Age, 1) > 2 Then
+                                '            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsChinook(TRun, Age) / TermChinRun(TRun, Age))
+                                '         Else
+                                '            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 1.8
+                                '         End If
+                                '      End If
+                                '   End If
+                                'Else
+                                'If (IterNum Mod 2) = 0 Then
+                                '- Normal Scaling  ********** Main Algorithm of Original Packer Method
+                                StockRecruit(Stk, Age, 1) = (StartCohort + (EscDiff / MaturationRate(Stk, Age, TStep) * (ChinSurvMultTemp + ERTotal))) / BaseCohortSize(Stk, Age)
 
+                                If BackwardsFlag(TRun) = 3 Then
+                                    Select Case IterNum
+                                        Case 1, 3, 5
+                                            '****Angelika June 2017 ** solve achieving BKTarget while addressing maturation in more than one time step and problems with large intercepts
+                                            If BackwardsFlag(TRun) = 3 Then
+                                                StockRecruit(Stk, Age, 1) = (BackwardsChinook(TRun, Age) + (AgeTSCatch(Stk, Age, 1) * MaturationRate(Stk, Age, 1) + (AgeTSCatch(Stk, Age, 1) * _
+                                                (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) + AgeTSCatch(Stk, Age, 2)) * _
+                                                MaturationRate(Stk, Age, 2) + ((AgeTSCatch(Stk, Age, 1) * (1 - MaturationRate(Stk, Age, 1)) * _
+                                                (1 - NaturalMortality(Age, 2)) + AgeTSCatch(Stk, Age, 2)) * (1 - MaturationRate(Stk, Age, 2)) * _
+                                                (1 - NaturalMortality(Age, 3)) + AgeTSCatch(Stk, Age, 3)) * MaturationRate(Stk, Age, 3))) / _
+                                                ((1 - NaturalMortality(Age, 1)) * MaturationRate(Stk, Age, 1) + (1 - NaturalMortality(Age, 1)) * _
+                                                (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) * MaturationRate(Stk, Age, 2) + _
+                                                (1 - NaturalMortality(Age, 1)) * (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) * _
+                                                (1 - MaturationRate(Stk, Age, 2)) * (1 - NaturalMortality(Age, 3)) * MaturationRate(Stk, Age, 3)) / _
+                                                BaseCohortSize(Stk, Age)
+                                                'End If
+                                            End If
+                                        Case Else
+                                            '**Pete-Jul 2014** Enter here and compute using 'brute force' method if flag = 3
+                                            StockRecruit(Stk, Age, 1) = PeteScale * PeteSclTemp
+                                    End Select
+                                End If
+
+                            ElseIf BackwardsChinook(TRun, Age) <> 0 And StockRecruit(Stk, Age, 1) = 0 Then
+                                '- Target Esc > zero and StkSclr = 0 change SS to one
+                                StockRecruit(Stk, Age, 1) = 1
+                            ElseIf BackwardsChinook(TRun, Age) = 0 And StockRecruit(Stk, Age, 1) <> 0 Then
+                                '- Target Esc = zero and StkSclr <> 0 change SS to zero
+                                StockRecruit(Stk, Age, 1) = 0
+                            End If
+                            'NewStkSize = ((Cohort(Stk, Age, 0, 1) / 0.882496) + ((BackwardsChinook(TRun, Age) - TermChinRun(TRun, Age)) * 1.22892))
+                            'OldStkSize = Cohort(Stk, Age, 0, 1) / 0.882496
                         End If
-
-
-
-                     ElseIf BackwardsChinook(TRun, Age) <> 0 And StockRecruit(Stk, Age, 1) = 0 Then
-                        '- Target Esc > zero and StkSclr = 0 change SS to one
-                        StockRecruit(Stk, Age, 1) = 1
-                     ElseIf BackwardsChinook(TRun, Age) = 0 And StockRecruit(Stk, Age, 1) <> 0 Then
-                        '- Target Esc = zero and StkSclr <> 0 change SS to zero
-                        StockRecruit(Stk, Age, 1) = 0
-                     End If
-                     'NewStkSize = ((Cohort(Stk, Age, 0, 1) / 0.882496) + ((BackwardsChinook(TRun, Age) - TermChinRun(TRun, Age)) * 1.22892))
-                     'OldStkSize = Cohort(Stk, Age, 0, 1) / 0.882496
-                  End If
-               End If
+                    End If
 NextChinScaler:
-               PrnLine &= String.Format("{0,11}", StockRecruit(Stk, Age, 1).ToString("###0.0000  "))
-               'Print #22, Format(Format(StartCohort, "########0"), "@@@@@@@@@  ");
-               PrnLine &= String.Format("{0,9}", (BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)).ToString("########0"))
-               PrnLine &= StockName(Stk)
-               bfsw.WriteLine(PrnLine)
-            Next Age
-         End If
+                    PrnLine &= String.Format("{0,11}", StockRecruit(Stk, Age, 1).ToString("###0.0000  "))
+                    'Print #22, Format(Format(StartCohort, "########0"), "@@@@@@@@@  ");
+                    PrnLine &= String.Format("{0,9}", (BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)).ToString("########0"))
+                    PrnLine &= StockName(Stk)
+                    bfsw.WriteLine(PrnLine)
+                Next Age
+            End If
 NextTRun:
-      Next TRun
+        Next TRun
 
-      Exit Sub
+        Exit Sub
 
    End Sub
 
    Sub SumChinTermRun(ByVal TermRun As Integer, ByVal Stock As Integer, ByVal IterNumbr As Integer)
 
         Dim StartNum, EndNum, TSum, I, J As Integer
-        ReDim AgeTSCatch(NumChinTermRuns * 3, NumAge + 1, NumSteps)
+
       '   On Error GoTo BackChinSumErr
-      On Error GoTo 0
-      If Stock = -1 Then  '- Combined Terminal Run
-         StartNum = TermRun + 1
-         '- Non-Selective Type Base File
-         If NumStk = 33 Or NumStk = 38 Then
-            If TermRun = 2 Then
-               EndNum = TermRun + 2
+        On Error GoTo 0
+        'If Stock = -1
+        If TermStockNum(TRun) < 0 Then  '- Combined Terminal Run
+            StartNum = TermRun + 1
+            '- Non-Selective Type Base File
+            If NumStk = 33 Or NumStk = 38 Then
+                If TermRun = 2 Then
+                    EndNum = TermRun + 2
+                Else
+                    EndNum = TermRun + 1
+                End If
             Else
-               EndNum = TermRun + 1
+                If TermRun = 2 Then
+                    EndNum = TermRun + 4
+                Else
+                    EndNum = TermRun + 2
+                End If
             End If
-         Else
-            If TermRun = 2 Then
-               EndNum = TermRun + 4
-            Else
-               EndNum = TermRun + 2
-            End If
-         End If
-         '- Loop through component stocks of this combined terminal run
-         For J = StartNum To EndNum
-            Stk = TermStockNum(J)
-            TSum = TermRunStock(Stk)
-            For Age As Integer = 3 To 5
-               '- Sum Escapement
-               For TStep As Integer = 1 To 3
-                  TermChinRun(J, Age) = TermChinRun(J, Age) + Escape(Stk, Age, TStep)
-               Next TStep
+            '- Loop through component stocks of this combined terminal run
+            For J = StartNum To EndNum
+                Stk = TermStockNum(J)
+                TSum = TermRunStock(Stk)
+                For Age As Integer = 3 To 5
+                    '- Sum Escapement
+                    For TStep As Integer = 1 To 3
+                        TermChinRun(J, Age) = TermChinRun(J, Age) + Escape(Stk, Age, TStep)
+                    Next TStep
                     '- Sum Terminal Fishery Catches
                     For I = 2 To TFish(TSum, 1) + 1
                         '- Loop through stock specific fisheries
@@ -801,25 +852,25 @@ NextTRun:
                         Next TStep
                     Next I
 
-                    'Sum catch over preterminal fisheries for a stock, age, and timestep
-                    For TStep = 1 To NumSteps - 1
-                        For Fish = 1 To NumFish - 2 ' exclude esc, fw net & Sport
-                            'if preterminal fishery
-                            Select Case Fish
-                                Case TFish(TSum, 2), TFish(TSum, 3), TFish(TSum, 4), TFish(TSum, 5), TFish(TSum, 6), TFish(TSum, 7), _
-                                    TFish(TSum, 8), TFish(TSum, 9), TFish(TSum, 10)
-                                    Select Case TStep
-                                        Case TTime(TSum, 1), TTime(TSum, 2)
-                                        Case Else
-                                            AgeTSCatch(Stk, Age, TStep) += LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) _
-                                         + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) - MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
-                                    End Select
-                                Case Else
-                                    AgeTSCatch(Stk, Age, TStep) += LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) _
-                                    + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) - MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
-                            End Select
-                        Next Fish
-                    Next TStep
+                    ''Sum catch over preterminal fisheries for a stock, age, and timestep
+                    'For TStep = 1 To NumSteps - 1
+                    '    For Fish = 1 To NumFish - 2 ' exclude esc, fw net & Sport
+                    '        'if preterminal fishery
+                    '        Select Case Fish
+                    '            Case TFish(TSum, 2), TFish(TSum, 3), TFish(TSum, 4), TFish(TSum, 5), TFish(TSum, 6), TFish(TSum, 7), _
+                    '                TFish(TSum, 8), TFish(TSum, 9), TFish(TSum, 10)
+                    '                Select Case TStep
+                    '                    Case TTime(TSum, 1), TTime(TSum, 2)
+                    '                    Case Else
+                    '                        AgeTSCatch(Stk, Age, TStep) += LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) _
+                    '                     + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) - MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
+                    '                End Select
+                    '            Case Else
+                    '                AgeTSCatch(Stk, Age, TStep) += LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) _
+                    '                + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) - MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
+                    '        End Select
+                    '    Next Fish
+                    'Next TStep
 
                 Next Age
             Next J
@@ -854,11 +905,11 @@ NextTRun:
                                     Case TTime(TSum, 1), TTime(TSum, 2)
                                     Case Else
                                         AgeTSCatch(Stk, Age, TStep) += LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) _
-                                     + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) - MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
+                                     + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
                                 End Select
                             Case Else
                                 AgeTSCatch(Stk, Age, TStep) += LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) _
-                                + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) - MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
+                                + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
                         End Select
                     Next Fish
                 Next TStep
