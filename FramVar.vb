@@ -268,11 +268,15 @@ Public Module FramVar
    Public BackEsc(,) As Double
    Public BackChinScaler(,,) As Double
    Public BackChinEsc(,,) As Double
-   Public TermChinRun(,) As Double
-   Public NumChinTermRuns As Integer
+    Public TermChinRun(,) As Double
+    Public DoneIterating As Integer
+    Public NumChinTermRuns As Integer
+    Public OldScalar(,,) As Double
+    Public TempCohort(,) As Double
    Public TermRunName() As String
    Public TermRunStock(), TermStockNum(), TFish(,), TTime(,) As Integer
-   Public ChinSurvMult() As Double
+    Public ChinSurvMult() As Double
+    Public StartRate(,) As Double
    Public SurvMultSp() As Double
     Public BackFramSave As Boolean
     Public TermCounter As Integer

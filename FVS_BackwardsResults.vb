@@ -241,16 +241,17 @@ Public Class FVS_BackwardsResults
                      BFResultsGrid.Item(0, RowCount).Value = " "
                   End If
                   BFResultsGrid.Item(2, RowCount).Value = Age.ToString
-                  If TermStockNum(Stk) = -2 Then
-                     '- Nooksack Spring Special Case - 4 stocks
-                     BFResultsGrid.Item(3, RowCount).Value = CLng(TermChinRun(Stk + 1, Age) + TermChinRun(Stk + 2, Age) + TermChinRun(Stk + 3, Age) + TermChinRun(Stk + 4, Age)).ToString
-                  Else
-                     '- Normal Sum - 2 stocks = Marked and UnMarked
-                     BFResultsGrid.Item(3, RowCount).Value = CLng(TermChinRun(Stk + 1, Age) + TermChinRun(Stk + 2, Age)).ToString
-                  End If
-                  '- Target Escapement
-                  BFResultsGrid.Item(4, RowCount).Value = CLng(BackwardsChinook(Stk + 1, Age) + BackwardsChinook(Stk + 2, Age)).ToString
-               Next Age
+                        'If TermStockNum(Stk) = -2 Then
+                        '- Nooksack Spring Special Case - 4 stocks
+                        BFResultsGrid.Item(3, RowCount).Value = CLng(TermChinRun(Stk, Age)).ToString
+                        ' Else
+                        '- Normal Sum - 2 stocks = Marked and UnMarked
+                        ' BFResultsGrid.Item(3, RowCount).Value = CLng(TermChinRun(Stk, Age)).ToString
+                        'End If
+                        '- Target Escapement
+                        BFResultsGrid.Item(4, RowCount).Value = CLng(BackwardsChinook(Stk, Age)).ToString
+                        BFResultsGrid.Item(6, RowCount).Value = BackwardsFlag(Stk).ToString
+                    Next Age
                'here i am
                If TermStockNum(Stk) = -2 Then
                   NumTermStk = 4

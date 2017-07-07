@@ -832,7 +832,7 @@ SkipTami2:
       '----- MAIN Backwards FRAM Processing Loop
 
       Call ScaleCohort()
-      AnyNegativeEscapement = 0
+        
       For TStep = 1 To NumSteps
          Call NatMort()
          Call CompCatch(PTerm)
@@ -2169,7 +2169,9 @@ NextTolerCheck:
                 'Call CompLegProp(Stock, ComAge, Fish, TerminalType, SubLegalProportion, LegalProportion)
             Call CompLegProp(Stock, ComAge, Fish, TerminalType)
 
-
+                If Stock = 36 Then
+                    Jim = 1
+                End If
             ''****************************************************************************************
             ''############################# BEGIN NEW CODE ############################ Pete-Jan. 2013
             ''Given that Puget Sound Chinook CNR inputs are roughly 'calibrated' to a 22" scenario AND that,
