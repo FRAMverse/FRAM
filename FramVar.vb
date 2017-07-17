@@ -269,6 +269,7 @@ Public Module FramVar
    Public BackChinScaler(,,) As Double
     Public BackChinEsc(,,) As Double
     Public BkMethod As Integer
+    Public ERBKMethod(,,) As Double
     Public EscDiffArray(,,) As Double
     Public TermChinRun(,) As Double
     Public DoneIterating As Integer
