@@ -273,6 +273,7 @@ Public Module FramVar
     Public EscDiffArray(,,) As Double
     Public TermChinRun(,) As Double
     Public DoneIterating As Integer
+    Public MatRateCounter As Integer
     Public NumChinTermRuns As Integer
     Public OldScalar(,,) As Double
     Public TempCohort(,) As Double

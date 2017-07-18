@@ -661,7 +661,7 @@ NextStockRecruitr:
             End If
         Next
 
-        If IterNum <= 50 Then
+        If IterNum = 1 Or IterNum = 3 Or IterNum = 5 Then
             '*****Angelika calcualted method to quickly bring terminal run sizes in line with target for most stocks; addresses maturation in other
             'time steps and problems with large intercepts, but will have residuals for most stocks
             For TRun = 1 To NumStk + NumChinTermRuns
@@ -739,41 +739,44 @@ NextStockRecruitr:
                     Call SumChinTermRun(TRun, TermStockNum(TRun), IterNum)
                     Stk = TermStockNum(TRun)
                     For Age = 3 To 5
-                        For TStep = 1 To 3
-                            If Cohort(Stk, Age, 3, TStep) > 0 Then
-                                If AgeTSCatch(Stk, Age, TStep) < 0 Then
-                                    AgeTSCatch(Stk, Age, TStep) = 0
-                                End If
-                                ERBKMethod(Stk, Age, TStep) = AgeTSCatch(Stk, Age, TStep) / Cohort(Stk, Age, 3, TStep)
-                                If ERBKMethod(Stk, Age, TStep) > 0.95 Then
-                                    ERBKMethod(Stk, Age, TStep) = 0.95
-                                End If
-                            Else
-                                ERBKMethod(Stk, Age, TStep) = 0.1
-                            End If
-                        Next
-                        'OldScalar(Stk, Age, 1) = StockRecruit(Stk, Age, 1)
+                        If Stk = 19 And Age = 5 Then
+                            Jim = 1
+                        End If
+                        'For TStep = 1 To 3
+                        '    If Cohort(Stk, Age, 3, TStep) > 0 Then
+                        '        If AgeTSCatch(Stk, Age, TStep) < 0 Then
+                        '            AgeTSCatch(Stk, Age, TStep) = 0
+                        '        End If
+                        '        ERBKMethod(Stk, Age, TStep) = AgeTSCatch(Stk, Age, TStep) / Cohort(Stk, Age, 3, TStep)
+                        '        If ERBKMethod(Stk, Age, TStep) > 1 Then
+                        '            ERBKMethod(Stk, Age, TStep) = 0.5
+                        '        End If
+                        '    Else
+                        '        ERBKMethod(Stk, Age, TStep) = 0.1
+                        '    End If
+                        'Next
+                        OldScalar(Stk, Age, 1) = StockRecruit(Stk, Age, 1)
                         If BackwardsChinook(TRun, Age) <> 0 Then
-                            '    StockRecruit(Stk, Age, 1) = (BackwardsChinook(TRun, Age) + (AgeTSCatch(Stk, Age, 1) * MaturationRate(Stk, Age, 1) + (AgeTSCatch(Stk, Age, 1) * _
-                            '                                (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) + AgeTSCatch(Stk, Age, 2)) * _
-                            '                                MaturationRate(Stk, Age, 2) + ((AgeTSCatch(Stk, Age, 1) * (1 - MaturationRate(Stk, Age, 1)) * _
-                            '                                (1 - NaturalMortality(Age, 2)) + AgeTSCatch(Stk, Age, 2)) * (1 - MaturationRate(Stk, Age, 2)) * _
-                            '                                (1 - NaturalMortality(Age, 3)) + AgeTSCatch(Stk, Age, 3)) * MaturationRate(Stk, Age, 3))) / _
-                            '                                ((1 - NaturalMortality(Age, 1)) * MaturationRate(Stk, Age, 1) + (1 - NaturalMortality(Age, 1)) * _
-                            '                                (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) * MaturationRate(Stk, Age, 2) + _
-                            '                                (1 - NaturalMortality(Age, 1)) * (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) * _
-                            '                                (1 - MaturationRate(Stk, Age, 2)) * (1 - NaturalMortality(Age, 3)) * MaturationRate(Stk, Age, 3)) / _
-                            '                                BaseCohortSize(Stk, Age)
-                            '    BackChinScaler(TRun, Age, IterNum) = StockRecruit(Stk, Age, 1)
-                            StartCohort = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
-                            EscDiff = BackwardsChinook(TRun, Age) - TermChinRun(TRun, Age)
-                            If Escape(Stk, Age, 1) + Escape(Stk, Age, 2) + Escape(Stk, Age, 3) < 0 Then
-                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.5
-                            Else
-                                StockRecruit(Stk, Age, 1) = (StartCohort + (EscDiff / MaturationRate(Stk, Age, 3) / (1 - ERBKMethod(Stk, Age, 3)) / (1 - NaturalMortality(Age, 3)) / _
-                                                                                (1 - MaturationRate(Stk, Age, 2)) / (1 - ERBKMethod(Stk, Age, 2)) / (1 - NaturalMortality(Age, 2)) / _
-                                                                                (1 - MaturationRate(Stk, Age, 1)) / (1 - ERBKMethod(Stk, Age, 1)) / (1 - NaturalMortality(Age, 1)))) / BaseCohortSize(Stk, Age)
-                            End If
+                            StockRecruit(Stk, Age, 1) = (BackwardsChinook(TRun, Age) + (AgeTSCatch(Stk, Age, 1) * MaturationRate(Stk, Age, 1) + (AgeTSCatch(Stk, Age, 1) * _
+                                                        (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) + AgeTSCatch(Stk, Age, 2)) * _
+                                                        MaturationRate(Stk, Age, 2) + ((AgeTSCatch(Stk, Age, 1) * (1 - MaturationRate(Stk, Age, 1)) * _
+                                                        (1 - NaturalMortality(Age, 2)) + AgeTSCatch(Stk, Age, 2)) * (1 - MaturationRate(Stk, Age, 2)) * _
+                                                        (1 - NaturalMortality(Age, 3)) + AgeTSCatch(Stk, Age, 3)) * MaturationRate(Stk, Age, 3))) / _
+                                                        ((1 - NaturalMortality(Age, 1)) * MaturationRate(Stk, Age, 1) + (1 - NaturalMortality(Age, 1)) * _
+                                                        (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) * MaturationRate(Stk, Age, 2) + _
+                                                        (1 - NaturalMortality(Age, 1)) * (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) * _
+                                                        (1 - MaturationRate(Stk, Age, 2)) * (1 - NaturalMortality(Age, 3)) * MaturationRate(Stk, Age, 3)) / _
+                                                        BaseCohortSize(Stk, Age)
+                            BackChinScaler(TRun, Age, IterNum) = StockRecruit(Stk, Age, 1)
+                            'StartCohort = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
+                            'EscDiff = BackwardsChinook(TRun, Age) - TermChinRun(TRun, Age)
+                            'If Escape(Stk, Age, 1) + Escape(Stk, Age, 2) + Escape(Stk, Age, 3) < 0 Then
+                            '    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.5
+                            'Else
+                            '    StockRecruit(Stk, Age, 1) = (StartCohort + (EscDiff / MaturationRate(Stk, Age, 3) / (1 - ERBKMethod(Stk, Age, 3)) / (1 - NaturalMortality(Age, 3)) / _
+                            '                                                    (1 - MaturationRate(Stk, Age, 2)) / (1 - ERBKMethod(Stk, Age, 2)) / (1 - NaturalMortality(Age, 2)) / _
+                            '                                                    (1 - MaturationRate(Stk, Age, 1)) / (1 - ERBKMethod(Stk, Age, 1)) / (1 - NaturalMortality(Age, 1)))) / BaseCohortSize(Stk, Age)
+                            'End If
                         End If
                     Next Age
                     StockRecruit(Stk, 2, 1) = StockRecruit(Stk, 3, 1) 'approximate age 2 from 3
@@ -782,9 +785,12 @@ NextStockRecruitr:
             BkMethod = 1
             ' ElseIf IterNum < 20 Or Math.Abs(BackwardsChinook(TRun, Age)  Then 'use original Packer Method to address residuals from Angelika method
         Else 'other methods
+
             For TRun = 1 To NumStk + NumChinTermRuns
                 If BackwardsFlag(TRun) = 2 Then
                     Stk = TermStockNum(TRun + 1)
+
+
                     For Age = 3 To 5
                         If BackwardsChinook(TRun, Age) <> 0 Then
 
@@ -799,7 +805,12 @@ NextStockRecruitr:
                 ElseIf BackwardsFlag(TRun) = 1 Then
                     Call SumChinTermRun(TRun, TermStockNum(TRun), IterNum)
                     Stk = TermStockNum(TRun)
+
                     For Age = 3 To 5
+                        If IterNum = 17 And Stk = 19 And Age = 5 Then
+                            Jim = 1
+                        End If
+
                         If BackwardsChinook(TRun, Age) <> 0 Then
                             StartCohort = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
                             EscDiff = BackwardsChinook(TRun, Age) - TermChinRun(TRun, Age)
@@ -811,7 +822,25 @@ NextStockRecruitr:
                                     BkMethod = 0
                                 End If
                             End If
+
+                            MatRateCounter = 0
+                            For TStep = 1 To NumSteps - 1 'use Packer Method if maturation in more than one timestep
+                                If MaturationRate(Stk, Age, TStep) > 0 Then
+                                    MatRateCounter = MatRateCounter + 1
+                                End If
+                            Next TStep
+                            If MatRateCounter > 1 Then
+                                BkMethod = 0
+                            End If
+                            If IterNum = 6 Then
+                                BkMethod = 1
+                            End If
+
+
                             If BkMethod = 0 Then 'Packer Method
+                                If Stk = 19 And Age = 5 Then
+                                    Jim = 1
+                                End If
                                 If NumStk = 33 Or NumStk = 38 Then
                                     If Stk >= 25 And Stk <= 26 Then  '- Spring Stocks mature in Time 1
                                         TStep = 1
@@ -835,7 +864,7 @@ NextStockRecruitr:
                                     '- Check for Negative Scaler
                                     If IterNum = 1 Then
                                         If EscDiff > 0 Then
-                                            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.5
+                                            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
                                         Else
                                             StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 2
                                         End If
@@ -855,12 +884,15 @@ NextStockRecruitr:
                                         End If
                                     End If
                                 Else
+                                    If ERTotal < 0 Then
+                                        ERTotal = 0
+                                    End If
                                     StockRecruit(Stk, Age, 1) = (StartCohort + (EscDiff / MaturationRate(Stk, Age, TStep) * (ChinSurvMultTemp + ERTotal))) / BaseCohortSize(Stk, Age)
                                 End If
-                            End If 'BackChin  <> 0
-                            BackChinScaler(TRun, Age, IterNum) = StockRecruit(Stk, Age, 1)
-                        Else 'Pete method
-                            If BackwardsChinook(TRun, Age) <> 0 Then
+                                'End If 'BackChin  <> 0
+                                BackChinScaler(TRun, Age, IterNum) = StockRecruit(Stk, Age, 1)
+                            Else 'Pete method
+                                'If BackwardsChinook(TRun, Age) <> 0 Then
                                 '- Save old scalers and Term Runs
                                 BackChinScaler(TRun, Age, IterNum) = StockRecruit(Stk, Age, 1)
                                 BackChinEsc(TRun, Age, IterNum) = TermChinRun(TRun, Age)
@@ -869,7 +901,7 @@ NextStockRecruitr:
                                     StockRecruit(Stk, Age, 1) = 0
                                     '- Reset Zero Stocks to Zero (TAMM Effects)
                                 ElseIf TermChinRun(TRun, Age) < 0 Then
-                                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.5
+                                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
                                 Else 'If TermChinRun(TRun, Age) > 0 Then
                                     '- Increase Cohort Size by Term Run Difference times Survival Rate
                                     StartCohort = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
