@@ -1017,9 +1017,7 @@ SkipTami2:
 
 
                                     '--- Main FRAM Harvest Algorithm --------------------
-                                    If Stk = 67 And Age = 2 And TStep = 3 And Fish = 54 Then
-                                        TStep = 3
-                                    End If
+                                    
 
                                     LandedCatch(Stk, Age, Fish, TStep) = _
                                        Cohort(Stk, Age, TerminalType, TStep) * _
@@ -1050,7 +1048,7 @@ SkipTami2:
                                     ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
                                     'NSEncountersTotal(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
                                     ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
-                                End If
+                                    End If
                             End If
 
 
@@ -1134,6 +1132,18 @@ SkipTami2:
                             '- Retention Quota Fishery
                             If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
                                 '- First Pass for Quota Fisheries - Landed Catch as if FisheryScaler = 1
+
+                                'Angelika test*********************************************
+                                If Stk = 34 And Age = 5 And TStep = 2 And Fish = 10 Then
+                                    Jim = 1
+                                End If
+                                If TerminalType = 0 And FisheryScaler(Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) > 0.7 Then
+                                    BaseExploitationRate(Stk, Age, Fish, TStep) = 0.7 / FisheryScaler(Fish, TStep)
+                                End If
+                                'end test*************************************************
+
+                               
+
                                 LandedCatch(Stk, Age, Fish, TStep) = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * Cohort(Stk, Age, TerminalType, TStep) * LegalProportion
                                 'Encounters(Stk, Age, Fish, TStep) += Encounters(Stk, Age, Fish, TStep) + LandedCatch(Stk, Age, Fish, TStep)
                                 'TotalEncounters(Fish, TStep) = TotalEncounters(Fish, TStep) + LandedCatch(Stk, Age, Fish, TStep)
@@ -1212,22 +1222,25 @@ NextScalerFishery:
                If NSFQuotaTotal(Fish, TStep) > 0 Then
                   FisheryScaler(Fish, TStep) = ModelStockProportion(Fish) * FisheryQuota(Fish, TStep) / NSFQuotaTotal(Fish, TStep)
                   For Stk As Integer = 1 To NumStk
-                     For Age As Integer = MinAge To MaxAge
-                        '- Subtract Landed Catch from 1st Pass from Total
+                            For Age As Integer = MinAge To MaxAge
+                                If Stk = 34 And Age = 5 And TStep = 2 And Fish = 10 Then
+                                    Jim = 1
+                                End If
+                                '- Subtract Landed Catch from 1st Pass from Total
                                 TotalLandedCatch(Fish, TStep) -= LandedCatch(Stk, Age, Fish, TStep)
 
-                        If (Stk Mod 2) <> 0 Then      '--- UnMarked Fish
-                           TotalLandedCatch(NumFish + Fish, TStep) -= LandedCatch(Stk, Age, Fish, TStep)
-                        End If
-                        '- Compute new Landed Catch and add back to Total
-                        LandedCatch(Stk, Age, Fish, TStep) = FisheryScaler(Fish, TStep) * LandedCatch(Stk, Age, Fish, TStep)
+                                If (Stk Mod 2) <> 0 Then      '--- UnMarked Fish
+                                    TotalLandedCatch(NumFish + Fish, TStep) -= LandedCatch(Stk, Age, Fish, TStep)
+                                End If
+                                '- Compute new Landed Catch and add back to Total
+                                LandedCatch(Stk, Age, Fish, TStep) = FisheryScaler(Fish, TStep) * LandedCatch(Stk, Age, Fish, TStep)
                                 Encounters(Stk, Age, Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
                                 TotalLandedCatch(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
-                        If (Stk Mod 2) <> 0 Then      '--- UnMarked Fish
-                           TotalLandedCatch(NumFish + Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
+                                If (Stk Mod 2) <> 0 Then      '--- UnMarked Fish
+                                    TotalLandedCatch(NumFish + Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
                                 End If
                                 TotalEncounters(Fish, TStep) = TotalEncounters(Fish, TStep) + LandedCatch(Stk, Age, Fish, TStep)
-                     Next Age
+                            Next Age
                   Next Stk
 
                   ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
@@ -2299,8 +2312,8 @@ NextTolerCheck:
             Else
                 For Stk As Integer = 1 To NumStk
                     For Age As Integer = MinAge To MaxAge
-                        If Fish = 1 And Age = 2 And TStep = 1 And Stk = 48 Then
-                            Fish = 1
+                        If Fish = 63 And Age = 2 And TStep = 3 And Stk = 13 Then
+                            Jim = 1
                         End If
                         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
                         If TStep = 3 And Fish = 42 And Stk = 21 And Age = 3 Then 'used to break code

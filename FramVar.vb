@@ -256,6 +256,8 @@ Public Module FramVar
 
     '- Backwards FRAM
     Public AgeTSCatch(,,) As Double
+    Public AgeTSCatchTerm(,,) As Double
+    Public SumTSCatch(,) As Double
    Public BackwardsFRAMFlag As Integer
    Public BackwardsTarget() As Double
    Public BackwardsChinook(,) As Double
