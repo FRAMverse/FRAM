@@ -668,6 +668,12 @@ NextStockRecruitr:
         For TRun = 1 To NumStk + NumChinTermRuns
 
             If BackwardsFlag(TRun) = 2 Then 'combined marked and unmarked; split starting cohort according to mark rates in current model run
+
+
+                If IterNum = 8 And TRun = 1 Then
+                    Jim = 1
+                End If
+
                 Call SumChinTermRun(TRun, TermStockNum(TRun), IterNum)
                 Stk = TermStockNum(TRun + 1)
 
@@ -702,6 +708,8 @@ NextStockRecruitr:
                                                     (1 - NaturalMortality(Age, 1)) * (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) * _
                                                     (1 - MaturationRate(Stk, Age, 2)) * (1 - NaturalMortality(Age, 3)) * MaturationRate(Stk, Age, 3)) / _
                                                     BaseCohortSize(Stk, Age)
+
+
 
 
                     End If
@@ -743,10 +751,7 @@ NextStockRecruitr:
                 End If
 
             ElseIf BackwardsFlag(TRun) = 1 Then
-                Stk = TermStockNum(TRun)
-                If Stk = 1 And IterNum = 8 Then
-                    Jim = 1
-                End If
+
                 Call SumChinTermRun(TRun, TermStockNum(TRun), IterNum)
                 Stk = TermStockNum(TRun)
                 For Age = 3 To 5
@@ -759,14 +764,7 @@ NextStockRecruitr:
 
                         SumTSCatch(Stk, Age) = AgeTSCatch(Stk, Age, 1) + AgeTSCatch(Stk, Age, 2) + AgeTSCatch(Stk, Age, 3)
                         ERBKMethod(Stk, Age, 1) = SumTSCatch(Stk, Age) / (SumTSCatch(Stk, Age) + TermChinRun(TRun, Age))
-                        'Sum over marked and unmarked catches
-                        'If IterNum = 19 And ERBKMethod(Stk, Age, 1) > 0.94 Then
-                        '    For TStep = 1 To 3 'calculate catch as function of target Escapement and scale to time step
-                        '        AgeTSCatch(Stk, Age, TStep) = AgeTSCatch(Stk, Age, TStep) / SumTSCatch(Stk, Age) * ERBKMethod(Stk, Age, 1) * BackwardsChinook(TRun, Age) / (1 - ERBKMethod(Stk, Age, 1))
-                        '    Next
-                        'End If
 
-                        'Sum over marked and unmarked catches
 
                         StockRecruit(Stk, Age, 1) = ((BackwardsChinook(TRun, Age) + (AgeTSCatch(Stk, Age, 1) * MaturationRate(Stk, Age, 1) + (AgeTSCatch(Stk, Age, 1) * _
                                                     (1 - MaturationRate(Stk, Age, 1)) * (1 - NaturalMortality(Age, 2)) + AgeTSCatch(Stk, Age, 2)) * _
@@ -931,6 +929,7 @@ NextTRun:
                                     TFish(TSum, 8), TFish(TSum, 9), TFish(TSum, 10)
                                     Select Case TStep
                                         Case TTime(TSum, 1), TTime(TSum, 2)
+                                            AgeTSCatchTerm(Stk, Age, TStep) += Shakers(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
                                         Case Else
                                             If TerminalFisheryFlag(Fish, TStep) = 0 Then
                                                 AgeTSCatch(Stk, Age, TStep) += LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) _
