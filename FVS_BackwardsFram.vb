@@ -73,33 +73,41 @@ Public Class FVS_BackwardsFram
             If BackwardsFlag(Stk) = 2 Then ' use starting mark rate on starting cohorts rather than escapement targets
                 If (Stk Mod 2) = 0 Then
                     '- Marked Target ... process combined target in unmarked stock spot
-                    If BackwardsFlag(Stk - 1) = 0 And BackwardsTarget(Stk - 1) = 0 Then
+                    'If BackwardsFlag(Stk - 1) = 0 And BackwardsTarget(Stk - 1) = 0 Then
+                    If BackwardsFlag(Stk - 1) = 0 Then
                         SumScalers = StockRecruit(Stk, 3, 1) + StockRecruit(Stk - 1, 3, 1)
                         If SumScalers = 0 Then
                             MsgBox("Error - Backwards Stock FLAG = 2 points to Stock Scalers = ZERO" & vbCrLf & "Stock Name = " & StockTitle(Stk), MsgBoxStyle.OkOnly)
                             Exit Sub
                         End If
-                        BackwardsTarget(Stk - 1) = BackwardsTarget(Stk) ' * (StockRecruit(Stk - 1, 3, 1) / SumScalers)
+                        BackwardsTarget(Stk - 1) = BackwardsTarget(Stk)  ' * (StockRecruit(Stk - 1, 3, 1) / SumScalers)
                         BackwardsTarget(Stk) = 0
                         BackwardsFlag(Stk - 1) = 2
-                        BackwardsFlag(Stk) = 2
+                        BackwardsFlag(Stk) = 0
                     Else
-                        'MsgBox("FLAG = 2 - Error for Backwards FRAM Target Esc" & vbCrLf & "Stock# " & Stk.ToString & " Name = " & StockTitle(Stk), MsgBoxStyle.OkOnly)
-                        'Exit Sub
+                        MsgBox("FLAG = 2 - Error for Backwards FRAM Target Esc" & vbCrLf & "Stock# " & Stk.ToString & " Name = " & StockTitle(Stk) & " - Conflicting Flags", MsgBoxStyle.OkOnly)
+                        Exit Sub
                     End If
                 Else
                     '- UnMarked Target ... 
 
                     SumScalers = StockRecruit(Stk, 3, 1) + StockRecruit(Stk + 1, 3, 1)
-                    If SumScalers = 0 Then
-                        MsgBox("Error - Backwards Stock FLAG = 2 points to Stock Scalers = ZERO" & vbCrLf & "Stock Name = " & StockTitle(Stk), MsgBoxStyle.OkOnly)
+                    
+                    If BackwardsFlag(Stk + 1) = 0 Then
+                        'SumScalers = StockRecruit(Stk, 3, 1) + StockRecruit(Stk + 1, 3, 1)
+                        If SumScalers = 0 Then
+                            MsgBox("Error - Backwards Stock FLAG = 2 points to Stock Scalers = ZERO" & vbCrLf & "Stock Name = " & StockTitle(Stk), MsgBoxStyle.OkOnly)
+                            Exit Sub
+                        End If
+                        BackwardsTarget(Stk + 1) = 0 ' * (StockRecruit(Stk - 1, 3, 1) / SumScalers)
+                        'BackwardsTarget(Stk) = 0
+                        'BackwardsFlag(Stk - 1) = 2
+                        'BackwardsFlag(Stk) = 2
+                    Else
+                        MsgBox("FLAG = 2 - Error for Backwards FRAM Target Esc" & vbCrLf & "Stock# " & Stk.ToString & " Name = " & StockTitle(Stk) & " - Conflicting Flags", MsgBoxStyle.OkOnly)
                         Exit Sub
                     End If
-                    'BackwardsTarget(Stk) = BackwardsTarget(Stk) * (StockRecruit(Stk, 3, 1) / SumScalers)
-                    BackwardsTarget(Stk + 1) = 0
-                    'BackwardsFlag(Stk) = 1
-                    BackwardsFlag(Stk + 1) = 2
-                    
+
                 End If
             End If
 
@@ -257,10 +265,10 @@ Public Class FVS_BackwardsFram
             If Escape(Stk, Age, TStep) < 0 Then
                 '- Increase Scalar when Escapement is negative
                 If IterNum = 1 Then
-                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.5
+                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
                 Else
                     If BackEsc(Stk, IterNum - 1) < 0 Then
-                        StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.5
+                        StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
                     Else
                         StockRecruit(Stk, Age, 1) = (StockRecruit(Stk, Age, 1) + BackScaler(Stk, IterNum - 1)) / 2
                     End If
@@ -272,11 +280,11 @@ Public Class FVS_BackwardsFram
                     EscDiff = BackwardsTarget(Stk) - Escape(Stk, Age, TStep)
                     'ERTotal = Escape(Stk, Age, TStep) / InitialCohort * 1.33571
                     ERTotal = (InitialCohort / 1.23 - Escape(Stk, Age, TStep)) / (InitialCohort / 1.23)
-                    If InitialCohort < (Math.Abs(EscDiff) * (1.33571 + ERTotal)) Then
+                    If InitialCohort < (Math.Abs(EscDiff) * (1.23 + ERTotal)) Then
                         '- Check for Negative Scaler
                         If IterNum = 1 Then
                             If EscDiff > 0 Then
-                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.5
+                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
                             Else
                                 StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 2
                             End If
@@ -299,7 +307,7 @@ Public Class FVS_BackwardsFram
                         '- Normal Scaling
 
                         StockRecruit(Stk, Age, 1) = (InitialCohort + (EscDiff * (1 + ERTotal) * 1.23)) / BaseCohortSize(Stk, Age)
-                       
+
                         If BackwardsTarget(Stk) > 0 Then
                             If Math.Abs(BackwardsTarget(Stk) - Escape(Stk, Age, TStep)) > 1 Then
                                 DoneIterating = DoneIterating + 1
@@ -324,8 +332,8 @@ Public Class FVS_BackwardsFram
                     '- Check for Negative Scaler
                     If IterNum = 1 Then
                         If EscDiff > 0 Then
-                            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.5
-                            StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * 1.5
+                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
+                                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * 1.1
                         Else
                             StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 2
                             StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) / 2
