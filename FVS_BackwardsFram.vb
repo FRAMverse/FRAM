@@ -978,6 +978,7 @@ NextTRun:
                         TermChinRun(TermRun, Age) = TermChinRun(TermRun, Age) + LandedCatch(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep)
                     Next TStep
                 Next I
+
                 'Sum catch over preterminal fisheries for a stock, age, and timestep
                 For TStep = 1 To NumSteps - 1
                     For Fish = 1 To NumFish - 2 ' exclude esc, fw net & Sport
@@ -1014,7 +1015,14 @@ NextTRun:
                 Next TStep
                 
             Next Age
-        End If
+
+      End If
+        'Jim = 2
+        'If TermChinRun(TermRun, Age) < 0 Then
+        '    Dim What As Integer
+        '    What = 1
+
+        'End If
 
         'If TermChinRun(TermRun, Age) < 0 Then
         '    Dim What As Integer
