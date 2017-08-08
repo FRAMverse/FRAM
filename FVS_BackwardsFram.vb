@@ -473,7 +473,7 @@ NextStockRecruitr:
         ReDim StartRate(NumStk, MaxAge)
         'Deal with case where a target exists but the current recruti scalar is zero
         For TRun = 1 To NumStk + NumChinTermRuns
-            If BackwardsFlag(TRun) = 1 Then
+            If BackwardsFlag(TRun) = 1 Or BackwardsFlag(TRun) = 3 Then
                 Stk = TermStockNum(TRun)
                 For Age = 3 To 5
                     If BackwardsChinook(TRun, Age) <> 0 Then
@@ -758,7 +758,7 @@ NextStockRecruitr:
                     TRun = TRun + 4
                 End If
 
-            ElseIf BackwardsFlag(TRun) = 1 Then
+            ElseIf BackwardsFlag(TRun) = 1 Or BackwardsFlag(TRun) = 3 Then
 
                 Call SumChinTermRun(TRun, TermStockNum(TRun), IterNum)
                 Stk = TermStockNum(TRun)
@@ -857,7 +857,7 @@ NextTRun:
 
         DoneIterating = 0
         For TRun = 1 To NumStk + NumChinTermRuns
-            If BackwardsFlag(TRun) = 1 Then
+            If BackwardsFlag(TRun) = 1 Or BackwardsFlag(TRun) = 3 Then
                 For Age = 3 To 5
                     If BackwardsChinook(TRun, Age) > 0 And BackwardsFlag(TRun) <> 0 Then
                         If Math.Abs(BackwardsChinook(TRun, Age) - TermChinRun(TRun, Age)) > 1 Then
