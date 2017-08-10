@@ -2075,7 +2075,7 @@ NextTRun:
     Private Sub SaveScalersButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles SaveScalersButton.Click
         BackFramSave = True
         Me.Visible = False
-        MsgBox("After saving recordset, new recruit scalars will only be saved in temporary memory. For permanent saving, RUN forward and SAVE the run.")
+        MsgBox("This action only saves BK_Targets. To save the new recruit scalars select 'Save Model Run' from the Main Menu")
         FVS_SaveModelRunInputs.ShowDialog()
         BackFramSave = False
         Exit Sub
