@@ -4116,18 +4116,21 @@ SkipNoSat:
         '- Changed Stk for SF Chin FRAM 9/20/2002
         NewStockFishRateScalers = 0
 
-        'let FRAM's BPERs calculate Nooksack Spring impacts in B'ham Bay net rather than using TAMM rate AHB 3/15/17
-        'If NumStk > 50 Then
-        '    Call CHKSPRCHSF(2, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 2
-        '    Call CHKSPRCHSF(2, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 2
-        '    Call CHKSPRCHSF(3, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 3
-        '    Call CHKSPRCHSF(3, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 3
-        'Else
-        '    Call CHKSPRCH(2, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 2
-        '    Call CHKSPRCH(2, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 2
-        '    Call CHKSPRCH(3, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 3
-        '    Call CHKSPRCH(3, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 3
-        'End If
+        If TammPSER(Area, TStep) <> -88 Then
+            'let FRAM's BPERs calculate Nooksack Spring impacts in B'ham Bay net rather than using TAMM rate AHB 3/15/17
+            If NumStk > 50 Then
+                Call CHKSPRCHSF(2, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 2
+                Call CHKSPRCHSF(2, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 2
+                Call CHKSPRCHSF(3, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 3
+                Call CHKSPRCHSF(3, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 3
+            Else
+                Call CHKSPRCH(2, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 2
+                Call CHKSPRCH(2, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 2
+                Call CHKSPRCH(3, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 3
+                Call CHKSPRCH(3, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 3
+            End If
+        End If
+
         '... 13A Not Used for WhRvr Spr 9/20/2002
         'Call CHKSPRCH(2, 15, 70, 11, 14) 'White River 13A NT Net TStep 2
         'Call CHKSPRCH(2, 16, 71, 12, 14) 'White River 13A TR Net TStep 2
