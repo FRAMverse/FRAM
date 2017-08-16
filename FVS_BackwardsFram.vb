@@ -34,6 +34,11 @@ Public Class FVS_BackwardsFram
         If SpeciesName = "CHINOOK" Then
             NoMSFBiasCorrection.Visible = False
         End If
+        If SpeciesName = "COHO" Then
+            chk2from3.Visible = False
+        Else
+            chk2from3.Visible = True
+        End If
    End Sub
 
    Private Sub TargetEscButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles TargetEscButton.Click
@@ -650,7 +655,7 @@ NextStockRecruitr:
         'Angelika June 2017: In the first pass solve for starting cohort using actual catches, maturation rates, and natural mortality rates.
         'All consecutive passes use ratio of TargetEsc/FRAMEsc to adjust recruit scalars
         Dim PeteScale, PeteSclTemp '**Pete-Jul 2014** variables for rescaling
-
+        Dim Age2from3 As Boolean
         On Error GoTo 0
 
         ReDim TermChinRun(NumStk + NumChinTermRuns, 5)
@@ -741,16 +746,17 @@ NextStockRecruitr:
                     End If
 
                 Next Age
-                If Stk = 3 Then   'approximate age 2 from 3
-                    StockRecruit(Stk, 2, 1) = StockRecruit(Stk, 3, 1)
-                    StockRecruit(Stk + 1, 2, 1) = StockRecruit(Stk + 1, 3, 1)
-                    StockRecruit(Stk + 2, 2, 1) = StockRecruit(Stk + 2, 3, 1)
-                    StockRecruit(Stk + 3, 2, 1) = StockRecruit(Stk + 3, 3, 1)
-                Else
-                    StockRecruit(Stk + 1, 2, 1) = StockRecruit(Stk + 1, 3, 1)
-                    StockRecruit(Stk, 2, 1) = StockRecruit(Stk, 3, 1)
+                If chk2from3.Checked = True Then
+                    If Stk = 3 Then   'approximate age 2 from 3
+                        StockRecruit(Stk, 2, 1) = StockRecruit(Stk, 3, 1)
+                        StockRecruit(Stk + 1, 2, 1) = StockRecruit(Stk + 1, 3, 1)
+                        StockRecruit(Stk + 2, 2, 1) = StockRecruit(Stk + 2, 3, 1)
+                        StockRecruit(Stk + 3, 2, 1) = StockRecruit(Stk + 3, 3, 1)
+                    Else
+                        StockRecruit(Stk + 1, 2, 1) = StockRecruit(Stk + 1, 3, 1)
+                        StockRecruit(Stk, 2, 1) = StockRecruit(Stk, 3, 1)
+                    End If
                 End If
-
 
                 If Stk <> 3 Then
                     TRun = TRun + 2
@@ -788,7 +794,10 @@ NextStockRecruitr:
 
                     End If
                 Next Age
-                StockRecruit(Stk, 2, 1) = StockRecruit(Stk, 3, 1) 'approximate age 2 from 3
+                If chk2from3.Checked = True Then
+                    StockRecruit(Stk, 2, 1) = StockRecruit(Stk, 3, 1) 'approximate age 2 from 3
+                End If
+
             End If
         Next TRun
         BkMethod = 1
@@ -2085,4 +2094,11 @@ NextTRun:
 
     End Sub
 
+    Private Sub NoMSFBiasCorrection_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NoMSFBiasCorrection.CheckedChanged
+
+    End Sub
+
+    Private Sub chk2from3_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chk2from3.CheckedChanged
+
+    End Sub
 End Class

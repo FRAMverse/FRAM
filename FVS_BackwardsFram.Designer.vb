@@ -39,6 +39,7 @@ Partial Class FVS_BackwardsFram
         Me.RecordSetTextLabel = New System.Windows.Forms.Label
         Me.DatabaseTextLabel = New System.Windows.Forms.Label
         Me.NoMSFBiasCorrection = New System.Windows.Forms.CheckBox
+        Me.chk2from3 = New System.Windows.Forms.CheckBox
         Me.SuspendLayout()
         '
         'Label1
@@ -214,12 +215,25 @@ Partial Class FVS_BackwardsFram
         Me.NoMSFBiasCorrection.Text = "Run without MSF Bias Correction (if checked)"
         Me.NoMSFBiasCorrection.UseVisualStyleBackColor = False
         '
+        'chk2from3
+        '
+        Me.chk2from3.AutoSize = True
+        Me.chk2from3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.chk2from3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chk2from3.Location = New System.Drawing.Point(319, 338)
+        Me.chk2from3.Name = "chk2from3"
+        Me.chk2from3.Size = New System.Drawing.Size(131, 24)
+        Me.chk2from3.TabIndex = 21
+        Me.chk2from3.Text = "Age 2 from 3"
+        Me.chk2from3.UseVisualStyleBackColor = False
+        '
         'FVS_BackwardsFram
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(887, 795)
+        Me.Controls.Add(Me.chk2from3)
         Me.Controls.Add(Me.NoMSFBiasCorrection)
         Me.Controls.Add(Me.RecordSetNameLabel)
         Me.Controls.Add(Me.DatabaseNameLabel)
@@ -260,4 +274,5 @@ Partial Class FVS_BackwardsFram
    Friend WithEvents RecordSetTextLabel As System.Windows.Forms.Label
     Friend WithEvents DatabaseTextLabel As System.Windows.Forms.Label
     Friend WithEvents NoMSFBiasCorrection As System.Windows.Forms.CheckBox
+    Friend WithEvents chk2from3 As System.Windows.Forms.CheckBox
 End Class
