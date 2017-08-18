@@ -945,7 +945,7 @@ SkipTami2:
 
                     For Stk As Integer = 1 To NumStk
                         For Age As Integer = MinAge To MaxAge
-
+                            
                             '- Zero Calculation Arrays for TAMM Iteration Calculations
                             LandedCatch(Stk, Age, Fish, TStep) = 0
                             DropOff(Stk, Age, Fish, TStep) = 0
@@ -1133,15 +1133,10 @@ SkipTami2:
                             If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
                                 '- First Pass for Quota Fisheries - Landed Catch as if FisheryScaler = 1
 
-                                'Angelika test*********************************************
-                                If Stk = 34 And Age = 5 And TStep = 2 And Fish = 10 Then
+                                
+                                If Stk = 57 And Fish = 1 And TStep = 4 And Age = 5 Then
                                     Jim = 1
                                 End If
-                                If TerminalType = 0 And FisheryScaler(Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) > 0.7 Then
-                                    BaseExploitationRate(Stk, Age, Fish, TStep) = 0.7 / FisheryScaler(Fish, TStep)
-                                End If
-                                'end test*************************************************
-
                                
 
                                 LandedCatch(Stk, Age, Fish, TStep) = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * Cohort(Stk, Age, TerminalType, TStep) * LegalProportion
@@ -4116,7 +4111,7 @@ SkipNoSat:
         '- Changed Stk for SF Chin FRAM 9/20/2002
         NewStockFishRateScalers = 0
 
-        If TammPSER(Area, TStep) <> -88 Then
+        If TammPSER(22, 3) <> -88 Then 'AHB 8/16/2017 added if statement for new BP
             'let FRAM's BPERs calculate Nooksack Spring impacts in B'ham Bay net rather than using TAMM rate AHB 3/15/17
             If NumStk > 50 Then
                 Call CHKSPRCHSF(2, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 2
