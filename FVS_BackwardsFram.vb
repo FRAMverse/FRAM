@@ -157,6 +157,7 @@ Public Class FVS_BackwardsFram
         For BackFRAMIteration = 1 To NumBackFRAMIterations
 
             If DoneIterating = 0 Then
+                ChangeStockRecruit = True
                 Exit For
             End If
 
@@ -2084,7 +2085,7 @@ NextTRun:
     Private Sub SaveScalersButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles SaveScalersButton.Click
         BackFramSave = True
         Me.Visible = False
-        MsgBox("This action only saves BK_Targets. To save the new recruit scalars select 'Save Model Run' from the Main Menu")
+        MsgBox("This action saves BkFRAMTargets as well as Recruit Scalars. To save, please follow instructions of next menu.")
         FVS_SaveModelRunInputs.ShowDialog()
         BackFramSave = False
         Exit Sub

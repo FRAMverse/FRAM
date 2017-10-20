@@ -134,7 +134,7 @@ Partial Class FVS_BackwardsFram
         Me.SaveScalersButton.Name = "SaveScalersButton"
         Me.SaveScalersButton.Size = New System.Drawing.Size(248, 55)
         Me.SaveScalersButton.TabIndex = 8
-        Me.SaveScalersButton.Text = "Save Bk_FRAM Targets"
+        Me.SaveScalersButton.Text = " Save BkFRAM targets and new Recruit Scalars"
         Me.SaveScalersButton.UseVisualStyleBackColor = False
         '
         'IterProgressLabel
