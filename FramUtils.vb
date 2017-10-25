@@ -719,7 +719,7 @@ NewCohoOldFormat:
       FramTrans = FramDB.BeginTransaction
       RIC.Connection = FramDB
       RIC.Transaction = FramTrans
-        RIC.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate) " & _
+        RIC.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear) " & _
             "VALUES(" & RunIDSelect.ToString & "," & _
                 Chr(34) & SpeciesName.ToString & Chr(34) & "," & _
               Chr(34) & RunIDNameSelect.ToString & Chr(34) & "," & _
@@ -5147,6 +5147,10 @@ ExitTransfer:
             RID.Connection = FramDB
             RID.Transaction = RIDTrans
             RecNum = 0
+            'If TransferDataSet.Tables("RunID").Rows(TransID - 1)(10) = then
+            '    TransferDataSet.Tables("RunID").Rows(TransID - 1)(10) = 0
+            'End If
+
             RID.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear) " & _
                "VALUES(" & NewRunID.ToString & "," & _
                Chr(34) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(2) & Chr(34) & "," & _
@@ -5209,7 +5213,7 @@ ExitTransfer:
                         BFC.ExecuteNonQuery()
                     End If
                 Else 'comment column exists in TransferDB
-                    
+
                     If OldRunID = TransferDataSet.Tables("BackwardsFRAM").Rows(RecNum)(0) Then
                         BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag,Comment) " & _
                         "VALUES(" & NewRunID.ToString & "," & _

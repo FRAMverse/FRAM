@@ -295,9 +295,9 @@ Public Class FVS_ModelRunSelection
         i = FramDataSet.Tables(RunIDTable).Columns.IndexOf("RunYear")
 
         If i = -1 Then 'This Column is missing so add it
-            Dim TempCmdDataType As String = "Integer"
 
-            RunID1cm.CommandText = "ALTER TABLE " & RunIDTable & " ADD " & "RunYear" & " " & "Integer"
+
+            RunID1cm.CommandText = "ALTER TABLE " & RunIDTable & " ADD " & "RunYear" & " " & "String"
             RunID1cm.ExecuteNonQuery()   'executes the SQL code in cmd without querry
 
         End If
