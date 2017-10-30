@@ -55,7 +55,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.RSETitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RSETitle.Location = New System.Drawing.Point(304, 20)
         Me.RSETitle.Name = "RSETitle"
-        Me.RSETitle.Size = New System.Drawing.Size(270, 29)
+        Me.RSETitle.Size = New System.Drawing.Size(214, 24)
         Me.RSETitle.TabIndex = 0
         Me.RSETitle.Text = "Recordset Information"
         '
@@ -65,7 +65,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(98, 74)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(61, 20)
+        Me.Label1.Size = New System.Drawing.Size(52, 17)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "RunID"
         '
@@ -75,7 +75,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(98, 103)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(76, 20)
+        Me.Label2.Size = New System.Drawing.Size(65, 17)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "Species"
         '
@@ -85,7 +85,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(98, 199)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(90, 20)
+        Me.Label3.Size = New System.Drawing.Size(78, 17)
         Me.Label3.TabIndex = 3
         Me.Label3.Text = "RunName"
         '
@@ -95,7 +95,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(98, 235)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(79, 20)
+        Me.Label4.Size = New System.Drawing.Size(69, 17)
         Me.Label4.TabIndex = 4
         Me.Label4.Text = "RunTitle"
         '
@@ -105,7 +105,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(98, 315)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(98, 20)
+        Me.Label5.Size = New System.Drawing.Size(82, 17)
         Me.Label5.TabIndex = 5
         Me.Label5.Text = "Comments"
         '
@@ -115,7 +115,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(26, 550)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(120, 20)
+        Me.Label6.Size = New System.Drawing.Size(103, 17)
         Me.Label6.TabIndex = 6
         Me.Label6.Text = "CreationDate"
         '
@@ -125,7 +125,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(26, 579)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(145, 20)
+        Me.Label7.Size = New System.Drawing.Size(125, 17)
         Me.Label7.TabIndex = 7
         Me.Label7.Text = "ModifyInputDate"
         '
@@ -135,7 +135,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(26, 607)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(123, 20)
+        Me.Label8.Size = New System.Drawing.Size(106, 17)
         Me.Label8.TabIndex = 8
         Me.Label8.Text = "RunTimeDate"
         '
@@ -145,7 +145,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.RunIDLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RunIDLabel.Location = New System.Drawing.Point(242, 74)
         Me.RunIDLabel.Name = "RunIDLabel"
-        Me.RunIDLabel.Size = New System.Drawing.Size(61, 20)
+        Me.RunIDLabel.Size = New System.Drawing.Size(52, 17)
         Me.RunIDLabel.TabIndex = 9
         Me.RunIDLabel.Text = "RunID"
         '
@@ -155,7 +155,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.SpeciesNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SpeciesNameLabel.Location = New System.Drawing.Point(242, 103)
         Me.SpeciesNameLabel.Name = "SpeciesNameLabel"
-        Me.SpeciesNameLabel.Size = New System.Drawing.Size(61, 20)
+        Me.SpeciesNameLabel.Size = New System.Drawing.Size(52, 17)
         Me.SpeciesNameLabel.TabIndex = 10
         Me.SpeciesNameLabel.Text = "RunID"
         '
@@ -164,7 +164,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.RunNameTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RunNameTextBox.Location = New System.Drawing.Point(246, 199)
         Me.RunNameTextBox.Name = "RunNameTextBox"
-        Me.RunNameTextBox.Size = New System.Drawing.Size(285, 27)
+        Me.RunNameTextBox.Size = New System.Drawing.Size(285, 23)
         Me.RunNameTextBox.TabIndex = 11
         '
         'RunTitleTextBox
@@ -172,7 +172,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.RunTitleTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RunTitleTextBox.Location = New System.Drawing.Point(246, 235)
         Me.RunTitleTextBox.Name = "RunTitleTextBox"
-        Me.RunTitleTextBox.Size = New System.Drawing.Size(585, 27)
+        Me.RunTitleTextBox.Size = New System.Drawing.Size(585, 23)
         Me.RunTitleTextBox.TabIndex = 12
         '
         'CommentsRichTextBox
@@ -190,7 +190,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.CreationDateLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CreationDateLabel.Location = New System.Drawing.Point(183, 550)
         Me.CreationDateLabel.Name = "CreationDateLabel"
-        Me.CreationDateLabel.Size = New System.Drawing.Size(120, 20)
+        Me.CreationDateLabel.Size = New System.Drawing.Size(103, 17)
         Me.CreationDateLabel.TabIndex = 14
         Me.CreationDateLabel.Text = "CreationDate"
         '
@@ -200,7 +200,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.ModifyInputDateLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ModifyInputDateLabel.Location = New System.Drawing.Point(183, 579)
         Me.ModifyInputDateLabel.Name = "ModifyInputDateLabel"
-        Me.ModifyInputDateLabel.Size = New System.Drawing.Size(120, 20)
+        Me.ModifyInputDateLabel.Size = New System.Drawing.Size(103, 17)
         Me.ModifyInputDateLabel.TabIndex = 15
         Me.ModifyInputDateLabel.Text = "CreationDate"
         '
@@ -210,7 +210,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.RunTimeDateLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RunTimeDateLabel.Location = New System.Drawing.Point(183, 607)
         Me.RunTimeDateLabel.Name = "RunTimeDateLabel"
-        Me.RunTimeDateLabel.Size = New System.Drawing.Size(120, 20)
+        Me.RunTimeDateLabel.Size = New System.Drawing.Size(103, 17)
         Me.RunTimeDateLabel.TabIndex = 16
         Me.RunTimeDateLabel.Text = "CreationDate"
         '
@@ -242,7 +242,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(98, 134)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(125, 20)
+        Me.Label9.Size = New System.Drawing.Size(106, 17)
         Me.Label9.TabIndex = 19
         Me.Label9.Text = "BasePeriodID"
         '
@@ -252,7 +252,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(63, 170)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(160, 20)
+        Me.Label10.Size = New System.Drawing.Size(137, 17)
         Me.Label10.TabIndex = 20
         Me.Label10.Text = "BasePeriod Name"
         '
@@ -262,7 +262,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.BasePeriodIDLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BasePeriodIDLabel.Location = New System.Drawing.Point(242, 134)
         Me.BasePeriodIDLabel.Name = "BasePeriodIDLabel"
-        Me.BasePeriodIDLabel.Size = New System.Drawing.Size(76, 20)
+        Me.BasePeriodIDLabel.Size = New System.Drawing.Size(65, 17)
         Me.BasePeriodIDLabel.TabIndex = 21
         Me.BasePeriodIDLabel.Text = "Species"
         '
@@ -272,7 +272,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.BasePeriodNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BasePeriodNameLabel.Location = New System.Drawing.Point(242, 170)
         Me.BasePeriodNameLabel.Name = "BasePeriodNameLabel"
-        Me.BasePeriodNameLabel.Size = New System.Drawing.Size(76, 20)
+        Me.BasePeriodNameLabel.Size = New System.Drawing.Size(65, 17)
         Me.BasePeriodNameLabel.TabIndex = 22
         Me.BasePeriodNameLabel.Text = "Species"
         '
@@ -282,7 +282,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.lblRunYear.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblRunYear.Location = New System.Drawing.Point(98, 270)
         Me.lblRunYear.Name = "lblRunYear"
-        Me.lblRunYear.Size = New System.Drawing.Size(80, 20)
+        Me.lblRunYear.Size = New System.Drawing.Size(71, 17)
         Me.lblRunYear.TabIndex = 23
         Me.lblRunYear.Text = "RunYear"
         '
@@ -291,7 +291,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.RunYearTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RunYearTextBox.Location = New System.Drawing.Point(246, 270)
         Me.RunYearTextBox.Name = "RunYearTextBox"
-        Me.RunYearTextBox.Size = New System.Drawing.Size(188, 27)
+        Me.RunYearTextBox.Size = New System.Drawing.Size(188, 23)
         Me.RunYearTextBox.TabIndex = 24
         '
         'FVS_EditRecordSetInfo

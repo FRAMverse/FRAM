@@ -318,7 +318,7 @@ Public Class FVS_ModelRunSelection
 
 
         Try
-            RunIDYearSelect = drd1.GetInt32(10)
+            RunIDYearSelect = drd1.GetString(10)
         Catch Ex As Exception
             MsgBox("Please provide a run year in the RunID table of the AccessDB for RunID " & RunIDSelect & ". You can also enter the run year under FRAMUtilities/EditModelRunInfo.")
             RunIDYearSelect = 0

@@ -253,14 +253,14 @@ TryDBAgain:
          MsgBox("Database and Model Run Must be Selected First !!!", MsgBoxStyle.OkOnly)
          Exit Sub
       End If
-      If ChangeAnyInput = True Or ChangeBackFram = True Or ChangeFishScalers = True Or _
-         ChangeNonRetention = True Or ChangePSCMaxER = True Or ChangeSizeLimit = True Or _
-         ChangeStockFishScaler = True Or ChangeStockRecruit = True Then
-         ChangeAnyInput = True
-      Else
-         MsgBox("No Input Values have been Changed!" & vbCrLf & "No Action Taken", MsgBoxStyle.OkOnly)
-         Exit Sub
-      End If
+        If ChangeAnyInput = True Or ChangeBackFram = True Or ChangeFishScalers = True Or _
+           ChangeNonRetention = True Or ChangePSCMaxER = True Or ChangeSizeLimit = True Or _
+           ChangeStockFishScaler = True Or ChangeStockRecruit = True Or AnyChange = True Then
+            ChangeAnyInput = True
+        Else
+            MsgBox("No Input Values have been Changed!" & vbCrLf & "No Action Taken", MsgBoxStyle.OkOnly)
+            Exit Sub
+        End If
 
       Me.Visible = False
       FVS_SaveModelRunInputs.ShowDialog()

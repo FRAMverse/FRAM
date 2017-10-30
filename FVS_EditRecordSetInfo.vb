@@ -24,7 +24,7 @@ Public Class FVS_EditRecordSetInfo
          SpeciesNameLabel.Text = SpeciesName.ToString
          BasePeriodIDLabel.Text = BasePeriodID.ToString
          BasePeriodNameLabel.Text = BasePeriodName.ToString
-         RunNameTextBox.Text = RunIDNameSelect.ToString
+            RunNameTextBox.Text = RunIDNameSelect.ToString
          RunTitleTextBox.Text = RunIDTitleSelect.ToString
          CommentsRichTextBox.Text = RunIDCommentsSelect
          CreationDateLabel.Text = RunIDCreationDateSelect.ToString
@@ -81,18 +81,22 @@ Public Class FVS_EditRecordSetInfo
 
    Private Sub REDoneButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles REDoneButton.Click
 
-      Dim AnyChange As Boolean
+        'Dim AnyChange As Boolean
       Dim Result As Integer
       AnyChange = False
 
       If RunNameTextBox.Text <> RunIDNameSelect.ToString Then
          AnyChange = True
-      End If
-      If (RunTitleTextBox.Text <> RunIDTitleSelect.ToString) Then
-         AnyChange = True
-      End If
-      If CommentsRichTextBox.Text <> RunIDCommentsSelect Then
-         AnyChange = True
+        End If
+        
+        If (RunTitleTextBox.Text <> RunIDTitleSelect.ToString) Then
+            AnyChange = True
+        End If
+        If (RunTitleTextBox.Text <> RunIDTitleSelect.ToString) Then
+            AnyChange = True
+        End If
+        If CommentsRichTextBox.Text <> RunIDCommentsSelect Then
+            AnyChange = True
         End If
         If RunYearTextBox.Text <> RunIDYearSelect.ToString Then
             AnyChange = True
@@ -198,6 +202,14 @@ Public Class FVS_EditRecordSetInfo
     End Sub
 
     Private Sub RunTitleTextBox_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RunTitleTextBox.TextChanged
+
+    End Sub
+
+    Private Sub CommentsRichTextBox_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CommentsRichTextBox.TextChanged
+
+    End Sub
+
+    Private Sub RunYearTextBox_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RunYearTextBox.TextChanged
 
     End Sub
 End Class

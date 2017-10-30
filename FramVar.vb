@@ -59,7 +59,8 @@ Public Module FramVar
    Public ChangePSCMaxER As Boolean
    Public ChangeSizeLimit As Boolean
    Public ChangeStockFishScaler As Boolean
-   Public ChangeStockRecruit As Boolean
+    Public ChangeStockRecruit As Boolean
+    Public AnyChange As Boolean
 
    '- Base Period Variables
    Public BasePeriodID As Integer

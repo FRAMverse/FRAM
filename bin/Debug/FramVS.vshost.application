@@ -11,11 +11,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-<<<<<<< HEAD
-        <dsig:DigestValue>lLRRpffl+GWjbzZ+slaNNIluHIM=</dsig:DigestValue>
-=======
-        <dsig:DigestValue>OuDW69Zr2FcuDdru8ZJ005vuEUg=</dsig:DigestValue>
->>>>>>> BkFRAM_updates
+        <dsig:DigestValue>2z+TTCP1eHjWR5zHydH+pQCffZY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
