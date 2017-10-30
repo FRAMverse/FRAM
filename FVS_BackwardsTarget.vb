@@ -28,39 +28,41 @@ Public Class FVS_BackwardsTarget
       BFTargetGrid.Columns.Clear()
       BFTargetGrid.ColumnHeadersDefaultCellStyle.Font = New Font("Microsoft San Serif", CInt(10 / FormWidthScaler), FontStyle.Bold)
       BFTargetGrid.Rows.Clear()
-      If SpeciesName = "COHO" Then
-         BFTargetGrid.DefaultCellStyle.Font = New Font("Microsoft San Serif", CInt(10 / FormWidthScaler), FontStyle.Bold)
+        If SpeciesName = "COHO" Then
+            BTFillSSButton.Visible = True
+            BFTargetGrid.DefaultCellStyle.Font = New Font("Microsoft San Serif", CInt(10 / FormWidthScaler), FontStyle.Bold)
 
-         BFTargetGrid.Columns.Add("StockTitle", "Stock Name")
-         BFTargetGrid.Columns("StockTitle").Width = 400 / FormWidthScaler
-         BFTargetGrid.Columns("StockTitle").ReadOnly = True
-         BFTargetGrid.Columns("StockTitle").DefaultCellStyle.BackColor = Color.Aquamarine
-         BFTargetGrid.Columns("StockTitle").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
+            BFTargetGrid.Columns.Add("StockTitle", "Stock Name")
+            BFTargetGrid.Columns("StockTitle").Width = 400 / FormWidthScaler
+            BFTargetGrid.Columns("StockTitle").ReadOnly = True
+            BFTargetGrid.Columns("StockTitle").DefaultCellStyle.BackColor = Color.Aquamarine
+            BFTargetGrid.Columns("StockTitle").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
 
-         BFTargetGrid.Columns.Add("StockName", "Stk Abbrv")
-         BFTargetGrid.Columns("StockName").Width = 100 / FormWidthScaler
-         BFTargetGrid.Columns("StockName").ReadOnly = True
-         BFTargetGrid.Columns("StockName").DefaultCellStyle.BackColor = Color.Aquamarine
-         BFTargetGrid.Columns("StockName").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
+            BFTargetGrid.Columns.Add("StockName", "Stk Abbrv")
+            BFTargetGrid.Columns("StockName").Width = 100 / FormWidthScaler
+            BFTargetGrid.Columns("StockName").ReadOnly = True
+            BFTargetGrid.Columns("StockName").DefaultCellStyle.BackColor = Color.Aquamarine
+            BFTargetGrid.Columns("StockName").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
 
-         BFTargetGrid.Columns.Add("TargetEsc", "Target Esc")
-         BFTargetGrid.Columns("TargetEsc").Width = 100 / FormWidthScaler
-         BFTargetGrid.Columns("TargetEsc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
+            BFTargetGrid.Columns.Add("TargetEsc", "Target Esc")
+            BFTargetGrid.Columns("TargetEsc").Width = 100 / FormWidthScaler
+            BFTargetGrid.Columns("TargetEsc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
 
-         BFTargetGrid.Columns.Add("Flag", "FLAG")
-         BFTargetGrid.Columns("Flag").Width = 60 / FormWidthScaler
-         BFTargetGrid.Columns("Flag").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomCenter
+            BFTargetGrid.Columns.Add("Flag", "FLAG")
+            BFTargetGrid.Columns("Flag").Width = 60 / FormWidthScaler
+            BFTargetGrid.Columns("Flag").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomCenter
 
-         BFTargetGrid.RowCount = NumStk
+            BFTargetGrid.RowCount = NumStk
 
-         For Stk As Integer = 1 To NumStk
-            BFTargetGrid.Item(0, Stk - 1).Value = StockTitle(Stk)
-            BFTargetGrid.Item(1, Stk - 1).Value = StockName(Stk)
-            BFTargetGrid.Item(2, Stk - 1).Value = CLng(BackwardsTarget(Stk))
-            BFTargetGrid.Item(3, Stk - 1).Value = BackwardsFlag(Stk)
-         Next
+            For Stk As Integer = 1 To NumStk
+                BFTargetGrid.Item(0, Stk - 1).Value = StockTitle(Stk)
+                BFTargetGrid.Item(1, Stk - 1).Value = StockName(Stk)
+                BFTargetGrid.Item(2, Stk - 1).Value = CLng(BackwardsTarget(Stk))
+                BFTargetGrid.Item(3, Stk - 1).Value = BackwardsFlag(Stk)
+            Next
 
-      ElseIf SpeciesName = "CHINOOK" Then
+        ElseIf SpeciesName = "CHINOOK" Then
+            BTFillSSButton.Visible = False
 
             If NumStk = 38 Or NumStk = 76 Then
                 NumChinTermRuns = 37
@@ -70,43 +72,43 @@ Public Class FVS_BackwardsTarget
                 NumChinTermRuns = NumStk / 2 - 1
             End If
 
-         Call FVS_BackwardsFram.BackChinArrays()
+            Call FVS_BackwardsFram.BackChinArrays()
 
-         BFTargetGrid.DefaultCellStyle.Font = New Font("Microsoft San Serif", CInt(8 / FormWidthScaler), FontStyle.Bold)
-         If BFTargetGrid.ColumnCount = 0 Then
-            BFTargetGrid.Columns.Add("StockTitle", "Stock Name")
-            BFTargetGrid.Columns("StockTitle").Width = 350 / FormWidthScaler
-            BFTargetGrid.Columns("StockTitle").ReadOnly = True
-            BFTargetGrid.Columns("StockTitle").DefaultCellStyle.BackColor = Color.Aquamarine
+            BFTargetGrid.DefaultCellStyle.Font = New Font("Microsoft San Serif", CInt(8 / FormWidthScaler), FontStyle.Bold)
+            If BFTargetGrid.ColumnCount = 0 Then
+                BFTargetGrid.Columns.Add("StockTitle", "Stock Name")
+                BFTargetGrid.Columns("StockTitle").Width = 350 / FormWidthScaler
+                BFTargetGrid.Columns("StockTitle").ReadOnly = True
+                BFTargetGrid.Columns("StockTitle").DefaultCellStyle.BackColor = Color.Aquamarine
 
-            BFTargetGrid.Columns.Add("StockName", "Stk Abbrv")
-            BFTargetGrid.Columns("StockName").Width = 150 / FormWidthScaler
-            BFTargetGrid.Columns("StockName").ReadOnly = True
-            BFTargetGrid.Columns("StockName").DefaultCellStyle.BackColor = Color.Aquamarine
+                BFTargetGrid.Columns.Add("StockName", "Stk Abbrv")
+                BFTargetGrid.Columns("StockName").Width = 150 / FormWidthScaler
+                BFTargetGrid.Columns("StockName").ReadOnly = True
+                BFTargetGrid.Columns("StockName").DefaultCellStyle.BackColor = Color.Aquamarine
 
-            BFTargetGrid.Columns.Add("Age3TermRun", "Age-3")
-            BFTargetGrid.Columns("Age3TermRun").Width = 100 / FormWidthScaler
-            BFTargetGrid.Columns("Age3TermRun").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
+                BFTargetGrid.Columns.Add("Age3TermRun", "Age-3")
+                BFTargetGrid.Columns("Age3TermRun").Width = 100 / FormWidthScaler
+                BFTargetGrid.Columns("Age3TermRun").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
 
-            BFTargetGrid.Columns.Add("Age4TermRun", "Age-4")
-            BFTargetGrid.Columns("Age4TermRun").Width = 100 / FormWidthScaler
-            BFTargetGrid.Columns("Age4TermRun").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
+                BFTargetGrid.Columns.Add("Age4TermRun", "Age-4")
+                BFTargetGrid.Columns("Age4TermRun").Width = 100 / FormWidthScaler
+                BFTargetGrid.Columns("Age4TermRun").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
 
-            BFTargetGrid.Columns.Add("Age5TermRun", "Age-5")
-            BFTargetGrid.Columns("Age5TermRun").Width = 100 / FormWidthScaler
-            BFTargetGrid.Columns("Age5TermRun").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
+                BFTargetGrid.Columns.Add("Age5TermRun", "Age-5")
+                BFTargetGrid.Columns("Age5TermRun").Width = 100 / FormWidthScaler
+                BFTargetGrid.Columns("Age5TermRun").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
 
-            BFTargetGrid.Columns.Add("ChinFlag", "FLAG")
-            BFTargetGrid.Columns("ChinFlag").Width = 60 / FormWidthScaler
-            BFTargetGrid.Columns("ChinFlag").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomCenter
+                BFTargetGrid.Columns.Add("ChinFlag", "FLAG")
+                BFTargetGrid.Columns("ChinFlag").Width = 60 / FormWidthScaler
+                BFTargetGrid.Columns("ChinFlag").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomCenter
 
-         End If
+            End If
 
             BFTargetGrid.RowCount = NumStk + NumChinTermRuns
 
-         'Put Stock Names into Array using DRV File order
-         For Stk As Integer = 1 To NumStk
-            Select Case NumStk
+            'Put Stock Names into Array using DRV File order
+            For Stk As Integer = 1 To NumStk
+                Select Case NumStk
                     Case Is > 65
                         If Stk = 1 Or Stk = 2 Then
                             BFTargetGrid.Item(0, Stk).Value = "-----  " & StockTitle(Stk)
@@ -125,21 +127,21 @@ Public Class FVS_BackwardsTarget
                                 BFTargetGrid.Item(1, TermRunStock(Stk) * 3).Value = "-- " & StockName(Stk)
                             End If
                         End If
-               Case 33, 38
-                  If Stk = 1 Then
-                     BFTargetGrid.Item(0, Stk).Value = "-----  " & StockTitle(Stk)
-                     BFTargetGrid.Item(1, Stk).Value = "-- " & StockName(Stk)
-                  ElseIf Stk > 1 And Stk < 4 Then
-                     BFTargetGrid.Item(0, Stk + 1).Value = "-----  " & StockTitle(Stk)
-                     BFTargetGrid.Item(1, Stk + 1).Value = "-- " & StockName(Stk)
-                  Else
-                     BFTargetGrid.Item(0, TermRunStock(Stk) * 2).Value = "-----  " & StockTitle(Stk)
-                     BFTargetGrid.Item(1, TermRunStock(Stk) * 2).Value = "-- " & StockName(Stk)
-                  End If
-            End Select
-         Next Stk
-         '- Term Run Names
-         For Stk As Integer = 1 To NumChinTermRuns
+                    Case 33, 38
+                        If Stk = 1 Then
+                            BFTargetGrid.Item(0, Stk).Value = "-----  " & StockTitle(Stk)
+                            BFTargetGrid.Item(1, Stk).Value = "-- " & StockName(Stk)
+                        ElseIf Stk > 1 And Stk < 4 Then
+                            BFTargetGrid.Item(0, Stk + 1).Value = "-----  " & StockTitle(Stk)
+                            BFTargetGrid.Item(1, Stk + 1).Value = "-- " & StockName(Stk)
+                        Else
+                            BFTargetGrid.Item(0, TermRunStock(Stk) * 2).Value = "-----  " & StockTitle(Stk)
+                            BFTargetGrid.Item(1, TermRunStock(Stk) * 2).Value = "-- " & StockName(Stk)
+                        End If
+                End Select
+            Next Stk
+            '- Term Run Names
+            For Stk As Integer = 1 To NumChinTermRuns
 
                 If NumStk > 65 Then
                     If Stk > 2 Then
@@ -160,21 +162,21 @@ Public Class FVS_BackwardsTarget
                 End If
             Next Stk
 
-         For Stk As Integer = 1 To NumStk + NumChinTermRuns
-            For Age As Integer = 3 To 5
-               If TermStockNum(Stk) < 0 And NumStk < 66 Then  '- TermRuns NOT USED for Non-Selective Base
-                  BFTargetGrid.Item(Age - 1, Stk - 1).Value = "*****"
-               Else
-                  BFTargetGrid.Item(Age - 1, Stk - 1).Value = BackwardsChinook(Stk, Age)
-               End If
-            Next
-            If TermStockNum(Stk) < 0 And NumStk < 66 Then
-               BFTargetGrid.Item(5, Stk - 1).Value = "*"
-            Else
-               BFTargetGrid.Item(5, Stk - 1).Value = BackwardsFlag(Stk)
-            End If
-         Next Stk
-      End If
+            For Stk As Integer = 1 To NumStk + NumChinTermRuns
+                For Age As Integer = 3 To 5
+                    If TermStockNum(Stk) < 0 And NumStk < 66 Then  '- TermRuns NOT USED for Non-Selective Base
+                        BFTargetGrid.Item(Age - 1, Stk - 1).Value = "*****"
+                    Else
+                        BFTargetGrid.Item(Age - 1, Stk - 1).Value = BackwardsChinook(Stk, Age)
+                    End If
+                Next
+                If TermStockNum(Stk) < 0 And NumStk < 66 Then
+                    BFTargetGrid.Item(5, Stk - 1).Value = "*"
+                Else
+                    BFTargetGrid.Item(5, Stk - 1).Value = BackwardsFlag(Stk)
+                End If
+            Next Stk
+        End If
 
    End Sub
 

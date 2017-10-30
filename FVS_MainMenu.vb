@@ -39,11 +39,12 @@ Public Class FVS_MainMenu
          ChangeAnyInput = True
          Result = MsgBox("Input Values have been Changed!" & vbCrLf & "Save Current Model Run ???", MsgBoxStyle.YesNo)
          If Result = vbYes Then
-            Call SaveModelRunInputs()
-         End If
+                Call SaveModelRunInputs()
+            
+            End If
       End If
 
-      End
+        End
 
    End Sub
 

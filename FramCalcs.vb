@@ -832,37 +832,44 @@ SkipTami2:
       '----- MAIN Backwards FRAM Processing Loop
 
       Call ScaleCohort()
-      AnyNegativeEscapement = 0
-      For TStep = 1 To NumSteps
-         Call NatMort()
-         Call CompCatch(PTerm)
-         Call IncMort(PTerm)
-         Call Mature()
-         Call CompCatch(Term)
-         Call IncMort(Term)
-         Call CompEscape()
-         '- Put Cohort Numbers into Next Time Step
-         For Stk As Integer = 1 To NumStk
-            For Age As Integer = MinAge To MaxAge
-               If TStep < NumSteps Then
-                  Cohort(Stk, Age, PTerm, TStep + 1) = Cohort(Stk, Age, PTerm, TStep)
-               End If
-            Next
-         Next
-         '- Check for Negative Escapements
-         If AnyNegativeEscapement = 1 Then
-            PrnLine = "Negative Escapements"
-            sw.WriteLine(PrnLine)
+        
+        For TStep = 1 To NumSteps
+
+            If TStep = 5 Then
+                Jim = 1
+            End If
+
+
+
+            Call NatMort()
+            Call CompCatch(PTerm)
+            Call IncMort(PTerm)
+            Call Mature()
+            Call CompCatch(Term)
+            Call IncMort(Term)
+            Call CompEscape()
+            '- Put Cohort Numbers into Next Time Step
             For Stk As Integer = 1 To NumStk
-               For Age As Integer = MinAge To MaxAge
-                  If Escape(Stk, Age, TStep) < 0 Then
-                     PrnLine = "   Stock=" & StockName(Stk).ToString & " Age=" & Age.ToString & " = " & Escape(Stk, Age, TStep).ToString("#####0.0")
-                     sw.WriteLine(PrnLine)
-                  End If
-               Next Age
-            Next Stk
-         End If
-      Next
+                For Age As Integer = MinAge To MaxAge
+                    If TStep < NumSteps Then
+                        Cohort(Stk, Age, PTerm, TStep + 1) = Cohort(Stk, Age, PTerm, TStep)
+                    End If
+                Next
+            Next
+            '- Check for Negative Escapements
+            If AnyNegativeEscapement = 1 Then
+                PrnLine = "Negative Escapements"
+                sw.WriteLine(PrnLine)
+                For Stk As Integer = 1 To NumStk
+                    For Age As Integer = MinAge To MaxAge
+                        If Escape(Stk, Age, TStep) < 0 Then
+                            PrnLine = "   Stock=" & StockName(Stk).ToString & " Age=" & Age.ToString & " = " & Escape(Stk, Age, TStep).ToString("#####0.0")
+                            sw.WriteLine(PrnLine)
+                        End If
+                    Next Age
+                Next Stk
+            End If
+        Next
 
       '- Move this Call to FVS_BackwardsFram (after all iterations)
       'Call SaveDat()
@@ -911,12 +918,8 @@ SkipTami2:
         If SkipJim = 1 Then sw.WriteLine(PrnLine)
 
         For Fish As Integer = 1 To NumFish
-            If Fish = 40 And TStep = 3 Then
-                Fish = 40
-            End If
+            
             'If TStep >= 4 And Fish = 140 Then Jim = 1
-            If TStep = 1 And Fish = 15 Then Jim = 1
-            If TerminalType = 1 Then Jim = 1
 
             If AnyBaseRate(Fish, TStep) = 0 Then GoTo NextScalerFishery ' if there is no catch in the base period
             '- Fishery/Time-Step can only be Terminal or Pre-Terminal
@@ -929,7 +932,7 @@ SkipTami2:
                 TotalDropOff(Fish, TStep) = 0
                 NSFQuotaTotal(Fish, TStep) = 0
                 MSFQuotaTotal(Fish, TStep) = 0
-               
+
                 ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
                 'MSFEncountersTotal(Fish, TStep) = 0 ' Wipe these out...
                 'NSEncountersTotal(Fish, TStep) = 0  ' Wipe these out...
@@ -942,10 +945,7 @@ SkipTami2:
 
                     For Stk As Integer = 1 To NumStk
                         For Age As Integer = MinAge To MaxAge
-                            If Stk = 47 And Fish = 27 And TStep = 3 Then
-                                Stk = 47
-                            End If
-
+                            
                             '- Zero Calculation Arrays for TAMM Iteration Calculations
                             LandedCatch(Stk, Age, Fish, TStep) = 0
                             DropOff(Stk, Age, Fish, TStep) = 0
@@ -955,7 +955,7 @@ SkipTami2:
                             MSFDropOff(Stk, Age, Fish, TStep) = 0
                             MSFEncounters(Stk, Age, Fish, TStep) = 0
                             MSFNonRetention(Stk, Age, Fish, TStep) = 0
-                            
+
                             '- Compute Legal Proportion by Stock, Age, and Time-Step
                             ChinookBaseLegProp = False
                             If Stk = 3 And Age = 3 And TStep = 3 And Fish = 40 Then
@@ -1017,10 +1017,8 @@ SkipTami2:
 
 
                                     '--- Main FRAM Harvest Algorithm --------------------
-                                    If Stk = 67 And Age = 2 And TStep = 3 And Fish = 54 Then
-                                        TStep = 3
-                                    End If
                                     
+
                                     LandedCatch(Stk, Age, Fish, TStep) = _
                                        Cohort(Stk, Age, TerminalType, TStep) * _
                                        BaseExploitationRate(Stk, Age, Fish, TStep) * _
@@ -1050,7 +1048,7 @@ SkipTami2:
                                     ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
                                     'NSEncountersTotal(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
                                     ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
-                                End If
+                                    End If
                             End If
 
 
@@ -1134,6 +1132,13 @@ SkipTami2:
                             '- Retention Quota Fishery
                             If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
                                 '- First Pass for Quota Fisheries - Landed Catch as if FisheryScaler = 1
+
+                                
+                                If Stk = 57 And Fish = 1 And TStep = 4 And Age = 5 Then
+                                    Jim = 1
+                                End If
+                               
+
                                 LandedCatch(Stk, Age, Fish, TStep) = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * Cohort(Stk, Age, TerminalType, TStep) * LegalProportion
                                 'Encounters(Stk, Age, Fish, TStep) += Encounters(Stk, Age, Fish, TStep) + LandedCatch(Stk, Age, Fish, TStep)
                                 'TotalEncounters(Fish, TStep) = TotalEncounters(Fish, TStep) + LandedCatch(Stk, Age, Fish, TStep)
@@ -1198,16 +1203,13 @@ SkipTami2:
                 End If
             End If
 NextScalerFishery:
-         'Debug.Print("Fishery " & FisheryName(Fish) & "TS " & TStep & " Landed = " & TotalLandedCatch(Fish, TStep))
+            'Debug.Print("Fishery " & FisheryName(Fish) & "TS " & TStep & " Landed = " & TotalLandedCatch(Fish, TStep))
         Next Fish
 
       'Pass #2 - COMPUTE CATCH IN FISHERIES WITH QUOTAS 
 
       For Fish As Integer = 1 To NumFish
-            If Fish = 40 And TStep = 3 Then
-                TStep = 3
-
-            End If
+          
          If TerminalFisheryFlag(Fish, TStep) = TerminalType Then
 
             '- Retention Quota Fishery Pass #2
@@ -1215,22 +1217,25 @@ NextScalerFishery:
                If NSFQuotaTotal(Fish, TStep) > 0 Then
                   FisheryScaler(Fish, TStep) = ModelStockProportion(Fish) * FisheryQuota(Fish, TStep) / NSFQuotaTotal(Fish, TStep)
                   For Stk As Integer = 1 To NumStk
-                     For Age As Integer = MinAge To MaxAge
-                        '- Subtract Landed Catch from 1st Pass from Total
+                            For Age As Integer = MinAge To MaxAge
+                                If Stk = 34 And Age = 5 And TStep = 2 And Fish = 10 Then
+                                    Jim = 1
+                                End If
+                                '- Subtract Landed Catch from 1st Pass from Total
                                 TotalLandedCatch(Fish, TStep) -= LandedCatch(Stk, Age, Fish, TStep)
 
-                        If (Stk Mod 2) <> 0 Then      '--- UnMarked Fish
-                           TotalLandedCatch(NumFish + Fish, TStep) -= LandedCatch(Stk, Age, Fish, TStep)
-                        End If
-                        '- Compute new Landed Catch and add back to Total
-                        LandedCatch(Stk, Age, Fish, TStep) = FisheryScaler(Fish, TStep) * LandedCatch(Stk, Age, Fish, TStep)
+                                If (Stk Mod 2) <> 0 Then      '--- UnMarked Fish
+                                    TotalLandedCatch(NumFish + Fish, TStep) -= LandedCatch(Stk, Age, Fish, TStep)
+                                End If
+                                '- Compute new Landed Catch and add back to Total
+                                LandedCatch(Stk, Age, Fish, TStep) = FisheryScaler(Fish, TStep) * LandedCatch(Stk, Age, Fish, TStep)
                                 Encounters(Stk, Age, Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
                                 TotalLandedCatch(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
-                        If (Stk Mod 2) <> 0 Then      '--- UnMarked Fish
-                           TotalLandedCatch(NumFish + Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
+                                If (Stk Mod 2) <> 0 Then      '--- UnMarked Fish
+                                    TotalLandedCatch(NumFish + Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
                                 End If
                                 TotalEncounters(Fish, TStep) = TotalEncounters(Fish, TStep) + LandedCatch(Stk, Age, Fish, TStep)
-                     Next Age
+                            Next Age
                   Next Stk
 
                   ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
@@ -1469,58 +1474,60 @@ SecondPassEntry:
 
       '- Sum ER by Mark Type for All Stocks and All Fisheries
       For Stk As Integer = 1 To NumStk
-         For Fish As Integer = 1 To NumFish
-            If TerminalFisheryFlag(Fish, TStep) <> TerminalType Then GoTo NextERateFish
-            '- Set Scaler to 0.1 for quota First Pass to 0.1 if undefined to avoid high total ER for time step
-            'If SecondPass = False Then
-            '   If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
-            '      If FisheryQuota(Fish, TStep) = 0 Then
-            '         FisheryScaler(Fish, TStep) = 0
-            '      Else
-            '         If FisheryScaler(Fish, TStep) = 0 Then FisheryScaler(Fish, TStep) = 0.1
-            '      End If
-            '   End If
-            '   If FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 28 Then
-            '      If MSFFisheryQuota(Fish, TStep) = 0 Then
-            '         MSFFisheryScaler(Fish, TStep) = 0
-            '      Else
-            '         If MSFFisheryScaler(Fish, TStep) = 0 Then MSFFisheryScaler(Fish, TStep) = 0.1
-            '      End If
-            '   End If
-            'End If
-            '- Compute Rates
-            FishERRate = 0
-            If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
-               FishERRate = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * FisheryScaler(Fish, TStep) * (1 + IncidentalRate(Fish, TStep))
-               NSStkERRate(Stk, Fish) += FishERRate
-               NSStkERRateTilde(Stk, Fish) += FishERRate
-            End If
+            For Fish As Integer = 1 To NumFish
 
-            'If FishERRate <> 0 Then
-            '   PrnLine = String.Format("NS!{0,8}", StockName(Stk))
-            '   PrnLine &= String.Format("{0,11}", FisheryName(Fish))
-            '   PrnLine &= String.Format("{0,2}", TStep.ToString(" 0"))
-            '   PrnLine &= String.Format("{0,10}", FishERRate.ToString(" #0.000000"))
-            '   sw.WriteLine(PrnLine)
-            'End If
+                
+                If TerminalFisheryFlag(Fish, TStep) <> TerminalType Then GoTo NextERateFish
+                '- Set Scaler to 0.1 for quota First Pass to 0.1 if undefined to avoid high total ER for time step
+                'If SecondPass = False Then
+                '   If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
+                '      If FisheryQuota(Fish, TStep) = 0 Then
+                '         FisheryScaler(Fish, TStep) = 0
+                '      Else
+                '         If FisheryScaler(Fish, TStep) = 0 Then FisheryScaler(Fish, TStep) = 0.1
+                '      End If
+                '   End If
+                '   If FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 28 Then
+                '      If MSFFisheryQuota(Fish, TStep) = 0 Then
+                '         MSFFisheryScaler(Fish, TStep) = 0
+                '      Else
+                '         If MSFFisheryScaler(Fish, TStep) = 0 Then MSFFisheryScaler(Fish, TStep) = 0.1
+                '      End If
+                '   End If
+                'End If
+                '- Compute Rates
+                FishERRate = 0
+                If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
+                    FishERRate = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * FisheryScaler(Fish, TStep) * (1 + IncidentalRate(Fish, TStep))
+                    NSStkERRate(Stk, Fish) += FishERRate
+                    NSStkERRateTilde(Stk, Fish) += FishERRate
+                End If
 
-            FishERRate = 0
-            If FisheryFlag(Fish, TStep) = 7 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
-               FishERRate = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep) * (1 + MarkSelectiveIncRate(Fish, TStep))
-               MSFStkERRate(Stk, Fish) += FishERRate
-               FishERRate = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep) * (1 + MarkSelectiveIncRate(Fish, TStep)) * EncounterMort(Stk, Fish)
-               MSFStkERRateTilde(Stk, Fish) += FishERRate
-            End If
+                'If FishERRate <> 0 Then
+                '   PrnLine = String.Format("NS!{0,8}", StockName(Stk))
+                '   PrnLine &= String.Format("{0,11}", FisheryName(Fish))
+                '   PrnLine &= String.Format("{0,2}", TStep.ToString(" 0"))
+                '   PrnLine &= String.Format("{0,10}", FishERRate.ToString(" #0.000000"))
+                '   sw.WriteLine(PrnLine)
+                'End If
 
-            'If FishERRate <> 0 Then
-            '   PrnLine = String.Format("MSF{0,8}", StockName(Stk))
-            '   PrnLine &= String.Format("{0,11}", FisheryName(Fish))
-            '   PrnLine &= String.Format("{0,2}", TStep.ToString(" 0"))
-            '   PrnLine &= String.Format("{0,10}", FishERRate.ToString(" #0.000000"))
-            '   sw.WriteLine(PrnLine)
-            'End If
+                FishERRate = 0
+                If FisheryFlag(Fish, TStep) = 7 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
+                    FishERRate = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep) * (1 + MarkSelectiveIncRate(Fish, TStep))
+                    MSFStkERRate(Stk, Fish) += FishERRate
+                    FishERRate = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep) * (1 + MarkSelectiveIncRate(Fish, TStep)) * EncounterMort(Stk, Fish)
+                    MSFStkERRateTilde(Stk, Fish) += FishERRate
+                End If
 
-            '- Sum over all fisheries (Non-Selective and Selective)
+                'If FishERRate <> 0 Then
+                '   PrnLine = String.Format("MSF{0,8}", StockName(Stk))
+                '   PrnLine &= String.Format("{0,11}", FisheryName(Fish))
+                '   PrnLine &= String.Format("{0,2}", TStep.ToString(" 0"))
+                '   PrnLine &= String.Format("{0,10}", FishERRate.ToString(" #0.000000"))
+                '   sw.WriteLine(PrnLine)
+                'End If
+
+                '- Sum over all fisheries (Non-Selective and Selective)
                 StkERRate(Stk) += (MSFStkERRate(Stk, Fish) + NSStkERRate(Stk, Fish))
                 StkERRateTilde(Stk) += (MSFStkERRateTilde(Stk, Fish) + NSStkERRateTilde(Stk, Fish))
                 If StkERRateTilde(Stk) > 1 Then
@@ -1602,61 +1609,62 @@ NextERateFish:
          '- Compute TimeStep Mortality for a Stock
          StkMort(Stk) = Cohort(Stk, Age, TerminalType, TStep) * Meeew(Stk)
          '- Compute Fishery/Time-Step Mortality for a Stock
-         For Fish As Integer = 1 To NumFish
-            If StkERRateTilde(Stk) = 0 Then
-               NSFishWeight(Stk, Fish) = 0
-               MSFishWeight(Stk, Fish) = 0
-            Else
-               NSFishWeight(Stk, Fish) = NSStkERRateTilde(Stk, Fish) / StkERRateTilde(Stk)
-               MSFishWeight(Stk, Fish) = MSFStkERRateTilde(Stk, Fish) / StkERRateTilde(Stk)
-            End If
+            For Fish As Integer = 1 To NumFish
+                
+                If StkERRateTilde(Stk) = 0 Then
+                    NSFishWeight(Stk, Fish) = 0
+                    MSFishWeight(Stk, Fish) = 0
+                Else
+                    NSFishWeight(Stk, Fish) = NSStkERRateTilde(Stk, Fish) / StkERRateTilde(Stk)
+                    MSFishWeight(Stk, Fish) = MSFStkERRateTilde(Stk, Fish) / StkERRateTilde(Stk)
+                End If
 
-            If NSFishWeight(Stk, Fish) = 0 Then
-               NSFishMort(Stk, Fish) = 0
-            Else
-               NSFishMort(Stk, Fish) = StkMort(Stk) * NSFishWeight(Stk, Fish)
-            End If
+                If NSFishWeight(Stk, Fish) = 0 Then
+                    NSFishMort(Stk, Fish) = 0
+                Else
+                    NSFishMort(Stk, Fish) = StkMort(Stk) * NSFishWeight(Stk, Fish)
+                End If
 
-            If MSFishWeight(Stk, Fish) = 0 Then
-               MSFishMort(Stk, Fish) = 0
-            Else
-               MSFishMort(Stk, Fish) = StkMort(Stk) * MSFishWeight(Stk, Fish)
-            End If
+                If MSFishWeight(Stk, Fish) = 0 Then
+                    MSFishMort(Stk, Fish) = 0
+                Else
+                    MSFishMort(Stk, Fish) = StkMort(Stk) * MSFishWeight(Stk, Fish)
+                End If
 
-            'If Fish = 187 And NSFishMort(Stk, Fish) <> 0 Then
+                'If Fish = 187 And NSFishMort(Stk, Fish) <> 0 Then
 
-            'End If
-            'Jim = 1
+                'End If
+                'Jim = 1
 
-            If NSFishMort(Stk, Fish) = 0 Then
-               LandedCatch(Stk, Age, Fish, TStep) = 0
-               Encounters(Stk, Age, Fish, TStep) = 0
-               DropOff(Stk, Age, Fish, TStep) = 0
-            Else
-               '- Compute Non-Selective Landed and Non-Landed Mortality by Stock, Fishery, Time-Step
-               LandedCatch(Stk, Age, Fish, TStep) = NSFishMort(Stk, Fish) / (1 + IncidentalRate(Fish, TStep))
-               Encounters(Stk, Age, Fish, TStep) = LandedCatch(Stk, Age, Fish, TStep)
-               DropOff(Stk, Age, Fish, TStep) = NSFishMort(Stk, Fish) - LandedCatch(Stk, Age, Fish, TStep)
-               TotalNSLanded(Fish) += LandedCatch(Stk, Age, Fish, TStep)
-               TotalLandedCatch(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
-               TotalEncounters(Fish, TStep) += Encounters(Stk, Age, Fish, TStep)
-            End If
-            If MSFishMort(Stk, Fish) = 0 Then
-               MSFLandedCatch(Stk, Age, Fish, TStep) = 0
-               MSFNonRetention(Stk, Age, Fish, TStep) = 0
-               MSFEncounters(Stk, Age, Fish, TStep) = 0
-               MSFDropOff(Stk, Age, Fish, TStep) = 0
-            Else
-               '- Compute Non-Selective Landed and Non-Landed Mortality by Stock, Fishery, Time-Step
-               MSFLandedCatch(Stk, Age, Fish, TStep) = MSFishMort(Stk, Fish) * PPNLandedCat(Stk, Fish)
-               MSFNonRetention(Stk, Age, Fish, TStep) = MSFishMort(Stk, Fish) * PPNNonRetion(Stk, Fish)
-               MSFEncounters(Stk, Age, Fish, TStep) = Cohort(Stk, Age, TerminalType, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep)
-               MSFDropOff(Stk, Age, Fish, TStep) = MSFishMort(Stk, Fish) * PPNIncidental(Stk, Fish)
-               TotalMSFLanded(Fish) += MSFLandedCatch(Stk, Age, Fish, TStep)
-               TotalLandedCatch(Fish, TStep) += MSFLandedCatch(Stk, Age, Fish, TStep)
-               TotalEncounters(Fish, TStep) += MSFEncounters(Stk, Age, Fish, TStep)
-            End If
-         Next
+                If NSFishMort(Stk, Fish) = 0 Then
+                    LandedCatch(Stk, Age, Fish, TStep) = 0
+                    Encounters(Stk, Age, Fish, TStep) = 0
+                    DropOff(Stk, Age, Fish, TStep) = 0
+                Else
+                    '- Compute Non-Selective Landed and Non-Landed Mortality by Stock, Fishery, Time-Step
+                    LandedCatch(Stk, Age, Fish, TStep) = NSFishMort(Stk, Fish) / (1 + IncidentalRate(Fish, TStep))
+                    Encounters(Stk, Age, Fish, TStep) = LandedCatch(Stk, Age, Fish, TStep)
+                    DropOff(Stk, Age, Fish, TStep) = NSFishMort(Stk, Fish) - LandedCatch(Stk, Age, Fish, TStep)
+                    TotalNSLanded(Fish) += LandedCatch(Stk, Age, Fish, TStep)
+                    TotalLandedCatch(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
+                    TotalEncounters(Fish, TStep) += Encounters(Stk, Age, Fish, TStep)
+                End If
+                If MSFishMort(Stk, Fish) = 0 Then
+                    MSFLandedCatch(Stk, Age, Fish, TStep) = 0
+                    MSFNonRetention(Stk, Age, Fish, TStep) = 0
+                    MSFEncounters(Stk, Age, Fish, TStep) = 0
+                    MSFDropOff(Stk, Age, Fish, TStep) = 0
+                Else
+                    '- Compute Non-Selective Landed and Non-Landed Mortality by Stock, Fishery, Time-Step
+                    MSFLandedCatch(Stk, Age, Fish, TStep) = MSFishMort(Stk, Fish) * PPNLandedCat(Stk, Fish)
+                    MSFNonRetention(Stk, Age, Fish, TStep) = MSFishMort(Stk, Fish) * PPNNonRetion(Stk, Fish)
+                    MSFEncounters(Stk, Age, Fish, TStep) = Cohort(Stk, Age, TerminalType, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep)
+                    MSFDropOff(Stk, Age, Fish, TStep) = MSFishMort(Stk, Fish) * PPNIncidental(Stk, Fish)
+                    TotalMSFLanded(Fish) += MSFLandedCatch(Stk, Age, Fish, TStep)
+                    TotalLandedCatch(Fish, TStep) += MSFLandedCatch(Stk, Age, Fish, TStep)
+                    TotalEncounters(Fish, TStep) += MSFEncounters(Stk, Age, Fish, TStep)
+                End If
+            Next
 NextStkMort:
       Next
 
@@ -1687,47 +1695,57 @@ NextStkMort:
 
 
       '- Compute Fishery Scalers for Next Iteration and Check for Convergence Tolerance
-      For Fish As Integer = 1 To NumFish
-         If TerminalFisheryFlag(Fish, TStep) <> TerminalType Then GoTo NextTolerCheck
-         If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
-            If TotalNSLanded(Fish) = 0 Then
-               'If Fish = 144 Then
-               'MessageBox.Show("Fish" & Fish & "  TS" & TStep & "  tt" & TerminalType)
-               'End If
-               FisheryScaler(Fish, TStep) = 0
-            Else
-               If FisheryQuota(Fish, TStep) = 0 Then
-                  FisheryScaler(Fish, TStep) = 0
-               Else
-                  FisheryScaler(Fish, TStep) *= (FisheryQuota(Fish, TStep) / TotalNSLanded(Fish))
-               End If
-               MSFTestTolerance = FisheryQuota(Fish, TStep) / TotalNSLanded(Fish)
-               'If MSFTestTolerance > MSFtolerance Then MSFBiasIter = True
-               If MSFTestTolerance > (1 + MSFtolerance) Or MSFTestTolerance < (1 - MSFtolerance) Then MSFBiasIter = True
+        For Fish As Integer = 1 To NumFish
+            If Fish = 144 Then
+                Jim = 1
             End If
-         End If
-         If FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 28 Then
-            If TotalMSFLanded(Fish) = 0 Then
-               MSFFisheryScaler(Fish, TStep) = 0
-            Else
-               If MSFFisheryQuota(Fish, TStep) = 0 Then
-                  MSFFisheryScaler(Fish, TStep) = 0
-               Else
-                  MSFFisheryScaler(Fish, TStep) *= (MSFFisheryQuota(Fish, TStep) / TotalMSFLanded(Fish))
-               End If
-               MSFTestTolerance = MSFFisheryQuota(Fish, TStep) / TotalMSFLanded(Fish)
-               If MSFTestTolerance > (1 + MSFtolerance) Or MSFTestTolerance < (1 - MSFtolerance) Then MSFBiasIter = True
+            If TerminalFisheryFlag(Fish, TStep) <> TerminalType Then GoTo NextTolerCheck
+            If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
+                If TotalNSLanded(Fish) = 0 Then
+                    'If Fish = 144 Then
+                    'MessageBox.Show("Fish" & Fish & "  TS" & TStep & "  tt" & TerminalType)
+                    'End If
+                    FisheryScaler(Fish, TStep) = 0
+                Else
+                    If FisheryQuota(Fish, TStep) = 0 Then
+                        FisheryScaler(Fish, TStep) = 0
+                    Else
+                        Try
+                            FisheryScaler(Fish, TStep) *= (FisheryQuota(Fish, TStep) / TotalNSLanded(Fish))
+                        Catch ex As Exception
+                            MsgBox("Fishery " & Fish & " TimeStep " & TStep & "do not have enough fish to meet the quota.")
+                        End Try
+                    End If
+                    MSFTestTolerance = FisheryQuota(Fish, TStep) / TotalNSLanded(Fish)
+                    'If MSFTestTolerance > MSFtolerance Then MSFBiasIter = True
+                    If MSFTestTolerance > (1 + MSFtolerance) Or MSFTestTolerance < (1 - MSFtolerance) Then MSFBiasIter = True
+                End If
             End If
-         End If
+            If FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 28 Then
+                If TotalMSFLanded(Fish) = 0 Then
+                    MSFFisheryScaler(Fish, TStep) = 0
+                Else
+                    If MSFFisheryQuota(Fish, TStep) = 0 Then
+                        MSFFisheryScaler(Fish, TStep) = 0
+                    Else
+                        MSFFisheryScaler(Fish, TStep) *= (MSFFisheryQuota(Fish, TStep) / TotalMSFLanded(Fish))
+                    End If
+                    MSFTestTolerance = MSFFisheryQuota(Fish, TStep) / TotalMSFLanded(Fish)
+                    If MSFTestTolerance > (1 + MSFtolerance) Or MSFTestTolerance < (1 - MSFtolerance) Then MSFBiasIter = True
+                End If
+            End If
 NextTolerCheck:
-      Next
+        Next
 
       SecondPass = True
 
-      If MSFBiasIter = True Then
-         MSFBiasCount += 1
-         GoTo SecondPassEntry
-      End If
+        If MSFBiasIter = True Then
+            If MSFBiasCount = 233 Then
+                Jim = 1
+            End If
+            MSFBiasCount += 1
+            GoTo SecondPassEntry
+        End If
 
    End Sub
 
@@ -2169,7 +2187,9 @@ NextTolerCheck:
                 'Call CompLegProp(Stock, ComAge, Fish, TerminalType, SubLegalProportion, LegalProportion)
             Call CompLegProp(Stock, ComAge, Fish, TerminalType)
 
-
+                If Stock = 36 Then
+                    Jim = 1
+                End If
             ''****************************************************************************************
             ''############################# BEGIN NEW CODE ############################ Pete-Jan. 2013
             ''Given that Puget Sound Chinook CNR inputs are roughly 'calibrated' to a 22" scenario AND that,
@@ -2287,8 +2307,8 @@ NextTolerCheck:
             Else
                 For Stk As Integer = 1 To NumStk
                     For Age As Integer = MinAge To MaxAge
-                        If Fish = 1 And Age = 2 And TStep = 1 And Stk = 48 Then
-                            Fish = 1
+                        If Fish = 63 And Age = 2 And TStep = 3 And Stk = 13 Then
+                            Jim = 1
                         End If
                         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
                         If TStep = 3 And Fish = 42 And Stk = 21 And Age = 3 Then 'used to break code
@@ -4091,18 +4111,21 @@ SkipNoSat:
         '- Changed Stk for SF Chin FRAM 9/20/2002
         NewStockFishRateScalers = 0
 
-        'let FRAM's BPERs calculate Nooksack Spring impacts in B'ham Bay net rather than using TAMM rate AHB 3/15/17
-        'If NumStk > 50 Then
-        '    Call CHKSPRCHSF(2, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 2
-        '    Call CHKSPRCHSF(2, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 2
-        '    Call CHKSPRCHSF(3, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 3
-        '    Call CHKSPRCHSF(3, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 3
-        'Else
-        '    Call CHKSPRCH(2, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 2
-        '    Call CHKSPRCH(2, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 2
-        '    Call CHKSPRCH(3, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 3
-        '    Call CHKSPRCH(3, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 3
-        'End If
+        If TammPSER(22, 3) <> -88 Then 'AHB 8/16/2017 added if statement for new BP
+            'let FRAM's BPERs calculate Nooksack Spring impacts in B'ham Bay net rather than using TAMM rate AHB 3/15/17
+            If NumStk > 50 Then
+                Call CHKSPRCHSF(2, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 2
+                Call CHKSPRCHSF(2, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 2
+                Call CHKSPRCHSF(3, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 3
+                Call CHKSPRCHSF(3, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 3
+            Else
+                Call CHKSPRCH(2, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 2
+                Call CHKSPRCH(2, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 2
+                Call CHKSPRCH(3, 13, 39, 1, 2)   'Nooksack Native NT Net TStep 3
+                Call CHKSPRCH(3, 14, 40, 2, 2)   'Nooksack Native TR Net TStep 3
+            End If
+        End If
+
         '... 13A Not Used for WhRvr Spr 9/20/2002
         'Call CHKSPRCH(2, 15, 70, 11, 14) 'White River 13A NT Net TStep 2
         'Call CHKSPRCH(2, 16, 71, 12, 14) 'White River 13A TR Net TStep 2

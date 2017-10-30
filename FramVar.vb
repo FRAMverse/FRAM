@@ -254,7 +254,10 @@ Public Module FramVar
     Public SaveTermQuota(,) As Double
     Public SaveCoastalQuota(,) As Double
 
-   '- Backwards FRAM
+    '- Backwards FRAM
+    Public AgeTSCatch(,,) As Double
+    Public AgeTSCatchTerm(,,) As Double
+    Public SumTSCatch(,) As Double
    Public BackwardsFRAMFlag As Integer
    Public BackwardsTarget() As Double
    Public BackwardsChinook(,) As Double
@@ -266,15 +269,24 @@ Public Module FramVar
    Public BackScaler(,) As Double
    Public BackEsc(,) As Double
    Public BackChinScaler(,,) As Double
-   Public BackChinEsc(,,) As Double
-   Public TermChinRun(,) As Double
-   Public NumChinTermRuns As Integer
+    Public BackChinEsc(,,) As Double
+    Public BkMethod As Integer
+    Public ERBKMethod(,,) As Double
+    Public EscDiffArray(,,) As Double
+    Public TermChinRun(,) As Double
+    Public DoneIterating As Integer
+    Public MatRateCounter As Integer
+    Public NumChinTermRuns As Integer
+    Public OldScalar(,,) As Double
+    Public TempCohort(,) As Double
    Public TermRunName() As String
    Public TermRunStock(), TermStockNum(), TFish(,), TTime(,) As Integer
-   Public ChinSurvMult() As Double
+    Public ChinSurvMult() As Double
+    Public StartRate(,) As Double
    Public SurvMultSp() As Double
     Public BackFramSave As Boolean
     Public TermCounter As Integer
+    Public TRun As Integer
     Public xvar As Integer
 
 

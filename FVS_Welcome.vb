@@ -82,6 +82,10 @@ Public Class FVS_Welcome
         VersionNumberChanges(34) = "(2.17) update age 2 from 3 constants for the new base period in FRAMUtils\btn_Chin2s3s_Click "
         VersionNumberChanges(34) = "(2.17) prevent TAMM from overwriting modeling of Nooksack Earlies in B'ham Bay net; use BPER instead" 'AHB 3/15/17
         VersionNumberChanges(35) = "(2.18) add comment columns to FishScalers and BkFRAM tables updated transfer routines to import and export new columns'AHB 4/5/17"
+        VersionNumberChanges(35) = "(2.18) re-code BkFRAM algorithms for Chin & Coho as descibed in 'BkFRAMAug4_2017.docx' corrected age processing in MortAgeReport (Report5) for Chinook (set to age 3 instead of age 3-5)"
+        VersionNumberChanges(35) = "(2.18) clairified functionality and re-labeled 'Save New Recordset' button to 'Save BK_Targets'on bkFRAM screen."
+        VersionNumberChanges(35) = "(2.18) checkbox to make age 2 from 3 recruit scalars optional during bkFRAM" 'AHB 8/16/2017
+        VersionNumberChanges(35) = "(2.18) made overwriting modeling NooksackEarlies in B'hamNet with TAMM a function of Flag-88, if modeled as a rate it will still overwrite for backwards compatibility" 'AHB 8/18/17
     End Sub
 
    Private Sub FVS_Continue_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles FVS_Continue.Click

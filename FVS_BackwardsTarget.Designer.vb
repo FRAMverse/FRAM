@@ -22,7 +22,7 @@ Partial Class FVS_BackwardsTarget
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Me.Label1 = New System.Windows.Forms.Label
         Me.BFTargetGrid = New System.Windows.Forms.DataGridView
         Me.BTOKButton = New System.Windows.Forms.Button
@@ -45,20 +45,20 @@ Partial Class FVS_BackwardsTarget
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(216, 25)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(504, 29)
+        Me.Label1.Size = New System.Drawing.Size(402, 24)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Target Escapements for Backwards FRAM"
         '
         'BFTargetGrid
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.BFTargetGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.BFTargetGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.BFTargetGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.BFTargetGrid.Location = New System.Drawing.Point(44, 74)
         Me.BFTargetGrid.Name = "BFTargetGrid"
@@ -116,10 +116,9 @@ Partial Class FVS_BackwardsTarget
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(43, 768)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(887, 25)
+        Me.Label2.Size = New System.Drawing.Size(456, 20)
         Me.Label2.TabIndex = 6
-        Me.Label2.Text = "FLAGS: 0=Don't Use, 1=Exact Value, 2=Split into M/UM, 3=1 w/ Manual Method (Chino" & _
-            "ok)"
+        Me.Label2.Text = "FLAGS: 0=Don't Use, 1=Exact Value, 2=Split into M/UM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'OpenFileDialog1
         '
@@ -132,7 +131,7 @@ Partial Class FVS_BackwardsTarget
         Me.RecordSetNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetNameLabel.Location = New System.Drawing.Point(128, 834)
         Me.RecordSetNameLabel.Name = "RecordSetNameLabel"
-        Me.RecordSetNameLabel.Size = New System.Drawing.Size(140, 20)
+        Me.RecordSetNameLabel.Size = New System.Drawing.Size(121, 17)
         Me.RecordSetNameLabel.TabIndex = 19
         Me.RecordSetNameLabel.Text = "recordset name"
         '
@@ -143,7 +142,7 @@ Partial Class FVS_BackwardsTarget
         Me.DatabaseNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseNameLabel.Location = New System.Drawing.Point(128, 800)
         Me.DatabaseNameLabel.Name = "DatabaseNameLabel"
-        Me.DatabaseNameLabel.Size = New System.Drawing.Size(136, 20)
+        Me.DatabaseNameLabel.Size = New System.Drawing.Size(119, 17)
         Me.DatabaseNameLabel.TabIndex = 18
         Me.DatabaseNameLabel.Text = "database name"
         '
@@ -153,7 +152,7 @@ Partial Class FVS_BackwardsTarget
         Me.RecordSetTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetTextLabel.Location = New System.Drawing.Point(45, 834)
         Me.RecordSetTextLabel.Name = "RecordSetTextLabel"
-        Me.RecordSetTextLabel.Size = New System.Drawing.Size(84, 17)
+        Me.RecordSetTextLabel.Size = New System.Drawing.Size(67, 13)
         Me.RecordSetTextLabel.TabIndex = 17
         Me.RecordSetTextLabel.Text = "RecordSet"
         '
@@ -163,7 +162,7 @@ Partial Class FVS_BackwardsTarget
         Me.DatabaseTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseTextLabel.Location = New System.Drawing.Point(45, 800)
         Me.DatabaseTextLabel.Name = "DatabaseTextLabel"
-        Me.DatabaseTextLabel.Size = New System.Drawing.Size(77, 17)
+        Me.DatabaseTextLabel.Size = New System.Drawing.Size(61, 13)
         Me.DatabaseTextLabel.TabIndex = 16
         Me.DatabaseTextLabel.Text = "Database"
         '

@@ -1761,15 +1761,15 @@ NextMortAgeFish1:
                         RepTotMort += LandedCatch(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep)
                      ElseIf MortalityType = 2 Then
                         '- Total Mortality
-                        RepMort = LandedCatch(Stk, 3, Fish, TStep) + NonRetention(Stk, 3, Fish, TStep) + Shakers(Stk, 3, Fish, TStep) + DropOff(Stk, 3, Fish, TStep) + MSFLandedCatch(Stk, 3, Fish, TStep) + MSFNonRetention(Stk, 3, Fish, TStep) + MSFShakers(Stk, 3, Fish, TStep) + MSFDropOff(Stk, 3, Fish, TStep)
+                                RepMort = LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
                         PrnLine &= String.Format("{0,6}", CLng(RepMort))
                         RepTotMort += RepMort
                      ElseIf MortalityType = 3 Then
                         '- AEQ Total Mortality - Terminal Fisheries AEQ = 1
                         If TerminalFisheryFlag(Fish, TStep) = Term Then
-                           RepMort = LandedCatch(Stk, 3, Fish, TStep) + NonRetention(Stk, 3, Fish, TStep) + Shakers(Stk, 3, Fish, TStep) + DropOff(Stk, 3, Fish, TStep) + MSFLandedCatch(Stk, 3, Fish, TStep) + MSFNonRetention(Stk, 3, Fish, TStep) + MSFShakers(Stk, 3, Fish, TStep) + MSFDropOff(Stk, 3, Fish, TStep)
+                                    RepMort = LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
                         Else
-                           RepMort = AEQ(Stk, Age, TStep) * (LandedCatch(Stk, 3, Fish, TStep) + NonRetention(Stk, 3, Fish, TStep) + Shakers(Stk, 3, Fish, TStep) + DropOff(Stk, 3, Fish, TStep) + MSFLandedCatch(Stk, 3, Fish, TStep) + MSFNonRetention(Stk, 3, Fish, TStep) + MSFShakers(Stk, 3, Fish, TStep) + MSFDropOff(Stk, 3, Fish, TStep))
+                                    RepMort = AEQ(Stk, Age, TStep) * (LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep))
                         End If
                         PrnLine &= String.Format("{0,6}", CLng(RepMort))
                         RepTotMort += RepMort

@@ -39,6 +39,7 @@ Partial Class FVS_BackwardsFram
         Me.RecordSetTextLabel = New System.Windows.Forms.Label
         Me.DatabaseTextLabel = New System.Windows.Forms.Label
         Me.NoMSFBiasCorrection = New System.Windows.Forms.CheckBox
+        Me.chk2from3 = New System.Windows.Forms.CheckBox
         Me.SuspendLayout()
         '
         'Label1
@@ -47,7 +48,7 @@ Partial Class FVS_BackwardsFram
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(305, 24)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(342, 29)
+        Me.Label1.Size = New System.Drawing.Size(277, 24)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Backwards FRAM Run Menu"
         '
@@ -57,7 +58,7 @@ Partial Class FVS_BackwardsFram
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(106, 67)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(836, 29)
+        Me.Label2.Size = New System.Drawing.Size(674, 24)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Post-Season Stock Abundance using Observed Catch and Escapement"
         '
@@ -77,7 +78,7 @@ Partial Class FVS_BackwardsFram
         Me.NumBackFRAMIterationsTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NumBackFRAMIterationsTextBox.Location = New System.Drawing.Point(319, 213)
         Me.NumBackFRAMIterationsTextBox.Name = "NumBackFRAMIterationsTextBox"
-        Me.NumBackFRAMIterationsTextBox.Size = New System.Drawing.Size(46, 30)
+        Me.NumBackFRAMIterationsTextBox.Size = New System.Drawing.Size(46, 26)
         Me.NumBackFRAMIterationsTextBox.TabIndex = 3
         Me.NumBackFRAMIterationsTextBox.Text = "99"
         Me.NumBackFRAMIterationsTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -88,7 +89,7 @@ Partial Class FVS_BackwardsFram
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(371, 216)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(206, 25)
+        Me.Label3.Size = New System.Drawing.Size(174, 20)
         Me.Label3.TabIndex = 4
         Me.Label3.Text = "Number of Iterations"
         '
@@ -129,11 +130,11 @@ Partial Class FVS_BackwardsFram
         '
         Me.SaveScalersButton.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.SaveScalersButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SaveScalersButton.Location = New System.Drawing.Point(202, 533)
+        Me.SaveScalersButton.Location = New System.Drawing.Point(319, 533)
         Me.SaveScalersButton.Name = "SaveScalersButton"
-        Me.SaveScalersButton.Size = New System.Drawing.Size(483, 55)
+        Me.SaveScalersButton.Size = New System.Drawing.Size(248, 55)
         Me.SaveScalersButton.TabIndex = 8
-        Me.SaveScalersButton.Text = "Save New Recordset with New Stock Scalers"
+        Me.SaveScalersButton.Text = " Save BkFRAM targets and new Recruit Scalars"
         Me.SaveScalersButton.UseVisualStyleBackColor = False
         '
         'IterProgressLabel
@@ -142,7 +143,7 @@ Partial Class FVS_BackwardsFram
         Me.IterProgressLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.IterProgressLabel.Location = New System.Drawing.Point(314, 495)
         Me.IterProgressLabel.Name = "IterProgressLabel"
-        Me.IterProgressLabel.Size = New System.Drawing.Size(212, 25)
+        Me.IterProgressLabel.Size = New System.Drawing.Size(177, 20)
         Me.IterProgressLabel.TabIndex = 9
         Me.IterProgressLabel.Text = "Working on Iteration "
         '
@@ -151,7 +152,7 @@ Partial Class FVS_BackwardsFram
         Me.IterProgressTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.IterProgressTextBox.Location = New System.Drawing.Point(531, 490)
         Me.IterProgressTextBox.Name = "IterProgressTextBox"
-        Me.IterProgressTextBox.Size = New System.Drawing.Size(46, 30)
+        Me.IterProgressTextBox.Size = New System.Drawing.Size(46, 26)
         Me.IterProgressTextBox.TabIndex = 10
         Me.IterProgressTextBox.Text = "99"
         Me.IterProgressTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
@@ -167,7 +168,7 @@ Partial Class FVS_BackwardsFram
         Me.RecordSetNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetNameLabel.Location = New System.Drawing.Point(128, 649)
         Me.RecordSetNameLabel.Name = "RecordSetNameLabel"
-        Me.RecordSetNameLabel.Size = New System.Drawing.Size(140, 20)
+        Me.RecordSetNameLabel.Size = New System.Drawing.Size(121, 17)
         Me.RecordSetNameLabel.TabIndex = 19
         Me.RecordSetNameLabel.Text = "recordset name"
         '
@@ -178,7 +179,7 @@ Partial Class FVS_BackwardsFram
         Me.DatabaseNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseNameLabel.Location = New System.Drawing.Point(128, 615)
         Me.DatabaseNameLabel.Name = "DatabaseNameLabel"
-        Me.DatabaseNameLabel.Size = New System.Drawing.Size(136, 20)
+        Me.DatabaseNameLabel.Size = New System.Drawing.Size(119, 17)
         Me.DatabaseNameLabel.TabIndex = 18
         Me.DatabaseNameLabel.Text = "database name"
         '
@@ -188,7 +189,7 @@ Partial Class FVS_BackwardsFram
         Me.RecordSetTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetTextLabel.Location = New System.Drawing.Point(45, 649)
         Me.RecordSetTextLabel.Name = "RecordSetTextLabel"
-        Me.RecordSetTextLabel.Size = New System.Drawing.Size(84, 17)
+        Me.RecordSetTextLabel.Size = New System.Drawing.Size(67, 13)
         Me.RecordSetTextLabel.TabIndex = 17
         Me.RecordSetTextLabel.Text = "RecordSet"
         '
@@ -198,7 +199,7 @@ Partial Class FVS_BackwardsFram
         Me.DatabaseTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseTextLabel.Location = New System.Drawing.Point(45, 615)
         Me.DatabaseTextLabel.Name = "DatabaseTextLabel"
-        Me.DatabaseTextLabel.Size = New System.Drawing.Size(77, 17)
+        Me.DatabaseTextLabel.Size = New System.Drawing.Size(61, 13)
         Me.DatabaseTextLabel.TabIndex = 16
         Me.DatabaseTextLabel.Text = "Database"
         '
@@ -209,10 +210,22 @@ Partial Class FVS_BackwardsFram
         Me.NoMSFBiasCorrection.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NoMSFBiasCorrection.Location = New System.Drawing.Point(319, 327)
         Me.NoMSFBiasCorrection.Name = "NoMSFBiasCorrection"
-        Me.NoMSFBiasCorrection.Size = New System.Drawing.Size(358, 21)
+        Me.NoMSFBiasCorrection.Size = New System.Drawing.Size(285, 17)
         Me.NoMSFBiasCorrection.TabIndex = 20
         Me.NoMSFBiasCorrection.Text = "Run without MSF Bias Correction (if checked)"
         Me.NoMSFBiasCorrection.UseVisualStyleBackColor = False
+        '
+        'chk2from3
+        '
+        Me.chk2from3.AutoSize = True
+        Me.chk2from3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.chk2from3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chk2from3.Location = New System.Drawing.Point(319, 338)
+        Me.chk2from3.Name = "chk2from3"
+        Me.chk2from3.Size = New System.Drawing.Size(131, 24)
+        Me.chk2from3.TabIndex = 21
+        Me.chk2from3.Text = "Age 2 from 3"
+        Me.chk2from3.UseVisualStyleBackColor = False
         '
         'FVS_BackwardsFram
         '
@@ -220,6 +233,7 @@ Partial Class FVS_BackwardsFram
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(887, 795)
+        Me.Controls.Add(Me.chk2from3)
         Me.Controls.Add(Me.NoMSFBiasCorrection)
         Me.Controls.Add(Me.RecordSetNameLabel)
         Me.Controls.Add(Me.DatabaseNameLabel)
@@ -260,4 +274,5 @@ Partial Class FVS_BackwardsFram
    Friend WithEvents RecordSetTextLabel As System.Windows.Forms.Label
     Friend WithEvents DatabaseTextLabel As System.Windows.Forms.Label
     Friend WithEvents NoMSFBiasCorrection As System.Windows.Forms.CheckBox
+    Friend WithEvents chk2from3 As System.Windows.Forms.CheckBox
 End Class
