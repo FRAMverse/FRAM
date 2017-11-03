@@ -6328,12 +6328,13 @@ NextTaaETRS:
         'Next
 
         '- Restore Original FisheryQuota and FisheryFlag Values before Saving
-        For Fish = 80 To 166
-            For TStep = 4 To 5
-                FisheryFlag(Fish, TStep) = SaveTermFlag(Fish - 80, TStep - 4)
-                FisheryQuota(Fish, TStep) = SaveTermQuota(Fish - 80, TStep - 4)
-            Next
-        Next
+        '- AHB 11/2/17 comment out this section to update Fishery Quota in order to get a match between scalar and quota
+        'For Fish = 80 To 166
+        '    For TStep = 4 To 5
+        '        FisheryFlag(Fish, TStep) = SaveTermFlag(Fish - 80, TStep - 4)
+        '        FisheryQuota(Fish, TStep) = SaveTermQuota(Fish - 80, TStep - 4)
+        '    Next
+        'Next
 
         Call SaveDat()
 
