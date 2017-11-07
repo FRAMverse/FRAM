@@ -163,24 +163,27 @@ Module FramCalcs
         'FileClose(77)
       Dim TotalSum As Double
       '-Save Calculation Estimates to Database Table except if TAMM Run
-      If RunTAMMIter = 0 Then
-         For Fish As Integer = 1 To NumFish
-            For TStep As Integer = 1 To NumSteps
-               '- Retention Fishery Scaler
-               If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Then
-                  TotalSum = 0
-                  For Stk As Integer = 1 To NumStk
-                     For Age As Integer = MinAge To MaxAge
-                        TotalSum += LandedCatch(Stk, Age, Fish, TStep)
-                     Next
-                  Next
-                  If TotalSum > 0 Then
-                     FisheryQuota(Fish, TStep) = CDbl(TotalSum / ModelStockProportion(Fish))
-                  Else
-                     FisheryQuota(Fish, TStep) = 0
-                  End If
-               End If
-               '- Retention Quota
+        If RunTAMMIter = 0 Then
+            For Fish As Integer = 1 To NumFish
+                For TStep As Integer = 1 To NumSteps
+
+
+
+                    '- Retention Fishery Scaler
+                    If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Then
+                        TotalSum = 0
+                        For Stk As Integer = 1 To NumStk
+                            For Age As Integer = MinAge To MaxAge
+                                TotalSum += LandedCatch(Stk, Age, Fish, TStep)
+                            Next
+                        Next
+                        If TotalSum > 0 Then
+                            FisheryQuota(Fish, TStep) = CDbl(TotalSum / ModelStockProportion(Fish))
+                        Else
+                            FisheryQuota(Fish, TStep) = 0
+                        End If
+                    End If
+                    '- Retention Quota
                     'If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
                     '   If OptionReplaceQuota = True Then
                     '      If FisheryFlag(Fish, TStep) = 2 Then
@@ -192,21 +195,22 @@ Module FramCalcs
                     '      End If
                     '   End If
                     'End If
-               '- MSF Scaler
-               If FisheryFlag(Fish, TStep) = 7 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 27 Then
-                  TotalSum = 0
-                  For Stk As Integer = 1 To NumStk
-                     For Age As Integer = MinAge To MaxAge
-                        TotalSum += MSFLandedCatch(Stk, Age, Fish, TStep)
-                     Next
-                  Next
-                  If TotalSum > 0 Then
-                     MSFFisheryQuota(Fish, TStep) = CDbl(TotalSum / ModelStockProportion(Fish))
-                  Else
-                     MSFFisheryQuota(Fish, TStep) = 0
-                  End If
-               End If
-               '- Retention Quota
+                    '- MSF Scaler
+
+                    If FisheryFlag(Fish, TStep) = 7 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 27 Then
+                        TotalSum = 0
+                        For Stk As Integer = 1 To NumStk
+                            For Age As Integer = MinAge To MaxAge
+                                TotalSum += MSFLandedCatch(Stk, Age, Fish, TStep)
+                            Next
+                        Next
+                        If TotalSum > 0 Then
+                            MSFFisheryQuota(Fish, TStep) = CDbl(TotalSum / ModelStockProportion(Fish))
+                        Else
+                            MSFFisheryQuota(Fish, TStep) = 0
+                        End If
+                    End If
+                    '- Retention Quota
                     'If FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 28 Then
                     '   If OptionReplaceQuota = True Then
                     '      If FisheryFlag(Fish, TStep) = 8 Then
@@ -218,33 +222,33 @@ Module FramCalcs
                     '      End If
                     '   End If
                     'End If
+                Next
             Next
-         Next
-         '---------------------------------------------------------------------------------
-         Call SaveDat()
-      End If
+            '---------------------------------------------------------------------------------
+            Call SaveDat()
+        End If
 
-      '--- Call TAMM Procedures
-      If RunTAMMIter = 1 Then
-         FVS_RunModel.RunProgressLabel.Text = " TAMM Iterations "
-         FVS_RunModel.RunProgressLabel.Refresh()
+        '--- Call TAMM Procedures
+        If RunTAMMIter = 1 Then
+            FVS_RunModel.RunProgressLabel.Text = " TAMM Iterations "
+            FVS_RunModel.RunProgressLabel.Refresh()
 
-         PrnLine = "Tamm Input File =" & TAMMSpreadSheet
-         sw.WriteLine(PrnLine)
-         sw.WriteLine(" ")
+            PrnLine = "Tamm Input File =" & TAMMSpreadSheet
+            sw.WriteLine(PrnLine)
+            sw.WriteLine(" ")
 
-         If SpeciesName = "COHO" Then
-            Call TammCohoProc()
-         ElseIf SpeciesName = "CHINOOK" Then
-            Call TammChinookProc()
-            If TammChinookConverge = 1 Then
-               MsgBox("Chinook TAMM Did Not Converge!" & vbCrLf & "TAMM Transfer Files not Created", MsgBoxStyle.OkOnly)
-            Else
-               For Fish As Integer = 1 To NumFish
-                  For TStep As Integer = 1 To NumSteps
-                     If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 7 Then
-                        FisheryQuota(Fish, TStep) = CDbl(TotalLandedCatch(Fish, TStep) / ModelStockProportion(Fish))
-                     ElseIf FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 8 Then
+            If SpeciesName = "COHO" Then
+                Call TammCohoProc()
+            ElseIf SpeciesName = "CHINOOK" Then
+                Call TammChinookProc()
+                If TammChinookConverge = 1 Then
+                    MsgBox("Chinook TAMM Did Not Converge!" & vbCrLf & "TAMM Transfer Files not Created", MsgBoxStyle.OkOnly)
+                Else
+                    For Fish As Integer = 1 To NumFish
+                        For TStep As Integer = 1 To NumSteps
+                            If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 7 Then
+                                FisheryQuota(Fish, TStep) = CDbl(TotalLandedCatch(Fish, TStep) / ModelStockProportion(Fish))
+                            ElseIf FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 8 Then
                                 'If OptionReplaceQuota = True Then
                                 '   If FisheryFlag(Fish, TStep) = 2 Then
                                 '      FisheryFlag(Fish, TStep) = 1
@@ -253,30 +257,30 @@ Module FramCalcs
                                 '   End If
                                 'End If
                             End If
-                  Next
-               Next
-               Call SaveDat()
+                        Next
+                    Next
+                    Call SaveDat()
+                End If
             End If
-         End If
-      End If
+        End If
 
-      '- Check for Negative TAMM Escapements
-      If AnyNegativeEscapement = 1 Then
-         PrnLine = "Negative Escapements"
-         sw.WriteLine(PrnLine)
-         For Stk As Integer = 1 To NumStk
-            For Age As Integer = MinAge To MaxAge
-               For TStep As Integer = 1 To NumSteps
-                  If Escape(Stk, Age, TStep) < 0 Then
-                     PrnLine = "   Stock=" & StockName(Stk).ToString & " Age=" & Age.ToString & " = " & Escape(Stk, Age, TStep).ToString("#####0.0")
-                     sw.WriteLine(PrnLine)
-                  End If
-               Next TStep
-            Next Age
-         Next Stk
-      End If
+        '- Check for Negative TAMM Escapements
+        If AnyNegativeEscapement = 1 Then
+            PrnLine = "Negative Escapements"
+            sw.WriteLine(PrnLine)
+            For Stk As Integer = 1 To NumStk
+                For Age As Integer = MinAge To MaxAge
+                    For TStep As Integer = 1 To NumSteps
+                        If Escape(Stk, Age, TStep) < 0 Then
+                            PrnLine = "   Stock=" & StockName(Stk).ToString & " Age=" & Age.ToString & " = " & Escape(Stk, Age, TStep).ToString("#####0.0")
+                            sw.WriteLine(PrnLine)
+                        End If
+                    Next TStep
+                Next Age
+            Next Stk
+        End If
 
-      '###################################################Pete-12/17/12.
+        '###################################################Pete-12/17/12.
         If SpeciesName = "COHO" And MSFBiasFlag = True Then
             Dim ProbStkList As String
             Dim msgFlag As Boolean
@@ -919,7 +923,10 @@ SkipTami2:
 
         For Fish As Integer = 1 To NumFish
             
-            'If TStep >= 4 And Fish = 140 Then Jim = 1
+            If TStep = 2 And Fish = 91 Then
+                Jim = 1
+            End If
+
 
             If AnyBaseRate(Fish, TStep) = 0 Then GoTo NextScalerFishery ' if there is no catch in the base period
             '- Fishery/Time-Step can only be Terminal or Pre-Terminal
@@ -1208,15 +1215,18 @@ NextScalerFishery:
 
       'Pass #2 - COMPUTE CATCH IN FISHERIES WITH QUOTAS 
 
-      For Fish As Integer = 1 To NumFish
-          
-         If TerminalFisheryFlag(Fish, TStep) = TerminalType Then
+        For Fish As Integer = 1 To NumFish
+            If Fish = 91 Then
+                Jim = 1
+            End If
 
-            '- Retention Quota Fishery Pass #2
-            If (FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28) Then
-               If NSFQuotaTotal(Fish, TStep) > 0 Then
-                  FisheryScaler(Fish, TStep) = ModelStockProportion(Fish) * FisheryQuota(Fish, TStep) / NSFQuotaTotal(Fish, TStep)
-                  For Stk As Integer = 1 To NumStk
+            If TerminalFisheryFlag(Fish, TStep) = TerminalType Then
+
+                '- Retention Quota Fishery Pass #2
+                If (FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28) Then
+                    If NSFQuotaTotal(Fish, TStep) > 0 Then
+                        FisheryScaler(Fish, TStep) = ModelStockProportion(Fish) * FisheryQuota(Fish, TStep) / NSFQuotaTotal(Fish, TStep)
+                        For Stk As Integer = 1 To NumStk
                             For Age As Integer = MinAge To MaxAge
                                 If Stk = 34 And Age = 5 And TStep = 2 And Fish = 10 Then
                                     Jim = 1
@@ -1236,57 +1246,57 @@ NextScalerFishery:
                                 End If
                                 TotalEncounters(Fish, TStep) = TotalEncounters(Fish, TStep) + LandedCatch(Stk, Age, Fish, TStep)
                             Next Age
-                  Next Stk
+                        Next Stk
 
-                  ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
-                  'NSEncountersTotal(Fish, TStep) = FisheryQuota(Fish, TStep) * ModelStockProportion(Fish)
-                  ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
+                        ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
+                        'NSEncountersTotal(Fish, TStep) = FisheryQuota(Fish, TStep) * ModelStockProportion(Fish)
+                        ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
 
-               Else
-                  FisheryScaler(Fish, TStep) = 0
-               End If
+                    Else
+                        FisheryScaler(Fish, TStep) = 0
+                    End If
+
+                End If
+
+                '- MSF Quota Fishery Pass #2
+                If (FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 28) Then
+                    If MSFQuotaTotal(Fish, TStep) > 0 Then
+                        MSFFisheryScaler(Fish, TStep) = ModelStockProportion(Fish) * MSFFisheryQuota(Fish, TStep) / MSFQuotaTotal(Fish, TStep)
+                        For Stk As Integer = 1 To NumStk
+                            For Age As Integer = MinAge To MaxAge
+                                '- Subtract Landed Catch from 1st Pass from Total
+                                TotalLandedCatch(Fish, TStep) -= MSFLandedCatch(Stk, Age, Fish, TStep)
+                                If (Stk Mod 2) <> 0 Then      '--- UnMarked Fish
+                                    TotalLandedCatch(NumFish + Fish, TStep) -= MSFLandedCatch(Stk, Age, Fish, TStep)
+                                End If
+                                '- Compute new Landed Catch and add back to Total
+                                MSFLandedCatch(Stk, Age, Fish, TStep) = MSFFisheryScaler(Fish, TStep) * MSFLandedCatch(Stk, Age, Fish, TStep)
+                                TotalLandedCatch(Fish, TStep) += MSFLandedCatch(Stk, Age, Fish, TStep)
+                                If (Stk Mod 2) <> 0 Then      '--- UNMarked Fish
+                                    TotalLandedCatch(NumFish + Fish, TStep) += MSFLandedCatch(Stk, Age, Fish, TStep)
+                                End If
+                                '--- Adjust CNR and Shakers to Quota Scalar
+                                MSFDropOff(Stk, Age, Fish, TStep) = MSFDropOff(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep)
+                                TotalDropOff(Fish, TStep) += MSFDropOff(Stk, Age, Fish, TStep)
+                                MSFNonRetention(Stk, Age, Fish, TStep) = MSFNonRetention(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep)
+                                TotalNonRetention(Fish, TStep) += MSFNonRetention(Stk, Age, Fish, TStep)
+                                MSFEncounters(Stk, Age, Fish, TStep) = MSFEncounters(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep)
+
+                                ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
+                                'MSFEncountersTotal(Fish, TStep) += MSFEncounters(Stk, Age, Fish, TStep)
+                                ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
+
+                                TotalEncounters(Fish, TStep) += MSFEncounters(Stk, Age, Fish, TStep)
+                            Next Age
+                        Next Stk
+                    Else
+                        MSFFisheryScaler(Fish, TStep) = 0
+                    End If
+                End If
 
             End If
 
-            '- MSF Quota Fishery Pass #2
-            If (FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 28) Then
-               If MSFQuotaTotal(Fish, TStep) > 0 Then
-                  MSFFisheryScaler(Fish, TStep) = ModelStockProportion(Fish) * MSFFisheryQuota(Fish, TStep) / MSFQuotaTotal(Fish, TStep)
-                  For Stk As Integer = 1 To NumStk
-                     For Age As Integer = MinAge To MaxAge
-                        '- Subtract Landed Catch from 1st Pass from Total
-                        TotalLandedCatch(Fish, TStep) -= MSFLandedCatch(Stk, Age, Fish, TStep)
-                        If (Stk Mod 2) <> 0 Then      '--- UnMarked Fish
-                           TotalLandedCatch(NumFish + Fish, TStep) -= MSFLandedCatch(Stk, Age, Fish, TStep)
-                        End If
-                        '- Compute new Landed Catch and add back to Total
-                        MSFLandedCatch(Stk, Age, Fish, TStep) = MSFFisheryScaler(Fish, TStep) * MSFLandedCatch(Stk, Age, Fish, TStep)
-                        TotalLandedCatch(Fish, TStep) += MSFLandedCatch(Stk, Age, Fish, TStep)
-                        If (Stk Mod 2) <> 0 Then      '--- UNMarked Fish
-                           TotalLandedCatch(NumFish + Fish, TStep) += MSFLandedCatch(Stk, Age, Fish, TStep)
-                        End If
-                        '--- Adjust CNR and Shakers to Quota Scalar
-                        MSFDropOff(Stk, Age, Fish, TStep) = MSFDropOff(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep)
-                        TotalDropOff(Fish, TStep) += MSFDropOff(Stk, Age, Fish, TStep)
-                        MSFNonRetention(Stk, Age, Fish, TStep) = MSFNonRetention(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep)
-                        TotalNonRetention(Fish, TStep) += MSFNonRetention(Stk, Age, Fish, TStep)
-                        MSFEncounters(Stk, Age, Fish, TStep) = MSFEncounters(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep)
-
-                        ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
-                        'MSFEncountersTotal(Fish, TStep) += MSFEncounters(Stk, Age, Fish, TStep)
-                        ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
-
-                        TotalEncounters(Fish, TStep) += MSFEncounters(Stk, Age, Fish, TStep)
-                     Next Age
-                  Next Stk
-               Else
-                  MSFFisheryScaler(Fish, TStep) = 0
-               End If
-            End If
-
-         End If
-
-      Next Fish
+        Next Fish
 
 
 
@@ -6335,6 +6345,46 @@ NextTaaETRS:
         '        FisheryQuota(Fish, TStep) = SaveTermQuota(Fish - 80, TStep - 4)
         '    Next
         'Next
+
+        'AHB 11/6/2017 compute quotas for scalar fisheries to create a match between scalars and quotas
+        Dim TotalSum As Double
+        For Fish As Integer = 1 To NumFish
+            For TStep As Integer = 1 To NumSteps
+
+
+
+                '- Retention Fishery Scaler
+                If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Then
+                    TotalSum = 0
+                    For Stk As Integer = 1 To NumStk
+                        For Age As Integer = MinAge To MaxAge
+                            TotalSum += LandedCatch(Stk, Age, Fish, TStep)
+                        Next
+                    Next
+                    If TotalSum > 0 Then
+                        FisheryQuota(Fish, TStep) = CDbl(TotalSum / ModelStockProportion(Fish))
+                    Else
+                        FisheryQuota(Fish, TStep) = 0
+                    End If
+                End If
+               
+
+                If FisheryFlag(Fish, TStep) = 7 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 27 Then
+                    TotalSum = 0
+                    For Stk As Integer = 1 To NumStk
+                        For Age As Integer = MinAge To MaxAge
+                            TotalSum += MSFLandedCatch(Stk, Age, Fish, TStep)
+                        Next
+                    Next
+                    If TotalSum > 0 Then
+                        MSFFisheryQuota(Fish, TStep) = CDbl(TotalSum / ModelStockProportion(Fish))
+                    Else
+                        MSFFisheryQuota(Fish, TStep) = 0
+                    End If
+                End If
+                
+            Next
+        Next
 
         Call SaveDat()
 
