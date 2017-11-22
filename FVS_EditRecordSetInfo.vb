@@ -31,35 +31,35 @@ Public Class FVS_EditRecordSetInfo
          ModifyInputDateLabel.Text = RunIDModifyInputDateSelect.ToString
             RunTimeDateLabel.Text = RunIDRunTimeDateSelect.ToString
             RunYearTextBox.Text = RunIDYearSelect.ToString
-      ElseIf RecordsetSelectionType = 4 Or RecordsetSelectionType = 5 Then
-         '- EDIT New RunID Header Information (from Copied Recordset)
-         Dim drd1 As OleDb.OleDbDataReader
-         Dim cmd1 As New OleDb.OleDbCommand()
-         Dim MaxOldID As Integer
-         '- Get Current Max RunID Value, Add One for New Recordset RunID Value
-         cmd1.Connection = FramDB
-         cmd1.CommandText = "SELECT * FROM RunID ORDER BY RunID DESC"
-         FramDB.Open()
-         drd1 = cmd1.ExecuteReader
-         drd1.Read()
-         MaxOldID = drd1.GetInt32(1)
-         cmd1.Dispose()
-         drd1.Dispose()
-         FramDB.Close()
-         '- Value used in CopyNewRecordset Routine
-         NewRunID = MaxOldID + 1
-         RSETitle.Text = "NEW Copied Recordset Information"
-         RunIDLabel.Text = NewRunID.ToString
-         SpeciesNameLabel.Text = SpeciesName.ToString
-         BasePeriodIDLabel.Text = BasePeriodID.ToString
-         BasePeriodNameLabel.Text = BasePeriodName.ToString
-         RunNameTextBox.Text = "COPY OF " & RunIDNameSelect.ToString
+        ElseIf RecordsetSelectionType = 4 Or RecordsetSelectionType = 5 Then
+            '- EDIT New RunID Header Information (from Copied Recordset)
+            Dim drd1 As OleDb.OleDbDataReader
+            Dim cmd1 As New OleDb.OleDbCommand()
+            Dim MaxOldID As Integer
+            '- Get Current Max RunID Value, Add One for New Recordset RunID Value
+            cmd1.Connection = FramDB
+            cmd1.CommandText = "SELECT * FROM RunID ORDER BY RunID DESC"
+            FramDB.Open()
+            drd1 = cmd1.ExecuteReader
+            drd1.Read()
+            MaxOldID = drd1.GetInt32(1)
+            cmd1.Dispose()
+            drd1.Dispose()
+            FramDB.Close()
+            '- Value used in CopyNewRecordset Routine
+            NewRunID = MaxOldID + 1
+            RSETitle.Text = "NEW Copied Recordset Information"
+            RunIDLabel.Text = NewRunID.ToString
+            SpeciesNameLabel.Text = SpeciesName.ToString
+            BasePeriodIDLabel.Text = BasePeriodID.ToString
+            BasePeriodNameLabel.Text = BasePeriodName.ToString
+            RunNameTextBox.Text = "COPY OF " & RunIDNameSelect.ToString
             RunTitleTextBox.Text = RunIDTitleSelect.ToString
             RunYearTextBox.Text = RunIDYearSelect.ToString
-         CommentsRichTextBox.Text = RunIDCommentsSelect
-         CreationDateLabel.Text = Now.ToString
-         ModifyInputDateLabel.Text = ""
-         RunTimeDateLabel.Text = ""
+            CommentsRichTextBox.Text = RunIDCommentsSelect
+            CreationDateLabel.Text = Now.ToString
+            ModifyInputDateLabel.Text = ""
+            RunTimeDateLabel.Text = ""
       End If
 
    End Sub
@@ -155,7 +155,7 @@ Public Class FVS_EditRecordSetInfo
         RIC.Connection = FramDB
         RIC.Transaction = RITrans
         '- INSERT Record into DataBase Table
-        RIC.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear) " & _
+        RIC.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear,RunType) " & _
               "VALUES(" & RunIDSelect.ToString & "," & _
               Chr(34) & SpeciesName.ToString & Chr(34) & "," & _
             Chr(34) & RunIDNameSelect.ToString & Chr(34) & "," & _
@@ -165,7 +165,8 @@ Public Class FVS_EditRecordSetInfo
             Chr(35) & RunIDCreationDateSelect.ToString & Chr(35) & "," & _
             Chr(35) & Now().ToString & Chr(35) & "," & _
             Chr(35) & RunIDRunTimeDateSelect.ToString & Chr(35) & "," & _
-            Chr(34) & RunIDYearSelect & Chr(34) & ");"
+            Chr(34) & RunIDYearSelect & Chr(34) & "," & _
+            Chr(34) & RunIDTypeSelect & Chr(34) & ");"
 
         'Chr(35) & "1/1/1" & Chr(35) & "," & _
         'Chr(35) & "1/1/1" & Chr(35) & "," & _

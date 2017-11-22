@@ -40,6 +40,7 @@ Public Module FramVar
    Public RunIDModifyInputDateSelect As DateTime
     Public RunIDRunTimeDateSelect As DateTime
     Public RunIDYearSelect As String
+    Public RunIDTypeSelect As String
    Public OptionReplaceQuota As Boolean
    Public OptionOldTAMMformat As Boolean
    Public OptionUseTAMMfws As Boolean

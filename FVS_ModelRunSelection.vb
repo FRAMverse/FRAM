@@ -293,14 +293,18 @@ Public Class FVS_ModelRunSelection
         Dim i As Integer = 1
        
         i = FramDataSet.Tables(RunIDTable).Columns.IndexOf("RunYear")
-
         If i = -1 Then 'This Column is missing so add it
-
-
             RunID1cm.CommandText = "ALTER TABLE " & RunIDTable & " ADD " & "RunYear" & " " & "String"
             RunID1cm.ExecuteNonQuery()   'executes the SQL code in cmd without querry
-
         End If
+
+        i = 1
+        i = FramDataSet.Tables(RunIDTable).Columns.IndexOf("RunType")
+        If i = -1 Then 'This Column is missing so add it
+            RunID1cm.CommandText = "ALTER TABLE " & RunIDTable & " ADD " & "RunType" & " " & "String"
+            RunID1cm.ExecuteNonQuery()   'executes the SQL code in cmd without querry
+        End If
+
         '*****************************************************************
 
         cmd1.Connection = FramDB
@@ -323,6 +327,17 @@ Public Class FVS_ModelRunSelection
             MsgBox("Please provide a run year in the RunID table of the AccessDB for RunID " & RunIDSelect & ". You can also enter the run year under FRAMUtilities/EditModelRunInfo.")
             RunIDYearSelect = 0
         End Try
+
+        Try
+            RunIDTypeSelect = drd1.GetString(11)
+        Catch Ex As Exception
+            'MsgBox("Please provide a Run Type (Pre or Post)in the RunID table of the AccessDB for RunType. " & RunIDSelect & ". You can also enter the run year under FRAMUtilities/EditModelRunInfo.")
+            RunIDTypeSelect = 0
+        End Try
+
+
+
+
         cmd1.Dispose()
         drd1.Dispose()
 
