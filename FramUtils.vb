@@ -180,8 +180,9 @@ Module FramUtils
       ReDim PropSubPop(NumStk, MaxAge)
       ReDim CNRShakers(NumStk, MaxAge)
       ReDim PSCMaxER(17)
-      ReDim BackwardsTarget(NumStk)
-
+        ReDim BackwardsTarget(NumStk)
+        ReDim BackwardsComment(NumStk * 2)
+        ReDim FisheryComment(NumFish, NumSteps)
       '=============================================
       'Pete 12/13 ReDim Code for External Sublegals vars
       ReDim TargetRatio(NumFish, MaxAge, NumSteps)
@@ -786,22 +787,39 @@ SkipRID:
       For Fish = 1 To NumFish
          For TStep = 1 To NumSteps
             If FisheryFlag(Fish, TStep) <> 0 Or FisheryScaler(Fish, TStep) <> 0 Or FisheryQuota(Fish, TStep) <> 0 Or MSFFisheryScaler(Fish, TStep) <> 0 Or MSFFisheryQuota(Fish, TStep) <> 0 Then
-               '- MarkSelectiveFlag currently not used ... placeholder after Quota
-                    FSC.CommandText = "INSERT INTO FisheryScalers (RunID,FisheryID,TimeStep,FisheryFlag,FisheryScaleFactor,Quota,MSFFisheryScaleFactor,MSFQuota,MarkReleaseRate,MarkMisIDRate,UnMarkMisIDRate,MarkIncidentalRate) " & _
-                    "VALUES(" & NewRunID.ToString & "," & _
-                    Fish.ToString & "," & _
-                    TStep.ToString & "," & _
-                    FisheryFlag(Fish, TStep).ToString & "," & _
-                    FisheryScaler(Fish, TStep).ToString("######0.0000") & "," & _
-                    FisheryQuota(Fish, TStep).ToString("########0.0000") & "," & _
-                    MSFFisheryScaler(Fish, TStep).ToString("######0.0000") & "," & _
-                    MSFFisheryQuota(Fish, TStep).ToString("########0.0000") & "," & _
-                    MarkSelectiveMortRate(Fish, TStep).ToString("######0.0000") & "," & _
-                    MarkSelectiveMarkMisID(Fish, TStep).ToString("######0.0000") & "," & _
-                    MarkSelectiveUnMarkMisID(Fish, TStep).ToString("######0.0000") & "," & _
-                    MarkSelectiveIncRate(Fish, TStep).ToString("######0.0000") & ")"
-               FSC.ExecuteNonQuery()
-            End If
+                    '- MarkSelectiveFlag currently not used ... placeholder after Quota
+                    If FramDataSet.Tables("FisheryScalers").Columns.IndexOf("Comment") = -1 Then
+                        FSC.CommandText = "INSERT INTO FisheryScalers (RunID,FisheryID,TimeStep,FisheryFlag,FisheryScaleFactor,Quota,MSFFisheryScaleFactor,MSFQuota,MarkReleaseRate,MarkMisIDRate,UnMarkMisIDRate,MarkIncidentalRate) " & _
+                        "VALUES(" & NewRunID.ToString & "," & _
+                        Fish.ToString & "," & _
+                        TStep.ToString & "," & _
+                        FisheryFlag(Fish, TStep).ToString & "," & _
+                        FisheryScaler(Fish, TStep).ToString("######0.0000") & "," & _
+                        FisheryQuota(Fish, TStep).ToString("########0.0000") & "," & _
+                        MSFFisheryScaler(Fish, TStep).ToString("######0.0000") & "," & _
+                        MSFFisheryQuota(Fish, TStep).ToString("########0.0000") & "," & _
+                        MarkSelectiveMortRate(Fish, TStep).ToString("######0.0000") & "," & _
+                        MarkSelectiveMarkMisID(Fish, TStep).ToString("######0.0000") & "," & _
+                        MarkSelectiveUnMarkMisID(Fish, TStep).ToString("######0.0000") & "," & _
+                        MarkSelectiveIncRate(Fish, TStep).ToString("######0.0000") & ")"
+                    Else
+                        FSC.CommandText = "INSERT INTO FisheryScalers (RunID,FisheryID,TimeStep,FisheryFlag,FisheryScaleFactor,Quota,MSFFisheryScaleFactor,MSFQuota,MarkReleaseRate,MarkMisIDRate,UnMarkMisIDRate,MarkIncidentalRate,Comment) " & _
+                            "VALUES(" & NewRunID.ToString & "," & _
+                            Fish.ToString & "," & _
+                            TStep.ToString & "," & _
+                            FisheryFlag(Fish, TStep).ToString & "," & _
+                            FisheryScaler(Fish, TStep).ToString("######0.0000") & "," & _
+                            FisheryQuota(Fish, TStep).ToString("########0.0000") & "," & _
+                            MSFFisheryScaler(Fish, TStep).ToString("######0.0000") & "," & _
+                            MSFFisheryQuota(Fish, TStep).ToString("########0.0000") & "," & _
+                            MarkSelectiveMortRate(Fish, TStep).ToString("######0.0000") & "," & _
+                            MarkSelectiveMarkMisID(Fish, TStep).ToString("######0.0000") & "," & _
+                            MarkSelectiveUnMarkMisID(Fish, TStep).ToString("######0.0000") & "," & _
+                            MarkSelectiveIncRate(Fish, TStep).ToString("######0.0000") & "," & _
+                            Chr(34) & FisheryComment(Fish, TStep) & Chr(34) & ")"
+                    End If
+                    FSC.ExecuteNonQuery()
+                End If
          Next
       Next
       FramTrans.Commit()
@@ -906,15 +924,24 @@ SkipChinookMER:
       BFC.Transaction = FramTrans
       If SpeciesName = "COHO" Then
          For Stk = 1 To NumStk
-            If BackwardsTarget(Stk) <> 0 Then
-               BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
-               "VALUES(" & NewRunID.ToString & "," & _
-               Stk.ToString & "," & _
-               BackwardsTarget(Stk).ToString("0.0") & ", 0, 0, " & _
-               BackwardsFlag(Stk).ToString & ")"
-               BFC.ExecuteNonQuery()
-            End If
-         Next
+                If BackwardsTarget(Stk) <> 0 Then
+                    If FramDataSet.Tables("BackwardsFram").Columns.IndexOf("comment") = -1 Then
+                        BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
+                        "VALUES(" & NewRunID.ToString & "," & _
+                        Stk.ToString & "," & _
+                        BackwardsTarget(Stk).ToString("0.0") & ", 0, 0, " & _
+                        BackwardsFlag(Stk).ToString & ")"
+                    Else
+                        BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag,Comment) " & _
+                        "VALUES(" & NewRunID.ToString & "," & _
+                        Stk.ToString & "," & _
+                        BackwardsTarget(Stk).ToString("0.0") & ", 0, 0, " & _
+                        BackwardsFlag(Stk).ToString & "," & _
+                        Chr(34) & BackwardsComment(Stk) & Chr(34) & ")"
+                    End If
+                    BFC.ExecuteNonQuery()
+                End If
+            Next
       ElseIf SpeciesName = "CHINOOK" Then
          Dim SumChinTarget As Double
             'SumChinTarget = BackwardsChinook(Stk, 3) + BackwardsChinook(Stk, 4) + BackwardsChinook(Stk, 5)
@@ -925,15 +952,27 @@ SkipChinookMER:
             Else
                 NumChinTermRuns = NumStk / 2 - 1
             End If
+
          For Stk = 1 To NumStk + NumChinTermRuns
                 'If SumChinTarget <> 0 Then
-                BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
-                "VALUES(" & NewRunID.ToString & "," & _
-                Stk.ToString & "," & _
-                BackwardsChinook(Stk, 3).ToString("0.0") & "," & _
-                BackwardsChinook(Stk, 4).ToString("0.0") & "," & _
-                BackwardsChinook(Stk, 5).ToString("0.0") & "," & _
-                BackwardsFlag(Stk).ToString & ")"
+                If FramDataSet.Tables("BackwardsFram").Columns.IndexOf("comment") = -1 Then
+                    BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
+                    "VALUES(" & NewRunID.ToString & "," & _
+                    Stk.ToString & "," & _
+                    BackwardsChinook(Stk, 3).ToString("0.0") & "," & _
+                    BackwardsChinook(Stk, 4).ToString("0.0") & "," & _
+                    BackwardsChinook(Stk, 5).ToString("0.0") & "," & _
+                    BackwardsFlag(Stk).ToString & ")"
+                Else
+                    BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag,Comment) " & _
+                    "VALUES(" & NewRunID.ToString & "," & _
+                    Stk.ToString & "," & _
+                    BackwardsChinook(Stk, 3).ToString("0.0") & "," & _
+                    BackwardsChinook(Stk, 4).ToString("0.0") & "," & _
+                    BackwardsChinook(Stk, 5).ToString("0.0") & "," & _
+                    BackwardsFlag(Stk).ToString & "," & _
+                    Chr(34) & BackwardsComment(Stk) & Chr(34) & ")"
+                End If
                 BFC.ExecuteNonQuery()
                 'End If
             Next
@@ -3548,7 +3587,13 @@ SkipSR:
             Chr(35) & TransferDataSet.Tables("RunID").Rows(RecNum)(9) & Chr(35) & "," & _
             Chr(34) & TransferDataSet.Tables("RunID").Rows(RecNum)(10) & Chr(34) & "," & _
             Chr(34) & TransferDataSet.Tables("RunID").Rows(RecNum)(11) & Chr(34) & ")"
-         RID.ExecuteNonQuery()
+            Try
+                RID.ExecuteNonQuery()
+            Catch ex As Exception
+                MsgBox("Please select TransferFile version 5 or higher")
+                GoTo ExitTransfer
+            End Try
+
          RIDTrans.Commit()
          TransDB.Close()
 
@@ -3633,7 +3678,7 @@ SkipSR:
                     Try
                         BFC.ExecuteNonQuery()
                     Catch ex As Exception
-                        MsgBox("Please select TransferFile version 4 or higher")
+                        MsgBox("Please select TransferFile version 5 or higher")
                         GoTo ExitTransfer
                     End Try
                 Else

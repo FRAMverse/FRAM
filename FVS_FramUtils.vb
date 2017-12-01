@@ -234,8 +234,8 @@ NewName:
                 End Try
             End If
             If NewTransferDB = "" Then Exit Sub
-            If NewTransferDB = "NewModelRunTransfer3.Mdb" Then
-                MsgBox("The file 'NewModelRunTransfer3.Mdb' is Reserved" & vbCrLf & _
+            If NewTransferDB = "NewModelRunTransfer5.Mdb" Then
+                MsgBox("The file 'NewModelRunTransfer5.Mdb' is Reserved" & vbCrLf & _
                        "Please Choose Different Name for Transfer DataBase" & vbCrLf & _
                        "Prevents Corruption of Database Structure!", MsgBoxStyle.OkOnly)
                 GoTo NewName

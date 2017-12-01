@@ -146,7 +146,8 @@ Public Module FramVar
    Public TimeStepTitle() As String
 
    '- Run Input Variables
-   Public StockRecruit(,,) As Double
+    Public StockRecruit(,,) As Double
+    Public FisheryComment(,)
    Public FisheryScaler(,) As Double
     Public FisheryQuota(,) As Double
     Public FisheryQuotaCompare(NumFish, NumSteps) As Double
@@ -260,6 +261,7 @@ Public Module FramVar
     Public AgeTSCatch(,,) As Double
     Public AgeTSCatchTerm(,,) As Double
     Public SumTSCatch(,) As Double
+    Public BackwardsComment()
    Public BackwardsFRAMFlag As Integer
    Public BackwardsTarget() As Double
    Public BackwardsChinook(,) As Double

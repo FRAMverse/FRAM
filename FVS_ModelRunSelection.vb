@@ -167,8 +167,10 @@ Public Class FVS_ModelRunSelection
       Dim FramDA As New System.Data.OleDb.OleDbDataAdapter
       Dim CmdStr As String
       Dim RunIDNum, RecNum, FoundBaseID, Result As Integer
-      Dim drd1 As OleDb.OleDbDataReader
-      Dim cmd1 As New OleDb.OleDbCommand()
+        Dim drd1 As OleDb.OleDbDataReader
+        Dim RunYear As String
+        Dim cmd1 As New OleDb.OleDbCommand()
+
 
       Me.Cursor = Cursors.WaitCursor
       ModelRunBPSelect = False
@@ -785,6 +787,9 @@ FoundNewColumn:
             MarkSelectiveMarkMisID(Fish, TStep) = FramDataSet.Tables("FisheryScalers").Rows(RecNum)(10)
             MarkSelectiveUnMarkMisID(Fish, TStep) = FramDataSet.Tables("FisheryScalers").Rows(RecNum)(11)
             MarkSelectiveIncRate(Fish, TStep) = FramDataSet.Tables("FisheryScalers").Rows(RecNum)(12)
+            If FramDataSet.Tables("FisheryScalers").Columns.IndexOf("Comment") <> -1 Then
+                FisheryComment(Fish, TStep) = FramDataSet.Tables("FisheryScalers").Rows(RecNum)(13)
+            End If
         Next
 
         '- Read Stock Recruit Input Scalers Data
@@ -1021,6 +1026,9 @@ FoundNewColumn:
                 BackwardsChinook(Stk, 5) = FramDataSet.Tables("BackwardsFRAM").Rows(RecNum)(4)
             End If
             BackwardsFlag(Stk) = FramDataSet.Tables("BackwardsFRAM").Rows(RecNum)(5)
+            If FramDataSet.Tables("BackwardsFRAM").Columns.IndexOf("Comment") <> -1 Then
+                BackwardsComment(Stk) = FramDataSet.Tables("BackwardsFRAM").Rows(RecNum)(6)
+            End If
         Next
         BFDA = Nothing
 
