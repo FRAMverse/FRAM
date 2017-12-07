@@ -298,16 +298,16 @@ NewName:
             '- (Pete 12/13) Part II.  Code that creates the Target Sublegal:Legal Ratio (SLRatio) 
             '- and run-specific sublegal encounter rate adjustment (RunEncounterRateAdjustment) tables
             '- needed to use external sublegals in the transfer database
-
-            Dim sql As String       'SQL Query text string
-            sql = "CREATE TABLE SLRatio (RunID INTEGER,FisheryID INTEGER,Age INTEGER,TimeStep INTEGER,TargetRatio DOUBLE,RunEncounterRateAdjustment DOUBLE, UpdateWhen DATETIME, UpdateBy VARCHAR(255))"
-            'create a command
-            Dim my_Command1 As New System.Data.OleDb.OleDbCommand(sql, TransDB)
-            TransDB.Open()
-            'command execute
-            my_Command1.ExecuteNonQuery()
-            TransDB.Close()
-
+            If SpeciesName = "Chinook" Then
+                Dim sql As String       'SQL Query text string
+                sql = "CREATE TABLE SLRatio (RunID INTEGER,FisheryID INTEGER,Age INTEGER,TimeStep INTEGER,TargetRatio DOUBLE,RunEncounterRateAdjustment DOUBLE, UpdateWhen DATETIME, UpdateBy VARCHAR(255))"
+                'create a command
+                Dim my_Command1 As New System.Data.OleDb.OleDbCommand(sql, TransDB)
+                TransDB.Open()
+                'command execute
+                my_Command1.ExecuteNonQuery()
+                TransDB.Close()
+            End If
             '==============================================================================================
 
 
