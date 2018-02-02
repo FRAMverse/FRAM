@@ -6418,6 +6418,7 @@ NextTaaETRS:
         xlWorkSheet.Range("A7").Value = "Landed Catch by Fishery"
         xlWorkSheet.Range("C2").Value = "Ver:" & FramVersion
         xlWorkSheet.Range("A4").Value = "Title:" & RunIDTitleSelect
+        xlWorkSheet.Range("A5").Value = "Run Name: " & RunIDNameSelect
         xlWorkSheet.Range("G2").Value = "RunDate:" & RunIDRunTimeDateSelect.ToString
         xlWorkSheet.Range("G3").Value = "RepDate:" & Now().ToString
 
