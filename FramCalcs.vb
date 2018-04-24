@@ -834,17 +834,12 @@ SkipTami2:
    Sub RunBackFRAM()
 
       '----- MAIN Backwards FRAM Processing Loop
-
-      Call ScaleCohort()
-        
+      Call ScaleCohort()     
         For TStep = 1 To NumSteps
 
-            If TStep = 5 Then
+            If TStep = 4 Then
                 Jim = 1
             End If
-
-
-
             Call NatMort()
             Call CompCatch(PTerm)
             Call IncMort(PTerm)
@@ -923,7 +918,7 @@ SkipTami2:
 
         For Fish As Integer = 1 To NumFish
             
-            If TStep = 2 And Fish = 91 Then
+            If Fish = 112 Then
                 Jim = 1
             End If
 
@@ -965,8 +960,8 @@ SkipTami2:
 
                             '- Compute Legal Proportion by Stock, Age, and Time-Step
                             ChinookBaseLegProp = False
-                            If Stk = 3 And Age = 3 And TStep = 3 And Fish = 40 Then
-                                TStep = 3
+                            If Stk = 34 Then
+                                Jim = 1
                             End If
                             Call CompLegProp(Stk, Age, Fish, TerminalType)
 
@@ -1024,7 +1019,9 @@ SkipTami2:
 
 
                                     '--- Main FRAM Harvest Algorithm --------------------
-                                    
+                                    If Stk = 7 And TStep = 5 And Fish = 98 Then
+                                        Jim = 1
+                                    End If
 
                                     LandedCatch(Stk, Age, Fish, TStep) = _
                                        Cohort(Stk, Age, TerminalType, TStep) * _
@@ -1141,7 +1138,7 @@ SkipTami2:
                                 '- First Pass for Quota Fisheries - Landed Catch as if FisheryScaler = 1
 
                                 
-                                If Stk = 57 And Fish = 1 And TStep = 4 And Age = 5 Then
+                                If Stk = 1 And Fish = 1 And TStep = 4 Then
                                     Jim = 1
                                 End If
                                
@@ -1216,7 +1213,7 @@ NextScalerFishery:
       'Pass #2 - COMPUTE CATCH IN FISHERIES WITH QUOTAS 
 
         For Fish As Integer = 1 To NumFish
-            If Fish = 91 Then
+            If Fish = 112 Then
                 Jim = 1
             End If
 
@@ -1562,7 +1559,7 @@ NextERateFish:
             '*************************************Pete-02/22/13
             If Cohort(Stk, Age, TerminalType, TStep) = 0 Then ERgtrOne(TStep, Stk) = False ' statement required to handle issue for stocks with zero abundance but fishery combos with ER>1
             '*************************************Pete-02/22/13
-            StkERRate(Stk) = 1
+                StkERRate(Stk) = 0.9999
             '###################################################Pete-12/17/12.
 
          Else
@@ -1570,7 +1567,7 @@ NextERateFish:
             c1 = (1 - StkERRate(Stk))
             c2 = (1 - StkERRate(Stk)) ^ Alpha(Stk)
             c3 = c1 ^ Alpha(Stk)
-            c4 = 1 - c3
+                c4 = 1 - c3
             Meeew(Stk) = 1 - ((1 - StkERRate(Stk)) ^ Alpha(Stk))
          End If
       Next
@@ -1611,7 +1608,9 @@ NextERateFish:
 
       '- Compute Mortalities
       For Stk As Integer = 1 To NumStk
-         '- Test for Zero
+            '- Test for Zero
+
+            
          If Cohort(Stk, Age, TerminalType, TStep) = 0 Or Meeew(Stk) = 0 Then
             StkMort(Stk) = 0
             GoTo NextStkMort
@@ -1653,6 +1652,9 @@ NextERateFish:
                 Else
                     '- Compute Non-Selective Landed and Non-Landed Mortality by Stock, Fishery, Time-Step
                     LandedCatch(Stk, Age, Fish, TStep) = NSFishMort(Stk, Fish) / (1 + IncidentalRate(Fish, TStep))
+                    'If Stk = 1 And Fish = 1 And TStep = 4 Then
+                    'Debug.Print(LandedCatch(Stk, Age, Fish, TStep))
+                    'End If
                     Encounters(Stk, Age, Fish, TStep) = LandedCatch(Stk, Age, Fish, TStep)
                     DropOff(Stk, Age, Fish, TStep) = NSFishMort(Stk, Fish) - LandedCatch(Stk, Age, Fish, TStep)
                     TotalNSLanded(Fish) += LandedCatch(Stk, Age, Fish, TStep)
@@ -1706,7 +1708,7 @@ NextStkMort:
 
       '- Compute Fishery Scalers for Next Iteration and Check for Convergence Tolerance
         For Fish As Integer = 1 To NumFish
-            If Fish = 144 Then
+            If Fish = 112 And TStep = 4 And MSFBiasCount = 475 Then
                 Jim = 1
             End If
             If TerminalFisheryFlag(Fish, TStep) <> TerminalType Then GoTo NextTolerCheck
@@ -1720,11 +1722,17 @@ NextStkMort:
                     If FisheryQuota(Fish, TStep) = 0 Then
                         FisheryScaler(Fish, TStep) = 0
                     Else
-                        Try
-                            FisheryScaler(Fish, TStep) *= (FisheryQuota(Fish, TStep) / TotalNSLanded(Fish))
-                        Catch ex As Exception
-                            MsgBox("Fishery " & Fish & " TimeStep " & TStep & "do not have enough fish to meet the quota.")
-                        End Try
+                        'Try
+                        FisheryScaler(Fish, TStep) *= (FisheryQuota(Fish, TStep) / TotalNSLanded(Fish))
+
+
+                        If FisheryScaler(Fish, TStep) > 200000 Then
+                            MsgBox("Not enough abundance to fill the quota in fishery " & Fish & " Time Step " & TStep & ". Try to manually increase the abundance of the main stock.")
+                            End
+                        End If
+                        'Catch ex As Exception
+                        '    MsgBox("Fishery " & Fish & " TimeStep " & TStep & "do not have enough fish to meet the quota.")
+                        'End Try
                     End If
                     MSFTestTolerance = FisheryQuota(Fish, TStep) / TotalNSLanded(Fish)
                     'If MSFTestTolerance > MSFtolerance Then MSFBiasIter = True
@@ -1754,6 +1762,9 @@ NextTolerCheck:
                 Jim = 1
             End If
             MSFBiasCount += 1
+            If MSFBiasCount = 475 Then
+                Jim = 1
+            End If
             GoTo SecondPassEntry
         End If
 
@@ -3547,10 +3558,18 @@ SelctFsh:
         '**************************************************************************
 
         '- Reset Starting Cohort Size to Base Period Value for Backwards Coho FRAM
-        If SpeciesName = "COHO" And BackwardsFRAMFlag = 1 Then
+        If SpeciesName = "COHO" And RunBackFramFlag <> 0 Then
             Age = 3
+
             For Stk = 1 To NumStk
-                Cohort(Stk, Age, PTerm, 1) = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
+
+                
+                If BackFRAMIteration = 1 And BackwardsFlag(Stk) > 0 Then
+                    Cohort(Stk, Age, PTerm, 1) = BaseCohortSize(Stk, Age) * 1000
+                    StockRecruit(Stk, Age, 1) = 1000
+                Else
+                    Cohort(Stk, Age, PTerm, 1) = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
+                End If
             Next Stk
             Exit Sub
         End If
@@ -3558,11 +3577,11 @@ SelctFsh:
         '- Reset TIME-1 AGE 3-5 Cohort Sizes to Initial Value for Backwards Chinook FRAM
         '- Must do this because TIME-4 Ages Cohort Sizes for "Next Year"
         If SpeciesName = "CHINOOK" And BackwardsFRAMFlag = 1 Then
-         For Stk As Integer = 1 To NumStk
-            For Age As Integer = 3 To 5
-               Cohort(Stk, Age, PTerm, 1) = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
-            Next Age
-         Next Stk
+            For Stk As Integer = 1 To NumStk
+                For Age As Integer = 3 To 5
+                    Cohort(Stk, Age, PTerm, 1) = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
+                Next Age
+            Next Stk
             Exit Sub
         End If
 
@@ -3570,23 +3589,23 @@ SelctFsh:
         Dim Jim1, Jim2, Jim3 As Double
         Dim Trm, TP As Integer
         '- Zero Cohort Array
-      For Stk As Integer = 0 To NumStk
-         For Age As Integer = 0 To MaxAge
-            For Trm = 0 To 2
-               For TP = 0 To NumSteps
-                  Cohort(Stk, Age, Trm, TP) = 0
-               Next
-            Next
-         Next Age
-      Next Stk
-      For Stk As Integer = 1 To NumStk
-         For Age As Integer = MinAge To MaxAge
-            Cohort(Stk, Age, PTerm, 1) = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
-            Jim1 = Cohort(Stk, Age, PTerm, 1)
-            Jim2 = BaseCohortSize(Stk, Age)
-            Jim3 = StockRecruit(Stk, Age, 1)
-         Next Age
-      Next Stk
+        For Stk As Integer = 0 To NumStk
+            For Age As Integer = 0 To MaxAge
+                For Trm = 0 To 2
+                    For TP = 0 To NumSteps
+                        Cohort(Stk, Age, Trm, TP) = 0
+                    Next
+                Next
+            Next Age
+        Next Stk
+        For Stk As Integer = 1 To NumStk
+            For Age As Integer = MinAge To MaxAge
+                Cohort(Stk, Age, PTerm, 1) = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
+                Jim1 = Cohort(Stk, Age, PTerm, 1)
+                Jim2 = BaseCohortSize(Stk, Age)
+                Jim3 = StockRecruit(Stk, Age, 1)
+            Next Age
+        Next Stk
 
     End Sub
 
@@ -5210,6 +5229,16 @@ NooksackSpringReEntry:
                 Next Age
             Next Stk
         Next TStep
+        '*****************************************
+        'AHB 4/2/18
+        'Save Nooksack NOR when modeled in North Fork slot (stk = 2), before they get combined with South Fork (or hatchery); FW net and sport = 0
+        Dim NookSprETRS_NOR As Double
+        For Age = 3 To 5
+            For TStep = 2 To 3
+                NookSprETRS_NOR += Escape(3, Age, TStep) 'UM Nook NOR
+            Next TStep
+        Next Age
+        '******************************************
 
         'ADD IN FRESHWATER NET and Sport CATCH TO GET EXTREME TERMINAL RUN
 
@@ -5441,7 +5470,7 @@ NooksackSpringReEntry:
         For Fish = 58 To 71
             If Fish > 63 And Fish < 68 Then GoTo NotFish
             For Stk = 1 To AllStocks '- NumStk / 2
-                
+
 
 
                 For Age = MinAge To MaxAge   '---- All ages in TAA and TRS catches
@@ -6020,6 +6049,15 @@ NooksackSpringReEntry2:
             Next Fish
             '- Nooksack Spring Chinook now has 2 stocks - Add together
             If Stk = 2 And StkNum = 2 Then
+
+                If TammChinookRunFlag = 1 Then
+                    RngVal1 = "AA" & (StkVal * 72 + 42).ToString
+                    xlWorkSheet.Range(RngVal1).Resize(NumFish - 3, NumSteps + 1).Value = UnMkTMort
+                Else
+                    RngVal1 = "AA" & (StkVal * 73 + 42).ToString
+                    xlWorkSheet.Range(RngVal1).Resize(NumFish - 2, NumSteps + 1).Value = UnMkTMort
+                End If
+
                 StkNum = 3
                 Stk = 3
                 StkVal = 2
@@ -6067,7 +6105,8 @@ NooksackSpringReEntry2:
                 xlWorkSheet.Range(RngVal1).Resize(NumFish - 2, NumSteps + 1).Value = MarkCatch
             End If
         Next
-
+        xlWorkSheet.Range("N7").Value = NookSprETRS_NOR
+       
         '- Save WorkBook and Close Application if Necessary
         'xlApp.Application.DisplayAlerts = False
         'xlWorkBook.Save()
@@ -6418,7 +6457,7 @@ NextTaaETRS:
         xlWorkSheet.Range("A7").Value = "Landed Catch by Fishery"
         xlWorkSheet.Range("C2").Value = "Ver:" & FramVersion
         xlWorkSheet.Range("A4").Value = "Title:" & RunIDTitleSelect
-        xlWorkSheet.Range("A5").Value = "Run Name: " & RunIDNameSelect
+        xlWorkSheet.Range("A5").Value = RunIDNameSelect
         xlWorkSheet.Range("G2").Value = "RunDate:" & RunIDRunTimeDateSelect.ToString
         xlWorkSheet.Range("G3").Value = "RepDate:" & Now().ToString
 

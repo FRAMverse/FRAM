@@ -821,6 +821,7 @@ FoundNewColumn:
                 StockRecruit(Stk, Age, 2) = SRCohort
             End If
         Next
+        
 
         '- Read NonRetention Flag and Input Data
         CmdStr = "SELECT * FROM NonRetention WHERE RunID = " & RunIDSelect.ToString & " ORDER BY FisheryID, TimeStep"
@@ -1183,6 +1184,7 @@ FoundNewColumn:
             TotalEncounters(Fish, TStep) = FramDataSet.Tables("FisheryMortality").Rows(RecNum)(8)
         Next
         TFMDA = Nothing
+        
 
         '- Read PSC Max ER Data for COHO
         CmdStr = "SELECT * FROM PSCMaxER WHERE RunID = " & RunIDSelect.ToString
@@ -1213,6 +1215,7 @@ FoundNewColumn:
             Next
         End If
         MEDA = Nothing
+
 
         '- End of Calc Array Read =======================================================
 

@@ -48,7 +48,7 @@ Public Class FVS_BackwardsFram
    End Sub
 
    Private Sub StartIterationsButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles StartIterationsButton.Click
-      Dim BackFRAMIteration, NumBackFRAMIterations As Integer
+        Dim NumBackFRAMIterations As Integer
 
       If Not IsNumeric(NumBackFRAMIterationsTextBox.Text) Then
          MsgBox("Number of Iterations must be Numeric!!", MsgBoxStyle.OkOnly)
@@ -70,90 +70,110 @@ Public Class FVS_BackwardsFram
 
       ReDim BackScaler(NumStk, NumBackFRAMIterations)
         ReDim BackEsc(NumStk, NumBackFRAMIterations)
-        'ReDim BackwardsTarget(NumStk)
+       
+        If SpeciesName = "COHO" Then
+            ReDim InitialCohort(NumStk + 1)
 
-      '- Process any Marked/UnMarked Splits (Flag=2)
-      Dim SumScalers As Double
-      For Stk As Integer = 1 To NumStk
+
+            For Stk = 1 To NumStk
+                InitialCohort(Stk) = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
+            Next
+        End If
+
+
+
+
+        '- Process any Marked/UnMarked Splits (Flag=2)
+        Dim SumScalers As Double
+        For Stk As Integer = 1 To NumStk
             If BackwardsFlag(Stk) = 2 Then ' use starting mark rate on starting cohorts rather than escapement targets
                 If (Stk Mod 2) = 0 Then
                     '- Marked Target ... process combined target in unmarked stock spot
-                    'If BackwardsFlag(Stk - 1) = 0 And BackwardsTarget(Stk - 1) = 0 Then
                     If BackwardsFlag(Stk - 1) = 0 Then
                         SumScalers = StockRecruit(Stk, 3, 1) + StockRecruit(Stk - 1, 3, 1)
                         If SumScalers = 0 Then
                             MsgBox("Error - Backwards Stock FLAG = 2 points to Stock Scalers = ZERO" & vbCrLf & "Stock Name = " & StockTitle(Stk), MsgBoxStyle.OkOnly)
                             Exit Sub
                         End If
-                        BackwardsTarget(Stk - 1) = BackwardsTarget(Stk)  ' * (StockRecruit(Stk - 1, 3, 1) / SumScalers)
-                        BackwardsTarget(Stk) = 0
+                        BackwardsTarget(Stk - 1) = BackwardsTarget(Stk) / 2  ' * (StockRecruit(Stk - 1, 3, 1) / SumScalers)
+                        BackwardsTarget(Stk) = BackwardsTarget(Stk - 1)
                         BackwardsFlag(Stk - 1) = 2
-                        BackwardsFlag(Stk) = 0
-                    Else
+                        'BackwardsFlag(Stk) = 0
+                    Else ' creates error message when both the marked and unmarked stock component have a flag of 2
                         MsgBox("FLAG = 2 - Error for Backwards FRAM Target Esc" & vbCrLf & "Stock# " & Stk.ToString & " Name = " & StockTitle(Stk) & " - Conflicting Flags", MsgBoxStyle.OkOnly)
                         Exit Sub
                     End If
                 Else
                     '- UnMarked Target ... 
-
                     SumScalers = StockRecruit(Stk, 3, 1) + StockRecruit(Stk + 1, 3, 1)
-                    
                     If BackwardsFlag(Stk + 1) = 0 Then
                         'SumScalers = StockRecruit(Stk, 3, 1) + StockRecruit(Stk + 1, 3, 1)
                         If SumScalers = 0 Then
                             MsgBox("Error - Backwards Stock FLAG = 2 points to Stock Scalers = ZERO" & vbCrLf & "Stock Name = " & StockTitle(Stk), MsgBoxStyle.OkOnly)
                             Exit Sub
                         End If
-                        BackwardsTarget(Stk + 1) = 0 ' * (StockRecruit(Stk - 1, 3, 1) / SumScalers)
-                        'BackwardsTarget(Stk) = 0
-                        'BackwardsFlag(Stk - 1) = 2
+                        BackwardsTarget(Stk + 1) = BackwardsTarget(Stk - 1) / 2 ' * (StockRecruit(Stk - 1, 3, 1) / SumScalers)
+                        BackwardsTarget(Stk) = BackwardsTarget(Stk + 1)
+                        BackwardsFlag(Stk + 1) = 2
                         'BackwardsFlag(Stk) = 2
+                        Stk = Stk + 1
                     Else
-                        MsgBox("FLAG = 2 - Error for Backwards FRAM Target Esc" & vbCrLf & "Stock# " & Stk.ToString & " Name = " & StockTitle(Stk) & " - Conflicting Flags", MsgBoxStyle.OkOnly)
+                        MsgBox("FLAG = 2 - Error for Backwards FRAM Target Esc" & vbCrLf & "Stock# " & Stk - 1.ToString & " Name = " & StockTitle(Stk - 1) & " - Conflicting Flags", MsgBoxStyle.OkOnly)
                         Exit Sub
                     End If
-
                 End If
             End If
 
-            'initilize a recruit scalar if a target exists, but the current run is not providing an initial scalar value
+            'initilize a recruit scalar if a target exists, but the recruit scalar of the seed run is zero
             'not needed for combo M/UM target, because the program produces an error message
             Age = 3
             If BackwardsFlag(Stk) = 1 And StockRecruit(Stk, Age, 1) = 0 And BackwardsTarget(Stk) > 0 Then
                 StockRecruit(Stk, Age, 1) = 1
             End If
+        Next Stk
 
-      Next Stk
+        RunBackFramFlag = 1
+        Me.Cursor = Cursors.WaitCursor
 
-      RunBackFramFlag = 1
-      Me.Cursor = Cursors.WaitCursor
+        '- Open Backwards FRAM Report Text File ... Used for DeBugging Errors
+        File_Name = FVSdatabasepath & "\BackFramCheck.Txt"
+        If Exists(File_Name) Then Delete(File_Name)
+        bfsw = CreateText(File_Name)
+        PrnLine = "Backwards FRAM Iteration Calculations " + FVSdatabasepath + "\" & RunIDNameSelect.ToString & " " & Date.Today.ToString
+        bfsw.WriteLine(PrnLine)
+        PrnLine = RunIDNameSelect.ToString & " -Date- " & Date.Today.ToString
+        bfsw.WriteLine(PrnLine)
+        bfsw.WriteLine(" ")
 
-      '- Open Backwards FRAM Report Text File ... Used for DeBugging Errors
-      File_Name = FVSdatabasepath & "\BackFramCheck.Txt"
-      If Exists(File_Name) Then Delete(File_Name)
-      bfsw = CreateText(File_Name)
-      PrnLine = "Backwards FRAM Iteration Calculations " + FVSdatabasepath + "\" & RunIDNameSelect.ToString & " " & Date.Today.ToString
-      bfsw.WriteLine(PrnLine)
-      PrnLine = RunIDNameSelect.ToString & " -Date- " & Date.Today.ToString
-      bfsw.WriteLine(PrnLine)
-      bfsw.WriteLine(" ")
+        PrnLine = "It#"
+        PrnLine &= String.Format("{0,4}", "Stk")
+        PrnLine &= String.Format("{0,9}", "Escape")
+        PrnLine &= String.Format("{0,8}", "EscTarg")
+        PrnLine &= String.Format("{0,12}", "EscTarg/Esc")
+        PrnLine &= String.Format("{0,11}", "Old Scalar")
+        PrnLine &= String.Format("{0,11}", "New Scalar")
+        PrnLine &= String.Format("{0,12}", "StartCohort")
+        PrnLine &= " StockName"
+        bfsw.WriteLine(PrnLine)
 
-      IterProgressLabel.Visible = True
-      IterProgressLabel.Refresh()
-      IterProgressTextBox.Visible = True
-      IterProgressTextBox.BringToFront()
 
-      '- Open FramChk.Txt for RunCalcs (RunBackFRAM)
-      File_Name = FVSdatabasepath & "\FramCheck.Txt"
-      If Exists(File_Name) Then Delete(File_Name)
-      sw = CreateText(File_Name)
-      PrnLine = "Command File =" & RunIDNameSelect.ToString & "     " & Date.Today.ToString
-      sw.WriteLine(PrnLine)
-      sw.WriteLine(" ")
+        IterProgressLabel.Visible = True
+        IterProgressLabel.Refresh()
+        IterProgressTextBox.Visible = True
+        IterProgressTextBox.BringToFront()
 
-      Dim StartTime, Endtime As Date
-      Dim DiffSpan1, DiffSpan2 As TimeSpan
+        '- Open FramChk.Txt for RunCalcs (RunBackFRAM)
+        File_Name = FVSdatabasepath & "\FramCheck.Txt"
+        If Exists(File_Name) Then Delete(File_Name)
+        sw = CreateText(File_Name)
+        PrnLine = "Command File =" & RunIDNameSelect.ToString & "     " & Date.Today.ToString
+        sw.WriteLine(PrnLine)
+        sw.WriteLine(" ")
+
+        Dim StartTime, Endtime As Date
+        Dim DiffSpan1, DiffSpan2 As TimeSpan
         DoneIterating = 1
+        FirstIter = 1
         For BackFRAMIteration = 1 To NumBackFRAMIterations
 
             If DoneIterating = 0 Then
@@ -166,11 +186,11 @@ Public Class FVS_BackwardsFram
             IterProgressTextBox.Text = BackFRAMIteration.ToString
             IterProgressTextBox.Refresh()
             '- Print Title for BackFRAM.Prn Report
-            PrnLine = "Iteration #" & CStr(BackFRAMIteration) & " "
-            bfsw.WriteLine(PrnLine)
-            bfsw.WriteLine(" ")
-            PrnLine = "Stk# FRAM-Esc Target-Esc ScaleFactor Old-Scalar New-Scalar   Cohort"
-            bfsw.WriteLine(PrnLine)
+            'PrnLine = "Iteration #" & CStr(BackFRAMIteration) & " "
+            'bfsw.WriteLine(PrnLine)
+            'bfsw.WriteLine(" ")
+            'PrnLine = "Iteration   Stk# FRAM-Esc Target-Esc ScaleFactor Old-Scalar New-Scalar   Cohort"
+            'bfsw.WriteLine(PrnLine)
 
             '- Call RunBackFRAM with RunBackFramFlag ON (=1)
             Call RunBackFRAM()
@@ -180,45 +200,43 @@ Public Class FVS_BackwardsFram
 
             '- Check RunCalcs Values against Target Escapements
             Call Check_BackwardsTarget(BackFRAMIteration, NumBackFRAMIterations)
-            PrnLine = "Iteration " & BackFRAMIteration.ToString & " - BackFram Secs=" & DiffSpan1.Seconds
-            bfsw.WriteLine(PrnLine)
-            Endtime = Date.Now
-            DiffSpan2 = Endtime - StartTime
-            PrnLine = "Iteration " & BackFRAMIteration.ToString & " - CheckBFm Secs=" & DiffSpan2.Seconds
-            bfsw.WriteLine(PrnLine)
+            'PrnLine = "Iteration " & BackFRAMIteration.ToString & " - BackFram Secs=" & DiffSpan1.Seconds
+            'bfsw.WriteLine(PrnLine)
+            'Endtime = Date.Now
+            'DiffSpan2 = Endtime - StartTime
+            'PrnLine = "Iteration " & BackFRAMIteration.ToString & " - CheckBFm Secs=" & DiffSpan2.Seconds
+            'bfsw.WriteLine(PrnLine)
 
         Next BackFRAMIteration
 
-      IterProgressTextBox.Text = "Save"
-      IterProgressTextBox.Refresh()
-      SaveDat()
+        IterProgressTextBox.Text = "Save"
+        IterProgressTextBox.Refresh()
+        SaveDat()
 
-      bfsw.Close()
-      sw.Close()
+        bfsw.Close()
+        sw.Close()
 
-      Me.Cursor = Cursors.Default
-      IterProgressLabel.Visible = False
-      IterProgressTextBox.Visible = False
-      MSMRecsButton.Visible = True
-      MSMRecsButton.Enabled = True
-      SaveScalersButton.Visible = True
-      SaveScalersButton.Enabled = True
-      'BackwardsCMDFlag = 1
-      RunBackFramFlag = 0
+        Me.Cursor = Cursors.Default
+        IterProgressLabel.Visible = False
+        IterProgressTextBox.Visible = False
+        MSMRecsButton.Visible = True
+        MSMRecsButton.Enabled = True
+        SaveScalersButton.Visible = True
+        SaveScalersButton.Enabled = True
+        'BackwardsCMDFlag = 1
+        RunBackFramFlag = 0
 
-      Me.Visible = False
-      FVS_BackwardsResults.ShowDialog()
-      Me.BringToFront()
-      Exit Sub
+        Me.Visible = False
+        FVS_BackwardsResults.ShowDialog()
+        Me.BringToFront()
+        Exit Sub
 
    End Sub
 
    Sub Check_BackwardsTarget(ByVal IterNum As Integer, ByVal BackFRAMIteration As Integer)
 
       Dim EscDiff, ERTotal As Double
-        Dim InitialCohort As Double
-        Dim InitialCohortM As Double
-
+      
       '- Compare FRAM Escapements to Target Escapements
       '  Recalculate Stock Scalars for Next Iteration
       '  Exit if Convergence Criteria is met ... do this later
@@ -228,21 +246,11 @@ Public Class FVS_BackwardsFram
         DoneIterating = 0
 
         For Stk As Integer = 1 To NumStk
-            If Stk = 8 Then
+            If Stk = 1 Then
                 Jim = 1
             End If
 
-            '- Output Report
-            PrnLine = String.Format("{0,4}", Stk.ToString("###0"))
-            PrnLine &= String.Format("{0,8}", Escape(Stk, Age, TStep).ToString("#######0"))
-            PrnLine &= String.Format("{0,8}", BackwardsTarget(Stk).ToString("#######0"))
-            If Escape(Stk, Age, TStep) <> 0 Then
-                PrnLine &= String.Format("{0,10}", (BackwardsTarget(Stk) / Escape(Stk, Age, TStep)).ToString("####0.0000"))
-            Else
-                PrnLine &= "         -"
-            End If
-            PrnLine &= String.Format("{0,11}", StockRecruit(Stk, Age, 1).ToString("###0.0000  "))
-
+           
             '----------
             BackScaler(Stk, IterNum) = StockRecruit(Stk, Age, 1)
             BackEsc(Stk, IterNum) = Escape(Stk, Age, TStep)
@@ -250,10 +258,6 @@ Public Class FVS_BackwardsFram
                 GoTo NextStockRecruitr
             End If
 
-
-
-            InitialCohort = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
-            InitialCohortM = BaseCohortSize(Stk + 1, Age) * StockRecruit(Stk + 1, Age, 1)
 
             'If InitialCohort = 0 Then
             'StockRecruit(Stk, Age, 1) = 0
@@ -266,137 +270,181 @@ Public Class FVS_BackwardsFram
                         GoTo NextStockRecruitr
                     End If
                 End If
-
             End If
-            If Escape(Stk, Age, TStep) < 0 Then
-                '- Increase Scalar when Escapement is negative
-                If IterNum = 1 Then
-                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                Else
-                    If BackEsc(Stk, IterNum - 1) < 0 Then
-                        StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                    Else
-                        StockRecruit(Stk, Age, 1) = (StockRecruit(Stk, Age, 1) + BackScaler(Stk, IterNum - 1)) / 2
-                    End If
-                End If
+
+            If Escape(Stk, Age, TStep) < 0 And BackwardsFlag(Stk) = 1 Then
+                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
+                'Increase Scalar when Escapement is negative
+                'If IterNum = 1 Then
+                'StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
+                'Else
+                '    If BackEsc(Stk, IterNum - 1) < 0 Then
+                '        StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
+                '    Else
+                '        StockRecruit(Stk, Age, 1) = (StockRecruit(Stk, Age, 1) + BackScaler(Stk, IterNum - 1)) / 2
+                '    End If
+                'End If
             Else
-                '- Increase Cohort Size by Escapement Difference times Survival Rate
-                If StockRecruit(Stk, Age, 1) <> 0 And BackwardsTarget(Stk) <> 0 And BackwardsFlag(Stk) = 1 Then
-                   
-                    EscDiff = BackwardsTarget(Stk) - Escape(Stk, Age, TStep)
-                    'ERTotal = Escape(Stk, Age, TStep) / InitialCohort * 1.33571
-                    ERTotal = (InitialCohort / 1.23 - Escape(Stk, Age, TStep)) / (InitialCohort / 1.23)
-                    If InitialCohort < (Math.Abs(EscDiff) * (1.23 + ERTotal)) Then
-                        '- Check for Negative Scaler
-                        If IterNum = 1 Then
-                            If EscDiff > 0 Then
-                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                            Else
-                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 2
-                            End If
-                        Else
-                            If EscDiff > 0 Then 'target > FRAMEsc; need to increase scalar
-                                If StockRecruit(Stk, Age, 1) < 1 Then
-                                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) / Escape(Stk, Age, TStep))
-                                Else
-                                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                                End If
-                            Else 'need to decrease
-                                If StockRecruit(Stk, Age, 1) > 2 Then
-                                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) / Escape(Stk, Age, TStep))
-                                Else
-                                    StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 1.1
-                                End If
-                            End If
-                        End If
+            '- Increase Cohort Size by Escapement Difference times Survival Rate
+            If StockRecruit(Stk, Age, 1) <> 0 And BackwardsTarget(Stk) <> 0 And BackwardsFlag(Stk) = 1 Then
+
+                EscDiff = BackwardsTarget(Stk) - Escape(Stk, Age, TStep)
+                'ERTotal = Escape(Stk, Age, TStep) / InitialCohort * 1.33571
+                ERTotal = (Cohort(Stk, Age, 4, 1) / 1.23 - Escape(Stk, Age, TStep)) / (Cohort(Stk, Age, 4, 1) / 1.23)
+                    'If Cohort(Stk, Age, 4, 1) < Math.Abs(EscDiff) * 1.23 / (1 - ERTotal) Then
+                    '    '- Check for Negative Scaler
+                    '    If IterNum = 1 Then
+                    '        If EscDiff > 0 Then
+                    '            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
+                    '        Else
+                    '            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 2
+                    '        End If
+                    '    Else
+                    '        If EscDiff > 0 Then 'target > FRAMEsc; need to increase scalar
+                    '            If StockRecruit(Stk, Age, 1) < 1 Then
+                    '                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) / Escape(Stk, Age, TStep))
+                    '            Else
+                    '                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
+                    '            End If
+                    '        Else 'need to decrease
+                    '            If StockRecruit(Stk, Age, 1) > 2 Then
+                    '                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) / Escape(Stk, Age, TStep))
+                    '            Else
+                    '                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 1.1
+                    '            End If
+                    '        End If
+                    '    End If
+                    'Else
+                    If ERTotal > 0.95 Then ' prevent the term EscDiff/(1-ERTotal) from getting too big when ER near 100%
+                        'stocks with small escapements and high ERs appear to be the problem with convergence - investigate
+                        StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) + (EscDiff / 0.5 * 1.23) / BaseCohortSize(Stk, Age)
                     Else
                         '- Normal Scaling
-
-                        StockRecruit(Stk, Age, 1) = (InitialCohort + (EscDiff * (1 + ERTotal) * 1.23)) / BaseCohortSize(Stk, Age)
-
-                        If BackwardsTarget(Stk) > 0 Then
-                            If Math.Abs(BackwardsTarget(Stk) - Escape(Stk, Age, TStep)) > 1 Then
-                                DoneIterating = DoneIterating + 1
-                            End If
+                        StockRecruit(Stk, Age, 1) = (Cohort(Stk, Age, 4, 1) + (EscDiff / (1 - ERTotal) * 1.23)) / BaseCohortSize(Stk, Age)
+                    End If
+                    If BackwardsTarget(Stk) > 0 Then
+                        If Math.Abs(BackwardsTarget(Stk) - Escape(Stk, Age, TStep)) > 1 Then
+                            DoneIterating = DoneIterating + 1
                         End If
                     End If
+                    'End If
                 ElseIf BackwardsTarget(Stk) <> 0 And StockRecruit(Stk, Age, 1) = 0 And BackwardsFlag(Stk) = 1 Then
-                '- Target Esc > zero and StkSclr = 0 change SS to one
-                StockRecruit(Stk, Age, 1) = 1
+                    '- Target Esc > zero and StkSclr = 0 change SS to one
+                    StockRecruit(Stk, Age, 1) = 1
                 ElseIf BackwardsTarget(Stk) = 0 And StockRecruit(Stk, Age, 1) <> 0 And BackwardsFlag(Stk) = 1 Then
-                '- Target Esc = zero and StkSclr <> 0 change SS to zero
-                StockRecruit(Stk, Age, 1) = 0
+                    '- Target Esc = zero and StkSclr <> 0 change SS to zero
+                    StockRecruit(Stk, Age, 1) = 0
                 ElseIf BackwardsFlag(Stk) = 2 Then 'combined marked and unmarked target
-                'If (Stk Mod 2) <> 0 Then
-                '    EscDiff = BackwardsTarget(Stk) * Escape(Stk, Age, TStep) / (Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep)) - Escape(Stk, Age, TStep)
-                'Else
-
-                EscDiff = BackwardsTarget(Stk) - Escape(Stk, Age, TStep) - Escape(Stk + 1, Age, TStep)
-                ERTotal = ((InitialCohort + InitialCohortM) / 1.23 - Escape(Stk, Age, TStep) - Escape(Stk + 1, Age, TStep)) / (InitialCohort + InitialCohortM / 1.23)
-
-                If (InitialCohort + InitialCohortM) < (Math.Abs(EscDiff) * (1 + ERTotal) * 1.23) Then
-                    '- Check for Negative Scaler
-                    If IterNum = 1 Then
-                        If EscDiff > 0 Then
-                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * 1.1
-                        Else
-                            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 2
-                            StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) / 2
-                        End If
-                    Else
-                        If EscDiff > 0 Then
-                            If StockRecruit(Stk, Age, 1) < 1 Then
-                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) / (Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep)))
-                                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * (BackwardsTarget(Stk) / (Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep)))
-                            Else
-                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * 1.1
-                            End If
-                        Else
-                            If StockRecruit(Stk, Age, 1) > 2 Then
-                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) / Escape(Stk, Age, TStep))
-                                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * 1.1
-                            Else
-                                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 1.1
-                                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) / 1.1
-                            End If
-                        End If
+                    'If (Stk Mod 2) <> 0 Then
+                    '    EscDiff = BackwardsTarget(Stk) * Escape(Stk, Age, TStep) / (Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep)) - Escape(Stk, Age, TStep)
+                    'Else
+                    If Stk = 5 Then
+                        Jim = 1
                     End If
-                Else
-                    '- Normal Scaling
-                        StockRecruit(Stk, Age, 1) = (InitialCohort + (EscDiff * (1 + ERTotal) * 1.23 * InitialCohort / (InitialCohort + InitialCohortM))) / BaseCohortSize(Stk, Age)
-                        StockRecruit(Stk + 1, Age, 1) = (InitialCohortM + (EscDiff * (1 + ERTotal) * 1.23 * InitialCohortM / (InitialCohort + InitialCohortM))) / BaseCohortSize(Stk, Age)
+
+
+
+
+                    If Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep) < 0 Then
+                        StockRecruit(Stk, Age, 1) = (StockRecruit(Stk, Age, 1) + StockRecruit(Stk + 1, Age, 1)) * 1.1 * InitialCohort(Stk) / (InitialCohort(Stk) + InitialCohort(Stk + 1))
+                        StockRecruit(Stk + 1, Age, 1) = (StockRecruit(Stk, Age, 1) + StockRecruit(Stk + 1, Age, 1)) * 1.1 * InitialCohort(Stk + 1) / (InitialCohort(Stk) + InitialCohort(Stk + 1))
+                    Else
+                        EscDiff = BackwardsTarget(Stk) + BackwardsTarget(Stk + 1) - Escape(Stk, Age, TStep) - Escape(Stk + 1, Age, TStep)
+                        ERTotal = ((Cohort(Stk, Age, 4, 1) + Cohort(Stk + 1, Age, 4, 1)) / 1.23 - Escape(Stk, Age, TStep) - Escape(Stk + 1, Age, TStep)) / ((Cohort(Stk, Age, 4, 1) + Cohort(Stk + 1, Age, 4, 1)) / 1.23)
+
+                        'If (Cohort(Stk, Age, 4, 1) + Cohort(Stk + 1, Age, 4, 1)) < (Math.Abs(EscDiff) / (1 - ERTotal) * 1.23) Then
+
+                        ' ''    '- Check for Negative Scaler
+                        ' ''    If IterNum = 1 Then
+                        ' ''        If EscDiff > 0 Then
+                        ' ''            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
+                        ' ''            StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * 1.1
+                        ' ''        Else
+                        ' ''            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 2
+                        ' ''            StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) / 2
+                        ' ''        End If
+                        ' ''    Else
+                        ' ''        If EscDiff > 0 Then
+                        ' ''            If StockRecruit(Stk, Age, 1) < 1 Then
+                        ' ''                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) + BackwardsTarget(Stk + 1)) / (Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep))
+                        ' ''                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * (BackwardsTarget(Stk) + BackwardsTarget(Stk + 1)) / (Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep))
+                        ' ''            Else
+                        ' ''                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
+                        ' ''                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * 1.1
+                        ' ''            End If
+                        ' ''        Else
+                        ' ''            If StockRecruit(Stk, Age, 1) > 2 Then
+                        ' ''                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) / Escape(Stk, Age, TStep))
+                        ' ''                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * 1.1
+                        ' ''            Else
+                        ' ''                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 1.1
+                        ' ''                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) / 1.1
+                        ' ''            End If
+                        ' ''        End If
+                        ' ''    End If
+                        ' ''Else
+                        '- Normal Scaling
+                        StockRecruit(Stk, Age, 1) = ((Cohort(Stk, Age, 4, 1) + Cohort(Stk + 1, Age, 4, 1) + (EscDiff / (1 - ERTotal) * 1.23)) * InitialCohort(Stk) / (InitialCohort(Stk) + InitialCohort(Stk + 1))) / BaseCohortSize(Stk, Age)
+                        StockRecruit(Stk + 1, Age, 1) = ((Cohort(Stk, Age, 4, 1) + Cohort(Stk + 1, Age, 4, 1) + (EscDiff / (1 - ERTotal) * 1.23)) * InitialCohort(Stk + 1) / (InitialCohort(Stk) + InitialCohort(Stk + 1))) / BaseCohortSize(Stk + 1, Age)
                     End If
 
                     If BackwardsTarget(Stk) > 0 Then
-                        If Math.Abs(BackwardsTarget(Stk) - Escape(Stk, Age, TStep) - Escape(Stk + 1, Age, TStep)) > 1 Then
+                        If Math.Abs(BackwardsTarget(Stk) * 2 - Escape(Stk, Age, TStep) - Escape(Stk + 1, Age, TStep)) > 1 Then
                             DoneIterating = DoneIterating + 1
                         End If
                     End If
 
                     Stk = Stk + 1
-            End If 'StockRecruit(Stk, Age, 1) <> 0 And BackwardsTarget(Stk) <> 0
+                End If 'StockRecruit(Stk, Age, 1) <> 0 And BackwardsTarget(Stk) <> 0
             End If 'Esc < 0
-
-
 NextStockRecruitr:
+            '- Output Report
+            'If Stk = 6 Then
+            If BackwardsFlag(Stk) = 2 Then
+                Stk = Stk - 1
+                PrnLine = IterNum.ToString
+                PrnLine &= String.Format("{0,4}", Stk.ToString("###0"))
+                PrnLine &= String.Format("{0,12}", Escape(Stk, Age, TStep).ToString("#########0"))
+                PrnLine &= String.Format("{0,8}", BackwardsTarget(Stk).ToString("#######0"))
+                If Escape(Stk, Age, TStep) <> 0 Then
+                    PrnLine &= String.Format("{0,10}", (BackwardsTarget(Stk) / Escape(Stk, Age, TStep)).ToString("####0.0000"))
+                Else
+                    PrnLine &= "         -"
+                End If
+                PrnLine &= String.Format("{0,15}", (Cohort(Stk, 3, 4, 1) / BaseCohortSize(Stk, Age)).ToString("#######0.0000  "))
+
+                PrnLine &= String.Format("{0,11}", StockRecruit(Stk, Age, 1).ToString("###0.0000  "))
+                If BackwardsFlag(Stk) = 0 Then
+                    PrnLine &= "        *"
+                Else
+                    PrnLine &= String.Format("{0,9}", Cohort(Stk, 3, PTerm, 1).ToString("########0"))
+                    'PrnLine &= String.Format("{0,9}", (InitialCohort * StockRecruit(Stk, Age, 1)).ToString("########0"))
+                End If
+                PrnLine &= " - " & StockName(Stk)
+                bfsw.WriteLine(PrnLine)
+                Stk = Stk + 1
+            End If
+            PrnLine = IterNum.ToString
+            PrnLine &= String.Format("{0,4}", Stk.ToString("###0"))
+            PrnLine &= String.Format("{0,12}", Escape(Stk, Age, TStep).ToString("#########0"))
+            PrnLine &= String.Format("{0,8}", BackwardsTarget(Stk).ToString("#######0"))
+            If Escape(Stk, Age, TStep) <> 0 Then
+                PrnLine &= String.Format("{0,10}", (BackwardsTarget(Stk) / Escape(Stk, Age, TStep)).ToString("####0.0000"))
+            Else
+                PrnLine &= "         -"
+            End If
+            PrnLine &= String.Format("{0,15}", (Cohort(Stk, 3, 4, 1) / BaseCohortSize(Stk, Age)).ToString("#######0.0000  "))
             PrnLine &= String.Format("{0,11}", StockRecruit(Stk, Age, 1).ToString("###0.0000  "))
             If BackwardsFlag(Stk) = 0 Then
-                PrnLine &= "        *        *"
+                PrnLine &= "        *"
             Else
-                PrnLine &= String.Format("{0,9}", InitialCohort.ToString("########0"))
-                PrnLine &= String.Format("{0,9}", (InitialCohort * StockRecruit(Stk, Age, 1)).ToString("########0"))
+                PrnLine &= String.Format("{0,9}", Cohort(Stk, 3, PTerm, 1).ToString("########0"))
+                'PrnLine &= String.Format("{0,9}", (InitialCohort * StockRecruit(Stk, Age, 1)).ToString("########0"))
             End If
-
             PrnLine &= " - " & StockName(Stk)
             bfsw.WriteLine(PrnLine)
-
             'stop iterating if target and FRAMEsc are within one fish
-
-
-            
-
+            'End If
         Next Stk
 
         'bfsw.Close()
@@ -541,6 +589,7 @@ NextStockRecruitr:
         DoneIterating = 1
         ReDim EscDiffArray(NumStk + NumChinTermRuns, MaxAge, 100)
         ReDim ERBKMethod(NumStk, MaxAge, NumSteps)
+
         For BackFRAMIteration = 1 To NumBackFRAMIterations
 
             If DoneIterating = 0 Then

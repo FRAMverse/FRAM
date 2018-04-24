@@ -262,10 +262,11 @@ Public Module FramVar
     Public AgeTSCatchTerm(,,) As Double
     Public SumTSCatch(,) As Double
     Public BackwardsComment()
+    Public BackwardsFlag(Stk) As Integer
    Public BackwardsFRAMFlag As Integer
    Public BackwardsTarget() As Double
    Public BackwardsChinook(,) As Double
-   Public BackwardsFlag() As Integer
+
    Public BFYearSelection As Integer
    Public BFYearSelectType As Integer
    Public BFEscYears() As Integer
@@ -274,9 +275,13 @@ Public Module FramVar
    Public BackEsc(,) As Double
    Public BackChinScaler(,,) As Double
     Public BackChinEsc(,,) As Double
+    Public BackFRAMIteration As Integer
     Public BkMethod As Integer
     Public ERBKMethod(,,) As Double
     Public EscDiffArray(,,) As Double
+    Public FirstIter As Integer
+    Public InitialCohort() As Double
+    Public InitialCohortM() As Double
     Public TermChinRun(,) As Double
     Public DoneIterating As Integer
     Public MatRateCounter As Integer
