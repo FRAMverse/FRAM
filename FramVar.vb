@@ -262,7 +262,7 @@ Public Module FramVar
     Public AgeTSCatchTerm(,,) As Double
     Public SumTSCatch(,) As Double
     Public BackwardsComment()
-    Public BackwardsFlag(Stk) As Integer
+    Public BackwardsFlag(Stk + 1) As Integer
    Public BackwardsFRAMFlag As Integer
    Public BackwardsTarget() As Double
    Public BackwardsChinook(,) As Double
@@ -287,12 +287,15 @@ Public Module FramVar
     Public MatRateCounter As Integer
     Public NumChinTermRuns As Integer
     Public OldScalar(,,) As Double
+    Public RunBackwardsTarget() As Double
+    Public RunBackwardsFlag() As Integer
     Public TempCohort(,) As Double
    Public TermRunName() As String
    Public TermRunStock(), TermStockNum(), TFish(,), TTime(,) As Integer
     Public ChinSurvMult() As Double
     Public StartRate(,) As Double
-   Public SurvMultSp() As Double
+    Public SurvMultSp() As Double
+    Public SaveInitialFlag As Boolean
     Public BackFramSave As Boolean
     Public TermCounter As Integer
     Public TRun As Integer

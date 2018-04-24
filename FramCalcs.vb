@@ -3560,20 +3560,26 @@ SelctFsh:
         '- Reset Starting Cohort Size to Base Period Value for Backwards Coho FRAM
         If SpeciesName = "COHO" And RunBackFramFlag <> 0 Then
             Age = 3
-
-            For Stk = 1 To NumStk
-
-                
-                If BackFRAMIteration = 1 And BackwardsFlag(Stk) > 0 Then
-                    Cohort(Stk, Age, PTerm, 1) = BaseCohortSize(Stk, Age) * 1000
-                    StockRecruit(Stk, Age, 1) = 1000
-                Else
-                    Cohort(Stk, Age, PTerm, 1) = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
-                End If
-            Next Stk
-            Exit Sub
+            ' prevent ER from exceeding 100% otherwise MSF bias corrected equation produce error
+            If BackFRAMIteration < 8 Then 'don't start bias calculations until target escapemetns are sufficiently close
+                MSFBiasFlag = False
+            Else
+                MSFBiasFlag = SaveInitialFlag
+            End If
+            If BackFRAMIteration < 2 Then
+                'start with a recruit scalar on first iteration that is sufficiently large to hold potentially hugh catch inputs
+                'without producing negative escapements and ER>100%
+                For Stk = 1 To NumStk
+                    If Stk = 5 Then
+                        Jim = 1
+                    End If
+                    If BackwardsFlag(Stk) > 0 Or RunBackwardsFlag(Stk) > 0 Then
+                        Cohort(Stk, Age, PTerm, 1) = 1000 * BaseCohortSize(Stk, Age)
+                    End If
+                Next Stk
+                Exit Sub
+            End If
         End If
-
         '- Reset TIME-1 AGE 3-5 Cohort Sizes to Initial Value for Backwards Chinook FRAM
         '- Must do this because TIME-4 Ages Cohort Sizes for "Next Year"
         If SpeciesName = "CHINOOK" And BackwardsFRAMFlag = 1 Then

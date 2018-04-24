@@ -64,8 +64,10 @@ Public Class FVS_BackwardsFram
 
         If NoMSFBiasCorrection.Checked = True Then
             MSFBiasFlag = False
+            SaveInitialFlag = False
         Else
             MSFBiasFlag = True
+            SaveInitialFlag = True
         End If
 
       ReDim BackScaler(NumStk, NumBackFRAMIterations)
@@ -74,17 +76,16 @@ Public Class FVS_BackwardsFram
         If SpeciesName = "COHO" Then
             ReDim InitialCohort(NumStk + 1)
 
-
+            Age = 3
             For Stk = 1 To NumStk
                 InitialCohort(Stk) = BaseCohortSize(Stk, Age) * StockRecruit(Stk, Age, 1)
             Next
         End If
 
-
-
-
         '- Process any Marked/UnMarked Splits (Flag=2)
         Dim SumScalers As Double
+        ReDim RunBackwardsFlag(Stk + 1)
+        ReDim RunBackwardsTarget(Stk + 1)
         For Stk As Integer = 1 To NumStk
             If BackwardsFlag(Stk) = 2 Then ' use starting mark rate on starting cohorts rather than escapement targets
                 If (Stk Mod 2) = 0 Then
@@ -95,10 +96,10 @@ Public Class FVS_BackwardsFram
                             MsgBox("Error - Backwards Stock FLAG = 2 points to Stock Scalers = ZERO" & vbCrLf & "Stock Name = " & StockTitle(Stk), MsgBoxStyle.OkOnly)
                             Exit Sub
                         End If
-                        BackwardsTarget(Stk - 1) = BackwardsTarget(Stk) / 2  ' * (StockRecruit(Stk - 1, 3, 1) / SumScalers)
-                        BackwardsTarget(Stk) = BackwardsTarget(Stk - 1)
-                        BackwardsFlag(Stk - 1) = 2
-                        'BackwardsFlag(Stk) = 0
+                        RunBackwardsTarget(Stk - 1) = BackwardsTarget(Stk) / 2  ' * (StockRecruit(Stk - 1, 3, 1) / SumScalers)
+                        RunBackwardsTarget(Stk) = RunBackwardsTarget(Stk - 1)
+                        RunBackwardsFlag(Stk - 1) = 2
+                        RunBackwardsFlag(Stk) = 2
                     Else ' creates error message when both the marked and unmarked stock component have a flag of 2
                         MsgBox("FLAG = 2 - Error for Backwards FRAM Target Esc" & vbCrLf & "Stock# " & Stk.ToString & " Name = " & StockTitle(Stk) & " - Conflicting Flags", MsgBoxStyle.OkOnly)
                         Exit Sub
@@ -112,10 +113,10 @@ Public Class FVS_BackwardsFram
                             MsgBox("Error - Backwards Stock FLAG = 2 points to Stock Scalers = ZERO" & vbCrLf & "Stock Name = " & StockTitle(Stk), MsgBoxStyle.OkOnly)
                             Exit Sub
                         End If
-                        BackwardsTarget(Stk + 1) = BackwardsTarget(Stk - 1) / 2 ' * (StockRecruit(Stk - 1, 3, 1) / SumScalers)
-                        BackwardsTarget(Stk) = BackwardsTarget(Stk + 1)
-                        BackwardsFlag(Stk + 1) = 2
-                        'BackwardsFlag(Stk) = 2
+                        RunBackwardsTarget(Stk + 1) = BackwardsTarget(Stk) / 2 ' * (StockRecruit(Stk - 1, 3, 1) / SumScalers)
+                        RunBackwardsTarget(Stk) = RunBackwardsTarget(Stk + 1)
+                        RunBackwardsFlag(Stk + 1) = 2
+                        RunBackwardsFlag(Stk) = 2
                         Stk = Stk + 1
                     Else
                         MsgBox("FLAG = 2 - Error for Backwards FRAM Target Esc" & vbCrLf & "Stock# " & Stk - 1.ToString & " Name = " & StockTitle(Stk - 1) & " - Conflicting Flags", MsgBoxStyle.OkOnly)
@@ -235,7 +236,8 @@ Public Class FVS_BackwardsFram
 
    Sub Check_BackwardsTarget(ByVal IterNum As Integer, ByVal BackFRAMIteration As Integer)
 
-      Dim EscDiff, ERTotal As Double
+        Dim EscDiff, ERTotal, StockMort(,) As Double
+        Dim timestep As Integer
       
       '- Compare FRAM Escapements to Target Escapements
       '  Recalculate Stock Scalars for Next Iteration
@@ -244,149 +246,94 @@ Public Class FVS_BackwardsFram
       Age = 3
         TStep = 5
         DoneIterating = 0
+        'calulate stock mortalities summed over all fisheries within a time step to expand target escapements
+        ReDim StockMort(NumStk, NumSteps)
+        For Stk = 1 To NumStk
+            For Fish = 1 To NumFish
+                For timestep = 1 To NumSteps
+                    StockMort(Stk, timestep) += LandedCatch(Stk, 3, Fish, timestep) + MSFLandedCatch(Stk, 3, Fish, timestep) + _
+                    NonRetention(Stk, 3, Fish, timestep) + MSFNonRetention(Stk, 3, Fish, timestep) + _
+                    DropOff(Stk, 3, Fish, timestep) + MSFDropOff(Stk, 3, Fish, timestep)
+                Next
+            Next
+        Next Stk
+
 
         For Stk As Integer = 1 To NumStk
-            If Stk = 1 Then
+            If Stk = 5 Then
                 Jim = 1
             End If
 
-           
             '----------
             BackScaler(Stk, IterNum) = StockRecruit(Stk, Age, 1)
             BackEsc(Stk, IterNum) = Escape(Stk, Age, TStep)
-            If BackwardsFlag(Stk) = 0 Then
-                GoTo NextStockRecruitr
+
+            If RunBackwardsFlag(Stk) = 0 Then
+                If BackwardsFlag(Stk) = 0 Then
+                    GoTo NextStockRecruitr
+                End If
             End If
 
 
-            'If InitialCohort = 0 Then
-            'StockRecruit(Stk, Age, 1) = 0
-            'Else
             If IterNum > 1 Then
                 '- Reset Zero Stocks to Zero (TAMM Effects)
                 If BackScaler(Stk, IterNum - 1) = 0 Then
-                    If BackwardsFlag(Stk) <> 2 Then
+                    If BackwardsFlag(Stk) = 1 Then
                         StockRecruit(Stk, Age, 1) = 0
                         GoTo NextStockRecruitr
                     End If
                 End If
             End If
 
-            If Escape(Stk, Age, TStep) < 0 And BackwardsFlag(Stk) = 1 Then
-                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                'Increase Scalar when Escapement is negative
-                'If IterNum = 1 Then
-                'StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                'Else
-                '    If BackEsc(Stk, IterNum - 1) < 0 Then
-                '        StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                '    Else
-                '        StockRecruit(Stk, Age, 1) = (StockRecruit(Stk, Age, 1) + BackScaler(Stk, IterNum - 1)) / 2
-                '    End If
-                'End If
-            Else
-            '- Increase Cohort Size by Escapement Difference times Survival Rate
+
             If StockRecruit(Stk, Age, 1) <> 0 And BackwardsTarget(Stk) <> 0 And BackwardsFlag(Stk) = 1 Then
 
-                EscDiff = BackwardsTarget(Stk) - Escape(Stk, Age, TStep)
-                'ERTotal = Escape(Stk, Age, TStep) / InitialCohort * 1.33571
-                ERTotal = (Cohort(Stk, Age, 4, 1) / 1.23 - Escape(Stk, Age, TStep)) / (Cohort(Stk, Age, 4, 1) / 1.23)
-                    'If Cohort(Stk, Age, 4, 1) < Math.Abs(EscDiff) * 1.23 / (1 - ERTotal) Then
-                    '    '- Check for Negative Scaler
-                    '    If IterNum = 1 Then
-                    '        If EscDiff > 0 Then
-                    '            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                    '        Else
-                    '            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 2
-                    '        End If
-                    '    Else
-                    '        If EscDiff > 0 Then 'target > FRAMEsc; need to increase scalar
-                    '            If StockRecruit(Stk, Age, 1) < 1 Then
-                    '                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) / Escape(Stk, Age, TStep))
-                    '            Else
-                    '                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                    '            End If
-                    '        Else 'need to decrease
-                    '            If StockRecruit(Stk, Age, 1) > 2 Then
-                    '                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) / Escape(Stk, Age, TStep))
-                    '            Else
-                    '                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 1.1
-                    '            End If
-                    '        End If
-                    '    End If
-                    'Else
-                    If ERTotal > 0.95 Then ' prevent the term EscDiff/(1-ERTotal) from getting too big when ER near 100%
-                        'stocks with small escapements and high ERs appear to be the problem with convergence - investigate
-                        StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) + (EscDiff / 0.5 * 1.23) / BaseCohortSize(Stk, Age)
-                    Else
-                        '- Normal Scaling
-                        StockRecruit(Stk, Age, 1) = (Cohort(Stk, Age, 4, 1) + (EscDiff / (1 - ERTotal) * 1.23)) / BaseCohortSize(Stk, Age)
+
+                StockRecruit(Stk, Age, 1) = ((((((BackwardsTarget(Stk) + StockMort(Stk, 5)) / (1 - NaturalMortality(3, 5)) + _
+                                            StockMort(Stk, 4)) / (1 - NaturalMortality(3, 4)) + StockMort(Stk, 3)) / _
+                                            (1 - NaturalMortality(3, 3)) + StockMort(Stk, 2)) / (1 - NaturalMortality(3, 2)) + _
+                                            StockMort(Stk, 1)) / (1 - NaturalMortality(3, 1))) / BaseCohortSize(Stk, Age)
+
+                If BackwardsTarget(Stk) > 0 Then
+                    If Math.Abs(BackwardsTarget(Stk) - Escape(Stk, Age, TStep)) > 1 Then
+                        DoneIterating = DoneIterating + 1
                     End If
-                    If BackwardsTarget(Stk) > 0 Then
-                        If Math.Abs(BackwardsTarget(Stk) - Escape(Stk, Age, TStep)) > 1 Then
-                            DoneIterating = DoneIterating + 1
-                        End If
-                    End If
-                    'End If
-                ElseIf BackwardsTarget(Stk) <> 0 And StockRecruit(Stk, Age, 1) = 0 And BackwardsFlag(Stk) = 1 Then
+                End If
+
+
+                If BackwardsTarget(Stk) <> 0 And StockRecruit(Stk, Age, 1) = 0 And BackwardsFlag(Stk) = 1 Then
                     '- Target Esc > zero and StkSclr = 0 change SS to one
                     StockRecruit(Stk, Age, 1) = 1
-                ElseIf BackwardsTarget(Stk) = 0 And StockRecruit(Stk, Age, 1) <> 0 And BackwardsFlag(Stk) = 1 Then
+                End If
+                If BackwardsTarget(Stk) = 0 And StockRecruit(Stk, Age, 1) <> 0 And BackwardsFlag(Stk) = 1 Then
                     '- Target Esc = zero and StkSclr <> 0 change SS to zero
                     StockRecruit(Stk, Age, 1) = 0
-                ElseIf BackwardsFlag(Stk) = 2 Then 'combined marked and unmarked target
-                    'If (Stk Mod 2) <> 0 Then
-                    '    EscDiff = BackwardsTarget(Stk) * Escape(Stk, Age, TStep) / (Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep)) - Escape(Stk, Age, TStep)
-                    'Else
+                End If
+            Else
+                If RunBackwardsFlag(Stk) = 2 Then 'combined marked and unmarked target
                     If Stk = 5 Then
                         Jim = 1
                     End If
+                    'If (Stk Mod 2) <> 0 Then
+                    '    EscDiff = BackwardsTarget(Stk) * Escape(Stk, Age, TStep) / (Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep)) - Escape(Stk, Age, TStep)
+                    'Else
+                    '- Normal Scaling
+                    StockRecruit(Stk, Age, 1) = ((((((RunBackwardsTarget(Stk) * 2 + StockMort(Stk, 5) + StockMort(Stk + 1, 5)) / (1 - NaturalMortality(3, 5)) + _
+                                                StockMort(Stk, 4) + StockMort(Stk + 1, 4)) / (1 - NaturalMortality(3, 4)) + _
+                                                StockMort(Stk, 3) + StockMort(Stk + 1, 3)) / _
+                                                (1 - NaturalMortality(3, 3)) + StockMort(Stk, 2) + StockMort(Stk + 1, 2)) / _
+                                                (1 - NaturalMortality(3, 2)) + StockMort(Stk, 1) + StockMort(Stk + 1, 1)) / _
+                                                (1 - NaturalMortality(3, 1)) * InitialCohort(Stk) / (InitialCohort(Stk) + InitialCohort(Stk + 1))) _
+                                                / BaseCohortSize(Stk, Age)
+                    StockRecruit(Stk + 1, Age, 1) = ((((((RunBackwardsTarget(Stk + 1) * 2 + StockMort(Stk, 5) + StockMort(Stk + 1, 5)) / (1 - NaturalMortality(3, 5)) + _
+                                               StockMort(Stk, 4) + StockMort(Stk + 1, 4)) / (1 - NaturalMortality(3, 4)) + _
+                                               StockMort(Stk, 3) + StockMort(Stk + 1, 3)) / _
+                                               (1 - NaturalMortality(3, 3)) + StockMort(Stk, 2) + StockMort(Stk + 1, 2)) / _
+                                               (1 - NaturalMortality(3, 2)) + StockMort(Stk, 1) + StockMort(Stk + 1, 1)) / _
+                                               (1 - NaturalMortality(3, 1)) * InitialCohort(Stk + 1) / (InitialCohort(Stk) + InitialCohort(Stk + 1))) _
+                                               / BaseCohortSize(Stk + 1, Age)
 
 
-
-
-                    If Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep) < 0 Then
-                        StockRecruit(Stk, Age, 1) = (StockRecruit(Stk, Age, 1) + StockRecruit(Stk + 1, Age, 1)) * 1.1 * InitialCohort(Stk) / (InitialCohort(Stk) + InitialCohort(Stk + 1))
-                        StockRecruit(Stk + 1, Age, 1) = (StockRecruit(Stk, Age, 1) + StockRecruit(Stk + 1, Age, 1)) * 1.1 * InitialCohort(Stk + 1) / (InitialCohort(Stk) + InitialCohort(Stk + 1))
-                    Else
-                        EscDiff = BackwardsTarget(Stk) + BackwardsTarget(Stk + 1) - Escape(Stk, Age, TStep) - Escape(Stk + 1, Age, TStep)
-                        ERTotal = ((Cohort(Stk, Age, 4, 1) + Cohort(Stk + 1, Age, 4, 1)) / 1.23 - Escape(Stk, Age, TStep) - Escape(Stk + 1, Age, TStep)) / ((Cohort(Stk, Age, 4, 1) + Cohort(Stk + 1, Age, 4, 1)) / 1.23)
-
-                        'If (Cohort(Stk, Age, 4, 1) + Cohort(Stk + 1, Age, 4, 1)) < (Math.Abs(EscDiff) / (1 - ERTotal) * 1.23) Then
-
-                        ' ''    '- Check for Negative Scaler
-                        ' ''    If IterNum = 1 Then
-                        ' ''        If EscDiff > 0 Then
-                        ' ''            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                        ' ''            StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * 1.1
-                        ' ''        Else
-                        ' ''            StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 2
-                        ' ''            StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) / 2
-                        ' ''        End If
-                        ' ''    Else
-                        ' ''        If EscDiff > 0 Then
-                        ' ''            If StockRecruit(Stk, Age, 1) < 1 Then
-                        ' ''                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) + BackwardsTarget(Stk + 1)) / (Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep))
-                        ' ''                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * (BackwardsTarget(Stk) + BackwardsTarget(Stk + 1)) / (Escape(Stk, Age, TStep) + Escape(Stk + 1, Age, TStep))
-                        ' ''            Else
-                        ' ''                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * 1.1
-                        ' ''                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * 1.1
-                        ' ''            End If
-                        ' ''        Else
-                        ' ''            If StockRecruit(Stk, Age, 1) > 2 Then
-                        ' ''                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) * (BackwardsTarget(Stk) / Escape(Stk, Age, TStep))
-                        ' ''                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) * 1.1
-                        ' ''            Else
-                        ' ''                StockRecruit(Stk, Age, 1) = StockRecruit(Stk, Age, 1) / 1.1
-                        ' ''                StockRecruit(Stk + 1, Age, 1) = StockRecruit(Stk + 1, Age, 1) / 1.1
-                        ' ''            End If
-                        ' ''        End If
-                        ' ''    End If
-                        ' ''Else
-                        '- Normal Scaling
-                        StockRecruit(Stk, Age, 1) = ((Cohort(Stk, Age, 4, 1) + Cohort(Stk + 1, Age, 4, 1) + (EscDiff / (1 - ERTotal) * 1.23)) * InitialCohort(Stk) / (InitialCohort(Stk) + InitialCohort(Stk + 1))) / BaseCohortSize(Stk, Age)
-                        StockRecruit(Stk + 1, Age, 1) = ((Cohort(Stk, Age, 4, 1) + Cohort(Stk + 1, Age, 4, 1) + (EscDiff / (1 - ERTotal) * 1.23)) * InitialCohort(Stk + 1) / (InitialCohort(Stk) + InitialCohort(Stk + 1))) / BaseCohortSize(Stk + 1, Age)
-                    End If
 
                     If BackwardsTarget(Stk) > 0 Then
                         If Math.Abs(BackwardsTarget(Stk) * 2 - Escape(Stk, Age, TStep) - Escape(Stk + 1, Age, TStep)) > 1 Then
@@ -395,12 +342,12 @@ Public Class FVS_BackwardsFram
                     End If
 
                     Stk = Stk + 1
-                End If 'StockRecruit(Stk, Age, 1) <> 0 And BackwardsTarget(Stk) <> 0
-            End If 'Esc < 0
+                End If
+            End If
 NextStockRecruitr:
             '- Output Report
             'If Stk = 6 Then
-            If BackwardsFlag(Stk) = 2 Then
+            If RunBackwardsFlag(Stk) = 2 Then
                 Stk = Stk - 1
                 PrnLine = IterNum.ToString
                 PrnLine &= String.Format("{0,4}", Stk.ToString("###0"))
@@ -726,7 +673,7 @@ NextStockRecruitr:
         Next
 
        
-        '*****Angelika calcualted method to quickly bring terminal run sizes in line with target for most stocks; addresses maturation in other
+        '*****Angelika calculated method to quickly bring terminal run sizes in line with target for most stocks; addresses maturation in other
         'time steps and problems with large intercepts, but will have residuals for most stocks
         For TRun = 1 To NumStk + NumChinTermRuns
 
