@@ -176,8 +176,8 @@ Public Class FVS_BackwardsFram
         DoneIterating = 1
         FirstIter = 1
         For BackFRAMIteration = 1 To NumBackFRAMIterations
-
-            If DoneIterating = 0 Then
+            
+            If DoneIterating < 0 Then
                 ChangeStockRecruit = True
                 Exit For
             End If
@@ -220,7 +220,7 @@ Public Class FVS_BackwardsFram
         Me.Cursor = Cursors.Default
         IterProgressLabel.Visible = False
         IterProgressTextBox.Visible = False
-        MSMRecsButton.Visible = True
+        MSMRecsButton.Visible = False
         MSMRecsButton.Enabled = True
         SaveScalersButton.Visible = True
         SaveScalersButton.Enabled = True
@@ -334,9 +334,11 @@ Public Class FVS_BackwardsFram
                                                / BaseCohortSize(Stk + 1, Age)
 
 
-
-                    If BackwardsTarget(Stk) > 0 Then
-                        If Math.Abs(BackwardsTarget(Stk) * 2 - Escape(Stk, Age, TStep) - Escape(Stk + 1, Age, TStep)) > 1 Then
+                    If IterNum = 120 Then
+                        Jim = 1
+                    End If
+                    If RunBackwardsTarget(Stk) > 0 Then
+                        If Math.Abs(RunBackwardsTarget(Stk) * 2 - Escape(Stk, Age, TStep) - Escape(Stk + 1, Age, TStep)) > 1 Then
                             DoneIterating = DoneIterating + 1
                         End If
                     End If
@@ -629,7 +631,7 @@ NextStockRecruitr:
         Me.Cursor = Cursors.Default
         IterProgressLabel.Visible = False
         IterProgressTextBox.Visible = False
-        MSMRecsButton.Visible = True
+        MSMRecsButton.Visible = False
         MSMRecsButton.Enabled = True
         SaveScalersButton.Visible = True
         SaveScalersButton.Enabled = True
@@ -2096,6 +2098,10 @@ NextTRun:
     End Sub
 
     Private Sub chk2from3_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chk2from3.CheckedChanged
+
+    End Sub
+
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
     End Sub
 End Class

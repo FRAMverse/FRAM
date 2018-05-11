@@ -722,7 +722,7 @@ NewCohoOldFormat:
 
       RIC.Transaction = FramTrans
         RIC.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear,RunType) " & _
-            "VALUES(" & RunIDSelect.ToString & "," & _
+            "VALUES(" & NewRunID.ToString & "," & _
                 Chr(34) & SpeciesName.ToString & Chr(34) & "," & _
               Chr(34) & RunIDNameSelect.ToString & Chr(34) & "," & _
               Chr(34) & RunIDTitleSelect.ToString & Chr(34) & "," & _
