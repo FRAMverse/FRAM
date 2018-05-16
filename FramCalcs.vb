@@ -6236,6 +6236,15 @@ NextTaaETRS:
                 If K = 4 Then
                     For Fish = 45 To 74
                         Select Case Fish
+                            Case 45
+                                If BaseExploitationRate(161, 3, 45, 4) <> 0 Then
+                                    If Abs(CInt(FisheryQuotaCompare(Fish, K)) - CInt(FisheryQuota(Fish, K))) > 1 Then
+                                        KeepIter = True
+                                    End If
+                                    FisheryFlag(Fish, K) = 2
+                                    FisheryQuota(Fish, K) = SaveCoastalQuota(Fish, K).ToString("########0")
+                                    FisheryQuotaCompare(Fish, K) = SaveCoastalQuota(Fish, K).ToString("########0")
+                                End If
                             Case 47, 48, 50, 52, 63, 68, 71, 74
                                 If Abs(CInt(FisheryQuotaCompare(Fish, K)) - CInt(FisheryQuota(Fish, K))) > 1 Then
                                     KeepIter = True
@@ -6248,6 +6257,24 @@ NextTaaETRS:
                 Else
                     For Fish = 45 To 74
                         Select Case Fish
+                            Case 45
+                                If BaseExploitationRate(161, 3, 45, 4) <> 0 Then
+                                    If Abs(CInt(FisheryQuotaCompare(Fish, K)) - CInt(FisheryQuota(Fish, K))) > 1 Then
+                                        KeepIter = True
+                                    End If
+                                    FisheryFlag(Fish, K) = 2
+                                    FisheryQuota(Fish, K) = SaveCoastalQuota(Fish, K).ToString("########0")
+                                    FisheryQuotaCompare(Fish, K) = SaveCoastalQuota(Fish, K).ToString("########0")
+                                Else
+                                    If Abs(CInt(FisheryQuotaCompare(Fish, K)) - CInt(FisheryQuota(Fish, K))) > 1 Then
+                                        KeepIter = True
+                                    End If
+                                    FisheryFlag(Fish, K) = 2
+                                    FisheryQuota(Fish, K) = SaveCoastalQuota(Fish, K) + SaveCoastalQuota(Fish, 4)
+                                    FisheryQuotaCompare(Fish, K) = SaveCoastalQuota(Fish, K) + SaveCoastalQuota(Fish, 4)
+                                    FisheryQuota(Fish, K) = FisheryQuota(Fish, K).ToString("########0")
+                                End If
+
                             Case 47, 48, 50, 52, 63, 68, 71, 74
                                 If Abs(CInt(FisheryQuotaCompare(Fish, K)) - CInt(FisheryQuota(Fish, K))) > 1 Then
                                     KeepIter = True
@@ -6255,7 +6282,7 @@ NextTaaETRS:
                                 FisheryFlag(Fish, K) = 2
                                 FisheryQuota(Fish, K) = SaveCoastalQuota(Fish, K).ToString("########0")
                                 FisheryQuotaCompare(Fish, K) = SaveCoastalQuota(Fish, K).ToString("########0")
-                            Case 45, 46, 49, 51, 54, 55, 56, 65, 70, 73
+                            Case 46, 49, 51, 54, 55, 56, 65, 70, 73
                                 If Abs(CInt(FisheryQuotaCompare(Fish, K)) - CInt(FisheryQuota(Fish, K))) > 1 Then
                                     KeepIter = True
                                 End If
