@@ -446,6 +446,9 @@ Public Class FVS_ModelRunSelection
         drd1.Dispose()
 
         '- Temp Fix for BaseERate, Nat Mort Rate, and Maturity Rate Time 4
+        '- time 4 Chinook are the same age as time 1 Chinook of the same age (see Popstat)
+        '- The calibration program mistakenly sets time 4 Chinook ER to time 1 Chinook ER of age +1
+        '- this code sets it back
         '- Error in Base Period write routine for Time 4
         If SpeciesName = "CHINOOK" Then
             For Stk As Integer = 1 To NumStk

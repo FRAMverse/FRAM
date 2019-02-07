@@ -260,7 +260,7 @@ Public Class FVS_BackwardsFram
 
 
         For Stk As Integer = 1 To NumStk
-            If Stk = 5 Then
+            If Stk = 123 Then
                 Jim = 1
             End If
 
@@ -293,6 +293,9 @@ Public Class FVS_BackwardsFram
                                             StockMort(Stk, 4)) / (1 - NaturalMortality(3, 4)) + StockMort(Stk, 3)) / _
                                             (1 - NaturalMortality(3, 3)) + StockMort(Stk, 2)) / (1 - NaturalMortality(3, 2)) + _
                                             StockMort(Stk, 1)) / (1 - NaturalMortality(3, 1))) / BaseCohortSize(Stk, Age)
+                If Double.IsNaN(StockRecruit(Stk, Age, 1)) Then
+                    MsgBox("Invalid Cohort Size for Stk " & Stk & ", PTerm " & PTerm & ", Time Step " & TStep & ".")
+                End If
 
                 If BackwardsTarget(Stk) > 0 Then
                     If Math.Abs(BackwardsTarget(Stk) - Escape(Stk, Age, TStep)) > 1 Then

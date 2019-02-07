@@ -837,12 +837,13 @@ SkipTami2:
       Call ScaleCohort()     
         For TStep = 1 To NumSteps
 
-            If TStep = 4 Then
-                Jim = 1
-            End If
+            
             Call NatMort()
             Call CompCatch(PTerm)
             Call IncMort(PTerm)
+            If TStep = 3 Then
+                Jim = 1
+            End If
             Call Mature()
             Call CompCatch(Term)
             Call IncMort(Term)
@@ -915,13 +916,9 @@ SkipTami2:
         If SkipJim = 1 Then sw.WriteLine(PrnLine)
         PrnLine = "--------Stk Age Fsh TSp LandCatch Cohort     BaseExpRt FishScl StkFshI LegalProp"
         If SkipJim = 1 Then sw.WriteLine(PrnLine)
-
+        
         For Fish As Integer = 1 To NumFish
             
-            If Fish = 112 Then
-                Jim = 1
-            End If
-
 
             If AnyBaseRate(Fish, TStep) = 0 Then GoTo NextScalerFishery ' if there is no catch in the base period
             '- Fishery/Time-Step can only be Terminal or Pre-Terminal
@@ -960,9 +957,7 @@ SkipTami2:
 
                             '- Compute Legal Proportion by Stock, Age, and Time-Step
                             ChinookBaseLegProp = False
-                            If Stk = 34 Then
-                                Jim = 1
-                            End If
+                            
                             Call CompLegProp(Stk, Age, Fish, TerminalType)
 
                             ''- Check if New Size Limit is different from Base Period Size Limit
@@ -976,9 +971,7 @@ SkipTami2:
                             ''############################# BEGIN NEW CODE ############################ Pete-Jan. 2013
                             ''Only use different legal and sublegal proportions for 1) scenarios involving <22" limits,
                             ''2) Puget Sound sport fisheries, and 3) combo fisheries with different limits during NS & MSF periods
-
-
-
+                           
 
 
                             'If SizeLimitScenario = True Then
@@ -1002,7 +995,9 @@ SkipTami2:
                             'End If
                             ''############################# END NEW CODE ############################ Pete-Jan. 2013
                             ''****************************************************************************************
-
+                            If Stk = 2 And Age = 3 And Fish = 119 And TStep = 4 Then
+                                Jim = 1
+                            End If
 
                             '- Retention Fishery Scalers 
                             If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Then
@@ -1031,7 +1026,7 @@ SkipTami2:
                                        LegalProportion
 
                                     JimD = LandedCatch(Stk, Age, Fish, TStep)
-
+                                   
                                     '- DEBUG Code to Check CompCatch Calculations
                                     'If SkipJim = 1 And (Fish = 1) And TStep = 2 And LandedCatch(Stk, Age, Fish, TStep) <> 0 Then
                                     'If SkipJim = 1 And LandedCatch(Stk, Age, Fish, TStep) <> 0 Then
@@ -1136,18 +1131,20 @@ SkipTami2:
                             '- Retention Quota Fishery
                             If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
                                 '- First Pass for Quota Fisheries - Landed Catch as if FisheryScaler = 1
-
-                                
-                                If Stk = 1 And Fish = 1 And TStep = 4 Then
+                                If TStep = 1 And Stk = 123 And Fish = 3 Then
                                     Jim = 1
                                 End If
+                               
                                
 
                                 LandedCatch(Stk, Age, Fish, TStep) = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * Cohort(Stk, Age, TerminalType, TStep) * LegalProportion
                                 'Encounters(Stk, Age, Fish, TStep) += Encounters(Stk, Age, Fish, TStep) + LandedCatch(Stk, Age, Fish, TStep)
                                 'TotalEncounters(Fish, TStep) = TotalEncounters(Fish, TStep) + LandedCatch(Stk, Age, Fish, TStep)
                                 NSFQuotaTotal(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
-
+                                
+                                If Double.IsNaN(LandedCatch(Stk, Age, Fish, TStep)) Then
+                                    MsgBox("Invalid Landed Catch for Stk " & Stk & ", Fishery " & Fish & ", Time Step " & TStep & ".")
+                                End If
                             End If
 
 
@@ -1190,6 +1187,9 @@ SkipTami2:
                                     MSFNonRetention(Stk, Age, Fish, TStep) = MSFLandedCatch(Stk, Age, Fish, TStep) * (1.0 - MarkSelectiveUnMarkMisID(Fish, TStep)) * MarkSelectiveMortRate(Fish, TStep)
                                     MSFLandedCatch(Stk, Age, Fish, TStep) = MSFLandedCatch(Stk, Age, Fish, TStep) * MarkSelectiveUnMarkMisID(Fish, TStep)
                                     'TotalNonRetention(Fish, TStep) += MSFNonRetention(Stk, Age, Fish, TStep)
+                                End If
+                                If Double.IsNaN(MSFLandedCatch(Stk, Age, Fish, TStep)) Then
+                                    MsgBox("Invalid MSF Landed Catch Size for Stk " & Stk & ", Fishery " & Fish & ", Time Step " & TStep & ".")
                                 End If
                                 MSFQuotaTotal(Fish, TStep) += MSFLandedCatch(Stk, Age, Fish, TStep)
                             End If
@@ -3088,14 +3088,22 @@ SelctFsh:
         Dim JimD As Double
 
       For Stk As Integer = 1 To NumStk
-         For Age As Integer = MinAge To MaxAge
+            For Age As Integer = MinAge To MaxAge
+                If Stk = 123 And Age = 3 And PTerm = 0 And TStep = 1 Then
+                    Jim = 1
+                End If
                 For Fish As Integer = 1 To NumFish
-                    If Stk = 38 Then
-                        Stk = 38
+                    If Fish = 198 Then
+                        Jim = 1
                     End If
                     If TerminalFisheryFlag(Fish, TStep) = PTerm Then
                         Cohort(Stk, Age, PTerm, TStep) = Cohort(Stk, Age, PTerm, TStep) - LandedCatch(Stk, Age, Fish, TStep) - Shakers(Stk, Age, Fish, TStep) - NonRetention(Stk, Age, Fish, TStep) - DropOff(Stk, Age, Fish, TStep) _
                                                                    - MSFLandedCatch(Stk, Age, Fish, TStep) - MSFShakers(Stk, Age, Fish, TStep) - MSFNonRetention(Stk, Age, Fish, TStep) - MSFDropOff(Stk, Age, Fish, TStep)
+
+                        If Double.IsNaN(Cohort(Stk, Age, PTerm, TStep)) Then
+                            MsgBox("Invalid Cohort Size for Stk " & Stk & ", PTerm " & PTerm & ", Time Step " & TStep & ".")
+                        End If
+
                         'If TStep = 4 Then
                         JimD = LandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) _
                                                                 + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
@@ -3117,14 +3125,15 @@ SelctFsh:
 
                     End If
                 Next Fish
-            '- Save After-PreTerminal Cohort
-            Cohort(Stk, Age, 2, TStep) = Cohort(Stk, Age, PTerm, TStep)
-            '- Check for Negative Cohort Size
-            If Cohort(Stk, Age, PTerm, TStep) < 0.0 Then
-               'Print #10, "ERROR - Negative Cohort Size for STOCK, AGE = " + SmlStockName$(Stk) + " " + Str(age)
-               'MsgBox("ERROR - Negative Cohort Size for STOCK, AGE = " & StockName(Stk).ToString & " " & Age.ToString, MsgBoxStyle.OkOnly)
-            End If
-         Next Age
+                '- Save After-PreTerminal Cohort
+                Cohort(Stk, Age, 2, TStep) = Cohort(Stk, Age, PTerm, TStep)
+                '- Check for Negative Cohort Size
+                If Cohort(Stk, Age, PTerm, TStep) < 0.0 Then
+                    Jim = 1
+                    'Print #10, "ERROR - Negative Cohort Size for STOCK, AGE = " + SmlStockName$(Stk) + " " + Str(age)
+                    'MsgBox("ERROR - Negative Cohort Size for STOCK, AGE = " & StockName(Stk).ToString & " " & Age.ToString, MsgBoxStyle.OkOnly)
+                End If
+            Next Age
       Next Stk
 
         'COMPUTE MATURE COMPONENT OF EACH COHORT

@@ -3752,7 +3752,7 @@ FoundNewColumn:
                     Try
                         FSC.ExecuteNonQuery()
                     Catch ex As Exception
-                        MsgBox("Please select TransferFile version 4 or higher")
+                        MsgBox("Please select TransferFile version 5c or higher")
                         GoTo ExitTransfer
                     End Try
                 Else
