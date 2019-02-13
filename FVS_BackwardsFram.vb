@@ -286,8 +286,8 @@ Public Class FVS_BackwardsFram
             End If
 
 
-            If StockRecruit(Stk, Age, 1) <> 0 And BackwardsTarget(Stk) <> 0 And BackwardsFlag(Stk) = 1 Then
-
+            'If StockRecruit(Stk, Age, 1) <> 0 And BackwardsTarget(Stk) <> 0 And BackwardsFlag(Stk) = 1 Then
+            If StockRecruit(Stk, Age, 1) <> 0 And BackwardsFlag(Stk) = 1 Then
 
                 StockRecruit(Stk, Age, 1) = ((((((BackwardsTarget(Stk) + StockMort(Stk, 5)) / (1 - NaturalMortality(3, 5)) + _
                                             StockMort(Stk, 4)) / (1 - NaturalMortality(3, 4)) + StockMort(Stk, 3)) / _
