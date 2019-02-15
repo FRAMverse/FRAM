@@ -2610,29 +2610,30 @@ SkipTaa:
          '- INSERT Records into DataBase Table
          If SpeciesName = "COHO" Then
             For Stk = 1 To NumStk
-               If BackwardsTarget(Stk) <> 0 Then
-                  BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
-                  "VALUES(" & RunIDSelect.ToString & "," & _
-                  Stk.ToString & "," & _
-                  BackwardsTarget(Stk).ToString("0.0") & ", 0, 0, " & _
-                  BackwardsFlag(Stk).ToString & ")"
-                  BFC.ExecuteNonQuery()
-               End If
+                    If BackwardsTarget(Stk) <> 0 Or BackwardsFlag(Stk) <> 0 Then
+                        BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
+                        "VALUES(" & RunIDSelect.ToString & "," & _
+                        Stk.ToString & "," & _
+                        BackwardsTarget(Stk).ToString("0.0") & ", 0, 0, " & _
+                        BackwardsFlag(Stk).ToString & ")"
+                        BFC.ExecuteNonQuery()
+
+                    End If
             Next
          ElseIf SpeciesName = "CHINOOK" Then
             Dim SumChinTarget As Double
             For Stk = 1 To NumStk + NumChinTermRuns
                SumChinTarget = BackwardsChinook(Stk, 3) + BackwardsChinook(Stk, 4) + BackwardsChinook(Stk, 5)
-               If SumChinTarget <> 0 Then
-                  BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
-                  "VALUES(" & RunIDSelect.ToString & "," & _
-                  Stk.ToString & "," & _
-                  BackwardsChinook(Stk, 3).ToString("0.0") & "," & _
-                  BackwardsChinook(Stk, 4).ToString("0.0") & "," & _
-                  BackwardsChinook(Stk, 5).ToString("0.0") & "," & _
-                  BackwardsFlag(Stk).ToString & ")"
-                  BFC.ExecuteNonQuery()
-               End If
+                    If SumChinTarget <> 0 Or BackwardsFlag(Stk) <> 0 Then
+                        BFC.CommandText = "INSERT INTO BackwardsFRAM (RunID,StockID,TargetEscAge3,TargetEscAge4,TargetEscAge5,TargetFlag) " & _
+                        "VALUES(" & RunIDSelect.ToString & "," & _
+                        Stk.ToString & "," & _
+                        BackwardsChinook(Stk, 3).ToString("0.0") & "," & _
+                        BackwardsChinook(Stk, 4).ToString("0.0") & "," & _
+                        BackwardsChinook(Stk, 5).ToString("0.0") & "," & _
+                        BackwardsFlag(Stk).ToString & ")"
+                        BFC.ExecuteNonQuery()
+                    End If
             Next
          End If
          BFTrans.Commit()

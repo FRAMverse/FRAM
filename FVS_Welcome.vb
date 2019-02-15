@@ -5,7 +5,7 @@ Public Class FVS_Welcome
 
    Private Sub FVS_Welcome_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        FramVersion = "2.19"
+        FramVersion = "2.19a"
       VersionLabel.Text = "Version " & FramVersion
       ReDim VersionNumberChanges(100)
       For Stk As Integer = 0 To 100

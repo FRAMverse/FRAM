@@ -285,6 +285,9 @@ Public Class FVS_BackwardsFram
                 End If
             End If
 
+            'If BackwardsTarget(Stk) = 0 And BackwardsFlag(Stk) = 1 Then
+            '    StockRecruit(Stk, Age, 1) = 0
+            'End If
 
             'If StockRecruit(Stk, Age, 1) <> 0 And BackwardsTarget(Stk) <> 0 And BackwardsFlag(Stk) = 1 Then
             If StockRecruit(Stk, Age, 1) <> 0 And BackwardsFlag(Stk) = 1 Then
@@ -2085,10 +2088,13 @@ NextTRun:
 
     Private Sub SaveScalersButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles SaveScalersButton.Click
         BackFramSave = True
+        ChangeStockRecruit = True
         Me.Visible = False
+
         MsgBox("This action saves BkFRAMTargets as well as Recruit Scalars. To save, please follow instructions of next menu.")
         FVS_SaveModelRunInputs.ShowDialog()
         BackFramSave = False
+        ChangeStockRecruit = False
         Exit Sub
     End Sub
 
