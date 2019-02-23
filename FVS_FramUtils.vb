@@ -25,10 +25,20 @@ Public Class FVS_FramUtils
         '    GetBPTransferBtn.Visible = False
         '    TransferBPBtn.Visible = False
         'ElseIf SpeciesName = "CHINOOK" Then
+        If SpeciesName = "COHO" Then
+           
+            PassonePasstwoBtn.Visible = False
+          
+        ElseIf SpeciesName = "CHINOOK" Then
+            PassonePasstwoBtn.Visible = True
+        End If
+
+
+
         GetBPTransferBtn.Visible = True
         TransferBPBtn.Visible = True
         'End If
-   End Sub
+    End Sub
 
    Private Sub FUExitButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles FUExitButton.Click
       Me.Visible = False
@@ -764,5 +774,362 @@ NewName:
 
     Private Sub OpenFileDialog1_FileOk(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles OpenTransferModelRunFileDialog.FileOk
 
+    End Sub
+
+    Private Sub PassonePasstwoBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PassonePasstwoBtn.Click
+
+
+        ' Pass 1 Pass 2 process added in by Derek Dapp on 4/19/2018.
+        ' While processing, make FRAM invisible
+        Me.Visible = False
+
+
+        
+
+
+        'Alert user that this process may take a few minutes
+
+        ' MessageBox.Show("This process will take a few minutes, FRAM will reappear when processing is complete.")
+        
+
+        ' Sets up a list of fisheries to loop through
+        Dim SptFishList As Integer() = {36, 42, 45, 53, 54, 56, 57, 64, 67}
+
+
+        'Loops through fisheries and time steps, sets non retention inputs to 0
+        'Sets fishery flags to 1
+        For Each SptFishNum As Integer In SptFishList
+            For TSCounter As Integer = 1 To 4
+                NonRetentionInput(SptFishNum, TSCounter, 1) = 0
+                NonRetentionInput(SptFishNum, TSCounter, 2) = 0
+                NonRetentionInput(SptFishNum, TSCounter, 3) = 0
+                NonRetentionInput(SptFishNum, TSCounter, 4) = 0
+
+                FisheryFlag(SptFishNum, TSCounter) = 1
+            Next
+        Next
+
+
+        ' Time to grab our Runsheet file from the computer
+
+        'First, dim out the variables necessary
+        Dim OpenRunSheet2 As New OpenFileDialog()
+        Dim RunSheetName2 As String
+        Dim RunSpreadSheet2 As String
+        Dim RunSheetPath2 As String
+
+        MsgBox("Select the 'Run Spreadsheet' with the Pass 1 Pass 2 scalers.")
+        RunSpreadSheet2 = ""
+        OpenRunSheet2.Filter = "RunSheets (*.xls*)|*.xls*|All files (*.*)|*.*"
+        OpenRunSheet2.FilterIndex = 1
+        OpenRunSheet2.RestoreDirectory = True
+
+        'Check if file is readable, throw error if not.
+        If OpenRunSheet2.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            Try
+                RunSpreadSheet2 = OpenRunSheet2.FileName
+                RunSheetPath2 = My.Computer.FileSystem.GetFileInfo(RunSpreadSheet2).DirectoryName
+            Catch Ex As Exception
+                MessageBox.Show("Cannot read file selected. Original error: " & Ex.Message)
+            End Try
+        End If
+
+        If RunSpreadSheet2 = "" Then Exit Sub
+
+        RunSheetName2 = My.Computer.FileSystem.GetFileInfo(RunSpreadSheet2).Name
+
+        '- Test if Excel was Running
+        ExcelWasNotRunning = True
+        Try
+            xlApp = System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application")
+            ExcelWasNotRunning = False
+        Catch ex As Exception
+            xlApp = New Microsoft.Office.Interop.Excel.Application()
+        End Try
+
+        '- Test if Runsheet Workbook is Open
+        WorkBookWasNotOpen = True
+        For Each xlWorkBook In xlApp.Workbooks
+            If xlWorkBook.Name = RunSheetName2 Then
+                xlWorkBook.Activate()
+                WorkBookWasNotOpen = False
+                GoTo SkipWBOpen
+            End If
+        Next
+        xlWorkBook = xlApp.Workbooks.Open(RunSpreadSheet2)
+        'xlApp.WindowState = Excel.XlWindowState.xlMinimized
+SkipWBOpen:
+
+        xlApp.Application.DisplayAlerts = False
+
+        'Make Excel Visible
+        xlApp.Visible = True
+        'xlApp.WindowState = Excel.XlWindowState.xlMinimized
+
+        'Finds Pass 1 worksheet
+        xlWorkSheet = xlWorkBook.Sheets("Pass1Inputs")
+
+        'Updates Pass 1 Values
+        FisheryScaler(36, 1) = xlWorkSheet.Cells(10, 2).Value
+        FisheryScaler(36, 2) = xlWorkSheet.Cells(10, 3).Value
+        FisheryScaler(36, 3) = xlWorkSheet.Cells(10, 4).Value
+        FisheryScaler(36, 4) = xlWorkSheet.Cells(10, 5).Value
+
+        FisheryScaler(42, 1) = xlWorkSheet.Cells(11, 2).Value
+        FisheryScaler(42, 2) = xlWorkSheet.Cells(11, 3).Value
+        FisheryScaler(42, 3) = xlWorkSheet.Cells(11, 4).Value
+        FisheryScaler(42, 4) = xlWorkSheet.Cells(11, 5).Value
+
+        FisheryScaler(45, 1) = xlWorkSheet.Cells(12, 2).Value
+        FisheryScaler(45, 2) = xlWorkSheet.Cells(12, 3).Value
+        FisheryScaler(45, 3) = xlWorkSheet.Cells(12, 4).Value
+        FisheryScaler(45, 4) = xlWorkSheet.Cells(12, 5).Value
+
+        FisheryScaler(53, 1) = xlWorkSheet.Cells(13, 2).Value
+        FisheryScaler(53, 2) = xlWorkSheet.Cells(13, 3).Value
+        FisheryScaler(53, 3) = xlWorkSheet.Cells(13, 4).Value
+        FisheryScaler(53, 4) = xlWorkSheet.Cells(13, 5).Value
+
+        FisheryScaler(54, 1) = xlWorkSheet.Cells(14, 2).Value
+        FisheryScaler(54, 2) = xlWorkSheet.Cells(14, 3).Value
+        FisheryScaler(54, 3) = xlWorkSheet.Cells(14, 4).Value
+        FisheryScaler(54, 4) = xlWorkSheet.Cells(14, 5).Value
+
+        FisheryScaler(56, 1) = xlWorkSheet.Cells(15, 2).Value
+        FisheryScaler(56, 2) = xlWorkSheet.Cells(15, 3).Value
+        FisheryScaler(56, 3) = xlWorkSheet.Cells(15, 4).Value
+        FisheryScaler(56, 4) = xlWorkSheet.Cells(15, 5).Value
+
+        FisheryScaler(57, 1) = xlWorkSheet.Cells(16, 2).Value
+        FisheryScaler(57, 2) = xlWorkSheet.Cells(16, 3).Value
+        FisheryScaler(57, 3) = xlWorkSheet.Cells(16, 4).Value
+        FisheryScaler(57, 4) = xlWorkSheet.Cells(16, 5).Value
+
+        FisheryScaler(64, 1) = xlWorkSheet.Cells(17, 2).Value
+        FisheryScaler(64, 2) = xlWorkSheet.Cells(17, 3).Value
+        FisheryScaler(64, 3) = xlWorkSheet.Cells(17, 4).Value
+        FisheryScaler(64, 4) = xlWorkSheet.Cells(17, 5).Value
+
+        FisheryScaler(67, 1) = xlWorkSheet.Cells(18, 2).Value
+        FisheryScaler(67, 2) = xlWorkSheet.Cells(18, 3).Value
+        FisheryScaler(67, 3) = xlWorkSheet.Cells(18, 4).Value
+        FisheryScaler(67, 4) = xlWorkSheet.Cells(18, 5).Value
+
+
+
+        Dim Result
+        If ChangeAnyInput = True Or ChangeBackFram = True Or ChangeFishScalers = True Or _
+          ChangeNonRetention = True Or ChangePSCMaxER = True Or ChangeSizeLimit = True Or _
+          ChangeStockFishScaler = True Or ChangeStockRecruit = True Then
+            ChangeAnyInput = True
+            Result = MsgBox("Input Values have been Changed!" & vbCrLf & "Changes Must be Saved before Running Model!!!" & vbCrLf & "Save Current Model Run ???", MsgBoxStyle.YesNo)
+            If Result = vbYes Then
+                'Call SaveModelRunInputs()
+                Me.Visible = False
+                FVS_SaveModelRunInputs.ShowDialog()
+                Me.Visible = True
+                RecordSetNameLabel.Text = RunIDNameSelect
+                Me.BringToFront()
+            Else
+                MsgBox("Please be aware that the OUTPUT for this run" & vbCrLf & "cannot be duplicated without saving your INPUT values", MsgBoxStyle.OkOnly)
+            End If
+        End If
+        Me.Visible = False
+        MsgBox("To execute Pass 1 select Model Run Options as usual. After you select 'Run Model' be prepared to wait a few minutes. FRAM will reappear when it is finished.")
+        FVS_RunModel.ShowDialog()
+
+        'Me.BringToFront()
+        FVS_MainMenu.Visible = False
+        'Reactivate Runspreadsheet
+        For Each xlWorkBook In xlApp.Workbooks
+            If xlWorkBook.Name = RunSheetName2 Then
+                xlWorkBook.Activate()
+                WorkBookWasNotOpen = False
+                Exit For
+            End If
+        Next
+
+
+        xlWorkSheet = xlWorkBook.Sheets("CatchShakerPrn")
+        xlWorkSheet.Range("J1").Value = "Species:" & String.Format("{0,-7}", SpeciesName)
+        xlWorkSheet.Range("K1").Value = "FRAM-Version:" & String.Format("{0,-4}", FramVersion)
+        xlWorkSheet.Range("L1").Value = "RunName: " & String.Format("{0,-27}", RunIDNameSelect)
+        xlWorkSheet.Range("M1").Value = "RunDate:" & RunIDRunTimeDateSelect.ToString
+
+        xlWorkSheet.Range("J2").Value = "Report: Fishery Summary Report"
+        xlWorkSheet.Range("K2").Value = "Driver: " & String.Format("{0,-27}", ReportDriverName)
+        xlWorkSheet.Range("L2").Value = "RepDate:" & Now.ToString
+
+        xlWorkSheet.Range("J4").Value = "LANDED CATCH BY FISHERY"
+
+        'Sets up a list to loop through
+
+        Dim FishSumAllColList As String() = {"J", "K", "L", "M", "N", "O", "P"}
+
+        'Sums together landed catch
+
+        'Create 2 variables to store all the information necessary
+        'They'll have 6 columns, because CatchShakerPRN has a grand total column (TS 1-4) and a sub total column (TS 2-4)
+        Dim CatchSum(NumFish, NumSteps + 2)
+        Dim ShakerSum(NumFish, NumSteps + 2)
+
+        'First, sum all the landed catch and shaker encs
+        For Stk As Integer = 1 To NumStk
+            For Age As Integer = MinAge To MaxAge
+                For Fish As Integer = 1 To NumFish
+                    For TStep As Integer = 1 To NumSteps
+                        CatchSum(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep)
+                        CatchSum(Fish, NumSteps + 1) += LandedCatch(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep)
+                        If TStep <> 1 Then
+                            CatchSum(Fish, NumSteps + 2) += LandedCatch(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep)
+                        End If
+                        ShakerSum(Fish, TStep) += Shakers(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
+                        ShakerSum(Fish, NumSteps + 1) += Shakers(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
+                        If TStep <> 1 Then
+                            ShakerSum(Fish, NumSteps + 2) += Shakers(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep)
+                        End If
+                    Next
+                Next
+            Next
+        Next
+
+        'Now, MSF and Landed catch matches up with what is in the data base, but MSP must be accounted for to match the FishSumAll driver.
+        For Fish As Integer = 1 To NumFish
+            For TStep = 1 To NumSteps + 2
+                CatchSum(Fish, TStep) = CatchSum(Fish, TStep) / ModelStockProportion(Fish)
+                ShakerSum(Fish, TStep) = ShakerSum(Fish, TStep) / ModelStockProportion(Fish)
+            Next
+        Next
+
+        'CatchShakerPRN tab row 8 = SEAK Troll Catch; Row 80 = FW Net Catch; Row 90 = SEAK Troll Shakers; Row 162 = Freshwater Net Shakers
+        For FisheryCounter As Integer = 1 To NumFish
+            For Each ColLocation As String In FishSumAllColList
+
+                'If Column = J, add in fishery name (use only up to 25 characters)
+                If ColLocation = "J" Then
+                    If FisheryTitle(FisheryCounter).Length > 25 Then
+                        xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 7)).Value = String.Format("{0,25}", FisheryTitle(FisheryCounter).Substring(0, 25))
+                        xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 89)).Value = String.Format("{0,25}", FisheryTitle(FisheryCounter).Substring(0, 25))
+                    Else
+                        xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 7)).Value = String.Format("{0,25}", FisheryTitle(FisheryCounter))
+                        xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 89)).Value = String.Format("{0,25}", FisheryTitle(FisheryCounter))
+                    End If
+                End If
+
+                'If Column = K, time step 1
+                If ColLocation = "K" Then
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 7)).Value = CatchSum(FisheryCounter, 1)
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 89)).Value = ShakerSum(FisheryCounter, 1)
+                End If
+
+                'If Column = L, time step 2
+                If ColLocation = "L" Then
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 7)).Value = CatchSum(FisheryCounter, 2)
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 89)).Value = ShakerSum(FisheryCounter, 2)
+                End If
+
+                'If Column = M, time step 3
+                If ColLocation = "M" Then
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 7)).Value = CatchSum(FisheryCounter, 3)
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 89)).Value = ShakerSum(FisheryCounter, 3)
+                End If
+
+                'If Column = N, time step 4
+                If ColLocation = "N" Then
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 7)).Value = CatchSum(FisheryCounter, 4)
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 89)).Value = ShakerSum(FisheryCounter, 4)
+                End If
+
+                'If Column = O, Grand total
+                If ColLocation = "O" Then
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 7)).Value = CatchSum(FisheryCounter, 5)
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 89)).Value = ShakerSum(FisheryCounter, 5)
+                End If
+
+                'If Column = P, Sub total
+                If ColLocation = "P" Then
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 7)).Value = CatchSum(FisheryCounter, 6)
+                    xlWorkSheet.Range(ColLocation & String.Format(FisheryCounter + 89)).Value = ShakerSum(FisheryCounter, 6)
+                End If
+
+            Next
+        Next
+
+        'Now add in correct fishery flags, SL ratio table, corrected scalars/quotas, non-retention
+        'Finds Pass 2 worksheet
+        xlWorkSheet = xlWorkBook.Sheets("Pass2Inputs")
+
+        'This has the rows for the Pass 2 sheet - it allows for looping
+        Dim SptRowIndex(67) As Integer
+        SptRowIndex(36) = 5
+        SptRowIndex(42) = 6
+        SptRowIndex(45) = 7
+        SptRowIndex(53) = 8
+        SptRowIndex(54) = 9
+        SptRowIndex(56) = 10
+        SptRowIndex(57) = 11
+        SptRowIndex(64) = 12
+        SptRowIndex(67) = 13
+
+        'Annndddd this one is for NR Rows
+        Dim NRRowIndex(67) As Integer
+        NRRowIndex(36) = 19
+        NRRowIndex(42) = 23
+        NRRowIndex(45) = 27
+        NRRowIndex(53) = 31
+        NRRowIndex(54) = 35
+        NRRowIndex(56) = 39
+        NRRowIndex(57) = 43
+        NRRowIndex(64) = 47
+        NRRowIndex(67) = 51
+
+        'Updates Fishery Flags/Values
+        For Each SptFishNum As Integer In SptFishList
+            For TSCounter As Integer = 1 To 4
+                'First, get fishery flag
+                'It gets the row index from the SptRowIndex variable defined above.
+                'TS 1 flags are in column 26, TS2 in 27, TS3 in 28, TS4 in 29.
+                'Therefore the column number is TS + 25.
+                FisheryFlag(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 25 + TSCounter).Value
+                If xlWorkSheet.Cells(NRRowIndex(SptFishNum), 2 + TSCounter).Value + xlWorkSheet.Cells(NRRowIndex(SptFishNum) + 1, 2 + TSCounter).Value <> 0 Then
+                    NonRetentionFlag(SptFishNum, TSCounter) = 3 'should always be legal, sublegal encounter method for Pass 1/2 spreadsheet
+                End If
+                NonRetentionInput(SptFishNum, TSCounter, 1) = xlWorkSheet.Cells(NRRowIndex(SptFishNum), 2 + TSCounter).Value
+                NonRetentionInput(SptFishNum, TSCounter, 2) = xlWorkSheet.Cells(NRRowIndex(SptFishNum) + 1, 2 + TSCounter).Value
+
+                Select Case FisheryFlag(SptFishNum, TSCounter)
+                    Case 1
+                        FisheryScaler(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 2 + TSCounter).Value
+                    Case 2
+                        FisheryQuota(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 38 + TSCounter).Value
+                    Case 7
+                        MSFFisheryScaler(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 8 + TSCounter).Value
+                    Case 8
+                        MSFFisheryQuota(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 32 + TSCounter).Value
+                    Case 17
+                        FisheryScaler(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 2 + TSCounter).Value
+                        MSFFisheryScaler(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 8 + TSCounter).Value
+                    Case 18
+                        FisheryScaler(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 2 + TSCounter).Value
+                        MSFFisheryQuota(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 32 + TSCounter).Value
+                    Case 27
+                        FisheryQuota(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 38 + TSCounter).Value
+                        MSFFisheryScaler(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 8 + TSCounter).Value
+                    Case 28
+                        FisheryQuota(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 38 + TSCounter).Value
+                        MSFFisheryQuota(SptFishNum, TSCounter) = xlWorkSheet.Cells(SptRowIndex(SptFishNum), 32 + TSCounter).Value
+                End Select
+            Next
+        Next
+
+
+        ChangeAnyInput = True
+        ChangeFishScalers = True
+        ChangeNonRetention = True
+        ' ChangeSizeLimit = True
+
+        ' Processing complete, time to make FRAM visible again.
+        Me.Visible = True
+        Me.BringToFront()
     End Sub
 End Class

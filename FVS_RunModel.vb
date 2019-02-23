@@ -105,7 +105,8 @@ Public Class FVS_RunModel
 
       'PPPPPP------------------------------------------------------------------------------------------------------------
       '- Pete 12/13 Code for Executing an integrated update system for external S:L Ratio based EncounterRateAdjustments
-      '- Outer flank to original RunModelButtonClick code...
+        '- Outer flank to original RunModelButtonClick code...
+
       FinalUpdatePass = False 'This should always be false unless set to true during S:L Ratio Update
       Dim iters As Integer = 1
       Dim c As Integer = 1 'Allows RunModelButton_Click to execute as normal (for coho or non-update Chinook runs)

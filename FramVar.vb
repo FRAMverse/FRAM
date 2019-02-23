@@ -145,7 +145,8 @@ Public Module FramVar
    Public TimeStepName() As String
    Public TimeStepTitle() As String
 
-   '- Run Input Variables
+    '- Run Input Variables
+    Public AutoSizeLimitCalcs As Boolean
     Public StockRecruit(,,) As Double
     Public FisheryComment(,)
    Public FisheryScaler(,) As Double

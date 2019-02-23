@@ -44,6 +44,7 @@ Partial Class FVS_FramUtils
         Me.GetBPTransferBtn = New System.Windows.Forms.Button
         Me.TransferBPBtn = New System.Windows.Forms.Button
         Me.OpenTransferModelRunFileDialog = New System.Windows.Forms.OpenFileDialog
+        Me.PassonePasstwoBtn = New System.Windows.Forms.Button
         Me.SuspendLayout()
         '
         'FUTitle
@@ -52,7 +53,7 @@ Partial Class FVS_FramUtils
         Me.FUTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FUTitle.Location = New System.Drawing.Point(344, 18)
         Me.FUTitle.Name = "FUTitle"
-        Me.FUTitle.Size = New System.Drawing.Size(179, 29)
+        Me.FUTitle.Size = New System.Drawing.Size(140, 24)
         Me.FUTitle.TabIndex = 0
         Me.FUTitle.Text = "FRAM Utilities"
         '
@@ -71,7 +72,7 @@ Partial Class FVS_FramUtils
         '
         Me.ReadCmdButton.BackColor = System.Drawing.Color.Tan
         Me.ReadCmdButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ReadCmdButton.Location = New System.Drawing.Point(78, 411)
+        Me.ReadCmdButton.Location = New System.Drawing.Point(78, 381)
         Me.ReadCmdButton.Name = "ReadCmdButton"
         Me.ReadCmdButton.Size = New System.Drawing.Size(265, 53)
         Me.ReadCmdButton.TabIndex = 3
@@ -141,7 +142,7 @@ Partial Class FVS_FramUtils
         '
         Me.ReadTaaEtrsButton.BackColor = System.Drawing.Color.BlanchedAlmond
         Me.ReadTaaEtrsButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ReadTaaEtrsButton.Location = New System.Drawing.Point(78, 499)
+        Me.ReadTaaEtrsButton.Location = New System.Drawing.Point(78, 440)
         Me.ReadTaaEtrsButton.Name = "ReadTaaEtrsButton"
         Me.ReadTaaEtrsButton.Size = New System.Drawing.Size(265, 53)
         Me.ReadTaaEtrsButton.TabIndex = 9
@@ -177,7 +178,7 @@ Partial Class FVS_FramUtils
         Me.RecordSetNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetNameLabel.Location = New System.Drawing.Point(155, 711)
         Me.RecordSetNameLabel.Name = "RecordSetNameLabel"
-        Me.RecordSetNameLabel.Size = New System.Drawing.Size(140, 20)
+        Me.RecordSetNameLabel.Size = New System.Drawing.Size(121, 17)
         Me.RecordSetNameLabel.TabIndex = 30
         Me.RecordSetNameLabel.Text = "recordset name"
         '
@@ -188,7 +189,7 @@ Partial Class FVS_FramUtils
         Me.DatabaseNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseNameLabel.Location = New System.Drawing.Point(155, 677)
         Me.DatabaseNameLabel.Name = "DatabaseNameLabel"
-        Me.DatabaseNameLabel.Size = New System.Drawing.Size(136, 20)
+        Me.DatabaseNameLabel.Size = New System.Drawing.Size(119, 17)
         Me.DatabaseNameLabel.TabIndex = 29
         Me.DatabaseNameLabel.Text = "database name"
         '
@@ -198,7 +199,7 @@ Partial Class FVS_FramUtils
         Me.RecordSetTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetTextLabel.Location = New System.Drawing.Point(72, 711)
         Me.RecordSetTextLabel.Name = "RecordSetTextLabel"
-        Me.RecordSetTextLabel.Size = New System.Drawing.Size(84, 17)
+        Me.RecordSetTextLabel.Size = New System.Drawing.Size(67, 13)
         Me.RecordSetTextLabel.TabIndex = 28
         Me.RecordSetTextLabel.Text = "RecordSet"
         '
@@ -208,7 +209,7 @@ Partial Class FVS_FramUtils
         Me.DatabaseTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseTextLabel.Location = New System.Drawing.Point(72, 677)
         Me.DatabaseTextLabel.Name = "DatabaseTextLabel"
-        Me.DatabaseTextLabel.Size = New System.Drawing.Size(77, 17)
+        Me.DatabaseTextLabel.Size = New System.Drawing.Size(61, 13)
         Me.DatabaseTextLabel.TabIndex = 27
         Me.DatabaseTextLabel.Text = "Database"
         '
@@ -260,12 +261,24 @@ Partial Class FVS_FramUtils
         '
         Me.OpenTransferModelRunFileDialog.FileName = "OpenFileDialog1"
         '
+        'PassonePasstwoBtn
+        '
+        Me.PassonePasstwoBtn.BackColor = System.Drawing.Color.DarkSalmon
+        Me.PassonePasstwoBtn.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.PassonePasstwoBtn.Location = New System.Drawing.Point(78, 499)
+        Me.PassonePasstwoBtn.Name = "PassonePasstwoBtn"
+        Me.PassonePasstwoBtn.Size = New System.Drawing.Size(265, 53)
+        Me.PassonePasstwoBtn.TabIndex = 35
+        Me.PassonePasstwoBtn.Text = "Automate Pass 1 Pass 2 (Chin)"
+        Me.PassonePasstwoBtn.UseVisualStyleBackColor = False
+        '
         'FVS_FramUtils
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.PaleGoldenrod
-        Me.ClientSize = New System.Drawing.Size(874, 742)
+        Me.ClientSize = New System.Drawing.Size(874, 701)
+        Me.Controls.Add(Me.PassonePasstwoBtn)
         Me.Controls.Add(Me.TransferBPBtn)
         Me.Controls.Add(Me.GetBPTransferBtn)
         Me.Controls.Add(Me.btn_Chin2s3s)
@@ -314,4 +327,5 @@ Partial Class FVS_FramUtils
     Friend WithEvents GetBPTransferBtn As System.Windows.Forms.Button
     Friend WithEvents TransferBPBtn As System.Windows.Forms.Button
     Friend WithEvents OpenTransferModelRunFileDialog As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents PassonePasstwoBtn As System.Windows.Forms.Button
 End Class
