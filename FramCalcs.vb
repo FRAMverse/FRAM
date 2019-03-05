@@ -225,7 +225,10 @@ Module FramCalcs
                 Next
             Next
             '---------------------------------------------------------------------------------
+            'tag111
+            'If FinalUpdatePass = True Or UpdateRunEncounterRateAdjustment = False Then
             Call SaveDat()
+            'End If
         End If
 
         '--- Call TAMM Procedures
@@ -259,7 +262,10 @@ Module FramCalcs
                             End If
                         Next
                     Next
+                    'tag111
+                    'If FinalUpdatePass = True Or UpdateRunEncounterRateAdjustment = False Then
                     Call SaveDat()
+                    'End If
                 End If
             End If
         End If

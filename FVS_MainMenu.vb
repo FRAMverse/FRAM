@@ -277,4 +277,7 @@ TryDBAgain:
       Me.BringToFront()
    End Sub
 
+    Private Sub RecordSetNameLabel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RecordSetNameLabel.Click
+
+    End Sub
 End Class

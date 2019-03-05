@@ -47,7 +47,8 @@ Public Module FramVar
    Public OptionChinookBYAEQ As Integer
    Public ModelRunBPSelect As Boolean
     Public SelectSpeciesName As String
-   Public SizeLimitFix As Boolean
+    Public SizeLimitFix As Boolean
+    Public SizeLimitOnly As Boolean
    Public RunIDmultiDelete() As Integer 'Pete 12/13 variable for multi-run deletion code
    Public multiRunPass As String 'Pete 12/13 variable for passing multi-run deletion during loop
    Public multiRunDeleteMode As Boolean 'Pete 12/13 variable for bypassing some content in delete mode
@@ -161,7 +162,8 @@ Public Module FramVar
    Public MarkSelectiveMarkMisID(,) As Double
    Public MarkSelectiveUnMarkMisID(,) As Double
    Public MarkSelectiveIncRate(,) As Double
-   Public MinSizeLimit(,) As Integer
+    Public MinSizeLimit(,) As Integer
+    Public NewSizeLimit(,) As Integer
    Public MaxSizeLimit(,) As Integer
    Public StockFishRateScalers(,,) As Double
    Public RunTAMMIter As Integer

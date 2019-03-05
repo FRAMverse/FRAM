@@ -109,40 +109,151 @@ Public Class FVS_RunModel
 
       FinalUpdatePass = False 'This should always be false unless set to true during S:L Ratio Update
       Dim iters As Integer = 1
-      Dim c As Integer = 1 'Allows RunModelButton_Click to execute as normal (for coho or non-update Chinook runs)
+        Dim c As Integer = 1 'Allows RunModelButton_Click to execute as normal (for coho or non-update Chinook runs)
 
-      If UpdateRunEncounterRateAdjustment = True Then
-         'set limit on outer loop iterations (3 is plenty for convergence, but we'll do 4 to be overachievers)
-         iters = 4
-      End If
+      
+        If ChinookSizeLimitCheck.Checked = True Then
+            SizeLimitFix = False
+        Else
+            SizeLimitFix = True
+            SizeLimitOnly = False
+        End If
 
-      Do While c <= iters
-         'PPPPPP--(end of leading Pete 12/13 Block, more at end of loop)-------------------------------------------------
+        If SizeLimitOnlyChk.Checked = True Then
+            SizeLimitOnly = True
+        End If
 
 
-         '- Set Chinook Tamm Run Option
-         TammChinookRunFlag = 0
-         If SpeciesName = "CHINOOK" Then
-            If OptionOldTAMMformat = True And OptionUseTAMMfws = False Then
-               TammChinookRunFlag = 1
-            ElseIf OptionOldTAMMformat = False And OptionUseTAMMfws = True Then
-               TammChinookRunFlag = 2
-            ElseIf OptionOldTAMMformat = True And OptionUseTAMMfws = True Then
-               TammChinookRunFlag = 3
+
+        '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        If SizeLimitFix = True Or SizeLimitOnly = True Then
+            'automatically updates Sublegal/Legal ratios (make sure table SLRatio table in FRAMDb is updated) and then performs
+            'size limit corrected algorithms to deal with size limit changes (make sure SizeLimit table is up to date)
+            'This is done in 5 steps
+            '1. Set size limit to base period (or original pre-change) size limit
+            '2. Run calculations to update Sublegal/legal ratios
+            '3. Re-set size limits to new size limits
+            '4. Run FRAM with size limit corrected algorithms 
+
+            ReDim NewSizeLimit(NumFish + 1, NumSteps + 1)
+
+            If RunIDNameSelect.Substring(0, 4) <> "SLC-" Then
+                RunIDNameSelect = "SLC-" & RunIDNameSelect
+            End If
+
+
+
+            SizeLimitFix = False 'first set to false to not trigger size limit calcualtions before sublegal/legal ratios are updated
+
+            'first save new size limits
+            For Fish As Integer = 1 To NumFish
+                For TStep As Integer = 1 To NumSteps
+                    NewSizeLimit(Fish, TStep) = MinSizeLimit(Fish, TStep)
+                Next
+            Next
+
+
+
+            'STEP 1: Sets size limit to base period size limit
+            For Fish As Integer = 1 To NumFish
+                For TStep As Integer = 1 To NumSteps
+                    MinSizeLimit(Fish, TStep) = ChinookBaseSizeLimit(Fish, TStep)
+                Next
+            Next
+
+            'STEP 2: S:L Update Run
+            'Does not ask to load in from spreadsheet
+            If SizeLimitOnly = True Then
+                UpdateRunEncounterRateAdjustment = False
+                iters = 1
+            Else
+                UpdateRunEncounterRateAdjustment = True
+                WhoUpdated = Environment.UserName
+            End If
+
+            If UpdateRunEncounterRateAdjustment = True Then
+                'set limit on outer loop iterations (3 is plenty for convergence, but we'll do 4 to be overachievers)
+                iters = 4
+            End If
+
+            Do While c <= iters
+
+                '- Set Chinook Tamm Run Option
+                TammChinookRunFlag = 0
+
+                If OptionOldTAMMformat = True And OptionUseTAMMfws = False Then
+                    TammChinookRunFlag = 1
+                ElseIf OptionOldTAMMformat = False And OptionUseTAMMfws = True Then
+                    TammChinookRunFlag = 2
+                ElseIf OptionOldTAMMformat = True And OptionUseTAMMfws = True Then
+                    TammChinookRunFlag = 3
                 End If
-                If SizeLimitFix = True Then
-                    If RunIDNameSelect.Substring(0, 4) <> "SLC-" Then
-                        RunIDNameSelect = "SLC-" & RunIDNameSelect
-                    End If
-                ElseIf SizeLimitFix = False Then
-                    If RunIDNameSelect.Substring(0, 4) = "SLC-" Then
-                        RunIDNameSelect = RunIDNameSelect.Substring(4, RunIDNameSelect.Length - 4)
-                    End If
-                End If
+
                 FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
-         End If
 
-            '- Check for TAMM Selection
+
+                '- Check for TAMM Selection
+                If FinalUpdatePass = True Then ' only ask to transfer on the final iteration
+                    If TAMMSpreadSheet <> "" Then
+                        RunTAMMIter = 1
+                        result = MsgBox("Do You Want to SAVE TAMM Tranfer Values into TAMM SpreadSheet?", MsgBoxStyle.YesNo)
+                        If result = vbYes Then
+                            TammTransferSave = True
+                        Else
+                            TammTransferSave = False
+                        End If
+                    End If
+                End If
+                MRProgressBar.Visible = True
+
+                '****************End PETE-2/27/13-Code for adding Delineation to Model Run Name if Bias Correction Is Applied
+
+                Call RunCalcs()
+
+
+                'PPPPPP------------------------------------------------------------------------------------------------------------
+                '- Closing flank of Pete 12/13 SL Ratio Code 
+                If UpdateRunEncounterRateAdjustment = True And c < iters Then 'don't enter ExternalSubCalcs on last pass
+                    RunProgressLabel.Text = " Loading Kfat for SLratio update pass #" & c & " ..."
+                    RunProgressLabel.Refresh()
+                    Call ExternalSubCalcs(c, iters)
+                End If
+                c = c + 1
+            Loop
+
+            '- Set the UpdateRunEncounterRateAdjustment back to False
+            '(should always be false except when set to true during update runs)
+            UpdateRunEncounterRateAdjustment = False
+            RunTAMMIter = 0 'This Needs to be zero OR things will get goofy on sequential runs.
+
+            ' STEP 3: Set size limits back to what they're supposed to be
+            For Fish As Integer = 1 To NumFish
+                For TStep As Integer = 1 To NumSteps
+                    MinSizeLimit(Fish, TStep) = NewSizeLimit(Fish, TStep)
+                Next
+            Next
+
+
+            'STEP 4: Run model with size limit corrected algorithems keeping total encounters constant
+            UpdateRunEncounterRateAdjustment = False
+            RunTAMMIter = 0 'This Needs to be zero OR things will get goofy on sequential runs.
+
+            SizeLimitFix = True
+
+            TammChinookRunFlag = 0
+
+            If OptionOldTAMMformat = True And OptionUseTAMMfws = False Then
+                TammChinookRunFlag = 1
+            ElseIf OptionOldTAMMformat = False And OptionUseTAMMfws = True Then
+                TammChinookRunFlag = 2
+            ElseIf OptionOldTAMMformat = True And OptionUseTAMMfws = True Then
+                TammChinookRunFlag = 3
+            End If
+
+            FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
+
+            'tag111
+            ' - Check for TAMM Selection
             If TAMMSpreadSheet <> "" Then
                 RunTAMMIter = 1
                 result = MsgBox("Do You Want to SAVE TAMM Tranfer Values into TAMM SpreadSheet?", MsgBoxStyle.YesNo)
@@ -153,58 +264,130 @@ Public Class FVS_RunModel
                 End If
             End If
             MRProgressBar.Visible = True
-
-
-            '****************Begin PETE-2/27/13-Code for adding Delineation to Model Run Name if Bias Correction Is Applied
-            If SpeciesName = "COHO" Then
-
-
-                If MSFBiasCorrectionCheckBox.Checked = True Then
-                    MSFBiasFlag = False
-                Else
-                    MSFBiasFlag = True
-                End If
-
-
-                If MSFBiasFlag = True Then
-                    If RunIDNameSelect.Substring(0, 3) <> "bc-" Then
-                        RunIDNameSelect = "bc-" & RunIDNameSelect
-                    End If
-                ElseIf MSFBiasFlag = False Then
-                    If RunIDNameSelect.Substring(0, 3) = "bc-" Then
-                        RunIDNameSelect = RunIDNameSelect.Substring(3, RunIDNameSelect.Length - 3)
-                    End If
-                End If
-            End If
-
             FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
             '****************End PETE-2/27/13-Code for adding Delineation to Model Run Name if Bias Correction Is Applied
 
-
             Call RunCalcs()
 
+            
 
-            'PPPPPP------------------------------------------------------------------------------------------------------------
-            '- Closing flank of Pete 12/13 SL Ratio Code 
-            If UpdateRunEncounterRateAdjustment = True And c < iters Then 'don't enter ExternalSubCalcs on last pass
-                RunProgressLabel.Text = " Loading Kfat for SLratio update pass #" & c & " ..."
-                RunProgressLabel.Refresh()
-                Call ExternalSubCalcs(c, iters)
+            SizeLimitFix = False
+
+
+            ChangeAnyInput = True
+            ChangeFishScalers = True
+            ChangeNonRetention = True
+            ChangeSizeLimit = True
+
+
+        Else 'Auto SizeLimitFix = False @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            ' run without size limit fix or perform Sublegal/Legal ratio update (if selected) without size limit fix
+           
+            If RunIDNameSelect.Substring(0, 4) = "SLC-" Then
+                RunIDNameSelect = RunIDNameSelect.Substring(4, RunIDNameSelect.Length - 4)
             End If
-            c = c + 1
-        Loop
-
-      '- Set the UpdateRunEncounterRateAdjustment back to False
-      '(should always be false except when set to true during update runs)
-      UpdateRunEncounterRateAdjustment = False
-      RunTAMMIter = 0 'This Needs to be zero OR things will get goofy on sequential runs.
-      'PPPPPP---(end of closing Pete 12/13 Block)------------------------------------------------------------------------
 
 
-      Me.Close()
-      FVS_MainMenu.Visible = True
 
-   End Sub
+            If UpdateRunEncounterRateAdjustment = True Then
+
+                'set limit on outer loop iterations (3 is plenty for convergence, but we'll do 4 to be overachievers)
+                iters = 4
+            End If
+
+            Do While c <= iters
+                'PPPPPP--(end of leading Pete 12/13 Block, more at end of loop)-------------------------------------------------
+
+
+                '- Set Chinook Tamm Run Option
+                TammChinookRunFlag = 0
+                If SpeciesName = "CHINOOK" Then
+                    If OptionOldTAMMformat = True And OptionUseTAMMfws = False Then
+                        TammChinookRunFlag = 1
+                    ElseIf OptionOldTAMMformat = False And OptionUseTAMMfws = True Then
+                        TammChinookRunFlag = 2
+                    ElseIf OptionOldTAMMformat = True And OptionUseTAMMfws = True Then
+                        TammChinookRunFlag = 3
+                    End If
+                    'If SizeLimitFix = True Then
+                    '    If RunIDNameSelect.Substring(0, 4) <> "SLC-" Then
+                    '        RunIDNameSelect = "SLC-" & RunIDNameSelect
+                    '    End If
+                    'ElseIf SizeLimitFix = False Then
+                    '    If RunIDNameSelect.Substring(0, 4) = "SLC-" Then
+                    '        RunIDNameSelect = RunIDNameSelect.Substring(4, RunIDNameSelect.Length - 4)
+                    '    End If
+                    'End If
+                    FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
+                End If
+
+                '- Check for TAMM Selection
+                If TAMMSpreadSheet <> "" Then
+                    RunTAMMIter = 1
+                    result = MsgBox("Do You Want to SAVE TAMM Tranfer Values into TAMM SpreadSheet?", MsgBoxStyle.YesNo)
+                    If result = vbYes Then
+                        TammTransferSave = True
+                    Else
+                        TammTransferSave = False
+                    End If
+                End If
+                MRProgressBar.Visible = True
+
+
+                '****************Begin PETE-2/27/13-Code for adding Delineation to Model Run Name if Bias Correction Is Applied
+                If SpeciesName = "COHO" Then
+
+
+                    If MSFBiasCorrectionCheckBox.Checked = True Then
+                        MSFBiasFlag = False
+                    Else
+                        MSFBiasFlag = True
+                    End If
+
+
+                    If MSFBiasFlag = True Then
+                        If RunIDNameSelect.Substring(0, 3) <> "bc-" Then
+                            RunIDNameSelect = "bc-" & RunIDNameSelect
+                        End If
+                    ElseIf MSFBiasFlag = False Then
+                        If RunIDNameSelect.Substring(0, 3) = "bc-" Then
+                            RunIDNameSelect = RunIDNameSelect.Substring(3, RunIDNameSelect.Length - 3)
+                        End If
+                    End If
+                End If
+
+                FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
+                '****************End PETE-2/27/13-Code for adding Delineation to Model Run Name if Bias Correction Is Applied
+
+
+                Call RunCalcs()
+
+
+                'PPPPPP------------------------------------------------------------------------------------------------------------
+                '- Closing flank of Pete 12/13 SL Ratio Code 
+                If UpdateRunEncounterRateAdjustment = True And c < iters Then 'don't enter ExternalSubCalcs on last pass
+                    RunProgressLabel.Text = " Loading Kfat for SLratio update pass #" & c & " ..."
+                    RunProgressLabel.Refresh()
+                    Call ExternalSubCalcs(c, iters)
+                End If
+                c = c + 1
+            Loop
+
+
+
+        End If 'Auto SizeLimitFix = True@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+            '- Set the UpdateRunEncounterRateAdjustment back to False
+            '(should always be false except when set to true during update runs)
+            UpdateRunEncounterRateAdjustment = False
+            RunTAMMIter = 0 'This Needs to be zero OR things will get goofy on sequential runs.
+            'PPPPPP---(end of closing Pete 12/13 Block)------------------------------------------------------------------------
+
+
+        Me.Close()
+        FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
+            FVS_MainMenu.Visible = True
+
+    End Sub
 
    Private Sub CancelRunButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles CancelRunButton.Click
       UpdateRunEncounterRateAdjustment = False
@@ -246,13 +429,13 @@ Public Class FVS_RunModel
 
    
 
-    Private Sub ChinookSizeLimitCheck_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChinookSizeLimitCheck.CheckedChanged
-        If ChinookSizeLimitCheck.Checked = True Then
-            SizeLimitFix = True
-        Else
-            SizeLimitFix = False
-        End If
-    End Sub
+    'Private Sub ChinookSizeLimitCheck_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChinookSizeLimitCheck.CheckedChanged
+    '    If ChinookSizeLimitCheck.Checked = True Then
+    '        SizeLimitFix = True
+    '    Else
+    '        SizeLimitFix = False
+    '    End If
+    'End Sub
 
    Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click
       If SpeciesName = "COHO" Then
@@ -278,7 +461,7 @@ Public Class FVS_RunModel
       'Try
       dbconn.Open()
 
-      'This is creates a simple table of legal and sublegal mortalities for computing SLRatio below.
+        'This creates a simple table of legal and sublegal mortalities for computing SLRatio below.
       sql = "SELECT Mortality.RunID, Mortality.FisheryID, Mortality.TimeStep, Sum(Mortality.MSFShaker) AS MSFSub, " & _
             "Sum(Mortality.MSFEncounter) AS MSFLeg, Sum(Mortality.LandedCatch) AS NSLeg, Sum(Mortality.Shaker) " & _
             "AS NSSub " & _
@@ -368,6 +551,22 @@ Public Class FVS_RunModel
             ReDim FisheryQuotaCompare(NumFish, NumSteps)
         Else
             CoastalIterations = False
+        End If
+    End Sub
+
+    Private Sub ToolTip1_Popup(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PopupEventArgs) Handles ToolTip1.Popup
+
+    End Sub
+
+    Private Sub ChinookSizeLimitCheck_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChinookSizeLimitCheck.CheckedChanged
+        If ChinookSizeLimitCheck.Checked = True Then
+            SizeLimitOnlyChk.Checked = False
+        End If
+    End Sub
+
+    Private Sub SizeLimitOnlyChk_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SizeLimitOnlyChk.CheckedChanged
+        If SizeLimitOnlyChk.Checked = True Then
+            ChinookSizeLimitCheck.Checked = False
         End If
     End Sub
 End Class
