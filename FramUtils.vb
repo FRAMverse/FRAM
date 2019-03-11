@@ -190,6 +190,7 @@ Module FramUtils
       ReDim UpdWhen(NumFish, MaxAge, NumSteps)
       ReDim UpdBy(NumFish, MaxAge, NumSteps)
       ReDim Kfat(NumFish, MaxAge, NumSteps)
+        ReDim Kfat2(NumFish, MaxAge, NumSteps)
 
 
       If SpeciesName = "COHO" Then

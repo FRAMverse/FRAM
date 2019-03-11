@@ -40,7 +40,10 @@ Public Class FVS_RunModel
          ChinookBYCheck.Enabled = False
          OldTammCheck.Visible = False
          OldTammCheck.Enabled = False
-         TammFwsCheck.Visible = False
+            TammFwsCheck.Visible = False
+            ChinookSizeLimitCheck.Visible = False
+            SizeLimitOnlyChk.Visible = False
+            Button2.Visible = False
          ChinookSizeLimitCheck.Visible = False
          TammFwsCheck.Enabled = False
          MSFBiasCorrectionCheckBox.Visible = True
@@ -112,14 +115,14 @@ Public Class FVS_RunModel
         Dim c As Integer = 1 'Allows RunModelButton_Click to execute as normal (for coho or non-update Chinook runs)
 
       
-        If ChinookSizeLimitCheck.Checked = True Then
+        If ChinookSizeLimitCheck.Checked = True Or SpeciesName = "COHO" Then
             SizeLimitFix = False
         Else
             SizeLimitFix = True
             SizeLimitOnly = False
         End If
 
-        If SizeLimitOnlyChk.Checked = True Then
+        If SizeLimitOnlyChk.Checked = True And SpeciesName = "CHINOOK" Then
             SizeLimitOnly = True
         End If
 
@@ -480,38 +483,60 @@ Public Class FVS_RunModel
 
       'Now compute the new Kfats and modify the EncounterRateAdjustment for the next run...
       For F = 1 To NumFish
-         For T = 1 To NumSteps
-            Dim str As String = "FisheryID = " & F.ToString & " AND TimeStep = " & T.ToString
-            Dim dr() As DataRow
-            Dim kfatold As Double
-            Dim leg, subleg, subrat As Double
+            For T = 1 To NumSteps
+                If F = 70 And T = 4 Then
+                    Jim = 1
+                End If
+                Dim str As String = "FisheryID = " & F.ToString & " AND TimeStep = " & T.ToString
+                Dim dr() As DataRow
+                Dim kfatold As Double
+                Dim leg, subleg, subrat As Double
 
-            dr = dsSLquery.Tables("TheMeat").Select(str) 'Gets query results for fishery and time step
-            'If F = 53 And T = 3 Then
-            '   F = 53
-            'End If
+                'tag111
+                'Dim leg2, subleg2, subrat2, kfatold2 As Double
 
-            If dr.Length = 1 Then
-               leg = dr(0)("MSFLeg") + dr(0)("NSLeg")
-               subleg = dr(0)("MSFSub") + dr(0)("NSSub")
-               For A = MinAge To MaxAge
-                  kfatold = Kfat(F, A, T) 'debugging variable
-                  If leg = 0 Or subleg = 0 Then
-                     Kfat(F, A, T) = 1 'Leave it at 1.00 = no adjustment.
-                  Else
-                     If TargetRatio(F, A, T) <> -1 Then 'Only compute new adjustments for fisheries providing an estimate of SL ratio 
-                        subrat = (subleg / ShakerMortRate(F, T)) / leg '<-FRAM SL Ratio
-                        Kfat(F, A, T) = TargetRatio(F, A, T) / subrat
-                        RunEncounterRateAdjustment(F, A, T) = RunEncounterRateAdjustment(F, A, T) * Kfat(F, A, T) 'Put it here for correct update/storage for saving
-                        EncounterRateAdjustment(A, F, T) = EncounterRateAdjustment(A, F, T) * Kfat(F, A, T) 'Put it here for correct execution during iterations
-                        'If (F = 16 Or F = 17) And T = 3 Then
-                        'Debug.Print("Fishery =, " & F & ",iteration = ," & c.ToString & " ,Age =," & A.ToString & " ,subrat =," & subrat.ToString & " ,Target =," & TargetRatio(F, A, T).ToString & " ,OldKfat =," & kfatold.ToString & " ,NewKfat =," & Kfat(F, A, T).ToString & " ,EncounterRateAdj =," & EncounterRateAdjustment(A, F, T).ToString & " ,RUNEncounterRateAdj =," & RunEncounterRateAdjustment(F, A, T).ToString)
-                        'End If
-                     End If
-                  End If
-               Next
-            End If
-         Next
+                'leg2 = TotalEncounters(F, T) + TotalNonRetention(F, T) / MarkSelectiveMortRate(F, T)
+                'subleg2 = TotalShakers(F, T) / ShakerMortRate(F, T)
+
+                'For A = MinAge To MaxAge
+                '    kfatold2 = Kfat2(F, A, T) 'debugging variable
+                '    If leg2 = 0 Or subleg2 = 0 Then
+                '        Kfat2(F, A, T) = 1 'Leave it at 1.00 = no adjustment.
+                '    Else
+                '        If TargetRatio(F, A, T) <> -1 Then 'Only compute new adjustments for fisheries providing an estimate of SL ratio 
+                '            subrat2 = subleg2 / leg2
+                '            Kfat2(F, A, T) = TargetRatio(F, A, T) / subrat2
+
+                '        End If
+                '    End If
+                'Next
+
+                dr = dsSLquery.Tables("TheMeat").Select(str) 'Gets query results for fishery and time step
+                'If F = 53 And T = 3 Then
+                '   F = 53
+                'End If
+
+                If dr.Length = 1 Then
+                    leg = dr(0)("MSFLeg") + dr(0)("NSLeg")
+                    subleg = dr(0)("MSFSub") + dr(0)("NSSub")
+                    For A = MinAge To MaxAge
+                        kfatold = Kfat(F, A, T) 'debugging variable
+                        If leg = 0 Or subleg = 0 Then
+                            Kfat(F, A, T) = 1 'Leave it at 1.00 = no adjustment.
+                        Else
+                            If TargetRatio(F, A, T) <> -1 Then 'Only compute new adjustments for fisheries providing an estimate of SL ratio 
+                                subrat = (subleg / ShakerMortRate(F, T)) / leg '<-FRAM SL Ratio
+                                Kfat(F, A, T) = TargetRatio(F, A, T) / subrat
+                                RunEncounterRateAdjustment(F, A, T) = RunEncounterRateAdjustment(F, A, T) * Kfat(F, A, T) 'Put it here for correct update/storage for saving
+                                EncounterRateAdjustment(A, F, T) = EncounterRateAdjustment(A, F, T) * Kfat(F, A, T) 'Put it here for correct execution during iterations
+                                'If (F = 16 Or F = 17) And T = 3 Then
+                                'Debug.Print("Fishery =, " & F & ",iteration = ," & c.ToString & " ,Age =," & A.ToString & " ,subrat =," & subrat.ToString & " ,Target =," & TargetRatio(F, A, T).ToString & " ,OldKfat =," & kfatold.ToString & " ,NewKfat =," & Kfat(F, A, T).ToString & " ,EncounterRateAdj =," & EncounterRateAdjustment(A, F, T).ToString & " ,RUNEncounterRateAdj =," & RunEncounterRateAdjustment(F, A, T).ToString)
+                                'End If
+                            End If
+                        End If
+                    Next
+                End If
+            Next
       Next
 
       'Set the boolean to true once FRAM has made all update passes; the last one will just be a calculation pass

@@ -196,7 +196,7 @@ Public Module FramVar
    'Pete 12/13 Pete External Sublegals Variables
    Public RunEncounterRateAdjustment(,,) As Double
    Public TargetRatio(,,) As Double
-   Public Kfat(,,) As Double 'Temporary in-update variable for computing new RunEncounterRateAdjustment
+    Public Kfat(,,), Kfat2(,,) As Double 'Temporary in-update variable for computing new RunEncounterRateAdjustment
    Public UpdBy(,,) As String
    Public UpdWhen(,,) As DateTime
    Public UpdateRunEncounterRateAdjustment As Boolean
