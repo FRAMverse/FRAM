@@ -1,2 +1,4 @@
 *.suo
 My Project/
+publish/
+bin/
