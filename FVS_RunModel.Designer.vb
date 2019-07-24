@@ -45,7 +45,6 @@ Partial Class FVS_RunModel
         Me.OldCohort = New System.Windows.Forms.CheckBox
         Me.chkCoastalIterations = New System.Windows.Forms.CheckBox
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.SizeLimitOnlyChk = New System.Windows.Forms.CheckBox
         Me.SuspendLayout()
         '
         'ModelRunTitleLabel
@@ -237,7 +236,7 @@ Partial Class FVS_RunModel
         Me.ChinookSizeLimitCheck.Size = New System.Drawing.Size(160, 22)
         Me.ChinookSizeLimitCheck.TabIndex = 32
         Me.ChinookSizeLimitCheck.Text = "No Size Limit Fix "
-        Me.ToolTip1.SetToolTip(Me.ChinookSizeLimitCheck, "select if you do not wish to have apply a size limit correction")
+        Me.ToolTip1.SetToolTip(Me.ChinookSizeLimitCheck, "select if you do not wish to apply a size limit correction")
         Me.ChinookSizeLimitCheck.UseVisualStyleBackColor = False
         '
         'Button2
@@ -279,26 +278,12 @@ Partial Class FVS_RunModel
         'ToolTip1
         '
         '
-        'SizeLimitOnlyChk
-        '
-        Me.SizeLimitOnlyChk.AutoSize = True
-        Me.SizeLimitOnlyChk.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.SizeLimitOnlyChk.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SizeLimitOnlyChk.Location = New System.Drawing.Point(425, 353)
-        Me.SizeLimitOnlyChk.Name = "SizeLimitOnlyChk"
-        Me.SizeLimitOnlyChk.Size = New System.Drawing.Size(284, 22)
-        Me.SizeLimitOnlyChk.TabIndex = 37
-        Me.SizeLimitOnlyChk.Text = "Size Limit Fix w/o Sub/Leg Update"
-        Me.ToolTip1.SetToolTip(Me.SizeLimitOnlyChk, "will run faster, but only perform size limit corrections")
-        Me.SizeLimitOnlyChk.UseVisualStyleBackColor = False
-        '
         'FVS_RunModel
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(882, 678)
-        Me.Controls.Add(Me.SizeLimitOnlyChk)
         Me.Controls.Add(Me.chkCoastalIterations)
         Me.Controls.Add(Me.OldCohort)
         Me.Controls.Add(Me.Button2)
@@ -348,5 +333,4 @@ Partial Class FVS_RunModel
     Friend WithEvents OldCohort As System.Windows.Forms.CheckBox
     Friend WithEvents chkCoastalIterations As System.Windows.Forms.CheckBox
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
-    Friend WithEvents SizeLimitOnlyChk As System.Windows.Forms.CheckBox
 End Class

@@ -226,9 +226,9 @@ Module FramCalcs
             Next
             '---------------------------------------------------------------------------------
             'tag111
-            'If FinalUpdatePass = True Or UpdateRunEncounterRateAdjustment = False Then
-            Call SaveDat()
-            'End If
+            If FinalUpdatePass = True Or UpdateRunEncounterRateAdjustment = False Then
+                Call SaveDat()
+            End If
         End If
 
         '--- Call TAMM Procedures
@@ -263,10 +263,10 @@ Module FramCalcs
                         Next
                     Next
                     'tag111
-                    'If FinalUpdatePass = True Or UpdateRunEncounterRateAdjustment = False Then
-                    Call SaveDat()
-                    'End If
-                End If
+                    If FinalUpdatePass = True Or UpdateRunEncounterRateAdjustment = False Then
+                        Call SaveDat()
+                    End If
+                    End If
             End If
         End If
 
@@ -1732,10 +1732,10 @@ NextStkMort:
                         FisheryScaler(Fish, TStep) *= (FisheryQuota(Fish, TStep) / TotalNSLanded(Fish))
 
 
-                        If FisheryScaler(Fish, TStep) > 200000 Then
-                            MsgBox("Not enough abundance to fill the quota in fishery " & Fish & " Time Step " & TStep & ". Try to manually increase the abundance of the main stock.")
-                            End
-                        End If
+                        'If FisheryScaler(Fish, TStep) > 200000 Then
+                        '    MsgBox("Not enough abundance to fill the quota in fishery " & Fish & " Time Step " & TStep & ". Try to manually increase the abundance of the main stock.")
+                        '    End
+                        'End If
                         'Catch ex As Exception
                         '    MsgBox("Fishery " & Fish & " TimeStep " & TStep & "do not have enough fish to meet the quota.")
                         'End Try

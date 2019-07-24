@@ -11,10 +11,10 @@
     <RootNamespace>FramVS</RootNamespace>
     <AssemblyName>FramVS</AssemblyName>
     <MyType>WindowsForms</MyType>
-    <ManifestCertificateThumbprint>62C143A2E0C31201C627D7D6DF0A4E8E7B3BC676</ManifestCertificateThumbprint>
-    <ManifestKeyFile>FramVS_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestCertificateThumbprint>933D14E58FCF3627921841CC8170FEF9E7E5774D</ManifestCertificateThumbprint>
+    <ManifestKeyFile>FramVS_2_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -34,7 +34,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -539,6 +539,7 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
     <None Include="FramVS_1_TemporaryKey.pfx" />
+    <None Include="FramVS_2_TemporaryKey.pfx" />
     <None Include="FramVS_TemporaryKey.pfx" />
     <None Include="JimPacker.snk" />
     <None Include="My Project\app.manifest" />
@@ -582,11 +583,6 @@
     <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -600,11 +596,6 @@
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>

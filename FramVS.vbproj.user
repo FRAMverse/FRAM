@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
     <ReferencePath>C:\Program Files\Common Files\Business Objects\2.7\Managed\</ReferencePath>
     <PublishUrlHistory>publish\</PublishUrlHistory>
     <InstallUrlHistory>

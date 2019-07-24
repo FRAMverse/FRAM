@@ -7,7 +7,7 @@ Public Class FVS_AdminPassword
    Public PasswordCheck As String
 
    Private Sub FVS_AdminPassword_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-      txt_pwentry.Clear()
+        'txt_pwentry.Clear()
       'txt_pwentry.Focus()
    End Sub
 
@@ -18,43 +18,43 @@ Public Class FVS_AdminPassword
 
 
    Private Sub Button1_Click_1(sender As System.Object, e As System.EventArgs) Handles Button1.Click
-      PasswordCheck = "password"
+        'PasswordCheck = "password"
       FailedLoad = False
 
-      If txt_pwentry.Text = "" Then
-         MessageBox.Show("Enter the secret nuclear codes or click cancel to exit admin panel")
-         txt_pwentry.Clear()
-      ElseIf txt_pwentry.Text = PasswordCheck Then
-         Dim result = MessageBox.Show("Are you ABSOLUTELY sure you want to do an SLRatio update?" & _
-                                      Environment.NewLine & "(If yes, click 'Yes' and complete model run as per usual.)", "SLRatio", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-         If result = DialogResult.No Then
-            UpdateRunEncounterRateAdjustment = False
-            Me.Close()
-            FVS_RunModel.Visible() = True
-         ElseIf result = DialogResult.Yes Then
+        'If txt_pwentry.Text = "" Then
+        '   MessageBox.Show("Enter the secret nuclear codes or click cancel to exit admin panel")
+        '   txt_pwentry.Clear()
+        'ElseIf txt_pwentry.Text = PasswordCheck Then
+        'Dim result = MessageBox.Show("Are you ABSOLUTELY sure you want to do an SLRatio update?" & _
+        '                                Environment.NewLine & "(If yes, click 'Yes' and complete model run as per usual.)", "SLRatio", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+        'If result = DialogResult.No Then
+        '    UpdateRunEncounterRateAdjustment = False
+        '    Me.Close()
+        '    FVS_RunModel.Visible() = True
+        'ElseIf result = DialogResult.Yes Then
 
-            'Call LoadSLRatio Subroutine if loading from spreadsheet is desired
-            If chk_LoadSLRatio.Checked = True Then
-               Call LoadSLRatio()
-               If FailedLoad = True Then
-                  chk_LoadSLRatio.Checked = False
-                  Exit Sub
-               End If
+        'Call LoadSLRatio Subroutine if loading from spreadsheet is desired
+        If chk_LoadSLRatio.Checked = True Then
+            Call LoadSLRatio()
+            If FailedLoad = True Then
+                chk_LoadSLRatio.Checked = False
+                Exit Sub
             End If
+        End If
 
-            UpdateRunEncounterRateAdjustment = True
-            WhoUpdated = Environment.UserName
-            Me.Close()
-            FVS_RunModel.Visible() = True
-            '**************************************
-            'Call the RunEncounterRateAdjustment process here or back on run screen?
-            '**************************************
-         End If
-      Else
-         MessageBox.Show("Incorrect password. Re-enter or click cancel to exit admin panel")
-         UpdateRunEncounterRateAdjustment = False
-         txt_pwentry.Clear()
-      End If
+        UpdateRunEncounterRateAdjustment = True
+        WhoUpdated = Environment.UserName
+        Me.Close()
+        FVS_RunModel.Visible() = True
+        '**************************************
+        'Call the RunEncounterRateAdjustment process here or back on run screen?
+        '**************************************
+        '  End If
+        'Else
+        'MessageBox.Show("Incorrect password. Re-enter or click cancel to exit admin panel")
+        'UpdateRunEncounterRateAdjustment = False
+        'txt_pwentry.Clear()
+        'End If
    End Sub
 
    Sub LoadSLRatio()
