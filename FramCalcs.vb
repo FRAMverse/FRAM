@@ -1793,7 +1793,7 @@ NextTolerCheck:
         Dim CNRScale, CNREncounter As Double
         Dim LegProp, SubLegProp As Double
         If TotalLandedCatch(Fish, TStep) = 0 And (NonRetentionFlag(Fish, TStep) = 1 Or NonRetentionFlag(Fish, TStep) = 2) Then
-            MsgBox("CNR Method 0 or 1 cannot be used in fishery with no catch" & vbCrLf & "Fishery= " & FisheryName(Fish) & " TStep= " & TStep.ToString & vbCrLf & "Must Fix this Error before Continuing!", MsgBoxStyle.OkOnly)
+            MsgBox("CNR Method 1 or 2 cannot be used in fishery with no catch" & vbCrLf & "Fishery= " & FisheryName(Fish) & " TStep= " & TStep.ToString & vbCrLf & "Must Fix this Error before Continuing!", MsgBoxStyle.OkOnly)
             Exit Sub
         End If
 
@@ -2034,8 +2034,8 @@ NextTolerCheck:
             Exit Sub
         End If
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        If TStep = 1 And Fish = 57 And Stk = 26 And Age = 2 Then 'used to break code
-            Stk = 26
+        If TStep = 2 And Fish = 30 And Stk = 45 And Age = 3 Then 'used to break code
+            Jim = 1
         End If
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
         'COMPUTE MEAN LENGTH OF FISH AND SD

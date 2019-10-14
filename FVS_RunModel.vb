@@ -611,4 +611,7 @@ Public Class FVS_RunModel
    
 
     
+    Private Sub ChinookSizeLimitCheck_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChinookSizeLimitCheck.CheckedChanged
+
+    End Sub
 End Class
