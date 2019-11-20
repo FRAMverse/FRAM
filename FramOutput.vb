@@ -3516,957 +3516,957 @@ NextRepFishery:
 
    Sub PSCCohoSpreadsheet()
 
-      Dim Stock, RecNum, RunYear As Integer
-      Dim PSCStock(16, 4) As Integer
-      Dim PSCFishery(NumFish) As Integer
-      Dim PSCFishName(28), PSCSSName As String
-      Dim PSCCatch(27, 30) As Double
-      Dim PSCBase(198, 5) As Double
-      Dim PSCBaseER(,) As Double
-      Dim LCat, CNR, Drop, Shak, InitCoht, Esc As Double
-      Dim MLCat, MCNR, MDrop, MShak As Double
-      Dim CmdStr As String
+        '      Dim Stock, RecNum, RunYear As Integer
+        '      Dim PSCStock(16, 4) As Integer
+        '      Dim PSCFishery(NumFish) As Integer
+        '      Dim PSCFishName(28), PSCSSName As String
+        '      Dim PSCCatch(27, 30) As Double
+        '      Dim PSCBase(198, 5) As Double
+        '      Dim PSCBaseER(,) As Double
+        '      Dim LCat, CNR, Drop, Shak, InitCoht, Esc As Double
+        '      Dim MLCat, MCNR, MDrop, MShak As Double
+        '      Dim CmdStr As String
 
-      '-- UnMarked List of Stocks for PSC Periodic Report
+        '      '-- UnMarked List of Stocks for PSC Periodic Report
 
-      PSCStock(1, 0) = 2      '- Skagit
-      PSCStock(1, 1) = 17
-      PSCStock(1, 2) = 23
-      PSCStock(2, 0) = 1      '- Stillaguamish
-      PSCStock(2, 1) = 29
-      PSCStock(3, 0) = 1      '- Snohomish
-      PSCStock(3, 1) = 35
-      PSCStock(4, 0) = 4      '- Hood Canal
-      PSCStock(4, 1) = 45
-      PSCStock(4, 2) = 51
-      PSCStock(4, 3) = 55
-      PSCStock(4, 4) = 59
-      PSCStock(5, 0) = 4      '- US JDF
-      PSCStock(5, 1) = 107
-      PSCStock(5, 2) = 111
-      PSCStock(5, 3) = 115
-      PSCStock(5, 4) = 117
-      PSCStock(6, 0) = 1      '- Quillayute
-      PSCStock(6, 1) = 131
-      PSCStock(7, 0) = 1      '- Hoh
-      PSCStock(7, 1) = 135
-      PSCStock(8, 0) = 1      '- Queets
-      PSCStock(8, 1) = 139
-      PSCStock(9, 0) = 3      '- Grays harbor
-      PSCStock(9, 1) = 149
-      PSCStock(9, 2) = 153
-      PSCStock(9, 3) = 157
-      PSCStock(10, 0) = 1     '- Lower Fraser
-      PSCStock(10, 1) = 227
-      PSCStock(11, 0) = 1     '- Upper Fraser
-      PSCStock(11, 1) = 231
-      PSCStock(12, 0) = 1     '- GS Mainland
-      PSCStock(12, 1) = 207
-      PSCStock(13, 0) = 1     '- GS Vanc Isl
-      PSCStock(13, 1) = 211
-      PSCStock(14, 0) = 1     '- SW Vanc Isl
-      PSCStock(14, 1) = 219
-      PSCStock(15, 0) = 1     '- Col River Early (colreh)
-      PSCStock(15, 1) = 166
-      PSCStock(16, 0) = 1     '- Col River Late (colrlh)
-      PSCStock(16, 1) = 176
+        '      PSCStock(1, 0) = 2      '- Skagit
+        '      PSCStock(1, 1) = 17
+        '      PSCStock(1, 2) = 23
+        '      PSCStock(2, 0) = 1      '- Stillaguamish
+        '      PSCStock(2, 1) = 29
+        '      PSCStock(3, 0) = 1      '- Snohomish
+        '      PSCStock(3, 1) = 35
+        '      PSCStock(4, 0) = 4      '- Hood Canal
+        '      PSCStock(4, 1) = 45
+        '      PSCStock(4, 2) = 51
+        '      PSCStock(4, 3) = 55
+        '      PSCStock(4, 4) = 59
+        '      PSCStock(5, 0) = 4      '- US JDF
+        '      PSCStock(5, 1) = 107
+        '      PSCStock(5, 2) = 111
+        '      PSCStock(5, 3) = 115
+        '      PSCStock(5, 4) = 117
+        '      PSCStock(6, 0) = 1      '- Quillayute
+        '      PSCStock(6, 1) = 131
+        '      PSCStock(7, 0) = 1      '- Hoh
+        '      PSCStock(7, 1) = 135
+        '      PSCStock(8, 0) = 1      '- Queets
+        '      PSCStock(8, 1) = 139
+        '      PSCStock(9, 0) = 3      '- Grays harbor
+        '      PSCStock(9, 1) = 149
+        '      PSCStock(9, 2) = 153
+        '      PSCStock(9, 3) = 157
+        '      PSCStock(10, 0) = 1     '- Lower Fraser
+        '      PSCStock(10, 1) = 227
+        '      PSCStock(11, 0) = 1     '- Upper Fraser
+        '      PSCStock(11, 1) = 231
+        '      PSCStock(12, 0) = 1     '- GS Mainland
+        '      PSCStock(12, 1) = 207
+        '      PSCStock(13, 0) = 1     '- GS Vanc Isl
+        '      PSCStock(13, 1) = 211
+        '      PSCStock(14, 0) = 1     '- SW Vanc Isl
+        '      PSCStock(14, 1) = 219
+        '      PSCStock(15, 0) = 1     '- Col River Early (colreh)
+        '      PSCStock(15, 1) = 166
+        '      PSCStock(16, 0) = 1     '- Col River Late (colrlh)
+        '      PSCStock(16, 1) = 176
 
-      '- Marked List for Bill Gazey Project ONLY !!!!
+        '      '- Marked List for Bill Gazey Project ONLY !!!!
 
-      'PSCStock(1, 0) = 2      '- Skagit
-      'PSCStock(1, 1) = 20
-      'PSCStock(1, 2) = 22
-      'PSCStock(2, 0) = 1      '- Stillaguamish
-      'PSCStock(2, 1) = 32
-      'PSCStock(3, 0) = 1      '- Snohomish
-      'PSCStock(3, 1) = 36
-      'PSCStock(4, 0) = 3      '- Hood Canal
-      'PSCStock(4, 1) = 48
-      'PSCStock(4, 2) = 54
-      'PSCStock(4, 3) = 58
-      ''PSCStock(4, 4) = 60
-      'PSCStock(5, 0) = 2      '- US JDF
-      'PSCStock(5, 1) = 110
-      'PSCStock(5, 2) = 114
-      ''PSCStock(5, 3) = 116
-      ''PSCStock(5, 4) = 118
-      'PSCStock(6, 0) = 1      '- Quillayute
-      'PSCStock(6, 1) = 134
-      'PSCStock(7, 0) = 1      '- Hoh
-      'PSCStock(7, 1) = 138
-      'PSCStock(8, 0) = 1      '- Queets
-      'PSCStock(8, 1) = 142
-      'PSCStock(9, 0) = 2      '- Grays harbor
-      'PSCStock(9, 1) = 152
-      'PSCStock(9, 2) = 156
-      ''PSCStock(9, 3) = 158
-      'PSCStock(10, 0) = 1     '- Lower Fraser
-      'PSCStock(10, 1) = 226
-      'PSCStock(11, 0) = 1     '- Upper Fraser
-      'PSCStock(11, 1) = 230
-      'PSCStock(12, 0) = 1     '- GS Mainland
-      'PSCStock(12, 1) = 206
-      'PSCStock(13, 0) = 1     '- GS Vanc Isl
-      'PSCStock(13, 1) = 210
-      'PSCStock(14, 0) = 1     '- SW Vanc Isl
-      'PSCStock(14, 1) = 218
-      'PSCStock(15, 0) = 1     '- Col River Early (colreh)
-      'PSCStock(15, 1) = 166
-      'PSCStock(16, 0) = 1     '- Col River Late (colrlh)
-      'PSCStock(16, 1) = 176
+        '      'PSCStock(1, 0) = 2      '- Skagit
+        '      'PSCStock(1, 1) = 20
+        '      'PSCStock(1, 2) = 22
+        '      'PSCStock(2, 0) = 1      '- Stillaguamish
+        '      'PSCStock(2, 1) = 32
+        '      'PSCStock(3, 0) = 1      '- Snohomish
+        '      'PSCStock(3, 1) = 36
+        '      'PSCStock(4, 0) = 3      '- Hood Canal
+        '      'PSCStock(4, 1) = 48
+        '      'PSCStock(4, 2) = 54
+        '      'PSCStock(4, 3) = 58
+        '      ''PSCStock(4, 4) = 60
+        '      'PSCStock(5, 0) = 2      '- US JDF
+        '      'PSCStock(5, 1) = 110
+        '      'PSCStock(5, 2) = 114
+        '      ''PSCStock(5, 3) = 116
+        '      ''PSCStock(5, 4) = 118
+        '      'PSCStock(6, 0) = 1      '- Quillayute
+        '      'PSCStock(6, 1) = 134
+        '      'PSCStock(7, 0) = 1      '- Hoh
+        '      'PSCStock(7, 1) = 138
+        '      'PSCStock(8, 0) = 1      '- Queets
+        '      'PSCStock(8, 1) = 142
+        '      'PSCStock(9, 0) = 2      '- Grays harbor
+        '      'PSCStock(9, 1) = 152
+        '      'PSCStock(9, 2) = 156
+        '      ''PSCStock(9, 3) = 158
+        '      'PSCStock(10, 0) = 1     '- Lower Fraser
+        '      'PSCStock(10, 1) = 226
+        '      'PSCStock(11, 0) = 1     '- Upper Fraser
+        '      'PSCStock(11, 1) = 230
+        '      'PSCStock(12, 0) = 1     '- GS Mainland
+        '      'PSCStock(12, 1) = 206
+        '      'PSCStock(13, 0) = 1     '- GS Vanc Isl
+        '      'PSCStock(13, 1) = 210
+        '      'PSCStock(14, 0) = 1     '- SW Vanc Isl
+        '      'PSCStock(14, 1) = 218
+        '      'PSCStock(15, 0) = 1     '- Col River Early (colreh)
+        '      'PSCStock(15, 1) = 166
+        '      'PSCStock(16, 0) = 1     '- Col River Late (colrlh)
+        '      'PSCStock(16, 1) = 176
 
-      '- FRAM Coho Fishery Assignment to PSC-Fishery List
-      PSCFishery(1) = 18 '-No Cal Trm	No Calif Cst Terminal Catch
-      PSCFishery(2) = 18 '-Cn Cal Trm	Cntrl Cal Cst Term Catch
-      PSCFishery(3) = 18 '-Ft Brg Spt	Fort Bragg Sport
-      PSCFishery(4) = 18 '-Ft Brg Trl	Fort Bragg Troll
-      PSCFishery(5) = 18 '-Ca KMZ Spt	KMZ Sport
-      PSCFishery(6) = 18 '-Ca KMZ Trl	KMZ Troll
-      PSCFishery(7) = 18 '-So Cal Spt	So Calif. Sport
-      PSCFishery(8) = 18 '-So Cal Trl	So Calif. Troll
-      PSCFishery(9) = 18 '-So Ore Trm	So Ore Coast Terminal Catch
-      PSCFishery(10) = 18 '-Or Prv Trm	Ore Private Hat Term Catch
-      PSCFishery(11) = 18 '-SMi Or Trm	So Mid Ore Coast Term Catch
-      PSCFishery(12) = 18 '-NMi Or Trm	No Mid Ore Coast Term Catch
-      PSCFishery(13) = 18 '-No Ore Trm	North Ore Coast Term Catch
-      PSCFishery(14) = 18 '-Or Cst Trm	Oregon Coast Term Catch
-      PSCFishery(15) = 18 '-Brkngs Spt	Brookings Sport
-      PSCFishery(16) = 18 '-Brkngs Trl	Brookings Troll
-      PSCFishery(17) = 18 '-Newprt Spt	Newport Sport
-      PSCFishery(18) = 18 '-Newprt Trl	Newport Troll
-      PSCFishery(19) = 18 '-Coos B Spt	Coos Bay Sport
-      PSCFishery(20) = 18 '-Coos B Trl	Coos Bay Troll
-      PSCFishery(21) = 18 '-Tillmk Spt	Tillamook Sport
-      PSCFishery(22) = 18 '-Tillmk Trl	Tillamook Troll
-      PSCFishery(23) = 24 '-Buoy10 Spt	Col. Rvr. Buoy 10 Sport
-      PSCFishery(24) = 24 '-L ColR Spt	Col. Rvr. Lower R Sport
-      PSCFishery(25) = 24 '-L ColR Net	Col. Rvr. Lower R Net
-      PSCFishery(26) = 24 '-Yngs B Net	Col. Rvr. Youngs Bay Net
-      PSCFishery(27) = 24 '-LCROrT Spt	Col. Rvr. Ore Trib Spt
-      PSCFishery(28) = 24 '-Clackm Spt	Clackamas R Sport
-      PSCFishery(29) = 24 '-SandyR Spt	Sandy R Sport
-      PSCFishery(30) = 24 '-LCRWaT Spt	Col. Rvr. Wash Trib Spt
-      PSCFishery(31) = 24 '-UpColR Spt	Col. Rvr. Sport Above Bonneville
-      PSCFishery(32) = 24 '-UpColR Net	Col. Rvr. Net Above Bonneville
-      PSCFishery(33) = 17 '-A1-Ast Spt	WA Area 1 & Astoria Sport
-      PSCFishery(34) = 16 '-A1-Ast Trl	WA Area 1 & Astoria Troll
-      PSCFishery(35) = 16 '-Area2TrlNT	WA Area 2 Non-Treaty Troll
-      PSCFishery(36) = 16 '-Area2TrlTR	WA Area 2 Treaty Troll
-      PSCFishery(37) = 17 '-Area 2 Spt	WA Area 2 Sport
-      PSCFishery(38) = 16 '-Area3TrlNT	WA Area 3 Non-Treaty Troll
-      PSCFishery(39) = 16 '-Area3TrlTR	WA Area 3 Treaty Troll
-      PSCFishery(40) = 17 '-Area 3 Spt	WA Area 3 Sport
-      PSCFishery(41) = 17 '-Area 4 Spt	WA Area 4 Sport
-      PSCFishery(42) = 16 '-A4/4BTrlNT	WA Area 4/4B Non-Treaty Troll
-      PSCFishery(43) = 16 '-A4/4BTrlTR	WA Area 4/4B Treaty Troll
-      PSCFishery(44) = 19 '-A 5-6C Trl	WA Area 5-6-6C Troll
-      PSCFishery(45) = 24 '-Willpa Spt	Willapa Bay Sport (2.1)
-      PSCFishery(46) = 24 '-Wlp Tb Spt	Willapa Tributary Sport
-      PSCFishery(47) = 24 '-WlpaBT Net	Willapa Bay & FW Trib Net
-      PSCFishery(48) = 24 '-GryHbr Spt	Grays Harbor Sport (2.2)
-      PSCFishery(49) = 24 '-SGryHb Spt	South Grays Harbor Sport
-      PSCFishery(50) = 24 '-GryHbr Net	Grays Harbor Estuary Net
-      PSCFishery(51) = 24 '-Hump R Spt	Humptulips R Sport
-      PSCFishery(52) = 24 '-LwCheh Net	Lower Chehalis R Net
-      PSCFishery(53) = 24 '-Hump R C&S	Humptulips R C&S
-      PSCFishery(54) = 24 '-Chehal Spt	Chehalis R Sport
-      PSCFishery(55) = 24 '-Hump R Net	Humptulips R Net
-      PSCFishery(56) = 24 '-UpCheh Net	Upper Chehalis R Net
-      PSCFishery(57) = 24 '-Chehal C&S	Chehalis R C&S
-      PSCFishery(58) = 24 '-Wynoch Spt	Wynochee R Sport
-      PSCFishery(59) = 24 '-Hoquam Spt	Hoquiam R Sport
-      PSCFishery(60) = 24 '-Wishkh Spt	Wishkah R Sport
-      PSCFishery(61) = 24 '-Satsop Spt	Satsop R Sport
-      PSCFishery(62) = 24 '-Quin R Spt	Quinault R Sport
-      PSCFishery(63) = 24 '-Quin R Net	Quinault R Net
-      PSCFishery(64) = 24 '-Quin R C&S	Quinault R C&S
-      PSCFishery(65) = 24 '-Queets Spt	Queets R Sport
-      PSCFishery(66) = 24 '-Clrwtr Spt	Clearwater R Sport
-      PSCFishery(67) = 24 '-Salm R Spt	Salmon R Sport (Queets)
-      PSCFishery(68) = 24 '-Queets Net	Queets R Net
-      PSCFishery(69) = 24 '-Queets C&S	Queets R C&S
-      PSCFishery(70) = 24 '-Quilly Spt	Quillayute R Sport
-      PSCFishery(71) = 24 '-Quilly Net	Quillayute R Net
-      PSCFishery(72) = 24 '-Quilly C&S	Quillayute R C&S
-      PSCFishery(73) = 24 '-Hoh R  Spt	Hoh R Sport
-      PSCFishery(74) = 24 '-Hoh R  Net	Hoh R Net
-      PSCFishery(75) = 24 '-Hoh R  C&S	Hoh R C&S
-      PSCFishery(76) = 24 '-Mak FW Spt	Makah Tributary Sport
-      PSCFishery(77) = 24 '-Mak FW Net	Makah Freshwater Net
-      PSCFishery(78) = 24 '-Makah  C&S	Makah C&S
-      PSCFishery(79) = 16 '-A 4-4A Net	WA Area 4-4A Net
-      PSCFishery(80) = 19 '-A4B6CNetNT	WA Area 4B-5-6C Non-Treaty Net
-      PSCFishery(81) = 19 '-A4B6CNetTR	WA Area 4B-5-6C Treaty Net
-      PSCFishery(82) = 19 '-Ar6D NetNT	6D Non-Treaty Net (Dungeness Bay & R)
-      PSCFishery(83) = 19 '-Ar6D NetTR	6D Treaty Net (Dungeness Bay & R)
-      PSCFishery(84) = 19 '-Elwha  Net	Elwha R Net
-      PSCFishery(85) = 19 '-WJDF T Net	West JDF Straits Trib Net
-      PSCFishery(86) = 19 '-EJDF T Net	East JDF Straits Trib Net
-      PSCFishery(87) = 20 '-A6-7ANetNT	WA Area 7-7A Non-Treaty Net
-      PSCFishery(88) = 20 '-A6-7ANetTR	WA Area 7-7A Treaty Net
-      PSCFishery(89) = 19 '-EJDF FWSpt	East JDF Straits Trib Sport
-      PSCFishery(90) = 19 '-WJDF FWSpt	West JDF Straits Trib Sport
-      PSCFishery(91) = 19 '-Area 5 Spt	WA Area 5 Sport (Sekiu)
-      PSCFishery(92) = 19 '-Area 6 Spt	WA Area 6 Sport (Port Angeles)
-      PSCFishery(93) = 21 '-Area 7 Spt	WA Area 7 Sport (San Juan Islands)
-      PSCFishery(94) = 19 '-Dung R Spt	Dungeness R Sport
-      PSCFishery(95) = 19 '-ElwhaR Spt	Elwha R Sport
-      PSCFishery(96) = 20 '-A7BCDNetNT	WA Area 7B-7C-7D Non-Treaty Net
-      PSCFishery(97) = 20 '-A7BCDNetTR	WA Area 7B-7C-7D Treaty Net
-      PSCFishery(98) = 23 '-Nook R Net	Nooksack R Net
-      PSCFishery(99) = 24 '-Nook R Spt	Nooksack R Sport
-      PSCFishery(100) = 24 '-Samh R Spt	Samish R Sport
-      PSCFishery(101) = 23 '-Ar 8 NetNT	WA Area 8 Non-Treaty Net (Skagit)
-      PSCFishery(102) = 23 '-Ar 8 NetTR	WA Area 8 Treaty Net (Skagit)
-      PSCFishery(103) = 24 '-Skag R Net	Skagit R Net
-      PSCFishery(104) = 24 '-SkgR TsNet	Skagit River Test Net
-      PSCFishery(105) = 24 '-SwinCh Net	Swinomish Channel Net
-        PSCFishery(106) = 22 '-Ar 8-1 Spt	WA Area 8.1 Sport (Skagit)
-      PSCFishery(107) = 22 '-Area 9 Spt	WA Area 9 Sport (Admirality Inlet)
-      PSCFishery(108) = 24 '-Skag R Spt	Skagit R Sport
-      PSCFishery(109) = 23 '-Ar8A NetNT	WA Area 8A Non-Treaty Net
-      PSCFishery(110) = 23 '-Ar8A NetTR	WA Area 8A Treaty Net
-      PSCFishery(111) = 23 '-Ar8D NetNT	WA Area 8D Non-Treaty Net (Tulalip Bay)
-      PSCFishery(112) = 23 '-Ar8D NetTR	WA Area 8D Treaty Net (Tulalip Bay)
-      PSCFishery(113) = 24 '-Stil R Net	Stillaguamish R Net
-      PSCFishery(114) = 24 '-Snoh R Net	Snohomish R Net
-        PSCFishery(115) = 22 '-Ar 8-2 Spt	WA Area 8.2 Sport (Everett)
-      PSCFishery(116) = 24 '-Stil R Spt	Stillaguamish R Sport
-      PSCFishery(117) = 24 '-Snoh R Spt	Snohomish R Sport
-      PSCFishery(118) = 22 '-Ar 10  Spt	WA Area 10 Sport (Seattle)
-      PSCFishery(119) = 23 '-Ar10 NetNT	WA Area 10 Non-Treaty Net (Seattle)
-      PSCFishery(120) = 23 '-Ar10 NetTR	WA Area 10 Treaty Net (Seattle)
-      PSCFishery(121) = 23 '-Ar10ANetNT	WA Area 10A Non-Treaty Net (Elliott Bay)
-      PSCFishery(122) = 23 '-Ar10ANetTR	WA Area 10A Treaty Net (Elliott Bay)
-      PSCFishery(123) = 23 '-Ar10ENetNT	WA Area 10E Non-Treaty Net (East Kitsap)
-      PSCFishery(124) = 23 '-Ar10ENetTR	WA Area 10E Treaty Net (East Kitsap)
-      PSCFishery(125) = 23 '-10F-G  Net	WA Area 10F-G Treaty Net (Lake Union)
-      PSCFishery(126) = 24 '-Duwm R Net	Green/Duwamish R Net
-      PSCFishery(127) = 24 '-Duwm R Spt	Green/Duwamish R Sport
-      PSCFishery(128) = 24 '-L WaSm Spt	Lk Wash/Sammamish/Tribs Spt
-      PSCFishery(129) = 22 '-Ar 11  Spt	WA Area 11 Sport (Tacoma)
-      PSCFishery(130) = 23 '-Ar11 NetNT	WA Area 11 Non-Treaty Net (E/W Pass)
-      PSCFishery(131) = 23 '-Ar11 NetTR	WA Area 11 Treaty Net (E/W Pass)
-      PSCFishery(132) = 23 '-Ar11ANetNT	WA Area 11A Non-Treaty Net (Comm. Bay)
-      PSCFishery(133) = 23 '-Ar11ANetTR	WA Area 11A Treaty Net (Comm. Bay)
-      PSCFishery(134) = 24 '-Puyl R Net	Puyallup R Net
-      PSCFishery(135) = 24 '-Puyl R Spt	Puyallup R Sport
-      PSCFishery(136) = 22 '-Ar 13  Spt	WAArea 13 Marine Sport
-      PSCFishery(137) = 23 '-Ar13 NetNT	Area 13 Non-Treaty Net (So Puget Sound)
-      PSCFishery(138) = 23 '-Ar13 NetTR	Area 13 Treaty Net (So Puget Sound)
-      PSCFishery(139) = 23 '-Ar13CNetNT	Area 13C Non-Treaty Net (Chambers Bay)
-      PSCFishery(140) = 23 '-Ar13CNetTR	Area 13C Treaty Net (Chambers Bay)
-      PSCFishery(141) = 23 '-Ar13ANetNT	Area 13A Non-Treaty Net (Carr Inlet)
-      PSCFishery(142) = 23 '-Ar13ANetTR	Area 13A Treaty Net (Carr Inlet)
-      PSCFishery(143) = 23 '-Ar13DNetNT	Area 13D Non-Treaty Net
-      PSCFishery(144) = 23 '-Ar13DNetTR	Area 13D Treaty Net
-      PSCFishery(145) = 23 '-A13FKNetNT	Area 13F-13K Non-Treaty Net
-      PSCFishery(146) = 23 '-A13FKNetTR	Area 13F-13K Treaty Net
-      PSCFishery(147) = 24 '-Nisq R Net	Nisqually R Net
-      PSCFishery(148) = 24 '-McAlls Net	McAllister Creek Net
-      PSCFishery(149) = 24 '-13D-K TSpt	13D-13K Trib Sport
-      PSCFishery(150) = 24 '-Nisq R Spt	Nisqually R Sport
-      PSCFishery(151) = 24 '-Desc R Spt	Deschutes R Sport
-      PSCFishery(152) = 22 '-Ar 12  Spt	Area 12 Marine Sport
-      PSCFishery(153) = 23 '-1212BNetNT	Area 12-12B Hood Canal Non-Treaty Net
-      PSCFishery(154) = 23 '-1212BNetTR	Area 12-12B Hood Canal Treaty Net
-      PSCFishery(155) = 23 '-A9-9ANetNT	Area 9/9A Non-Treaty Net
-      PSCFishery(156) = 23 '-A9-9ANetTR	Area 9/9A Treaty Net (On Res)
-      PSCFishery(157) = 23 '-Ar12ANetNT	Area 12A Non-Treaty Net (Quilcene Bay)
-      PSCFishery(158) = 23 '-Ar12ANetTR	Area 12A Treaty Net (Quilcene Bay)
-      PSCFishery(159) = 23 '-A12CDNetNT	Area 12C-12D Non-Treaty Net (SE Hood Canal)
-      PSCFishery(160) = 23 '-A12CDNetTR	Area 12C-12D Treaty Net (SE Hood Canal)
-      PSCFishery(161) = 24 '-Skok R Net	Skokomish R Net
-      PSCFishery(162) = 24 '-Quilcn Net	Quilcene R Net
-      PSCFishery(163) = 24 '-1212B TSpt	12, 12B Trib FW Sport
-      PSCFishery(164) = 24 '-12A Tb Spt	12A Trib FW Sport
-      PSCFishery(165) = 24 '-12C-D TSpt	12C, 12D Trib FW Sport
-      PSCFishery(166) = 24 '-Skok R Spt	Skokomish R Sport
-      PSCFishery(167) = 13 '-FRSLOW Trm	Lower Fraser R Term Catch
-      PSCFishery(168) = 13 '-FRSUPP Trm	Upper Fraser R Term Catch
-      PSCFishery(169) = 13 '-Fraser Spt	Lower Fraser River Sport
-      PSCFishery(170) = 1  '-JStrBC Trl	Johnstone Strait Troll
-      PSCFishery(171) = 1  '-No BC  Trl	BC Northern Troll
-      PSCFishery(172) = 1  '-NoC BC Trl	BC North Central Troll
-      PSCFishery(173) = 1  '-SoC BC Trl	BC South Central Troll
-      PSCFishery(174) = 4  '-NW VI  Trl	NW Vancouver Island Troll
-      PSCFishery(175) = 4  '-SW VI  Trl	SW Vancouver Island Troll
-      PSCFishery(176) = 9  '-GeoStr Trl	Georgia Straits Troll
-      PSCFishery(177) = 12 '-BC JDF Trl	BC Juan de Fuca Troll
-      PSCFishery(178) = 2  '-No BC  Net	BC Northern Net
-      PSCFishery(179) = 2  '-Cen BC Net	BC Central Net
-      PSCFishery(180) = 5  '-NW VI  Net	NW Vancouver Island Net
-      PSCFishery(181) = 5  '-SW VI  Net	SW Vancouver Island Net
-      PSCFishery(182) = 7  '-Johnst Net	Johnstone Straits Net
-      PSCFishery(183) = 10 '-GeoStr Net	Georgia Straits Net
-      PSCFishery(184) = 13 '-Fraser Net	Fraser R Gill Net
-      PSCFishery(185) = 12 '-BC JDF Net	BC Juan de Fuca Net
-      PSCFishery(186) = 8  '-JStrBC Spt	Johnstone Strait Sport
-      PSCFishery(187) = 3  '-No BC  Spt	BC Northern Sport
-      PSCFishery(188) = 3  '-Cen BC Spt	BC Central Sport
-      PSCFishery(189) = 11 '-BC JDF Spt	BC Juan de Fuca Sport
-      PSCFishery(190) = 6  '-WC VI  Spt	West Coast Vanc Is Sport
-      PSCFishery(191) = 9  '-NGaStr Spt	North Georgia Straits Sport
-      PSCFishery(192) = 9  '-SGaStr Spt	South Georgia Straits Sport
-      PSCFishery(193) = 9  '-Albern Spt	Alberni Canal Sport
-      PSCFishery(194) = 15 '-SW AK  Trl	SEAK Southwest Troll
-      PSCFishery(195) = 15 '-SE AK  Trl	SEAK Southeast Troll
-      PSCFishery(196) = 15 '-NW AK  Trl	SEAK Northwest Troll
-      PSCFishery(197) = 15 '-NE AK  Trl	SEAK Northeast Troll
-      PSCFishery(198) = 15 '-Alaska Net	Southeast Alaska Net
+        '      '- FRAM Coho Fishery Assignment to PSC-Fishery List
+        '      PSCFishery(1) = 18 '-No Cal Trm	No Calif Cst Terminal Catch
+        '      PSCFishery(2) = 18 '-Cn Cal Trm	Cntrl Cal Cst Term Catch
+        '      PSCFishery(3) = 18 '-Ft Brg Spt	Fort Bragg Sport
+        '      PSCFishery(4) = 18 '-Ft Brg Trl	Fort Bragg Troll
+        '      PSCFishery(5) = 18 '-Ca KMZ Spt	KMZ Sport
+        '      PSCFishery(6) = 18 '-Ca KMZ Trl	KMZ Troll
+        '      PSCFishery(7) = 18 '-So Cal Spt	So Calif. Sport
+        '      PSCFishery(8) = 18 '-So Cal Trl	So Calif. Troll
+        '      PSCFishery(9) = 18 '-So Ore Trm	So Ore Coast Terminal Catch
+        '      PSCFishery(10) = 18 '-Or Prv Trm	Ore Private Hat Term Catch
+        '      PSCFishery(11) = 18 '-SMi Or Trm	So Mid Ore Coast Term Catch
+        '      PSCFishery(12) = 18 '-NMi Or Trm	No Mid Ore Coast Term Catch
+        '      PSCFishery(13) = 18 '-No Ore Trm	North Ore Coast Term Catch
+        '      PSCFishery(14) = 18 '-Or Cst Trm	Oregon Coast Term Catch
+        '      PSCFishery(15) = 18 '-Brkngs Spt	Brookings Sport
+        '      PSCFishery(16) = 18 '-Brkngs Trl	Brookings Troll
+        '      PSCFishery(17) = 18 '-Newprt Spt	Newport Sport
+        '      PSCFishery(18) = 18 '-Newprt Trl	Newport Troll
+        '      PSCFishery(19) = 18 '-Coos B Spt	Coos Bay Sport
+        '      PSCFishery(20) = 18 '-Coos B Trl	Coos Bay Troll
+        '      PSCFishery(21) = 18 '-Tillmk Spt	Tillamook Sport
+        '      PSCFishery(22) = 18 '-Tillmk Trl	Tillamook Troll
+        '      PSCFishery(23) = 24 '-Buoy10 Spt	Col. Rvr. Buoy 10 Sport
+        '      PSCFishery(24) = 24 '-L ColR Spt	Col. Rvr. Lower R Sport
+        '      PSCFishery(25) = 24 '-L ColR Net	Col. Rvr. Lower R Net
+        '      PSCFishery(26) = 24 '-Yngs B Net	Col. Rvr. Youngs Bay Net
+        '      PSCFishery(27) = 24 '-LCROrT Spt	Col. Rvr. Ore Trib Spt
+        '      PSCFishery(28) = 24 '-Clackm Spt	Clackamas R Sport
+        '      PSCFishery(29) = 24 '-SandyR Spt	Sandy R Sport
+        '      PSCFishery(30) = 24 '-LCRWaT Spt	Col. Rvr. Wash Trib Spt
+        '      PSCFishery(31) = 24 '-UpColR Spt	Col. Rvr. Sport Above Bonneville
+        '      PSCFishery(32) = 24 '-UpColR Net	Col. Rvr. Net Above Bonneville
+        '      PSCFishery(33) = 17 '-A1-Ast Spt	WA Area 1 & Astoria Sport
+        '      PSCFishery(34) = 16 '-A1-Ast Trl	WA Area 1 & Astoria Troll
+        '      PSCFishery(35) = 16 '-Area2TrlNT	WA Area 2 Non-Treaty Troll
+        '      PSCFishery(36) = 16 '-Area2TrlTR	WA Area 2 Treaty Troll
+        '      PSCFishery(37) = 17 '-Area 2 Spt	WA Area 2 Sport
+        '      PSCFishery(38) = 16 '-Area3TrlNT	WA Area 3 Non-Treaty Troll
+        '      PSCFishery(39) = 16 '-Area3TrlTR	WA Area 3 Treaty Troll
+        '      PSCFishery(40) = 17 '-Area 3 Spt	WA Area 3 Sport
+        '      PSCFishery(41) = 17 '-Area 4 Spt	WA Area 4 Sport
+        '      PSCFishery(42) = 16 '-A4/4BTrlNT	WA Area 4/4B Non-Treaty Troll
+        '      PSCFishery(43) = 16 '-A4/4BTrlTR	WA Area 4/4B Treaty Troll
+        '      PSCFishery(44) = 19 '-A 5-6C Trl	WA Area 5-6-6C Troll
+        '      PSCFishery(45) = 24 '-Willpa Spt	Willapa Bay Sport (2.1)
+        '      PSCFishery(46) = 24 '-Wlp Tb Spt	Willapa Tributary Sport
+        '      PSCFishery(47) = 24 '-WlpaBT Net	Willapa Bay & FW Trib Net
+        '      PSCFishery(48) = 24 '-GryHbr Spt	Grays Harbor Sport (2.2)
+        '      PSCFishery(49) = 24 '-SGryHb Spt	South Grays Harbor Sport
+        '      PSCFishery(50) = 24 '-GryHbr Net	Grays Harbor Estuary Net
+        '      PSCFishery(51) = 24 '-Hump R Spt	Humptulips R Sport
+        '      PSCFishery(52) = 24 '-LwCheh Net	Lower Chehalis R Net
+        '      PSCFishery(53) = 24 '-Hump R C&S	Humptulips R C&S
+        '      PSCFishery(54) = 24 '-Chehal Spt	Chehalis R Sport
+        '      PSCFishery(55) = 24 '-Hump R Net	Humptulips R Net
+        '      PSCFishery(56) = 24 '-UpCheh Net	Upper Chehalis R Net
+        '      PSCFishery(57) = 24 '-Chehal C&S	Chehalis R C&S
+        '      PSCFishery(58) = 24 '-Wynoch Spt	Wynochee R Sport
+        '      PSCFishery(59) = 24 '-Hoquam Spt	Hoquiam R Sport
+        '      PSCFishery(60) = 24 '-Wishkh Spt	Wishkah R Sport
+        '      PSCFishery(61) = 24 '-Satsop Spt	Satsop R Sport
+        '      PSCFishery(62) = 24 '-Quin R Spt	Quinault R Sport
+        '      PSCFishery(63) = 24 '-Quin R Net	Quinault R Net
+        '      PSCFishery(64) = 24 '-Quin R C&S	Quinault R C&S
+        '      PSCFishery(65) = 24 '-Queets Spt	Queets R Sport
+        '      PSCFishery(66) = 24 '-Clrwtr Spt	Clearwater R Sport
+        '      PSCFishery(67) = 24 '-Salm R Spt	Salmon R Sport (Queets)
+        '      PSCFishery(68) = 24 '-Queets Net	Queets R Net
+        '      PSCFishery(69) = 24 '-Queets C&S	Queets R C&S
+        '      PSCFishery(70) = 24 '-Quilly Spt	Quillayute R Sport
+        '      PSCFishery(71) = 24 '-Quilly Net	Quillayute R Net
+        '      PSCFishery(72) = 24 '-Quilly C&S	Quillayute R C&S
+        '      PSCFishery(73) = 24 '-Hoh R  Spt	Hoh R Sport
+        '      PSCFishery(74) = 24 '-Hoh R  Net	Hoh R Net
+        '      PSCFishery(75) = 24 '-Hoh R  C&S	Hoh R C&S
+        '      PSCFishery(76) = 24 '-Mak FW Spt	Makah Tributary Sport
+        '      PSCFishery(77) = 24 '-Mak FW Net	Makah Freshwater Net
+        '      PSCFishery(78) = 24 '-Makah  C&S	Makah C&S
+        '      PSCFishery(79) = 16 '-A 4-4A Net	WA Area 4-4A Net
+        '      PSCFishery(80) = 19 '-A4B6CNetNT	WA Area 4B-5-6C Non-Treaty Net
+        '      PSCFishery(81) = 19 '-A4B6CNetTR	WA Area 4B-5-6C Treaty Net
+        '      PSCFishery(82) = 19 '-Ar6D NetNT	6D Non-Treaty Net (Dungeness Bay & R)
+        '      PSCFishery(83) = 19 '-Ar6D NetTR	6D Treaty Net (Dungeness Bay & R)
+        '      PSCFishery(84) = 19 '-Elwha  Net	Elwha R Net
+        '      PSCFishery(85) = 19 '-WJDF T Net	West JDF Straits Trib Net
+        '      PSCFishery(86) = 19 '-EJDF T Net	East JDF Straits Trib Net
+        '      PSCFishery(87) = 20 '-A6-7ANetNT	WA Area 7-7A Non-Treaty Net
+        '      PSCFishery(88) = 20 '-A6-7ANetTR	WA Area 7-7A Treaty Net
+        '      PSCFishery(89) = 19 '-EJDF FWSpt	East JDF Straits Trib Sport
+        '      PSCFishery(90) = 19 '-WJDF FWSpt	West JDF Straits Trib Sport
+        '      PSCFishery(91) = 19 '-Area 5 Spt	WA Area 5 Sport (Sekiu)
+        '      PSCFishery(92) = 19 '-Area 6 Spt	WA Area 6 Sport (Port Angeles)
+        '      PSCFishery(93) = 21 '-Area 7 Spt	WA Area 7 Sport (San Juan Islands)
+        '      PSCFishery(94) = 19 '-Dung R Spt	Dungeness R Sport
+        '      PSCFishery(95) = 19 '-ElwhaR Spt	Elwha R Sport
+        '      PSCFishery(96) = 20 '-A7BCDNetNT	WA Area 7B-7C-7D Non-Treaty Net
+        '      PSCFishery(97) = 20 '-A7BCDNetTR	WA Area 7B-7C-7D Treaty Net
+        '      PSCFishery(98) = 23 '-Nook R Net	Nooksack R Net
+        '      PSCFishery(99) = 24 '-Nook R Spt	Nooksack R Sport
+        '      PSCFishery(100) = 24 '-Samh R Spt	Samish R Sport
+        '      PSCFishery(101) = 23 '-Ar 8 NetNT	WA Area 8 Non-Treaty Net (Skagit)
+        '      PSCFishery(102) = 23 '-Ar 8 NetTR	WA Area 8 Treaty Net (Skagit)
+        '      PSCFishery(103) = 24 '-Skag R Net	Skagit R Net
+        '      PSCFishery(104) = 24 '-SkgR TsNet	Skagit River Test Net
+        '      PSCFishery(105) = 24 '-SwinCh Net	Swinomish Channel Net
+        '        PSCFishery(106) = 22 '-Ar 8-1 Spt	WA Area 8.1 Sport (Skagit)
+        '      PSCFishery(107) = 22 '-Area 9 Spt	WA Area 9 Sport (Admirality Inlet)
+        '      PSCFishery(108) = 24 '-Skag R Spt	Skagit R Sport
+        '      PSCFishery(109) = 23 '-Ar8A NetNT	WA Area 8A Non-Treaty Net
+        '      PSCFishery(110) = 23 '-Ar8A NetTR	WA Area 8A Treaty Net
+        '      PSCFishery(111) = 23 '-Ar8D NetNT	WA Area 8D Non-Treaty Net (Tulalip Bay)
+        '      PSCFishery(112) = 23 '-Ar8D NetTR	WA Area 8D Treaty Net (Tulalip Bay)
+        '      PSCFishery(113) = 24 '-Stil R Net	Stillaguamish R Net
+        '      PSCFishery(114) = 24 '-Snoh R Net	Snohomish R Net
+        '        PSCFishery(115) = 22 '-Ar 8-2 Spt	WA Area 8.2 Sport (Everett)
+        '      PSCFishery(116) = 24 '-Stil R Spt	Stillaguamish R Sport
+        '      PSCFishery(117) = 24 '-Snoh R Spt	Snohomish R Sport
+        '      PSCFishery(118) = 22 '-Ar 10  Spt	WA Area 10 Sport (Seattle)
+        '      PSCFishery(119) = 23 '-Ar10 NetNT	WA Area 10 Non-Treaty Net (Seattle)
+        '      PSCFishery(120) = 23 '-Ar10 NetTR	WA Area 10 Treaty Net (Seattle)
+        '      PSCFishery(121) = 23 '-Ar10ANetNT	WA Area 10A Non-Treaty Net (Elliott Bay)
+        '      PSCFishery(122) = 23 '-Ar10ANetTR	WA Area 10A Treaty Net (Elliott Bay)
+        '      PSCFishery(123) = 23 '-Ar10ENetNT	WA Area 10E Non-Treaty Net (East Kitsap)
+        '      PSCFishery(124) = 23 '-Ar10ENetTR	WA Area 10E Treaty Net (East Kitsap)
+        '      PSCFishery(125) = 23 '-10F-G  Net	WA Area 10F-G Treaty Net (Lake Union)
+        '      PSCFishery(126) = 24 '-Duwm R Net	Green/Duwamish R Net
+        '      PSCFishery(127) = 24 '-Duwm R Spt	Green/Duwamish R Sport
+        '      PSCFishery(128) = 24 '-L WaSm Spt	Lk Wash/Sammamish/Tribs Spt
+        '      PSCFishery(129) = 22 '-Ar 11  Spt	WA Area 11 Sport (Tacoma)
+        '      PSCFishery(130) = 23 '-Ar11 NetNT	WA Area 11 Non-Treaty Net (E/W Pass)
+        '      PSCFishery(131) = 23 '-Ar11 NetTR	WA Area 11 Treaty Net (E/W Pass)
+        '      PSCFishery(132) = 23 '-Ar11ANetNT	WA Area 11A Non-Treaty Net (Comm. Bay)
+        '      PSCFishery(133) = 23 '-Ar11ANetTR	WA Area 11A Treaty Net (Comm. Bay)
+        '      PSCFishery(134) = 24 '-Puyl R Net	Puyallup R Net
+        '      PSCFishery(135) = 24 '-Puyl R Spt	Puyallup R Sport
+        '      PSCFishery(136) = 22 '-Ar 13  Spt	WAArea 13 Marine Sport
+        '      PSCFishery(137) = 23 '-Ar13 NetNT	Area 13 Non-Treaty Net (So Puget Sound)
+        '      PSCFishery(138) = 23 '-Ar13 NetTR	Area 13 Treaty Net (So Puget Sound)
+        '      PSCFishery(139) = 23 '-Ar13CNetNT	Area 13C Non-Treaty Net (Chambers Bay)
+        '      PSCFishery(140) = 23 '-Ar13CNetTR	Area 13C Treaty Net (Chambers Bay)
+        '      PSCFishery(141) = 23 '-Ar13ANetNT	Area 13A Non-Treaty Net (Carr Inlet)
+        '      PSCFishery(142) = 23 '-Ar13ANetTR	Area 13A Treaty Net (Carr Inlet)
+        '      PSCFishery(143) = 23 '-Ar13DNetNT	Area 13D Non-Treaty Net
+        '      PSCFishery(144) = 23 '-Ar13DNetTR	Area 13D Treaty Net
+        '      PSCFishery(145) = 23 '-A13FKNetNT	Area 13F-13K Non-Treaty Net
+        '      PSCFishery(146) = 23 '-A13FKNetTR	Area 13F-13K Treaty Net
+        '      PSCFishery(147) = 24 '-Nisq R Net	Nisqually R Net
+        '      PSCFishery(148) = 24 '-McAlls Net	McAllister Creek Net
+        '      PSCFishery(149) = 24 '-13D-K TSpt	13D-13K Trib Sport
+        '      PSCFishery(150) = 24 '-Nisq R Spt	Nisqually R Sport
+        '      PSCFishery(151) = 24 '-Desc R Spt	Deschutes R Sport
+        '      PSCFishery(152) = 22 '-Ar 12  Spt	Area 12 Marine Sport
+        '      PSCFishery(153) = 23 '-1212BNetNT	Area 12-12B Hood Canal Non-Treaty Net
+        '      PSCFishery(154) = 23 '-1212BNetTR	Area 12-12B Hood Canal Treaty Net
+        '      PSCFishery(155) = 23 '-A9-9ANetNT	Area 9/9A Non-Treaty Net
+        '      PSCFishery(156) = 23 '-A9-9ANetTR	Area 9/9A Treaty Net (On Res)
+        '      PSCFishery(157) = 23 '-Ar12ANetNT	Area 12A Non-Treaty Net (Quilcene Bay)
+        '      PSCFishery(158) = 23 '-Ar12ANetTR	Area 12A Treaty Net (Quilcene Bay)
+        '      PSCFishery(159) = 23 '-A12CDNetNT	Area 12C-12D Non-Treaty Net (SE Hood Canal)
+        '      PSCFishery(160) = 23 '-A12CDNetTR	Area 12C-12D Treaty Net (SE Hood Canal)
+        '      PSCFishery(161) = 24 '-Skok R Net	Skokomish R Net
+        '      PSCFishery(162) = 24 '-Quilcn Net	Quilcene R Net
+        '      PSCFishery(163) = 24 '-1212B TSpt	12, 12B Trib FW Sport
+        '      PSCFishery(164) = 24 '-12A Tb Spt	12A Trib FW Sport
+        '      PSCFishery(165) = 24 '-12C-D TSpt	12C, 12D Trib FW Sport
+        '      PSCFishery(166) = 24 '-Skok R Spt	Skokomish R Sport
+        '      PSCFishery(167) = 13 '-FRSLOW Trm	Lower Fraser R Term Catch
+        '      PSCFishery(168) = 13 '-FRSUPP Trm	Upper Fraser R Term Catch
+        '      PSCFishery(169) = 13 '-Fraser Spt	Lower Fraser River Sport
+        '      PSCFishery(170) = 1  '-JStrBC Trl	Johnstone Strait Troll
+        '      PSCFishery(171) = 1  '-No BC  Trl	BC Northern Troll
+        '      PSCFishery(172) = 1  '-NoC BC Trl	BC North Central Troll
+        '      PSCFishery(173) = 1  '-SoC BC Trl	BC South Central Troll
+        '      PSCFishery(174) = 4  '-NW VI  Trl	NW Vancouver Island Troll
+        '      PSCFishery(175) = 4  '-SW VI  Trl	SW Vancouver Island Troll
+        '      PSCFishery(176) = 9  '-GeoStr Trl	Georgia Straits Troll
+        '      PSCFishery(177) = 12 '-BC JDF Trl	BC Juan de Fuca Troll
+        '      PSCFishery(178) = 2  '-No BC  Net	BC Northern Net
+        '      PSCFishery(179) = 2  '-Cen BC Net	BC Central Net
+        '      PSCFishery(180) = 5  '-NW VI  Net	NW Vancouver Island Net
+        '      PSCFishery(181) = 5  '-SW VI  Net	SW Vancouver Island Net
+        '      PSCFishery(182) = 7  '-Johnst Net	Johnstone Straits Net
+        '      PSCFishery(183) = 10 '-GeoStr Net	Georgia Straits Net
+        '      PSCFishery(184) = 13 '-Fraser Net	Fraser R Gill Net
+        '      PSCFishery(185) = 12 '-BC JDF Net	BC Juan de Fuca Net
+        '      PSCFishery(186) = 8  '-JStrBC Spt	Johnstone Strait Sport
+        '      PSCFishery(187) = 3  '-No BC  Spt	BC Northern Sport
+        '      PSCFishery(188) = 3  '-Cen BC Spt	BC Central Sport
+        '      PSCFishery(189) = 11 '-BC JDF Spt	BC Juan de Fuca Sport
+        '      PSCFishery(190) = 6  '-WC VI  Spt	West Coast Vanc Is Sport
+        '      PSCFishery(191) = 9  '-NGaStr Spt	North Georgia Straits Sport
+        '      PSCFishery(192) = 9  '-SGaStr Spt	South Georgia Straits Sport
+        '      PSCFishery(193) = 9  '-Albern Spt	Alberni Canal Sport
+        '      PSCFishery(194) = 15 '-SW AK  Trl	SEAK Southwest Troll
+        '      PSCFishery(195) = 15 '-SE AK  Trl	SEAK Southeast Troll
+        '      PSCFishery(196) = 15 '-NW AK  Trl	SEAK Northwest Troll
+        '      PSCFishery(197) = 15 '-NE AK  Trl	SEAK Northeast Troll
+        '      PSCFishery(198) = 15 '-Alaska Net	Southeast Alaska Net
 
-      PSCFishName(0) = "Fishery Name"
-      PSCFishName(1) = "BC No/Cent Troll"
-      PSCFishName(2) = "BC No/Cent Net"
-      PSCFishName(3) = "BC No/Cent Sport"
-      PSCFishName(4) = "BC WCVI Troll"
-      PSCFishName(5) = "BC WCVI Net"
-      PSCFishName(6) = "BC WCVI Sport"
-      PSCFishName(7) = "BC JnStr Net&Trl"
-      PSCFishName(8) = "BC JnstStr Sport"
-      PSCFishName(9) = "BC GeStr Spt&Trl"
-      PSCFishName(10) = "BC GeoStr Net"
-      PSCFishName(11) = "BC JDF Sport"
-      PSCFishName(12) = "BC JDF Net&Trl"
-      PSCFishName(13) = "BC Frasr Net&Spt"
-      PSCFishName(14) = "BC Sub-Total"
+        '      PSCFishName(0) = "Fishery Name"
+        '      PSCFishName(1) = "BC No/Cent Troll"
+        '      PSCFishName(2) = "BC No/Cent Net"
+        '      PSCFishName(3) = "BC No/Cent Sport"
+        '      PSCFishName(4) = "BC WCVI Troll"
+        '      PSCFishName(5) = "BC WCVI Net"
+        '      PSCFishName(6) = "BC WCVI Sport"
+        '      PSCFishName(7) = "BC JnStr Net&Trl"
+        '      PSCFishName(8) = "BC JnstStr Sport"
+        '      PSCFishName(9) = "BC GeStr Spt&Trl"
+        '      PSCFishName(10) = "BC GeoStr Net"
+        '      PSCFishName(11) = "BC JDF Sport"
+        '      PSCFishName(12) = "BC JDF Net&Trl"
+        '      PSCFishName(13) = "BC Frasr Net&Spt"
+        '      PSCFishName(14) = "BC Sub-Total"
 
-      PSCFishName(15) = "SEAK All"
-      PSCFishName(16) = "WA Ocn Troll"
-      PSCFishName(17) = "WA Ocn Sport"
-      PSCFishName(18) = "SOF All"
-      PSCFishName(19) = "US JDF All"
-      PSCFishName(20) = "SanJnIsl Net"
-      PSCFishName(21) = "SanJnIsl Sport"
-      PSCFishName(22) = "PS Sport (8-13)"
-      PSCFishName(23) = "PS Net (8-13)"
-      PSCFishName(24) = "FW Net & Sport"
-      PSCFishName(25) = "US Sub-Total"
-      PSCFishName(26) = "TOTAL"
-      PSCFishName(27) = "Cohort Size"
-      PSCFishName(28) = "Escapement"
+        '      PSCFishName(15) = "SEAK All"
+        '      PSCFishName(16) = "WA Ocn Troll"
+        '      PSCFishName(17) = "WA Ocn Sport"
+        '      PSCFishName(18) = "SOF All"
+        '      PSCFishName(19) = "US JDF All"
+        '      PSCFishName(20) = "SanJnIsl Net"
+        '      PSCFishName(21) = "SanJnIsl Sport"
+        '      PSCFishName(22) = "PS Sport (8-13)"
+        '      PSCFishName(23) = "PS Net (8-13)"
+        '      PSCFishName(24) = "FW Net & Sport"
+        '      PSCFishName(25) = "US Sub-Total"
+        '      PSCFishName(26) = "TOTAL"
+        '      PSCFishName(27) = "Cohort Size"
+        '      PSCFishName(28) = "Escapement"
 
-      '- Test if Excel was Running
-      ExcelWasNotRunning = True
-      Try
-         xlApp = System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application")
-         ExcelWasNotRunning = False
-      Catch ex As Exception
-         xlApp = New Microsoft.Office.Interop.Excel.Application()
-      End Try
+        '      '- Test if Excel was Running
+        '      ExcelWasNotRunning = True
+        '      Try
+        '         xlApp = System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application")
+        '         ExcelWasNotRunning = False
+        '      Catch ex As Exception
+        '         xlApp = New Microsoft.Office.Interop.Excel.Application()
+        '      End Try
 
-      '- This Spreadsheet is for PSC Coho Periodic Report
-      PSCSSName = FVSdatabasepath & "\PSCCohoReportData.XLSX"
-      '- This Spreadsheet is for Bill Gazey's PSC Coho Report
-      'PSCSSName = FVSdatabasepath & "\PSCCohoReportData-UNMARKED.XLSX"
+        '      '- This Spreadsheet is for PSC Coho Periodic Report
+        '      PSCSSName = FVSdatabasepath & "\PSCCohoReportData.XLSX"
+        '      '- This Spreadsheet is for Bill Gazey's PSC Coho Report
+        '      'PSCSSName = FVSdatabasepath & "\PSCCohoReportData-UNMARKED.XLSX"
 
-      '- Test if PSC Workbook is Open
-      WorkBookWasNotOpen = True
-      Dim wbName As String
-      wbName = My.Computer.FileSystem.GetFileInfo(PSCSSName).Name
-      For Each xlWorkBook In xlApp.Workbooks
-         If xlWorkBook.Name = wbName Then
-            xlWorkBook.Activate()
-            WorkBookWasNotOpen = False
-            GoTo SkipWBOpen
-         End If
-      Next
-      xlWorkBook = xlApp.Workbooks.Open(PSCSSName)
-      xlApp.WindowState = Excel.XlWindowState.xlMinimized
-SkipWBOpen:
-      xlWorkSheet = xlWorkBook.Sheets("Skagit")
-      xlApp.Application.DisplayAlerts = False
+        '      '- Test if PSC Workbook is Open
+        '      WorkBookWasNotOpen = True
+        '      Dim wbName As String
+        '      wbName = My.Computer.FileSystem.GetFileInfo(PSCSSName).Name
+        '      For Each xlWorkBook In xlApp.Workbooks
+        '         If xlWorkBook.Name = wbName Then
+        '            xlWorkBook.Activate()
+        '            WorkBookWasNotOpen = False
+        '            GoTo SkipWBOpen
+        '         End If
+        '      Next
+        '      xlWorkBook = xlApp.Workbooks.Open(PSCSSName)
+        '      xlApp.WindowState = Excel.XlWindowState.xlMinimized
+        'SkipWBOpen:
+        '      xlWorkSheet = xlWorkBook.Sheets("Skagit")
+        '      xlApp.Application.DisplayAlerts = False
 
-      '- Loop through PSC Coho Stocks for Catch, Cohort, & Escapement
+        '      '- Loop through PSC Coho Stocks for Catch, Cohort, & Escapement
 
-      'For Stock = 1 To 16 sixteen stocks for Bill Gazey project
-      For Stock = 1 To 13
-         ReDim PSCCatch(27, 30)
-         ReDim PSCBase(NumFish, NumSteps)
-         CmdStr = "SELECT RunID.RunYear, Mortality.StockID, Mortality.FisheryID, Mortality.TimeStep," & _
-            " Mortality.LandedCatch,Mortality.NonRetention, Mortality.Shaker, Mortality.DropOff," & _
-            " Mortality.MSFLandedCatch,Mortality.MSFNonRetention, Mortality.MSFShaker, Mortality.MSFDropOff" & _
-            " FROM Mortality INNER JOIN RunID ON Mortality.RunID = RunID.RunID" & _
-            " WHERE ("
-         For Stk = 1 To PSCStock(Stock, 0)
-            CmdStr &= "(Mortality.StockID)=" & PSCStock(Stock, Stk).ToString & " OR (Mortality.StockID)=" & (PSCStock(Stock, Stk) + 1).ToString
-            If Stk = PSCStock(Stock, 0) Then
-               CmdStr &= ") ORDER BY RunID.RunYear;"
-               Exit For
-            Else
-               CmdStr &= " OR "
-            End If
-         Next
+        '      'For Stock = 1 To 16 sixteen stocks for Bill Gazey project
+        '      For Stock = 1 To 13
+        '         ReDim PSCCatch(27, 30)
+        '         ReDim PSCBase(NumFish, NumSteps)
+        '         CmdStr = "SELECT RunID.RunYear, Mortality.StockID, Mortality.FisheryID, Mortality.TimeStep," & _
+        '            " Mortality.LandedCatch,Mortality.NonRetention, Mortality.Shaker, Mortality.DropOff," & _
+        '            " Mortality.MSFLandedCatch,Mortality.MSFNonRetention, Mortality.MSFShaker, Mortality.MSFDropOff" & _
+        '            " FROM Mortality INNER JOIN RunID ON Mortality.RunID = RunID.RunID" & _
+        '            " WHERE ("
+        '         For Stk = 1 To PSCStock(Stock, 0)
+        '            CmdStr &= "(Mortality.StockID)=" & PSCStock(Stock, Stk).ToString & " OR (Mortality.StockID)=" & (PSCStock(Stock, Stk) + 1).ToString
+        '            If Stk = PSCStock(Stock, 0) Then
+        '               CmdStr &= ") ORDER BY RunID.RunYear;"
+        '               Exit For
+        '            Else
+        '               CmdStr &= " OR "
+        '            End If
+        '         Next
 
-         Dim Mcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim MortalityDA As New System.Data.OleDb.OleDbDataAdapter
-         MortalityDA.SelectCommand = Mcm
-         Dim Mcb As New OleDb.OleDbCommandBuilder
-         Mcb = New OleDb.OleDbCommandBuilder(MortalityDA)
-         If FramDataSet.Tables.Contains("PSCMort") Then
-            FramDataSet.Tables("PSCMort").Clear()
-         End If
-         MortalityDA.Fill(FramDataSet, "PSCMort")
-         Dim NumM As Integer
-         NumM = FramDataSet.Tables("PSCMort").Rows.Count
-         '- Loop through Table Records for Actual Values
-         For RecNum = 0 To NumM - 1
-            RunYear = FramDataSet.Tables("PSCMort").Rows(RecNum)(0)
-            Fish = FramDataSet.Tables("PSCMort").Rows(RecNum)(2)
-            TStep = FramDataSet.Tables("PSCMort").Rows(RecNum)(3)
-            LCat = FramDataSet.Tables("PSCMort").Rows(RecNum)(4)
-            CNR = FramDataSet.Tables("PSCMort").Rows(RecNum)(5)
-            Shak = FramDataSet.Tables("PSCMort").Rows(RecNum)(6)
-            Drop = FramDataSet.Tables("PSCMort").Rows(RecNum)(7)
-            MLCat = FramDataSet.Tables("PSCMort").Rows(RecNum)(8)
-            MCNR = FramDataSet.Tables("PSCMort").Rows(RecNum)(9)
-            MShak = FramDataSet.Tables("PSCMort").Rows(RecNum)(10)
-            MDrop = FramDataSet.Tables("PSCMort").Rows(RecNum)(11)
-            PSCCatch(PSCFishery(Fish) - 1, RunYear - 1985) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
-            '- Sub-Total Lines
-            If PSCFishery(Fish) < 14 Then
-               PSCCatch(13, RunYear - 1985) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
-            Else
-               PSCCatch(24, RunYear - 1985) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
-            End If
-            '- TOTALS Line
-            PSCCatch(25, RunYear - 1985) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '         Dim Mcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        '         Dim MortalityDA As New System.Data.OleDb.OleDbDataAdapter
+        '         MortalityDA.SelectCommand = Mcm
+        '         Dim Mcb As New OleDb.OleDbCommandBuilder
+        '         Mcb = New OleDb.OleDbCommandBuilder(MortalityDA)
+        '         If FramDataSet.Tables.Contains("PSCMort") Then
+        '            FramDataSet.Tables("PSCMort").Clear()
+        '         End If
+        '         MortalityDA.Fill(FramDataSet, "PSCMort")
+        '         Dim NumM As Integer
+        '         NumM = FramDataSet.Tables("PSCMort").Rows.Count
+        '         '- Loop through Table Records for Actual Values
+        '         For RecNum = 0 To NumM - 1
+        '            RunYear = FramDataSet.Tables("PSCMort").Rows(RecNum)(0)
+        '            Fish = FramDataSet.Tables("PSCMort").Rows(RecNum)(2)
+        '            TStep = FramDataSet.Tables("PSCMort").Rows(RecNum)(3)
+        '            LCat = FramDataSet.Tables("PSCMort").Rows(RecNum)(4)
+        '            CNR = FramDataSet.Tables("PSCMort").Rows(RecNum)(5)
+        '            Shak = FramDataSet.Tables("PSCMort").Rows(RecNum)(6)
+        '            Drop = FramDataSet.Tables("PSCMort").Rows(RecNum)(7)
+        '            MLCat = FramDataSet.Tables("PSCMort").Rows(RecNum)(8)
+        '            MCNR = FramDataSet.Tables("PSCMort").Rows(RecNum)(9)
+        '            MShak = FramDataSet.Tables("PSCMort").Rows(RecNum)(10)
+        '            MDrop = FramDataSet.Tables("PSCMort").Rows(RecNum)(11)
+        '            PSCCatch(PSCFishery(Fish) - 1, RunYear - 1985) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '            '- Sub-Total Lines
+        '            If PSCFishery(Fish) < 14 Then
+        '               PSCCatch(13, RunYear - 1985) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '            Else
+        '               PSCCatch(24, RunYear - 1985) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '            End If
+        '            '- TOTALS Line
+        '            PSCCatch(25, RunYear - 1985) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
 
-            '- Coho Base
-            If RunYear = 1985 Then
-               PSCBase(Fish - 1, TStep - 1) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
-               PSCBase(Fish - 1, NumSteps) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
-               PSCBase(NumFish, TStep - 1) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
-               PSCBase(NumFish, NumSteps) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
-            End If
+        '            '- Coho Base
+        '            If RunYear = 1985 Then
+        '               PSCBase(Fish - 1, TStep - 1) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '               PSCBase(Fish - 1, NumSteps) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '               PSCBase(NumFish, TStep - 1) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '               PSCBase(NumFish, NumSteps) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '            End If
 
-         Next
-         MortalityDA = Nothing
+        '         Next
+        '         MortalityDA = Nothing
 
-         '- Read Cohort Data
-         CmdStr = "SELECT RunID.RunYear, Cohort.StockID, Cohort.TimeStep, Cohort.StartCohort" & _
-            " FROM Cohort INNER JOIN RunID ON Cohort.RunID = RunID.RunID" & _
-            " WHERE(("
-         For Stk = 1 To PSCStock(Stock, 0)
-            CmdStr &= "(Cohort.StockID)=" & PSCStock(Stock, Stk).ToString & " OR (Cohort.StockID)=" & (PSCStock(Stock, Stk) + 1).ToString
-            If Stk = PSCStock(Stock, 0) Then
-               CmdStr &= ") And (Cohort.TimeStep = 1));"
-               Exit For
-            Else
-               CmdStr &= " OR "
-            End If
-         Next
+        '         '- Read Cohort Data
+        '         CmdStr = "SELECT RunID.RunYear, Cohort.StockID, Cohort.TimeStep, Cohort.StartCohort" & _
+        '            " FROM Cohort INNER JOIN RunID ON Cohort.RunID = RunID.RunID" & _
+        '            " WHERE(("
+        '         For Stk = 1 To PSCStock(Stock, 0)
+        '            CmdStr &= "(Cohort.StockID)=" & PSCStock(Stock, Stk).ToString & " OR (Cohort.StockID)=" & (PSCStock(Stock, Stk) + 1).ToString
+        '            If Stk = PSCStock(Stock, 0) Then
+        '               CmdStr &= ") And (Cohort.TimeStep = 1));"
+        '               Exit For
+        '            Else
+        '               CmdStr &= " OR "
+        '            End If
+        '         Next
 
-         Dim CScm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim CohortDA As New System.Data.OleDb.OleDbDataAdapter
-         CohortDA.SelectCommand = CScm
-         Dim CScb As New OleDb.OleDbCommandBuilder
-         CScb = New OleDb.OleDbCommandBuilder(CohortDA)
-         If FramDataSet.Tables.Contains("PSCCohort") Then
-            FramDataSet.Tables("PSCCohort").Clear()
-         End If
-         CohortDA.Fill(FramDataSet, "PSCCohort")
-         Dim NumCS As Integer
-         NumCS = FramDataSet.Tables("PSCCohort").Rows.Count
-         '- Loop through Table Records for Actual Values
-         For RecNum = 0 To NumCS - 1
-            RunYear = FramDataSet.Tables("PSCCohort").Rows(RecNum)(0)
-            Stk = FramDataSet.Tables("PSCCohort").Rows(RecNum)(1)
-            TStep = FramDataSet.Tables("PSCCohort").Rows(RecNum)(2)
-            InitCoht = FramDataSet.Tables("PSCCohort").Rows(RecNum)(3)
-            PSCCatch(26, RunYear - 1985) += InitCoht
-         Next
-         CohortDA = Nothing
+        '         Dim CScm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        '         Dim CohortDA As New System.Data.OleDb.OleDbDataAdapter
+        '         CohortDA.SelectCommand = CScm
+        '         Dim CScb As New OleDb.OleDbCommandBuilder
+        '         CScb = New OleDb.OleDbCommandBuilder(CohortDA)
+        '         If FramDataSet.Tables.Contains("PSCCohort") Then
+        '            FramDataSet.Tables("PSCCohort").Clear()
+        '         End If
+        '         CohortDA.Fill(FramDataSet, "PSCCohort")
+        '         Dim NumCS As Integer
+        '         NumCS = FramDataSet.Tables("PSCCohort").Rows.Count
+        '         '- Loop through Table Records for Actual Values
+        '         For RecNum = 0 To NumCS - 1
+        '            RunYear = FramDataSet.Tables("PSCCohort").Rows(RecNum)(0)
+        '            Stk = FramDataSet.Tables("PSCCohort").Rows(RecNum)(1)
+        '            TStep = FramDataSet.Tables("PSCCohort").Rows(RecNum)(2)
+        '            InitCoht = FramDataSet.Tables("PSCCohort").Rows(RecNum)(3)
+        '            PSCCatch(26, RunYear - 1985) += InitCoht
+        '         Next
+        '         CohortDA = Nothing
 
-         '- Read Escapement Data
-         CmdStr = "SELECT Escapement.StockID, Escapement.Escapement, RunID.RunYear" & _
-            " FROM Escapement INNER JOIN RunID ON Escapement.RunID = RunID.RunID" & _
-            " WHERE("
-         For Stk = 1 To PSCStock(Stock, 0)
-            CmdStr &= "(Escapement.StockID)=" & PSCStock(Stock, Stk).ToString & " OR (Escapement.StockID)=" & (PSCStock(Stock, Stk) + 1).ToString
-            If Stk = PSCStock(Stock, 0) Then
-               CmdStr &= ") ORDER BY RunID.RunYear;"
-               Exit For
-            Else
-               CmdStr &= " OR "
-            End If
-         Next
-         Dim EScm As New OleDb.OleDbCommand(CmdStr, FramDB)
-         Dim EscapementDA As New System.Data.OleDb.OleDbDataAdapter
-         EscapementDA.SelectCommand = EScm
-         Dim EScb As New OleDb.OleDbCommandBuilder
-         EScb = New OleDb.OleDbCommandBuilder(EscapementDA)
-         If FramDataSet.Tables.Contains("PSCEsc") Then
-            FramDataSet.Tables("PSCEsc").Clear()
-         End If
-         EscapementDA.Fill(FramDataSet, "PSCEsc")
-         Dim NumES As Integer
-         NumES = FramDataSet.Tables("PSCEsc").Rows.Count
+        '         '- Read Escapement Data
+        '         CmdStr = "SELECT Escapement.StockID, Escapement.Escapement, RunID.RunYear" & _
+        '            " FROM Escapement INNER JOIN RunID ON Escapement.RunID = RunID.RunID" & _
+        '            " WHERE("
+        '         For Stk = 1 To PSCStock(Stock, 0)
+        '            CmdStr &= "(Escapement.StockID)=" & PSCStock(Stock, Stk).ToString & " OR (Escapement.StockID)=" & (PSCStock(Stock, Stk) + 1).ToString
+        '            If Stk = PSCStock(Stock, 0) Then
+        '               CmdStr &= ") ORDER BY RunID.RunYear;"
+        '               Exit For
+        '            Else
+        '               CmdStr &= " OR "
+        '            End If
+        '         Next
+        '         Dim EScm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        '         Dim EscapementDA As New System.Data.OleDb.OleDbDataAdapter
+        '         EscapementDA.SelectCommand = EScm
+        '         Dim EScb As New OleDb.OleDbCommandBuilder
+        '         EScb = New OleDb.OleDbCommandBuilder(EscapementDA)
+        '         If FramDataSet.Tables.Contains("PSCEsc") Then
+        '            FramDataSet.Tables("PSCEsc").Clear()
+        '         End If
+        '         EscapementDA.Fill(FramDataSet, "PSCEsc")
+        '         Dim NumES As Integer
+        '         NumES = FramDataSet.Tables("PSCEsc").Rows.Count
 
-         If Stock = 11 Then
-            Jim = 1
-         End If
+        '         If Stock = 11 Then
+        '            Jim = 1
+        '         End If
 
-         '- Loop through Table Records for Actual Values
-         For RecNum = 0 To NumES - 1
-            RunYear = FramDataSet.Tables("PSCEsc").Rows(RecNum)(2)
-            Esc = FramDataSet.Tables("PSCEsc").Rows(RecNum)(1)
-            PSCCatch(27, RunYear - 1985) += Esc
-         Next
-         EscapementDA = Nothing
+        '         '- Loop through Table Records for Actual Values
+        '         For RecNum = 0 To NumES - 1
+        '            RunYear = FramDataSet.Tables("PSCEsc").Rows(RecNum)(2)
+        '            Esc = FramDataSet.Tables("PSCEsc").Rows(RecNum)(1)
+        '            PSCCatch(27, RunYear - 1985) += Esc
+        '         Next
+        '         EscapementDA = Nothing
 
-         '- Put PSCCatch Array into PSC Spreadsheet by PSC Stock
+        '         '- Put PSCCatch Array into PSC Spreadsheet by PSC Stock
 
-         Select Case Stock
-            Case 1
-               xlWorkSheet = xlWorkBook.Sheets("Skagit")
-            Case 2
-               xlWorkSheet = xlWorkBook.Sheets("Stillaguamish")
-            Case 3
-               xlWorkSheet = xlWorkBook.Sheets("Snohomish")
-            Case 4
-               xlWorkSheet = xlWorkBook.Sheets("Hood Canal")
-            Case 5
-               xlWorkSheet = xlWorkBook.Sheets("USJDF")
-            Case 6
-               xlWorkSheet = xlWorkBook.Sheets("Quillayute")
-            Case 7
-               xlWorkSheet = xlWorkBook.Sheets("Hoh")
-            Case 8
-               xlWorkSheet = xlWorkBook.Sheets("Queets")
-            Case 9
-               xlWorkSheet = xlWorkBook.Sheets("Grays Harbor")
-            Case 10
-               xlWorkSheet = xlWorkBook.Sheets("Lower Fraser")
-            Case 11
-               xlWorkSheet = xlWorkBook.Sheets("Upper Fraser")
-            Case 12
-               xlWorkSheet = xlWorkBook.Sheets("GS Mainland")
-            Case 13
-               xlWorkSheet = xlWorkBook.Sheets("GS VancIsl")
-            Case 14
-               xlWorkSheet = xlWorkBook.Sheets("SW VancIsl")
-            Case 15
-               xlWorkSheet = xlWorkBook.Sheets("Col Riv Early")
-            Case 16
-               xlWorkSheet = xlWorkBook.Sheets("Col Riv Late")
-         End Select
+        '         Select Case Stock
+        '            Case 1
+        '               xlWorkSheet = xlWorkBook.Sheets("Skagit")
+        '            Case 2
+        '               xlWorkSheet = xlWorkBook.Sheets("Stillaguamish")
+        '            Case 3
+        '               xlWorkSheet = xlWorkBook.Sheets("Snohomish")
+        '            Case 4
+        '               xlWorkSheet = xlWorkBook.Sheets("Hood Canal")
+        '            Case 5
+        '               xlWorkSheet = xlWorkBook.Sheets("USJDF")
+        '            Case 6
+        '               xlWorkSheet = xlWorkBook.Sheets("Quillayute")
+        '            Case 7
+        '               xlWorkSheet = xlWorkBook.Sheets("Hoh")
+        '            Case 8
+        '               xlWorkSheet = xlWorkBook.Sheets("Queets")
+        '            Case 9
+        '               xlWorkSheet = xlWorkBook.Sheets("Grays Harbor")
+        '            Case 10
+        '               xlWorkSheet = xlWorkBook.Sheets("Lower Fraser")
+        '            Case 11
+        '               xlWorkSheet = xlWorkBook.Sheets("Upper Fraser")
+        '            Case 12
+        '               xlWorkSheet = xlWorkBook.Sheets("GS Mainland")
+        '            Case 13
+        '               xlWorkSheet = xlWorkBook.Sheets("GS VancIsl")
+        '            Case 14
+        '               xlWorkSheet = xlWorkBook.Sheets("SW VancIsl")
+        '            Case 15
+        '               xlWorkSheet = xlWorkBook.Sheets("Col Riv Early")
+        '            Case 16
+        '               xlWorkSheet = xlWorkBook.Sheets("Col Riv Late")
+        '         End Select
 
-         'Transfer array to the worksheet starting at cell A2.
-         xlWorkSheet.Range("B2").Resize(28, 30).Value = PSCCatch
-         'xlWorkSheet.Range("A1:A24").Resize(24).Value = PSCFishName
-         Dim CellAddress As String
-         For Fish As Integer = 1 To 28
-            CellAddress = "A" & (Fish + 1).ToString
-            xlWorkSheet.Range(CellAddress).Value = PSCFishName(Fish)
-         Next
+        '         'Transfer array to the worksheet starting at cell A2.
+        '         xlWorkSheet.Range("B2").Resize(28, 30).Value = PSCCatch
+        '         'xlWorkSheet.Range("A1:A24").Resize(24).Value = PSCFishName
+        '         Dim CellAddress As String
+        '         For Fish As Integer = 1 To 28
+        '            CellAddress = "A" & (Fish + 1).ToString
+        '            xlWorkSheet.Range(CellAddress).Value = PSCFishName(Fish)
+        '         Next
 
-         '- Transfer Base ER's
-         Dim NumERFish As Integer
-         NumERFish = 0
-         '- Find Number of Fisheries with ER's
-         For Fish As Integer = 1 To NumFish
-            If PSCBase(Fish - 1, NumSteps) > 0 Then
-               NumERFish += 1
-            End If
-         Next
-         ReDim PSCBaseER(NumERFish + 1, NumSteps)
-         NumERFish = 0
-         '- Copy Fishery ER's
-         NumERFish = 0
-         For Fish As Integer = 1 To NumFish + 1
-            If PSCBase(Fish - 1, NumSteps) > 0 Then
-               For TStep As Integer = 0 To NumSteps
-                  PSCBaseER(NumERFish, TStep) = PSCBase(Fish - 1, TStep)
-                  '- Divide by Total Mort plus Escapement
-                  PSCBaseER(NumERFish, TStep) = PSCBaseER(NumERFish, TStep) / (PSCCatch(25, 0) + PSCCatch(27, 0))
-               Next
-               NumERFish += 1
-            End If
-         Next
-         '- 
-         'Transfer array to the worksheet starting at cell B65.
-         xlWorkSheet.Range("A65:AE265").ClearContents()
-         xlWorkSheet.Range("B65").Resize(NumERFish, NumSteps + 1).Value = PSCBaseER
-         'Copy Fishery Names to Spreadsheet
-         NumERFish = 0
-         For Fish As Integer = 1 To NumFish
-            If PSCBase(Fish - 1, NumSteps) > 0 Then
-               CellAddress = "A" & (NumERFish + 65).ToString
-               xlWorkSheet.Range(CellAddress).Value = FisheryTitle(Fish)
-               NumERFish += 1
-            End If
-         Next
-         CellAddress = "A" & (NumERFish + 65).ToString
-         xlWorkSheet.Range(CellAddress).Value = "Total"
+        '         '- Transfer Base ER's
+        '         Dim NumERFish As Integer
+        '         NumERFish = 0
+        '         '- Find Number of Fisheries with ER's
+        '         For Fish As Integer = 1 To NumFish
+        '            If PSCBase(Fish - 1, NumSteps) > 0 Then
+        '               NumERFish += 1
+        '            End If
+        '         Next
+        '         ReDim PSCBaseER(NumERFish + 1, NumSteps)
+        '         NumERFish = 0
+        '         '- Copy Fishery ER's
+        '         NumERFish = 0
+        '         For Fish As Integer = 1 To NumFish + 1
+        '            If PSCBase(Fish - 1, NumSteps) > 0 Then
+        '               For TStep As Integer = 0 To NumSteps
+        '                  PSCBaseER(NumERFish, TStep) = PSCBase(Fish - 1, TStep)
+        '                  '- Divide by Total Mort plus Escapement
+        '                  PSCBaseER(NumERFish, TStep) = PSCBaseER(NumERFish, TStep) / (PSCCatch(25, 0) + PSCCatch(27, 0))
+        '               Next
+        '               NumERFish += 1
+        '            End If
+        '         Next
+        '         '- 
+        '         'Transfer array to the worksheet starting at cell B65.
+        '         xlWorkSheet.Range("A65:AE265").ClearContents()
+        '         xlWorkSheet.Range("B65").Resize(NumERFish, NumSteps + 1).Value = PSCBaseER
+        '         'Copy Fishery Names to Spreadsheet
+        '         NumERFish = 0
+        '         For Fish As Integer = 1 To NumFish
+        '            If PSCBase(Fish - 1, NumSteps) > 0 Then
+        '               CellAddress = "A" & (NumERFish + 65).ToString
+        '               xlWorkSheet.Range(CellAddress).Value = FisheryTitle(Fish)
+        '               NumERFish += 1
+        '            End If
+        '         Next
+        '         CellAddress = "A" & (NumERFish + 65).ToString
+        '         xlWorkSheet.Range(CellAddress).Value = "Total"
 
-      Next
+        '      Next
 
-      '- Call PSCCohoHatcheryInterception then return to Close Spreadsheet
-        'PSCCohoHatcheryInterception()
+        '      '- Call PSCCohoHatcheryInterception then return to Close Spreadsheet
+        '        'PSCCohoHatcheryInterception()
 
-      '- Done with PSC WorkBook for this run .. Close and release object
-      xlApp.Application.DisplayAlerts = False
-      xlWorkBook.Save()
-      If WorkBookWasNotOpen = True Then
-         xlWorkBook.Close()
-      End If
-      If ExcelWasNotRunning = True Then
-         xlApp.Application.Quit()
-         xlApp.Quit()
-      Else
-         xlApp.Visible = True
-         xlApp.WindowState = Excel.XlWindowState.xlMinimized
-      End If
-      xlApp.Application.DisplayAlerts = True
-      xlApp = Nothing
+        '      '- Done with PSC WorkBook for this run .. Close and release object
+        '      xlApp.Application.DisplayAlerts = False
+        '      xlWorkBook.Save()
+        '      If WorkBookWasNotOpen = True Then
+        '         xlWorkBook.Close()
+        '      End If
+        '      If ExcelWasNotRunning = True Then
+        '         xlApp.Application.Quit()
+        '         xlApp.Quit()
+        '      Else
+        '         xlApp.Visible = True
+        '         xlApp.WindowState = Excel.XlWindowState.xlMinimized
+        '      End If
+        '      xlApp.Application.DisplayAlerts = True
+        '      xlApp = Nothing
 
    End Sub
 
 
    Sub PSCCohoHatcheryInterception()
 
-      Dim PSCCohoHatchery(NumStk) As Integer
-      Dim RecNum, RunYear As Integer
-      Dim PSCIntercept(30, 4) As Double
-      Dim LCat, CNR, Drop, Shak As Double
-      Dim MLCat, MCNR, MDrop, MShak As Double
-      Dim CmdStr As String
+        '      Dim PSCCohoHatchery(NumStk) As Integer
+        '      Dim RecNum, RunYear As Integer
+        '      Dim PSCIntercept(30, 4) As Double
+        '      Dim LCat, CNR, Drop, Shak As Double
+        '      Dim MLCat, MCNR, MDrop, MShak As Double
+        '      Dim CmdStr As String
 
-      '- Array of All Stocks  1 = US Hatchery  2 = Canadian Hatchery Stocks
-      PSCCohoHatchery(1) = 0  '- U-nkskrw	Nooksack River Wild UnMarked
-      PSCCohoHatchery(2) = 0  '- M-nkskrw	Nooksack River Wild Marked
-      PSCCohoHatchery(3) = 1  '- U-kendlh	Kendall Creek Hatchery UnMarked
-      PSCCohoHatchery(4) = 1  '- M-kendlh	Kendall Creek Hatchery Marked
-      PSCCohoHatchery(5) = 1  '- U-skokmh	Skookum Creek Hatchery UnMarked
-      PSCCohoHatchery(6) = 1  '- M-skokmh	Skookum Creek Hatchery Marked
-      PSCCohoHatchery(7) = 1  '- U-lumpdh	Lummi Ponds Hatchery UnMarked
-      PSCCohoHatchery(8) = 1  '- M-lumpdh	Lummi Ponds Hatchery Marked
-      PSCCohoHatchery(9) = 1  '- U-bhambh	Bellingham Bay Net Pens UnMarked
-      PSCCohoHatchery(10) = 1  '- M-bhambh	Bellingham Bay Net Pens Marked
-      PSCCohoHatchery(11) = 0  '- U-samshw	Samish River Wild UnMarked
-      PSCCohoHatchery(12) = 0  '- M-samshw	Samish River Wild Marked
-      PSCCohoHatchery(13) = 0  '- U-ar77aw	Area 7/7A Independent Wild UnMarked
-      PSCCohoHatchery(14) = 0  '- M-ar77aw	Area 7/7A Independent Wild Marked
-      PSCCohoHatchery(15) = 1  '- U-whatch	Whatcom Creek Hatchery UnMarked
-      PSCCohoHatchery(16) = 1  '- M-whatch	Whatcom Creek Hatchery Marked
-      PSCCohoHatchery(17) = 0  '- U-skagtw	Skagit River Wild UnMarked
-      PSCCohoHatchery(18) = 0  '- M-skagtw	Skagit River Wild Marked
-      PSCCohoHatchery(19) = 1  '- U-skagth	Skagit River Hatchery UnMarked
-      PSCCohoHatchery(20) = 1  '- M-skagth	Skagit River Hatchery Marked
-      PSCCohoHatchery(21) = 1  '- U-skgbkh	Baker (Skagit) Hatchery UnMarked
-      PSCCohoHatchery(22) = 1  '- M-skgbkh	Baker (Skagit) Hatchery Marked
-      PSCCohoHatchery(23) = 0  '- U-skgbkw	Baker (Skagit) Wild UnMarked
-      PSCCohoHatchery(24) = 0  '- U-skgbkw	Baker (Skagit) Wild UnMarked
-      PSCCohoHatchery(25) = 1  '- U-swinch	Swinomish Channel Hatchery UnMarked
-      PSCCohoHatchery(26) = 1  '- M-swinch	Swinomish Channel Hatchery Marked
-      PSCCohoHatchery(27) = 1  '- U-oakhbh	Oak Harbor Net Pens UnMarked
-      PSCCohoHatchery(28) = 1  '- M-oakhbh	Oak Harbor Net Pens Marked
-      PSCCohoHatchery(29) = 0  '- U-stillw	Stillaguamish River Wild UnMarked
-      PSCCohoHatchery(30) = 0  '- M-stillw	Stillaguamish River Wild Marked
-      PSCCohoHatchery(31) = 1  '- U-stillh	Stillaguamish River Hatchery UnMarked
-      PSCCohoHatchery(32) = 1  '- M-stillh	Stillaguamish River Hatchery Marked
-      PSCCohoHatchery(33) = 1  '- U-tuliph	Tulalip Hatchery UnMarked
-      PSCCohoHatchery(34) = 1  '- M-tuliph	Tulalip Hatchery Marked
-      PSCCohoHatchery(35) = 0  '- U-snohow	Snohomish River Wild UnMarked
-      PSCCohoHatchery(36) = 0  '- M-snohow	Snohomish River Wild Marked
-      PSCCohoHatchery(37) = 1  '- U-snohoh	Snohomish River Hatchery UnMarked
-      PSCCohoHatchery(38) = 1  '- M-snohoh	Snohomish River Hatchery Marked
-      PSCCohoHatchery(39) = 1  '- U-ar8anh	Area 8A Net Pens UnMarked
-      PSCCohoHatchery(40) = 1  '- M-ar8anh	Area 8A Net Pens Marked
-      PSCCohoHatchery(41) = 1  '- U-ptgamh	Port Gamble Net Pens UnMarked
-      PSCCohoHatchery(42) = 1  '- M-ptgamh	Port Gamble Net Pens Marked
-      PSCCohoHatchery(43) = 0  '- U-ptgamw	Port Gamble Bay Wild UnMarked
-      PSCCohoHatchery(44) = 0  '- M-ptgamw	Port Gamble Bay Wild Marked
-      PSCCohoHatchery(45) = 0  '- U-ar12bw	Area 12/12B Wild UnMarked
-      PSCCohoHatchery(46) = 0  '- M-ar12bw	Area 12/12B Wild Marked
-      PSCCohoHatchery(47) = 1  '- U-qlcnbh	Quilcene Hatchery UnMarked
-      PSCCohoHatchery(48) = 1  '- M-qlcnbh	Quilcene Hatchery Marked
-      PSCCohoHatchery(49) = 0  '- U-qlcenh	Quilcene Bay Net Pens UnMarked
-      PSCCohoHatchery(50) = 0  '- M-qlcenh	Quilcene Bay Net Pens Marked
-      PSCCohoHatchery(51) = 0  '- U-ar12aw	Area 12A Wild UnMarked
-      PSCCohoHatchery(52) = 0  '- M-ar12aw	Area 12A Wild Marked
-      PSCCohoHatchery(53) = 1  '- U-hoodsh	Hoodsport Hatchery UnMarked
-      PSCCohoHatchery(54) = 1  '- M-hoodsh	Hoodsport Hatchery Marked
-      PSCCohoHatchery(55) = 0  '- U-ar12dw	Area 12C/12D Wild UnMarked
-      PSCCohoHatchery(56) = 0  '- M-ar12dw	Area 12C/12D Wild Marked
-      PSCCohoHatchery(57) = 1  '- U-gadamh	George Adams Hatchery UnMarked
-      PSCCohoHatchery(58) = 1  '- M-gadamh	George Adams Hatchery Marked
-      PSCCohoHatchery(59) = 0  '- U-skokrw	Skokomish River Wild UnMarked
-      PSCCohoHatchery(60) = 0  '- M-skokrw	Skokomish River Wild Marked
-      PSCCohoHatchery(61) = 0  '- U-ar13bw	Area 13B Miscellaneous Wild UnMarked
-      PSCCohoHatchery(62) = 0  '- M-ar13bw	Area 13B Miscellaneous Wild Marked
-      PSCCohoHatchery(63) = 0  '- U-deschw	Deschutes River (WA) Wild UnMarked
-      PSCCohoHatchery(64) = 0  '- M-deschw	Deschutes River (WA) Wild Marked
-      PSCCohoHatchery(65) = 1  '- U-ssdnph	South Puget Sound Net Pens UnMarked
-      PSCCohoHatchery(66) = 1  '- M-ssdnph	South Puget Sound Net Pens Marked
-      PSCCohoHatchery(67) = 1  '- U-nisqlh	Nisqually River Hatchery UnMarked
-      PSCCohoHatchery(68) = 1  '- M-nisqlh	Nisqually River Hatchery Marked
-      PSCCohoHatchery(69) = 0  '- U-nisqlw	Nisqually River Wild UnMarked
-      PSCCohoHatchery(70) = 0  '- M-nisqlw	Nisqually River Wild Marked
-      PSCCohoHatchery(71) = 1  '- U-foxish	Fox Island Net Pens UnMarked
-      PSCCohoHatchery(72) = 1  '- M-foxish	Fox Island Net Pens Marked
-      PSCCohoHatchery(73) = 1  '- U-mintch	Minter Creek Hatchery UnMarked
-      PSCCohoHatchery(74) = 1  '- M-mintch	Minter Creek Hatchery Marked
-      PSCCohoHatchery(75) = 0  '- U-ar13mw	Area 13 Miscellaneous Wild UnMarked
-      PSCCohoHatchery(76) = 0  '- M-ar13mw	Area 13 Miscellaneous Wild Marked
-      PSCCohoHatchery(77) = 1  '- U-chambh	Chambers Creek Hatchery UnMarked
-      PSCCohoHatchery(78) = 1  '- M-chambh	Chambers Creek Hatchery Marked
-      PSCCohoHatchery(79) = 1  '- U-ar13mh	Area 13 Miscellaneous Hatchery UnMarked
-      PSCCohoHatchery(80) = 1  '- M-ar13mh	Area 13 Miscellaneous Hatchery Marked
-      PSCCohoHatchery(81) = 0  '- U-ar13aw	Area 13A Miscellaneous Wild UnMarked
-      PSCCohoHatchery(82) = 0  '- M-ar13aw	Area 13A Miscellaneous Wild Marked
-      PSCCohoHatchery(83) = 1  '- U-puyalh	Puyallup River Hatchery UnMarked
-      PSCCohoHatchery(84) = 1  '- M-puyalh	Puyallup River Hatchery Marked
-      PSCCohoHatchery(85) = 0  '- U-puyalw	Puyallup River Wild UnMarked
-      PSCCohoHatchery(86) = 0  '- M-puyalw	Puyallup River Wild Marked
-      PSCCohoHatchery(87) = 1  '- U-are11h	Area 11 Hatchery UnMarked
-      PSCCohoHatchery(88) = 1  '- M-are11h	Area 11 Hatchery Marked
-      PSCCohoHatchery(89) = 0  '- U-ar11mw	Area 11 Miscellaneous Wild UnMarked
-      PSCCohoHatchery(90) = 0  '- M-ar11mw	Area 11 Miscellaneous Wild Marked
-      PSCCohoHatchery(91) = 1  '- U-ar10eh	Area 10E Hatchery UnMarked
-      PSCCohoHatchery(92) = 1  '- M-ar10eh	Area 10E Hatchery Marked
-      PSCCohoHatchery(93) = 0  '- U-ar10ew	Area 10E Miscellaneous Wild UnMarked
-      PSCCohoHatchery(94) = 0  '- M-ar10ew	Area 10E Miscellaneous Wild Marked
-      PSCCohoHatchery(95) = 1  '- U-greenh	Green River Hatchery UnMarked
-      PSCCohoHatchery(96) = 1  '- M-greenh	Green River Hatchery Marked
-      PSCCohoHatchery(97) = 0  '- U-greenw	Green River Wild UnMarked
-      PSCCohoHatchery(98) = 0  '- M-greenw	Green River Wild Marked
-      PSCCohoHatchery(99) = 1  '- U-lakwah	Lake Washington Hatchery UnMarked
-      PSCCohoHatchery(100) = 1  '- M-lakwah	Lake Washington Hatchery Marked
-      PSCCohoHatchery(101) = 0  '- U-lakwaw	Lake Washington Wild UnMarked
-      PSCCohoHatchery(102) = 0  '- M-lakwaw	Lake Washington Wild Marked
-      PSCCohoHatchery(103) = 1  '- U-are10h	Area 10 Hatchery UnMarked
-      PSCCohoHatchery(104) = 1  '- M-are10h	Area 10 Hatchery Marked
-      PSCCohoHatchery(105) = 0  '- U-ar10mw	Area 10 Miscellaneous Wild UnMarked
-      PSCCohoHatchery(106) = 0  '- M-ar10mw	Area 10 Miscellaneous Wild Marked
-      PSCCohoHatchery(107) = 0  '- U-dungew	Dungeness River Wild UnMarked
-      PSCCohoHatchery(108) = 0  '- M-dungew	Dungeness River Wild Marked
-      PSCCohoHatchery(109) = 1  '- U-dungeh	Dungeness Hatchery UnMarked
-      PSCCohoHatchery(110) = 1  '- M-dungeh	Dungeness Hatchery Marked
-      PSCCohoHatchery(111) = 0  '- U-elwhaw	Elwha River Wild UnMarked
-      PSCCohoHatchery(112) = 0  '- M-elwhaw	Elwha River Wild Marked
-      PSCCohoHatchery(113) = 1  '- U-elwhah	Elwha Hatchery UnMarked
-      PSCCohoHatchery(114) = 1  '- M-elwhah	Elwha Hatchery Marked
-      PSCCohoHatchery(115) = 0  '- U-ejdfmw	East JDF Miscellaneous Wild UnMarked
-      PSCCohoHatchery(116) = 0  '- M-ejdfmw	East JDF Miscellaneous Wild Marked
-      PSCCohoHatchery(117) = 0  '- U-wjdfmw	West JDF Miscellaneous Wild UnMarked
-      PSCCohoHatchery(118) = 0  '- M-wjdfmw	West JDF Miscellaneous Wild Marked
-      PSCCohoHatchery(119) = 1  '- U-ptangh	Port Angeles Net Pens UnMarked
-      PSCCohoHatchery(120) = 1  '- M-ptangh	Port Angeles Net Pens Marked
-      PSCCohoHatchery(121) = 0  '- U-area9w	Area 9 Miscellaneous Wild UnMarked
-      PSCCohoHatchery(122) = 0  '- M-area9w	Area 9 Miscellaneous Wild Marked
-      PSCCohoHatchery(123) = 0  '- U-makahw	Makah Coastal Wild UnMarked
-      PSCCohoHatchery(124) = 0  '- M-makahw	Makah Coastal Wild Marked
-      PSCCohoHatchery(125) = 1  '- U-makahh	Makah Coastal Hatchery UnMarked
-      PSCCohoHatchery(126) = 1  '- M-makahh	Makah Coastal Hatchery Marked
-      PSCCohoHatchery(127) = 0  '- U-quilsw	Quillayute River Summer Natural UnMarked
-      PSCCohoHatchery(128) = 0  '- M-quilsw	Quillayute River Summer Natural Marked
-      PSCCohoHatchery(129) = 1  '- U-quilsh	Quillayute River Summer Hatchery UnMarked
-      PSCCohoHatchery(130) = 1  '- M-quilsh	Quillayute River Summer Hatchery Marked
-      PSCCohoHatchery(131) = 0  '- U-quilfw	Quillayute River Fall Natural UnMarked
-      PSCCohoHatchery(132) = 0  '- M-quilfw	Quillayute River Fall Natural Marked
-      PSCCohoHatchery(133) = 1  '- U-quilfh	Quillayute River Fall Hatchery UnMarked
-      PSCCohoHatchery(134) = 1  '- M-quilfh	Quillayute River Fall Hatchery Marked
-      PSCCohoHatchery(135) = 0  '- U-hohrvw	Hoh River Wild UnMarked
-      PSCCohoHatchery(136) = 0  '- M-hohrvw	Hoh River Wild Marked
-      PSCCohoHatchery(137) = 1  '- U-hohrvh	Hoh River Hatchery UnMarked
-      PSCCohoHatchery(138) = 1  '- M-hohrvh	Hoh River Hatchery Marked
-      PSCCohoHatchery(139) = 0  '- U-quetfw	Queets River Fall Natural UnMarked
-      PSCCohoHatchery(140) = 0  '- M-quetfw	Queets River Fall Natural Marked
-      PSCCohoHatchery(141) = 1  '- U-quetfh	Queets River Fall Hatchery UnMarked
-      PSCCohoHatchery(142) = 1  '- M-quetfh	Queets River Fall Hatchery Marked
-      PSCCohoHatchery(143) = 1  '- U-quetph	Queets River Suppl. Hatchery UnMarked
-      PSCCohoHatchery(144) = 1  '- M-quetph	Queets River Suppl. Hatchery Marked
-      PSCCohoHatchery(145) = 0  '- U-quinfw	Quinault River Fall Natural UnMarked
-      PSCCohoHatchery(146) = 0  '- M-quinfw	Quinault River Fall Natural Marked
-      PSCCohoHatchery(147) = 1  '- U-quinfh	Quinault River Fall Hatchery UnMarked
-      PSCCohoHatchery(148) = 1  '- M-quinfh	Quinault River Fall Hatchery Marked
-      PSCCohoHatchery(149) = 0  '- U-chehlw	Chehalis River Wild UnMarked
-      PSCCohoHatchery(150) = 0  '- M-chehlw	Chehalis River Wild Marked
-      PSCCohoHatchery(151) = 1  '- U-chehlh	Chehalis River Hatchery UnMarked
-      PSCCohoHatchery(152) = 1  '- M-chehlh	Chehalis River Hatchery Marked
-      PSCCohoHatchery(153) = 0  '- U-humptw	Humptulips River Wild UnMarked
-      PSCCohoHatchery(154) = 0  '- M-humptw	Humptulips River Wild Marked
-      PSCCohoHatchery(155) = 1  '- U-humpth	Humptulips River Hatchery UnMarked
-      PSCCohoHatchery(156) = 1  '- M-humpth	Humptulips River Hatchery Marked
-      PSCCohoHatchery(157) = 0  '- U-gryhmw	Grays Harbor Miscellaneous Wild UnMarked
-      PSCCohoHatchery(158) = 0  '- M-gryhmw	Grays Harbor Miscellaneous Wild Marked
-      PSCCohoHatchery(159) = 1  '- U-gryhbh	Grays Harbor Net Pens UnMarked
-      PSCCohoHatchery(160) = 1  '- M-gryhbh	Grays Harbor Net Pens Marked
-      PSCCohoHatchery(161) = 0  '- U-willaw	Willapa Bay Natural UnMarked
-      PSCCohoHatchery(162) = 0  '- M-willaw	Willapa Bay Natural Marked
-      PSCCohoHatchery(163) = 1  '- U-willah	Willapa Bay Hatchery UnMarked
-      PSCCohoHatchery(164) = 1  '- M-willah	Willapa Bay Hatchery Marked
-      PSCCohoHatchery(165) = 1  '- U-colreh	Columbia River Early Hatchery UnMarked
-      PSCCohoHatchery(166) = 1  '- M-colreh	Columbia River Early Hatchery Marked
-      PSCCohoHatchery(167) = 1  '- U-youngh	Youngs Bay Hatchery UnMarked
-      PSCCohoHatchery(168) = 1  '- M-youngh	Youngs Bay Hatchery Marked
-      PSCCohoHatchery(169) = 0  '- U-crorew	Lower Col R Oregon Wild UnMarked
-      PSCCohoHatchery(170) = 0  '- M-crorew	Lower Col R Oregon Wild Marked
-      PSCCohoHatchery(171) = 0  '- U-washew	Wash Early Wild UnMarked
-      PSCCohoHatchery(172) = 0  '- M-washew	Wash Early Wild Marked
-      PSCCohoHatchery(173) = 0  '- U-washlw	Wash Late Wild UnMarked
-      PSCCohoHatchery(174) = 0  '- M-washlw	Wash Late Wild Marked
-      PSCCohoHatchery(175) = 1  '- U-colrlh	Columbia River Late Hatchery UnMarked
-      PSCCohoHatchery(176) = 1  '- M-colrlh	Columbia River Late Hatchery Marked
-      PSCCohoHatchery(177) = 1  '- U-orenoh	Oregon North Coast Hatchery UnMarked
-      PSCCohoHatchery(178) = 1  '- M-orenoh	Oregon North Coast Hatchery Marked
-      PSCCohoHatchery(179) = 0  '- U-orenow	Oregon North Coast Wild UnMarked
-      PSCCohoHatchery(180) = 0  '- M-orenow	Oregon North Coast Wild Marked
-      PSCCohoHatchery(181) = 1  '- U-orenmh	Oregon North-Mid Coast Hatchery UnMarked
-      PSCCohoHatchery(182) = 1  '- M-orenmh	Oregon North-Mid Coast Hatchery Marked
-      PSCCohoHatchery(183) = 0  '- U-orenmw	Oregon North-Mid Coast Wild UnMarked
-      PSCCohoHatchery(184) = 0  '- M-orenmw	Oregon North-Mid Coast Wild Marked
-      PSCCohoHatchery(185) = 1  '- U-oresmh	Oregon South-Mid Coast Hatchery UnMarked
-      PSCCohoHatchery(186) = 1  '- M-oresmh	Oregon South-Mid Coast Hatchery Marked
-      PSCCohoHatchery(187) = 0  '- U-oresmw	Oregon South-Mid Coast Wild UnMarked
-      PSCCohoHatchery(188) = 0  '- M-oresmw	Oregon South-Mid Coast Wild Marked
-      PSCCohoHatchery(189) = 1  '- U-oranah	Oregon Anadromous Hatchery UnMarked
-      PSCCohoHatchery(190) = 1  '- M-oranah	Oregon Anadromous Hatchery Marked
-      PSCCohoHatchery(191) = 1  '- U-oraqah	Oregon Aqua-Foods Hatchery UnMarked
-      PSCCohoHatchery(192) = 1  '- M-oraqah	Oregon Aqua-Foods Hatchery Marked
-      PSCCohoHatchery(193) = 1  '- U-oresoh	Oregon South Coast Hatchery UnMarked
-      PSCCohoHatchery(194) = 1  '- M-oresoh	Oregon South Coast Hatchery Marked
-      PSCCohoHatchery(195) = 0  '- U-oresow	Oregon South Coast Wild UnMarked
-      PSCCohoHatchery(196) = 0  '- M-oresow	Oregon South Coast Wild Marked
-      PSCCohoHatchery(197) = 1  '- U-calnoh	California North Coast Hatchery UnMarked
-      PSCCohoHatchery(198) = 1  '- M-calnoh	California North Coast Hatchery Marked
-      PSCCohoHatchery(199) = 0  '- U-calnow	California North Coast Wild UnMarked
-      PSCCohoHatchery(200) = 0  '- M-calnow	California North Coast Wild Marked
-      PSCCohoHatchery(201) = 1  '- U-calcnh	California Central Coast Hatchery UnMarked
-      PSCCohoHatchery(202) = 1  '- M-calcnh	California Central Coast Hatchery Marked
-      PSCCohoHatchery(203) = 0  '- U-calcnw	California Central Coast Wild UnMarked
-      PSCCohoHatchery(204) = 0  '- M-calcnw	California Central Coast Wild Marked
-      PSCCohoHatchery(205) = 2  '- U-gsmndh	Georgia Strait Mainland Hatchery UnMarked
-      PSCCohoHatchery(206) = 2  '- M-gsmndh	Georgia Strait Mainland Hatchery Marked
-      PSCCohoHatchery(207) = 0  '- U-gsmndw	Georgia Strait Mainland Wild UnMarked
-      PSCCohoHatchery(208) = 0  '- M-gsmndw	Georgia Strait Mainland Wild Marked
-      PSCCohoHatchery(209) = 2  '- U-gsvcih	Georgia Strait Vanc. Isl. Hatchery UnMarked
-      PSCCohoHatchery(210) = 2  '- M-gsvcih	Georgia Strait Vanc. Isl. Hatchery Marked
-      PSCCohoHatchery(211) = 0  '- U-gsvciw	Georgia Strait Vanc. Isl. Wild UnMarked
-      PSCCohoHatchery(212) = 0  '- M-gsvciw	Georgia Strait Vanc. Isl. Wild Marked
-      PSCCohoHatchery(213) = 2  '- U-jnstrh	Johnstone Strait Hatchery UnMarked
-      PSCCohoHatchery(214) = 2  '- M-jnstrh	Johnstone Strait Hatchery Marked
-      PSCCohoHatchery(215) = 0  '- U-jnstrw	Johnstone Strait Wild UnMarked
-      PSCCohoHatchery(216) = 0  '- M-jnstrw	Johnstone Strait Wild Marked
-      PSCCohoHatchery(217) = 2  '- U-swvcih	SW Vancouver Island Hatchery UnMarked
-      PSCCohoHatchery(218) = 2  '- M-swvcih	SW Vancouver Island Hatchery Marked
-      PSCCohoHatchery(219) = 0  '- U-swvciw	SW Vancouver Island Wild UnMarked
-      PSCCohoHatchery(220) = 0  '- M-swvciw	SW Vancouver Island Wild Marked
-      PSCCohoHatchery(221) = 2  '- U-nwvcih	NW Vancouver Island Hatchery UnMarked
-      PSCCohoHatchery(222) = 2  '- M-nwvcih	NW Vancouver Island Hatchery Marked
-      PSCCohoHatchery(223) = 0  '- U-nwvciw	NW Vancouver Island Wild UnMarked
-      PSCCohoHatchery(224) = 0  '- M-nwvciw	NW Vancouver Island Wild Marked
-      PSCCohoHatchery(225) = 2  '- U-frslwh	Lower Fraser River Hatchery UnMarked
-      PSCCohoHatchery(226) = 2  '- M-frslwh	Lower Fraser River Hatchery Marked
-      PSCCohoHatchery(227) = 0  '- U-frslww	Lower Fraser River Wild UnMarked
-      PSCCohoHatchery(228) = 0  '- M-frslww	Lower Fraser River Wild Marked
-      PSCCohoHatchery(229) = 2  '- U-frsuph	Upper Fraser River Hatchery UnMarked
-      PSCCohoHatchery(230) = 2  '- M-frsuph	Upper Fraser River Hatchery Marked
-      PSCCohoHatchery(231) = 0  '- U-frsupw	Upper Fraser River Wild UnMarked
-      PSCCohoHatchery(232) = 0  '- M-frsupw	Upper Fraser River Wild Marked
-      PSCCohoHatchery(233) = 0  '- U-bccnhw	BC Central Coast Hatchery/Wild UnMarked
-      PSCCohoHatchery(234) = 0  '- M-bccnhw	BC Central Coast Hatchery/Wild Marked
-      PSCCohoHatchery(235) = 0  '- U-bcnchw	BC North Coast Hatchery/Wild UnMarked
-      PSCCohoHatchery(236) = 0  '- M-bcnchw	BC North Coast Hatchery/Wild Marked
-      PSCCohoHatchery(237) = 0  '- U-tranhw	Trans Boundary Hatchery/Wild UnMarked
-      PSCCohoHatchery(238) = 0  '- M-tranhw	Trans Boundary Hatchery/Wild Marked
-      PSCCohoHatchery(239) = 0  '- U-niakhw	Alaska Northern Inside Hat/Wild UnMarked
-      PSCCohoHatchery(240) = 0  '- M-niakhw	Alaska Northern Inside Hat/Wild Marked
-      PSCCohoHatchery(241) = 0  '- U-noakhw	Alaska Northern Outside Hat/Wild UnMarked
-      PSCCohoHatchery(242) = 0  '- M-noakhw	Alaska Northern Outside Hat/Wild Marked
-      PSCCohoHatchery(243) = 0  '- U-siakhw	Alaska Southern Inside Hat/Wild UnMarked
-      PSCCohoHatchery(244) = 0  '- M-siakhw	Alaska Southern Inside Hat/Wild Marked
-      PSCCohoHatchery(245) = 0  '- U-soakhw	Alaska Southern Outside Hat/Wild UnMarked
-      PSCCohoHatchery(246) = 0  '- M-soakhw	Alaska Southern Outside Hat/Wild Marked
+        '      '- Array of All Stocks  1 = US Hatchery  2 = Canadian Hatchery Stocks
+        '      PSCCohoHatchery(1) = 0  '- U-nkskrw	Nooksack River Wild UnMarked
+        '      PSCCohoHatchery(2) = 0  '- M-nkskrw	Nooksack River Wild Marked
+        '      PSCCohoHatchery(3) = 1  '- U-kendlh	Kendall Creek Hatchery UnMarked
+        '      PSCCohoHatchery(4) = 1  '- M-kendlh	Kendall Creek Hatchery Marked
+        '      PSCCohoHatchery(5) = 1  '- U-skokmh	Skookum Creek Hatchery UnMarked
+        '      PSCCohoHatchery(6) = 1  '- M-skokmh	Skookum Creek Hatchery Marked
+        '      PSCCohoHatchery(7) = 1  '- U-lumpdh	Lummi Ponds Hatchery UnMarked
+        '      PSCCohoHatchery(8) = 1  '- M-lumpdh	Lummi Ponds Hatchery Marked
+        '      PSCCohoHatchery(9) = 1  '- U-bhambh	Bellingham Bay Net Pens UnMarked
+        '      PSCCohoHatchery(10) = 1  '- M-bhambh	Bellingham Bay Net Pens Marked
+        '      PSCCohoHatchery(11) = 0  '- U-samshw	Samish River Wild UnMarked
+        '      PSCCohoHatchery(12) = 0  '- M-samshw	Samish River Wild Marked
+        '      PSCCohoHatchery(13) = 0  '- U-ar77aw	Area 7/7A Independent Wild UnMarked
+        '      PSCCohoHatchery(14) = 0  '- M-ar77aw	Area 7/7A Independent Wild Marked
+        '      PSCCohoHatchery(15) = 1  '- U-whatch	Whatcom Creek Hatchery UnMarked
+        '      PSCCohoHatchery(16) = 1  '- M-whatch	Whatcom Creek Hatchery Marked
+        '      PSCCohoHatchery(17) = 0  '- U-skagtw	Skagit River Wild UnMarked
+        '      PSCCohoHatchery(18) = 0  '- M-skagtw	Skagit River Wild Marked
+        '      PSCCohoHatchery(19) = 1  '- U-skagth	Skagit River Hatchery UnMarked
+        '      PSCCohoHatchery(20) = 1  '- M-skagth	Skagit River Hatchery Marked
+        '      PSCCohoHatchery(21) = 1  '- U-skgbkh	Baker (Skagit) Hatchery UnMarked
+        '      PSCCohoHatchery(22) = 1  '- M-skgbkh	Baker (Skagit) Hatchery Marked
+        '      PSCCohoHatchery(23) = 0  '- U-skgbkw	Baker (Skagit) Wild UnMarked
+        '      PSCCohoHatchery(24) = 0  '- U-skgbkw	Baker (Skagit) Wild UnMarked
+        '      PSCCohoHatchery(25) = 1  '- U-swinch	Swinomish Channel Hatchery UnMarked
+        '      PSCCohoHatchery(26) = 1  '- M-swinch	Swinomish Channel Hatchery Marked
+        '      PSCCohoHatchery(27) = 1  '- U-oakhbh	Oak Harbor Net Pens UnMarked
+        '      PSCCohoHatchery(28) = 1  '- M-oakhbh	Oak Harbor Net Pens Marked
+        '      PSCCohoHatchery(29) = 0  '- U-stillw	Stillaguamish River Wild UnMarked
+        '      PSCCohoHatchery(30) = 0  '- M-stillw	Stillaguamish River Wild Marked
+        '      PSCCohoHatchery(31) = 1  '- U-stillh	Stillaguamish River Hatchery UnMarked
+        '      PSCCohoHatchery(32) = 1  '- M-stillh	Stillaguamish River Hatchery Marked
+        '      PSCCohoHatchery(33) = 1  '- U-tuliph	Tulalip Hatchery UnMarked
+        '      PSCCohoHatchery(34) = 1  '- M-tuliph	Tulalip Hatchery Marked
+        '      PSCCohoHatchery(35) = 0  '- U-snohow	Snohomish River Wild UnMarked
+        '      PSCCohoHatchery(36) = 0  '- M-snohow	Snohomish River Wild Marked
+        '      PSCCohoHatchery(37) = 1  '- U-snohoh	Snohomish River Hatchery UnMarked
+        '      PSCCohoHatchery(38) = 1  '- M-snohoh	Snohomish River Hatchery Marked
+        '      PSCCohoHatchery(39) = 1  '- U-ar8anh	Area 8A Net Pens UnMarked
+        '      PSCCohoHatchery(40) = 1  '- M-ar8anh	Area 8A Net Pens Marked
+        '      PSCCohoHatchery(41) = 1  '- U-ptgamh	Port Gamble Net Pens UnMarked
+        '      PSCCohoHatchery(42) = 1  '- M-ptgamh	Port Gamble Net Pens Marked
+        '      PSCCohoHatchery(43) = 0  '- U-ptgamw	Port Gamble Bay Wild UnMarked
+        '      PSCCohoHatchery(44) = 0  '- M-ptgamw	Port Gamble Bay Wild Marked
+        '      PSCCohoHatchery(45) = 0  '- U-ar12bw	Area 12/12B Wild UnMarked
+        '      PSCCohoHatchery(46) = 0  '- M-ar12bw	Area 12/12B Wild Marked
+        '      PSCCohoHatchery(47) = 1  '- U-qlcnbh	Quilcene Hatchery UnMarked
+        '      PSCCohoHatchery(48) = 1  '- M-qlcnbh	Quilcene Hatchery Marked
+        '      PSCCohoHatchery(49) = 0  '- U-qlcenh	Quilcene Bay Net Pens UnMarked
+        '      PSCCohoHatchery(50) = 0  '- M-qlcenh	Quilcene Bay Net Pens Marked
+        '      PSCCohoHatchery(51) = 0  '- U-ar12aw	Area 12A Wild UnMarked
+        '      PSCCohoHatchery(52) = 0  '- M-ar12aw	Area 12A Wild Marked
+        '      PSCCohoHatchery(53) = 1  '- U-hoodsh	Hoodsport Hatchery UnMarked
+        '      PSCCohoHatchery(54) = 1  '- M-hoodsh	Hoodsport Hatchery Marked
+        '      PSCCohoHatchery(55) = 0  '- U-ar12dw	Area 12C/12D Wild UnMarked
+        '      PSCCohoHatchery(56) = 0  '- M-ar12dw	Area 12C/12D Wild Marked
+        '      PSCCohoHatchery(57) = 1  '- U-gadamh	George Adams Hatchery UnMarked
+        '      PSCCohoHatchery(58) = 1  '- M-gadamh	George Adams Hatchery Marked
+        '      PSCCohoHatchery(59) = 0  '- U-skokrw	Skokomish River Wild UnMarked
+        '      PSCCohoHatchery(60) = 0  '- M-skokrw	Skokomish River Wild Marked
+        '      PSCCohoHatchery(61) = 0  '- U-ar13bw	Area 13B Miscellaneous Wild UnMarked
+        '      PSCCohoHatchery(62) = 0  '- M-ar13bw	Area 13B Miscellaneous Wild Marked
+        '      PSCCohoHatchery(63) = 0  '- U-deschw	Deschutes River (WA) Wild UnMarked
+        '      PSCCohoHatchery(64) = 0  '- M-deschw	Deschutes River (WA) Wild Marked
+        '      PSCCohoHatchery(65) = 1  '- U-ssdnph	South Puget Sound Net Pens UnMarked
+        '      PSCCohoHatchery(66) = 1  '- M-ssdnph	South Puget Sound Net Pens Marked
+        '      PSCCohoHatchery(67) = 1  '- U-nisqlh	Nisqually River Hatchery UnMarked
+        '      PSCCohoHatchery(68) = 1  '- M-nisqlh	Nisqually River Hatchery Marked
+        '      PSCCohoHatchery(69) = 0  '- U-nisqlw	Nisqually River Wild UnMarked
+        '      PSCCohoHatchery(70) = 0  '- M-nisqlw	Nisqually River Wild Marked
+        '      PSCCohoHatchery(71) = 1  '- U-foxish	Fox Island Net Pens UnMarked
+        '      PSCCohoHatchery(72) = 1  '- M-foxish	Fox Island Net Pens Marked
+        '      PSCCohoHatchery(73) = 1  '- U-mintch	Minter Creek Hatchery UnMarked
+        '      PSCCohoHatchery(74) = 1  '- M-mintch	Minter Creek Hatchery Marked
+        '      PSCCohoHatchery(75) = 0  '- U-ar13mw	Area 13 Miscellaneous Wild UnMarked
+        '      PSCCohoHatchery(76) = 0  '- M-ar13mw	Area 13 Miscellaneous Wild Marked
+        '      PSCCohoHatchery(77) = 1  '- U-chambh	Chambers Creek Hatchery UnMarked
+        '      PSCCohoHatchery(78) = 1  '- M-chambh	Chambers Creek Hatchery Marked
+        '      PSCCohoHatchery(79) = 1  '- U-ar13mh	Area 13 Miscellaneous Hatchery UnMarked
+        '      PSCCohoHatchery(80) = 1  '- M-ar13mh	Area 13 Miscellaneous Hatchery Marked
+        '      PSCCohoHatchery(81) = 0  '- U-ar13aw	Area 13A Miscellaneous Wild UnMarked
+        '      PSCCohoHatchery(82) = 0  '- M-ar13aw	Area 13A Miscellaneous Wild Marked
+        '      PSCCohoHatchery(83) = 1  '- U-puyalh	Puyallup River Hatchery UnMarked
+        '      PSCCohoHatchery(84) = 1  '- M-puyalh	Puyallup River Hatchery Marked
+        '      PSCCohoHatchery(85) = 0  '- U-puyalw	Puyallup River Wild UnMarked
+        '      PSCCohoHatchery(86) = 0  '- M-puyalw	Puyallup River Wild Marked
+        '      PSCCohoHatchery(87) = 1  '- U-are11h	Area 11 Hatchery UnMarked
+        '      PSCCohoHatchery(88) = 1  '- M-are11h	Area 11 Hatchery Marked
+        '      PSCCohoHatchery(89) = 0  '- U-ar11mw	Area 11 Miscellaneous Wild UnMarked
+        '      PSCCohoHatchery(90) = 0  '- M-ar11mw	Area 11 Miscellaneous Wild Marked
+        '      PSCCohoHatchery(91) = 1  '- U-ar10eh	Area 10E Hatchery UnMarked
+        '      PSCCohoHatchery(92) = 1  '- M-ar10eh	Area 10E Hatchery Marked
+        '      PSCCohoHatchery(93) = 0  '- U-ar10ew	Area 10E Miscellaneous Wild UnMarked
+        '      PSCCohoHatchery(94) = 0  '- M-ar10ew	Area 10E Miscellaneous Wild Marked
+        '      PSCCohoHatchery(95) = 1  '- U-greenh	Green River Hatchery UnMarked
+        '      PSCCohoHatchery(96) = 1  '- M-greenh	Green River Hatchery Marked
+        '      PSCCohoHatchery(97) = 0  '- U-greenw	Green River Wild UnMarked
+        '      PSCCohoHatchery(98) = 0  '- M-greenw	Green River Wild Marked
+        '      PSCCohoHatchery(99) = 1  '- U-lakwah	Lake Washington Hatchery UnMarked
+        '      PSCCohoHatchery(100) = 1  '- M-lakwah	Lake Washington Hatchery Marked
+        '      PSCCohoHatchery(101) = 0  '- U-lakwaw	Lake Washington Wild UnMarked
+        '      PSCCohoHatchery(102) = 0  '- M-lakwaw	Lake Washington Wild Marked
+        '      PSCCohoHatchery(103) = 1  '- U-are10h	Area 10 Hatchery UnMarked
+        '      PSCCohoHatchery(104) = 1  '- M-are10h	Area 10 Hatchery Marked
+        '      PSCCohoHatchery(105) = 0  '- U-ar10mw	Area 10 Miscellaneous Wild UnMarked
+        '      PSCCohoHatchery(106) = 0  '- M-ar10mw	Area 10 Miscellaneous Wild Marked
+        '      PSCCohoHatchery(107) = 0  '- U-dungew	Dungeness River Wild UnMarked
+        '      PSCCohoHatchery(108) = 0  '- M-dungew	Dungeness River Wild Marked
+        '      PSCCohoHatchery(109) = 1  '- U-dungeh	Dungeness Hatchery UnMarked
+        '      PSCCohoHatchery(110) = 1  '- M-dungeh	Dungeness Hatchery Marked
+        '      PSCCohoHatchery(111) = 0  '- U-elwhaw	Elwha River Wild UnMarked
+        '      PSCCohoHatchery(112) = 0  '- M-elwhaw	Elwha River Wild Marked
+        '      PSCCohoHatchery(113) = 1  '- U-elwhah	Elwha Hatchery UnMarked
+        '      PSCCohoHatchery(114) = 1  '- M-elwhah	Elwha Hatchery Marked
+        '      PSCCohoHatchery(115) = 0  '- U-ejdfmw	East JDF Miscellaneous Wild UnMarked
+        '      PSCCohoHatchery(116) = 0  '- M-ejdfmw	East JDF Miscellaneous Wild Marked
+        '      PSCCohoHatchery(117) = 0  '- U-wjdfmw	West JDF Miscellaneous Wild UnMarked
+        '      PSCCohoHatchery(118) = 0  '- M-wjdfmw	West JDF Miscellaneous Wild Marked
+        '      PSCCohoHatchery(119) = 1  '- U-ptangh	Port Angeles Net Pens UnMarked
+        '      PSCCohoHatchery(120) = 1  '- M-ptangh	Port Angeles Net Pens Marked
+        '      PSCCohoHatchery(121) = 0  '- U-area9w	Area 9 Miscellaneous Wild UnMarked
+        '      PSCCohoHatchery(122) = 0  '- M-area9w	Area 9 Miscellaneous Wild Marked
+        '      PSCCohoHatchery(123) = 0  '- U-makahw	Makah Coastal Wild UnMarked
+        '      PSCCohoHatchery(124) = 0  '- M-makahw	Makah Coastal Wild Marked
+        '      PSCCohoHatchery(125) = 1  '- U-makahh	Makah Coastal Hatchery UnMarked
+        '      PSCCohoHatchery(126) = 1  '- M-makahh	Makah Coastal Hatchery Marked
+        '      PSCCohoHatchery(127) = 0  '- U-quilsw	Quillayute River Summer Natural UnMarked
+        '      PSCCohoHatchery(128) = 0  '- M-quilsw	Quillayute River Summer Natural Marked
+        '      PSCCohoHatchery(129) = 1  '- U-quilsh	Quillayute River Summer Hatchery UnMarked
+        '      PSCCohoHatchery(130) = 1  '- M-quilsh	Quillayute River Summer Hatchery Marked
+        '      PSCCohoHatchery(131) = 0  '- U-quilfw	Quillayute River Fall Natural UnMarked
+        '      PSCCohoHatchery(132) = 0  '- M-quilfw	Quillayute River Fall Natural Marked
+        '      PSCCohoHatchery(133) = 1  '- U-quilfh	Quillayute River Fall Hatchery UnMarked
+        '      PSCCohoHatchery(134) = 1  '- M-quilfh	Quillayute River Fall Hatchery Marked
+        '      PSCCohoHatchery(135) = 0  '- U-hohrvw	Hoh River Wild UnMarked
+        '      PSCCohoHatchery(136) = 0  '- M-hohrvw	Hoh River Wild Marked
+        '      PSCCohoHatchery(137) = 1  '- U-hohrvh	Hoh River Hatchery UnMarked
+        '      PSCCohoHatchery(138) = 1  '- M-hohrvh	Hoh River Hatchery Marked
+        '      PSCCohoHatchery(139) = 0  '- U-quetfw	Queets River Fall Natural UnMarked
+        '      PSCCohoHatchery(140) = 0  '- M-quetfw	Queets River Fall Natural Marked
+        '      PSCCohoHatchery(141) = 1  '- U-quetfh	Queets River Fall Hatchery UnMarked
+        '      PSCCohoHatchery(142) = 1  '- M-quetfh	Queets River Fall Hatchery Marked
+        '      PSCCohoHatchery(143) = 1  '- U-quetph	Queets River Suppl. Hatchery UnMarked
+        '      PSCCohoHatchery(144) = 1  '- M-quetph	Queets River Suppl. Hatchery Marked
+        '      PSCCohoHatchery(145) = 0  '- U-quinfw	Quinault River Fall Natural UnMarked
+        '      PSCCohoHatchery(146) = 0  '- M-quinfw	Quinault River Fall Natural Marked
+        '      PSCCohoHatchery(147) = 1  '- U-quinfh	Quinault River Fall Hatchery UnMarked
+        '      PSCCohoHatchery(148) = 1  '- M-quinfh	Quinault River Fall Hatchery Marked
+        '      PSCCohoHatchery(149) = 0  '- U-chehlw	Chehalis River Wild UnMarked
+        '      PSCCohoHatchery(150) = 0  '- M-chehlw	Chehalis River Wild Marked
+        '      PSCCohoHatchery(151) = 1  '- U-chehlh	Chehalis River Hatchery UnMarked
+        '      PSCCohoHatchery(152) = 1  '- M-chehlh	Chehalis River Hatchery Marked
+        '      PSCCohoHatchery(153) = 0  '- U-humptw	Humptulips River Wild UnMarked
+        '      PSCCohoHatchery(154) = 0  '- M-humptw	Humptulips River Wild Marked
+        '      PSCCohoHatchery(155) = 1  '- U-humpth	Humptulips River Hatchery UnMarked
+        '      PSCCohoHatchery(156) = 1  '- M-humpth	Humptulips River Hatchery Marked
+        '      PSCCohoHatchery(157) = 0  '- U-gryhmw	Grays Harbor Miscellaneous Wild UnMarked
+        '      PSCCohoHatchery(158) = 0  '- M-gryhmw	Grays Harbor Miscellaneous Wild Marked
+        '      PSCCohoHatchery(159) = 1  '- U-gryhbh	Grays Harbor Net Pens UnMarked
+        '      PSCCohoHatchery(160) = 1  '- M-gryhbh	Grays Harbor Net Pens Marked
+        '      PSCCohoHatchery(161) = 0  '- U-willaw	Willapa Bay Natural UnMarked
+        '      PSCCohoHatchery(162) = 0  '- M-willaw	Willapa Bay Natural Marked
+        '      PSCCohoHatchery(163) = 1  '- U-willah	Willapa Bay Hatchery UnMarked
+        '      PSCCohoHatchery(164) = 1  '- M-willah	Willapa Bay Hatchery Marked
+        '      PSCCohoHatchery(165) = 1  '- U-colreh	Columbia River Early Hatchery UnMarked
+        '      PSCCohoHatchery(166) = 1  '- M-colreh	Columbia River Early Hatchery Marked
+        '      PSCCohoHatchery(167) = 1  '- U-youngh	Youngs Bay Hatchery UnMarked
+        '      PSCCohoHatchery(168) = 1  '- M-youngh	Youngs Bay Hatchery Marked
+        '      PSCCohoHatchery(169) = 0  '- U-crorew	Lower Col R Oregon Wild UnMarked
+        '      PSCCohoHatchery(170) = 0  '- M-crorew	Lower Col R Oregon Wild Marked
+        '      PSCCohoHatchery(171) = 0  '- U-washew	Wash Early Wild UnMarked
+        '      PSCCohoHatchery(172) = 0  '- M-washew	Wash Early Wild Marked
+        '      PSCCohoHatchery(173) = 0  '- U-washlw	Wash Late Wild UnMarked
+        '      PSCCohoHatchery(174) = 0  '- M-washlw	Wash Late Wild Marked
+        '      PSCCohoHatchery(175) = 1  '- U-colrlh	Columbia River Late Hatchery UnMarked
+        '      PSCCohoHatchery(176) = 1  '- M-colrlh	Columbia River Late Hatchery Marked
+        '      PSCCohoHatchery(177) = 1  '- U-orenoh	Oregon North Coast Hatchery UnMarked
+        '      PSCCohoHatchery(178) = 1  '- M-orenoh	Oregon North Coast Hatchery Marked
+        '      PSCCohoHatchery(179) = 0  '- U-orenow	Oregon North Coast Wild UnMarked
+        '      PSCCohoHatchery(180) = 0  '- M-orenow	Oregon North Coast Wild Marked
+        '      PSCCohoHatchery(181) = 1  '- U-orenmh	Oregon North-Mid Coast Hatchery UnMarked
+        '      PSCCohoHatchery(182) = 1  '- M-orenmh	Oregon North-Mid Coast Hatchery Marked
+        '      PSCCohoHatchery(183) = 0  '- U-orenmw	Oregon North-Mid Coast Wild UnMarked
+        '      PSCCohoHatchery(184) = 0  '- M-orenmw	Oregon North-Mid Coast Wild Marked
+        '      PSCCohoHatchery(185) = 1  '- U-oresmh	Oregon South-Mid Coast Hatchery UnMarked
+        '      PSCCohoHatchery(186) = 1  '- M-oresmh	Oregon South-Mid Coast Hatchery Marked
+        '      PSCCohoHatchery(187) = 0  '- U-oresmw	Oregon South-Mid Coast Wild UnMarked
+        '      PSCCohoHatchery(188) = 0  '- M-oresmw	Oregon South-Mid Coast Wild Marked
+        '      PSCCohoHatchery(189) = 1  '- U-oranah	Oregon Anadromous Hatchery UnMarked
+        '      PSCCohoHatchery(190) = 1  '- M-oranah	Oregon Anadromous Hatchery Marked
+        '      PSCCohoHatchery(191) = 1  '- U-oraqah	Oregon Aqua-Foods Hatchery UnMarked
+        '      PSCCohoHatchery(192) = 1  '- M-oraqah	Oregon Aqua-Foods Hatchery Marked
+        '      PSCCohoHatchery(193) = 1  '- U-oresoh	Oregon South Coast Hatchery UnMarked
+        '      PSCCohoHatchery(194) = 1  '- M-oresoh	Oregon South Coast Hatchery Marked
+        '      PSCCohoHatchery(195) = 0  '- U-oresow	Oregon South Coast Wild UnMarked
+        '      PSCCohoHatchery(196) = 0  '- M-oresow	Oregon South Coast Wild Marked
+        '      PSCCohoHatchery(197) = 1  '- U-calnoh	California North Coast Hatchery UnMarked
+        '      PSCCohoHatchery(198) = 1  '- M-calnoh	California North Coast Hatchery Marked
+        '      PSCCohoHatchery(199) = 0  '- U-calnow	California North Coast Wild UnMarked
+        '      PSCCohoHatchery(200) = 0  '- M-calnow	California North Coast Wild Marked
+        '      PSCCohoHatchery(201) = 1  '- U-calcnh	California Central Coast Hatchery UnMarked
+        '      PSCCohoHatchery(202) = 1  '- M-calcnh	California Central Coast Hatchery Marked
+        '      PSCCohoHatchery(203) = 0  '- U-calcnw	California Central Coast Wild UnMarked
+        '      PSCCohoHatchery(204) = 0  '- M-calcnw	California Central Coast Wild Marked
+        '      PSCCohoHatchery(205) = 2  '- U-gsmndh	Georgia Strait Mainland Hatchery UnMarked
+        '      PSCCohoHatchery(206) = 2  '- M-gsmndh	Georgia Strait Mainland Hatchery Marked
+        '      PSCCohoHatchery(207) = 0  '- U-gsmndw	Georgia Strait Mainland Wild UnMarked
+        '      PSCCohoHatchery(208) = 0  '- M-gsmndw	Georgia Strait Mainland Wild Marked
+        '      PSCCohoHatchery(209) = 2  '- U-gsvcih	Georgia Strait Vanc. Isl. Hatchery UnMarked
+        '      PSCCohoHatchery(210) = 2  '- M-gsvcih	Georgia Strait Vanc. Isl. Hatchery Marked
+        '      PSCCohoHatchery(211) = 0  '- U-gsvciw	Georgia Strait Vanc. Isl. Wild UnMarked
+        '      PSCCohoHatchery(212) = 0  '- M-gsvciw	Georgia Strait Vanc. Isl. Wild Marked
+        '      PSCCohoHatchery(213) = 2  '- U-jnstrh	Johnstone Strait Hatchery UnMarked
+        '      PSCCohoHatchery(214) = 2  '- M-jnstrh	Johnstone Strait Hatchery Marked
+        '      PSCCohoHatchery(215) = 0  '- U-jnstrw	Johnstone Strait Wild UnMarked
+        '      PSCCohoHatchery(216) = 0  '- M-jnstrw	Johnstone Strait Wild Marked
+        '      PSCCohoHatchery(217) = 2  '- U-swvcih	SW Vancouver Island Hatchery UnMarked
+        '      PSCCohoHatchery(218) = 2  '- M-swvcih	SW Vancouver Island Hatchery Marked
+        '      PSCCohoHatchery(219) = 0  '- U-swvciw	SW Vancouver Island Wild UnMarked
+        '      PSCCohoHatchery(220) = 0  '- M-swvciw	SW Vancouver Island Wild Marked
+        '      PSCCohoHatchery(221) = 2  '- U-nwvcih	NW Vancouver Island Hatchery UnMarked
+        '      PSCCohoHatchery(222) = 2  '- M-nwvcih	NW Vancouver Island Hatchery Marked
+        '      PSCCohoHatchery(223) = 0  '- U-nwvciw	NW Vancouver Island Wild UnMarked
+        '      PSCCohoHatchery(224) = 0  '- M-nwvciw	NW Vancouver Island Wild Marked
+        '      PSCCohoHatchery(225) = 2  '- U-frslwh	Lower Fraser River Hatchery UnMarked
+        '      PSCCohoHatchery(226) = 2  '- M-frslwh	Lower Fraser River Hatchery Marked
+        '      PSCCohoHatchery(227) = 0  '- U-frslww	Lower Fraser River Wild UnMarked
+        '      PSCCohoHatchery(228) = 0  '- M-frslww	Lower Fraser River Wild Marked
+        '      PSCCohoHatchery(229) = 2  '- U-frsuph	Upper Fraser River Hatchery UnMarked
+        '      PSCCohoHatchery(230) = 2  '- M-frsuph	Upper Fraser River Hatchery Marked
+        '      PSCCohoHatchery(231) = 0  '- U-frsupw	Upper Fraser River Wild UnMarked
+        '      PSCCohoHatchery(232) = 0  '- M-frsupw	Upper Fraser River Wild Marked
+        '      PSCCohoHatchery(233) = 0  '- U-bccnhw	BC Central Coast Hatchery/Wild UnMarked
+        '      PSCCohoHatchery(234) = 0  '- M-bccnhw	BC Central Coast Hatchery/Wild Marked
+        '      PSCCohoHatchery(235) = 0  '- U-bcnchw	BC North Coast Hatchery/Wild UnMarked
+        '      PSCCohoHatchery(236) = 0  '- M-bcnchw	BC North Coast Hatchery/Wild Marked
+        '      PSCCohoHatchery(237) = 0  '- U-tranhw	Trans Boundary Hatchery/Wild UnMarked
+        '      PSCCohoHatchery(238) = 0  '- M-tranhw	Trans Boundary Hatchery/Wild Marked
+        '      PSCCohoHatchery(239) = 0  '- U-niakhw	Alaska Northern Inside Hat/Wild UnMarked
+        '      PSCCohoHatchery(240) = 0  '- M-niakhw	Alaska Northern Inside Hat/Wild Marked
+        '      PSCCohoHatchery(241) = 0  '- U-noakhw	Alaska Northern Outside Hat/Wild UnMarked
+        '      PSCCohoHatchery(242) = 0  '- M-noakhw	Alaska Northern Outside Hat/Wild Marked
+        '      PSCCohoHatchery(243) = 0  '- U-siakhw	Alaska Southern Inside Hat/Wild UnMarked
+        '      PSCCohoHatchery(244) = 0  '- M-siakhw	Alaska Southern Inside Hat/Wild Marked
+        '      PSCCohoHatchery(245) = 0  '- U-soakhw	Alaska Southern Outside Hat/Wild UnMarked
+        '      PSCCohoHatchery(246) = 0  '- M-soakhw	Alaska Southern Outside Hat/Wild Marked
 
-      '- Fishery Numbers  167-193 are Canadian
-      '- Stock Numbers  Odd Numbers are UnMarked, Even Numbers are Marked
+        '      '- Fishery Numbers  167-193 are Canadian
+        '      '- Stock Numbers  Odd Numbers are UnMarked, Even Numbers are Marked
 
-      'CmdStr = "SELECT RunID.RunYear, Mortality.StockID, Mortality.FisheryID, Mortality.TimeStep, Mortality.LandedCatch," & _
-      '   "Mortality.NonRetention, Mortality.Shaker, Mortality.LegalShaker, Mortality.DropOff" & _
-      '   " FROM Mortality INNER JOIN RunID ON Mortality.RunID = RunID.RunID ORDER BY RunID.RunYear;"
-      CmdStr = "SELECT RunID.RunYear, Mortality.StockID, Mortality.FisheryID, Mortality.TimeStep," & _
-         " Mortality.LandedCatch,Mortality.NonRetention, Mortality.Shaker, Mortality.DropOff," & _
-         " Mortality.MSFLandedCatch,Mortality.MSFNonRetention, Mortality.MSFShaker, Mortality.MSFDropOff" & _
-         " FROM Mortality INNER JOIN RunID ON Mortality.RunID = RunID.RunID ORDER BY RunID.RunYear;"
+        '      'CmdStr = "SELECT RunID.RunYear, Mortality.StockID, Mortality.FisheryID, Mortality.TimeStep, Mortality.LandedCatch," & _
+        '      '   "Mortality.NonRetention, Mortality.Shaker, Mortality.LegalShaker, Mortality.DropOff" & _
+        '      '   " FROM Mortality INNER JOIN RunID ON Mortality.RunID = RunID.RunID ORDER BY RunID.RunYear;"
+        '      CmdStr = "SELECT RunID.RunYear, Mortality.StockID, Mortality.FisheryID, Mortality.TimeStep," & _
+        '         " Mortality.LandedCatch,Mortality.NonRetention, Mortality.Shaker, Mortality.DropOff," & _
+        '         " Mortality.MSFLandedCatch,Mortality.MSFNonRetention, Mortality.MSFShaker, Mortality.MSFDropOff" & _
+        '         " FROM Mortality INNER JOIN RunID ON Mortality.RunID = RunID.RunID ORDER BY RunID.RunYear;"
 
-      Dim Mcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      Dim MortalityDA As New System.Data.OleDb.OleDbDataAdapter
-      MortalityDA.SelectCommand = Mcm
-      Dim Mcb As New OleDb.OleDbCommandBuilder
-      Mcb = New OleDb.OleDbCommandBuilder(MortalityDA)
-      If FramDataSet.Tables.Contains("PSCIntercept") Then
-         FramDataSet.Tables("PSCIntercept").Clear()
-      End If
-      MortalityDA.Fill(FramDataSet, "PSCIntercept")
-      Dim NumM As Integer
-      NumM = FramDataSet.Tables("PSCIntercept").Rows.Count
+        '      Dim Mcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        '      Dim MortalityDA As New System.Data.OleDb.OleDbDataAdapter
+        '      MortalityDA.SelectCommand = Mcm
+        '      Dim Mcb As New OleDb.OleDbCommandBuilder
+        '      Mcb = New OleDb.OleDbCommandBuilder(MortalityDA)
+        '      If FramDataSet.Tables.Contains("PSCIntercept") Then
+        '         FramDataSet.Tables("PSCIntercept").Clear()
+        '      End If
+        '      MortalityDA.Fill(FramDataSet, "PSCIntercept")
+        '      Dim NumM As Integer
+        '      NumM = FramDataSet.Tables("PSCIntercept").Rows.Count
 
-      '- Loop through Table Records for Actual Values
-      For RecNum = 0 To NumM - 1
-         RunYear = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(0)
-         Stk = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(1)
-         Fish = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(2)
-         TStep = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(3)
-         LCat = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(4)
-         CNR = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(5)
-         Shak = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(6)
-         Drop = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(7)
-         MLCat = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(8)
-         MCNR = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(9)
-         MShak = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(10)
-         MDrop = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(11)
+        '      '- Loop through Table Records for Actual Values
+        '      For RecNum = 0 To NumM - 1
+        '         RunYear = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(0)
+        '         Stk = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(1)
+        '         Fish = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(2)
+        '         TStep = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(3)
+        '         LCat = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(4)
+        '         CNR = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(5)
+        '         Shak = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(6)
+        '         Drop = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(7)
+        '         MLCat = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(8)
+        '         MCNR = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(9)
+        '         MShak = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(10)
+        '         MDrop = FramDataSet.Tables("PSCIntercept").Rows(RecNum)(11)
 
-         If PSCCohoHatchery(Stk) = 0 Then GoTo NextCohoStock
+        '         If PSCCohoHatchery(Stk) = 0 Then GoTo NextCohoStock
 
-         If PSCCohoHatchery(Stk) = 1 Then
-            '- US Hatchery Fish
-            If Fish >= 167 And Fish <= 193 Then
-               '- Canadian Catch of US Hatchery Fish
-               If Stk Mod 2 = 0 And RunYear > 1997 Then
-                  '- Marked
-                  PSCIntercept(RunYear - 1985, 2) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
-               Else
-                  '- UnMarked
-                  PSCIntercept(RunYear - 1985, 3) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
-               End If
-            End If
-         Else
-            '- Canadian Hatchery Fish
-            If Fish < 167 Or Fish > 193 Then
-               '- US Catch of Canadian Hatchery Fish
-               If Stk Mod 2 = 0 And RunYear > 1997 Then
-                  '- Marked
-                  PSCIntercept(RunYear - 1985, 0) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
-               Else
-                  '- UnMarked
-                  PSCIntercept(RunYear - 1985, 1) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
-               End If
-            End If
-         End If
+        '         If PSCCohoHatchery(Stk) = 1 Then
+        '            '- US Hatchery Fish
+        '            If Fish >= 167 And Fish <= 193 Then
+        '               '- Canadian Catch of US Hatchery Fish
+        '               If Stk Mod 2 = 0 And RunYear > 1997 Then
+        '                  '- Marked
+        '                  PSCIntercept(RunYear - 1985, 2) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '               Else
+        '                  '- UnMarked
+        '                  PSCIntercept(RunYear - 1985, 3) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '               End If
+        '            End If
+        '         Else
+        '            '- Canadian Hatchery Fish
+        '            If Fish < 167 Or Fish > 193 Then
+        '               '- US Catch of Canadian Hatchery Fish
+        '               If Stk Mod 2 = 0 And RunYear > 1997 Then
+        '                  '- Marked
+        '                  PSCIntercept(RunYear - 1985, 0) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '               Else
+        '                  '- UnMarked
+        '                  PSCIntercept(RunYear - 1985, 1) += LCat + CNR + Shak + Drop + MLCat + MCNR + MShak + MDrop
+        '               End If
+        '            End If
+        '         End If
 
-NextCohoStock:
+        'NextCohoStock:
 
-      Next
-      MortalityDA = Nothing
+        '      Next
+        '      MortalityDA = Nothing
 
-      xlWorkSheet = xlWorkBook.Sheets("Hatchery Intercept")
+        '      xlWorkSheet = xlWorkBook.Sheets("Hatchery Intercept")
 
-      'Transfer array to the worksheet starting at cell B3.
-      xlWorkSheet.Range("B3").Resize(30, 4).Value = PSCIntercept
-      Dim CellAddress As String
-      For Fish As Integer = 0 To 29
-         CellAddress = "A" & (Fish + 3).ToString
-         If Fish = 0 Then
-            xlWorkSheet.Range(CellAddress).Value = "Base"
-         Else
-            xlWorkSheet.Range(CellAddress).Value = (Fish + 1985).ToString
-         End If
-      Next
+        '      'Transfer array to the worksheet starting at cell B3.
+        '      xlWorkSheet.Range("B3").Resize(30, 4).Value = PSCIntercept
+        '      Dim CellAddress As String
+        '      For Fish As Integer = 0 To 29
+        '         CellAddress = "A" & (Fish + 3).ToString
+        '         If Fish = 0 Then
+        '            xlWorkSheet.Range(CellAddress).Value = "Base"
+        '         Else
+        '            xlWorkSheet.Range(CellAddress).Value = (Fish + 1985).ToString
+        '         End If
+        '      Next
 
-      Exit Sub
+        '      Exit Sub
 
    End Sub
 

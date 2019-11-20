@@ -176,13 +176,14 @@ Partial Class FVS_BackwardsTarget
         Me.BTCatchButton.TabIndex = 20
         Me.BTCatchButton.Text = "Load Back-Fram Catch"
         Me.BTCatchButton.UseVisualStyleBackColor = False
+        Me.BTCatchButton.Visible = False
         '
         'FVS_BackwardsTarget
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(1004, 855)
+        Me.ClientSize = New System.Drawing.Size(1004, 701)
         Me.Controls.Add(Me.BTCatchButton)
         Me.Controls.Add(Me.RecordSetNameLabel)
         Me.Controls.Add(Me.DatabaseNameLabel)

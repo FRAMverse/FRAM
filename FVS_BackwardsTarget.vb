@@ -551,156 +551,156 @@ CloseEscWorkbook:
    '--------------------------=============================
    Private Sub BTCatchButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BTCatchButton.Click
 
-      If SpeciesName = "CHINOOK" Then
-         MsgBox("Currently there are no Backwards FRAM Chinook Input Spreadsheets" & "Function to be Implemented later", MsgBoxStyle.OkOnly)
-         Exit Sub
-      End If
+        '      If SpeciesName = "CHINOOK" Then
+        '         MsgBox("Currently there are no Backwards FRAM Chinook Input Spreadsheets" & "Function to be Implemented later", MsgBoxStyle.OkOnly)
+        '         Exit Sub
+        '      End If
 
-      Dim OpenBACKFRAMspreadsheet As New OpenFileDialog()
-      Dim I As Integer
+        '      Dim OpenBACKFRAMspreadsheet As New OpenFileDialog()
+        '      Dim I As Integer
 
-      '==================
-      '- Test if Excel was Running
-      ExcelWasNotRunning = True
-      Try
-         xlApp = System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application")
-         ExcelWasNotRunning = False
-      Catch ex As Exception
-         xlApp = New Microsoft.Office.Interop.Excel.Application()
-      End Try
+        '      '==================
+        '      '- Test if Excel was Running
+        '      ExcelWasNotRunning = True
+        '      Try
+        '         xlApp = System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application")
+        '         ExcelWasNotRunning = False
+        '      Catch ex As Exception
+        '         xlApp = New Microsoft.Office.Interop.Excel.Application()
+        '      End Try
 
-      OpenBACKFRAMspreadsheet.Filter = "BACKFRAM Spreadsheets (*.xls)|*.xls|All files (*.*)|*.*"
-      OpenBACKFRAMspreadsheet.FilterIndex = 1
-      OpenBACKFRAMspreadsheet.RestoreDirectory = True
+        '      OpenBACKFRAMspreadsheet.Filter = "BACKFRAM Spreadsheets (*.xls)|*.xls|All files (*.*)|*.*"
+        '      OpenBACKFRAMspreadsheet.FilterIndex = 1
+        '      OpenBACKFRAMspreadsheet.RestoreDirectory = True
 
-      If OpenBACKFRAMspreadsheet.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-         BACKFRAMSpreadSheet = OpenBACKFRAMspreadsheet.FileName
-         BACKFRAMSpreadSheetPath = My.Computer.FileSystem.GetFileInfo(BACKFRAMSpreadSheet).DirectoryName
-      Else
-         Exit Sub
-      End If
+        '      If OpenBACKFRAMspreadsheet.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+        '         BACKFRAMSpreadSheet = OpenBACKFRAMspreadsheet.FileName
+        '         BACKFRAMSpreadSheetPath = My.Computer.FileSystem.GetFileInfo(BACKFRAMSpreadSheet).DirectoryName
+        '      Else
+        '         Exit Sub
+        '      End If
 
-      '- Test if Excel was Running
-      ExcelWasNotRunning = True
-      Try
-         xlApp = System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application")
-         ExcelWasNotRunning = False
-      Catch ex As Exception
-         xlApp = New Microsoft.Office.Interop.Excel.Application()
-      End Try
+        '      '- Test if Excel was Running
+        '      ExcelWasNotRunning = True
+        '      Try
+        '         xlApp = System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application")
+        '         ExcelWasNotRunning = False
+        '      Catch ex As Exception
+        '         xlApp = New Microsoft.Office.Interop.Excel.Application()
+        '      End Try
 
-      '- Test if TAMM Workbook is Open
-      WorkBookWasNotOpen = True
-      Dim wbName As String
-      wbName = My.Computer.FileSystem.GetFileInfo(BACKFRAMSpreadSheet).Name
-      For Each xlWorkBook In xlApp.Workbooks
-         If xlWorkBook.Name = wbName Then
-            xlWorkBook.Activate()
-            WorkBookWasNotOpen = False
-            GoTo SkipWBOpen
-         End If
-      Next
-      xlWorkBook = xlApp.Workbooks.Open(BACKFRAMSpreadSheet)
-      xlApp.WindowState = Excel.XlWindowState.xlMinimized
-SkipWBOpen:
+        '      '- Test if TAMM Workbook is Open
+        '      WorkBookWasNotOpen = True
+        '      Dim wbName As String
+        '      wbName = My.Computer.FileSystem.GetFileInfo(BACKFRAMSpreadSheet).Name
+        '      For Each xlWorkBook In xlApp.Workbooks
+        '         If xlWorkBook.Name = wbName Then
+        '            xlWorkBook.Activate()
+        '            WorkBookWasNotOpen = False
+        '            GoTo SkipWBOpen
+        '         End If
+        '      Next
+        '      xlWorkBook = xlApp.Workbooks.Open(BACKFRAMSpreadSheet)
+        '      xlApp.WindowState = Excel.XlWindowState.xlMinimized
+        'SkipWBOpen:
 
-      xlApp.Application.DisplayAlerts = False
-      xlApp.Visible = False
-      xlApp.WindowState = Excel.XlWindowState.xlMinimized
+        '      xlApp.Application.DisplayAlerts = False
+        '      xlApp.Visible = False
+        '      xlApp.WindowState = Excel.XlWindowState.xlMinimized
 
-      '- Find WorkSheets with FRAM Catch numbers
-      ReDim BFCatchYears(50)
-      I = 1
-      For Each xlWorkSheet In xlWorkBook.Worksheets
-         If xlWorkSheet.Name.Length > 7 Then
-            If xlWorkSheet.Name.Substring(4, 4) = "FRAM" And IsNumeric(xlWorkSheet.Name.Substring(0, 4)) Then
-               BFCatchYears(I) = CInt(xlWorkSheet.Name.Substring(0, 4))
-               I += 1
-            End If
-         End If
-      Next
+        '      '- Find WorkSheets with FRAM Catch numbers
+        '      ReDim BFCatchYears(50)
+        '      I = 1
+        '      For Each xlWorkSheet In xlWorkBook.Worksheets
+        '         If xlWorkSheet.Name.Length > 7 Then
+        '            If xlWorkSheet.Name.Substring(4, 4) = "FRAM" And IsNumeric(xlWorkSheet.Name.Substring(0, 4)) Then
+        '               BFCatchYears(I) = CInt(xlWorkSheet.Name.Substring(0, 4))
+        '               I += 1
+        '            End If
+        '         End If
+        '      Next
 
-      '-Check if WorkBook contains any FRAM#### WorkSheets
-      If I = 1 Then
-         MsgBox("Can't Find BackFRAM Catch WorkSheet in your DataBase Selection" & vbCrLf & _
-                "Please Choose appropriate DataBase with Backwards FRAM Catch!", MsgBoxStyle.OkOnly)
-         GoTo CloseBFWorkBook
-      End If
+        '      '-Check if WorkBook contains any FRAM#### WorkSheets
+        '      If I = 1 Then
+        '         MsgBox("Can't Find BackFRAM Catch WorkSheet in your DataBase Selection" & vbCrLf & _
+        '                "Please Choose appropriate DataBase with Backwards FRAM Catch!", MsgBoxStyle.OkOnly)
+        '         GoTo CloseBFWorkBook
+        '      End If
 
-      '- User Year Selection
-      BFYearSelectType = 2
-      Me.Enabled = False
-      FVS_BackwardsYearSelect.ShowDialog()
-      Me.BringToFront()
+        '      '- User Year Selection
+        '      BFYearSelectType = 2
+        '      Me.Enabled = False
+        '      FVS_BackwardsYearSelect.ShowDialog()
+        '      Me.BringToFront()
 
-      '- Find WorkSheet matching Year Selection
-      For Each xlWorkSheet In xlWorkBook.Worksheets
-         If xlWorkSheet.Name.Length > 7 Then
-            If xlWorkSheet.Name.Substring(4, 4) = "FRAM" And IsNumeric(xlWorkSheet.Name.Substring(0, 4)) Then
-               If CInt(xlWorkSheet.Name.Substring(0, 4)) = BFYearSelection Then Exit For
-            End If
-         End If
-      Next
+        '      '- Find WorkSheet matching Year Selection
+        '      For Each xlWorkSheet In xlWorkBook.Worksheets
+        '         If xlWorkSheet.Name.Length > 7 Then
+        '            If xlWorkSheet.Name.Substring(4, 4) = "FRAM" And IsNumeric(xlWorkSheet.Name.Substring(0, 4)) Then
+        '               If CInt(xlWorkSheet.Name.Substring(0, 4)) = BFYearSelection Then Exit For
+        '            End If
+        '         End If
+        '      Next
 
-      '- Load WorkSheet Catch into Quota Array (Change Flag)
-      Dim CellAddress As String
-      Dim FlagAddress As String
-      Dim FlagValue As Integer
-      For Fish As Integer = 1 To NumFish
-         For TStep As Integer = 1 To NumSteps
-            CellAddress = ""
-            FlagAddress = ""
-            Select Case TStep
-               Case 1
-                  CellAddress = "C" & CStr(Fish + 3)
-                  FlagAddress = "D" & CStr(Fish + 3)
-               Case 2
-                  CellAddress = "E" & CStr(Fish + 3)
-                  FlagAddress = "F" & CStr(Fish + 3)
-               Case 3
-                  CellAddress = "G" & CStr(Fish + 3)
-                  FlagAddress = "H" & CStr(Fish + 3)
-               Case 4
-                  CellAddress = "I" & CStr(Fish + 3)
-                  FlagAddress = "J" & CStr(Fish + 3)
-               Case 5
-                  CellAddress = "K" & CStr(Fish + 3)
-                  FlagAddress = "L" & CStr(Fish + 3)
-            End Select
-            If IsNumeric(xlWorkSheet.Range(CellAddress).Value) Then
-               If CInt(xlWorkSheet.Range(CellAddress).Value) < 0 Or CInt(xlWorkSheet.Range(CellAddress).Value) > 999999 Then GoTo NextBFCatch
-               FisheryQuota(Fish, TStep) = CInt(xlWorkSheet.Range(CellAddress).Value)
-               If IsNumeric(xlWorkSheet.Range(FlagAddress).Value) Then
-                  FlagValue = xlWorkSheet.Range(FlagAddress).Value
-                  If FlagValue = 8 Then
-                     FisheryFlag(Fish, TStep) = 8
-                  Else
-                     FisheryFlag(Fish, TStep) = 2
-                  End If
-               End If
-            End If
-NextBFCatch:
-         Next
-      Next
+        '      '- Load WorkSheet Catch into Quota Array (Change Flag)
+        '      Dim CellAddress As String
+        '      Dim FlagAddress As String
+        '      Dim FlagValue As Integer
+        '      For Fish As Integer = 1 To NumFish
+        '         For TStep As Integer = 1 To NumSteps
+        '            CellAddress = ""
+        '            FlagAddress = ""
+        '            Select Case TStep
+        '               Case 1
+        '                  CellAddress = "C" & CStr(Fish + 3)
+        '                  FlagAddress = "D" & CStr(Fish + 3)
+        '               Case 2
+        '                  CellAddress = "E" & CStr(Fish + 3)
+        '                  FlagAddress = "F" & CStr(Fish + 3)
+        '               Case 3
+        '                  CellAddress = "G" & CStr(Fish + 3)
+        '                  FlagAddress = "H" & CStr(Fish + 3)
+        '               Case 4
+        '                  CellAddress = "I" & CStr(Fish + 3)
+        '                  FlagAddress = "J" & CStr(Fish + 3)
+        '               Case 5
+        '                  CellAddress = "K" & CStr(Fish + 3)
+        '                  FlagAddress = "L" & CStr(Fish + 3)
+        '            End Select
+        '            If IsNumeric(xlWorkSheet.Range(CellAddress).Value) Then
+        '               If CInt(xlWorkSheet.Range(CellAddress).Value) < 0 Or CInt(xlWorkSheet.Range(CellAddress).Value) > 999999 Then GoTo NextBFCatch
+        '               FisheryQuota(Fish, TStep) = CInt(xlWorkSheet.Range(CellAddress).Value)
+        '               If IsNumeric(xlWorkSheet.Range(FlagAddress).Value) Then
+        '                  FlagValue = xlWorkSheet.Range(FlagAddress).Value
+        '                  If FlagValue = 8 Then
+        '                     FisheryFlag(Fish, TStep) = 8
+        '                  Else
+        '                     FisheryFlag(Fish, TStep) = 2
+        '                  End If
+        '               End If
+        '            End If
+        'NextBFCatch:
+        '         Next
+        '      Next
 
-      ChangeBackFram = True
+        '      ChangeBackFram = True
 
-CloseBFWorkBook:
-      '- Done with TAMM WorkBook for this run .. Close and release object
-      xlApp.Application.DisplayAlerts = False
-      xlWorkBook.Save()
-      If WorkBookWasNotOpen = True Then
-         xlWorkBook.Close()
-      End If
-      If ExcelWasNotRunning = True Then
-         xlApp.Application.Quit()
-         xlApp.Quit()
-      Else
-         xlApp.Visible = True
-         xlApp.WindowState = Excel.XlWindowState.xlMinimized
-      End If
-      xlApp.Application.DisplayAlerts = True
-      xlApp = Nothing
+        'CloseBFWorkBook:
+        '      '- Done with TAMM WorkBook for this run .. Close and release object
+        '      xlApp.Application.DisplayAlerts = False
+        '      xlWorkBook.Save()
+        '      If WorkBookWasNotOpen = True Then
+        '         xlWorkBook.Close()
+        '      End If
+        '      If ExcelWasNotRunning = True Then
+        '         xlApp.Application.Quit()
+        '         xlApp.Quit()
+        '      Else
+        '         xlApp.Visible = True
+        '         xlApp.WindowState = Excel.XlWindowState.xlMinimized
+        '      End If
+        '      xlApp.Application.DisplayAlerts = True
+        '      xlApp = Nothing
 
    End Sub
 
