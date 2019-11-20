@@ -73,21 +73,21 @@ Public Class FVS_PSCCohoERScreen
          PSCERGrid.Columns(9).Width = 100 / FormWidthScaler
          PSCERGrid.Columns(9).DefaultCellStyle.Format = ("###0.0000")
          PSCERGrid.Columns(9).DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
-         PSCERGrid.RowCount = 17
+            PSCERGrid.RowCount = 13
       End If
 
       '- Sum Mortalities, Calculate ERs
       Call CalculatePSCCohoER()
 
       '- Put ERs into Grid
-      For Stk = 1 To 17
-         PSCERGrid.Item(0, Stk - 1).Value = PSCStockName(Stk)
-         For Col = 2 To 9
-            PSCERGrid.Item(Col - 1, Stk - 1).Value = PSCER(Stk, Col).ToString("###0.0000")
-         Next
-         '- Totals Line
-         PSCERGrid.Item(Col - 1, Stk - 1).Value = (PSCER(Stk, 2) + PSCER(Stk, 6)).ToString("###0.0000")
-      Next
+        For Stk = 1 To 13
+            PSCERGrid.Item(0, Stk - 1).Value = PSCStockName(Stk)
+            For Col = 2 To 9
+                PSCERGrid.Item(Col - 1, Stk - 1).Value = PSCER(Stk, Col).ToString("###0.0000")
+            Next
+            '- Totals Line
+            PSCERGrid.Item(Col - 1, Stk - 1).Value = (PSCER(Stk, 2) + PSCER(Stk, 6)).ToString("###0.0000")
+        Next
 
    End Sub
 
@@ -140,10 +140,10 @@ Public Class FVS_PSCCohoERScreen
       PSCStockName(11) = "Upper Fraser"
       PSCStockName(12) = "Georgia Mainland"
       PSCStockName(13) = "Georgia Vanc Isl"
-      PSCStockName(14) = "Puyallup Hatch"
-      PSCStockName(15) = "Skookum Hatch"
-      PSCStockName(16) = "Deschutes Wild"
-      PSCStockName(17) = "SPS Net Pens"
+        PSCStockName(14) = "Puyallup Hatch"
+        PSCStockName(15) = "Skookum Hatch"
+        PSCStockName(16) = "Deschutes Wild"
+        PSCStockName(17) = "SPS Net Pens"
 
       '- Number of FRAM Stocks to Group
       PSCGroup(1, 0) = 2
@@ -197,69 +197,69 @@ Public Class FVS_PSCCohoERScreen
       End If
       PSCGroup(12, 1) = 207 '- Georgia Str Mainland Wild
       PSCGroup(13, 1) = 211 '- Georgia Str Vanc Isl Wild
-      PSCGroup(14, 1) = 83 '- Puyallup Hatchery
-      PSCGroup(15, 1) = 5 '- Skookum Hatchery
-      PSCGroup(16, 1) = 63 '- Deschutes Wild
-      PSCGroup(17, 1) = 65 '- South Sound Net Pens
+        PSCGroup(14, 1) = 83 '- Puyallup Hatchery
+        PSCGroup(15, 1) = 5 '- Skookum Hatchery
+        PSCGroup(16, 1) = 63 '- Deschutes Wild
+        PSCGroup(17, 1) = 65 '- South Sound Net Pens
 
       '- Get ESCAPEMENT Data and put into array dimension-1
       Age = 3
       For TStep = 4 To 5
-         For StkGroup = 1 To 17
-            For StkList = 1 To PSCGroup(StkGroup, 0)
-               Stk = PSCGroup(StkGroup, StkList)
-               PSCER(StkGroup, 1) = PSCER(StkGroup, 1) + Escape(Stk, Age, TStep)
+            For StkGroup = 1 To 17
+                For StkList = 1 To PSCGroup(StkGroup, 0)
+                    Stk = PSCGroup(StkGroup, StkList)
+                    PSCER(StkGroup, 1) = PSCER(StkGroup, 1) + Escape(Stk, Age, TStep)
+                Next
             Next
-         Next
       Next
 
       '- Get Catch by US/Canada and put into appropriate array dimensions
       For Fish = 1 To NumFish
-         For StkGroup = 1 To 17
-            For StkList = 1 To PSCGroup(StkGroup, 0)
-               Stk = PSCGroup(StkGroup, StkList)
-               For TStep = 1 To NumSteps
-                  If NumStk = 256 Then
-                     If Fish > 166 And Fish < 202 Then '- Canadian Catch
-                        PSCER(StkGroup, 3) = PSCER(StkGroup, 3) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
-                     Else
-                        PSCER(StkGroup, 2) = PSCER(StkGroup, 2) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
-                     End If
-                  Else
-                     If Fish > 166 And Fish < 194 Then
-                        '- Canadian Catch
-                        PSCER(StkGroup, 6) = PSCER(StkGroup, 6) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
-                     End If
-                     If Fish < 167 Or Fish > 193 Then
-                        '- US Catch
-                        PSCER(StkGroup, 2) = PSCER(StkGroup, 2) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
-                     End If
-                     If Fish > 0 And Fish < 23 Or Fish > 32 And Fish < 44 Or Fish = 79 Or Fish > 193 And Fish < 199 Then 'US Ocean
-                        PSCER(StkGroup, 3) = PSCER(StkGroup, 3) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
-                     End If
-                     If Fish = 44 Or Fish > 79 And Fish < 167 Then
-                        '- Puget Sound
-                        PSCER(StkGroup, 4) = PSCER(StkGroup, 4) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
-                     End If
-                     If Fish > 22 And Fish < 33 Or Fish > 44 And Fish < 79 Then
-                        '- US Other
-                        PSCER(StkGroup, 5) = PSCER(StkGroup, 5) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
-                     End If
-                     If Fish > 170 And Fish < 176 Or Fish > 177 And Fish < 182 Or Fish > 186 And Fish < 189 Or Fish = 190 Then 'BC Ocean
-                        PSCER(StkGroup, 7) = PSCER(StkGroup, 7) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
-                     End If
-                     If Fish = 176 Or Fish = 183 Or Fish > 190 And Fish < 193 Then
-                        '- Georgia Strait
-                        PSCER(StkGroup, 8) = PSCER(StkGroup, 8) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
-                     End If
-                     If Fish > 166 And Fish < 171 Or Fish = 177 Or Fish = 182 Or Fish > 183 And Fish < 187 Or Fish = 189 Or Fish = 193 Then
-                        '- BC Other
-                        PSCER(StkGroup, 9) = PSCER(StkGroup, 9) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
-                     End If
-                  End If
-               Next
+            For StkGroup = 1 To 17
+                For StkList = 1 To PSCGroup(StkGroup, 0)
+                    Stk = PSCGroup(StkGroup, StkList)
+                    For TStep = 1 To NumSteps
+                        If NumStk = 256 Then
+                            If Fish > 166 And Fish < 202 Then '- Canadian Catch
+                                PSCER(StkGroup, 3) = PSCER(StkGroup, 3) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
+                            Else
+                                PSCER(StkGroup, 2) = PSCER(StkGroup, 2) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
+                            End If
+                        Else
+                            If Fish > 166 And Fish < 194 Then
+                                '- Canadian Catch
+                                PSCER(StkGroup, 6) = PSCER(StkGroup, 6) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
+                            End If
+                            If Fish < 167 Or Fish > 193 Then
+                                '- US Catch
+                                PSCER(StkGroup, 2) = PSCER(StkGroup, 2) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
+                            End If
+                            If Fish > 0 And Fish < 23 Or Fish > 32 And Fish < 44 Or Fish = 79 Or Fish > 193 And Fish < 199 Then 'US Ocean
+                                PSCER(StkGroup, 3) = PSCER(StkGroup, 3) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
+                            End If
+                            If Fish = 44 Or Fish > 79 And Fish < 167 Then
+                                '- Puget Sound
+                                PSCER(StkGroup, 4) = PSCER(StkGroup, 4) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
+                            End If
+                            If Fish > 22 And Fish < 33 Or Fish > 44 And Fish < 79 Then
+                                '- US Other
+                                PSCER(StkGroup, 5) = PSCER(StkGroup, 5) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
+                            End If
+                            If Fish > 170 And Fish < 176 Or Fish > 177 And Fish < 182 Or Fish > 186 And Fish < 189 Or Fish = 190 Then 'BC Ocean
+                                PSCER(StkGroup, 7) = PSCER(StkGroup, 7) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
+                            End If
+                            If Fish = 176 Or Fish = 183 Or Fish > 190 And Fish < 193 Then
+                                '- Georgia Strait
+                                PSCER(StkGroup, 8) = PSCER(StkGroup, 8) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
+                            End If
+                            If Fish > 166 And Fish < 171 Or Fish = 177 Or Fish = 182 Or Fish > 183 And Fish < 187 Or Fish = 189 Or Fish = 193 Then
+                                '- BC Other
+                                PSCER(StkGroup, 9) = PSCER(StkGroup, 9) + LandedCatch(Stk, Age, Fish, TStep) + NonRetention(Stk, Age, Fish, TStep) + DropOff(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) + MSFDropOff(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep)
+                            End If
+                        End If
+                    Next
+                Next
             Next
-         Next
       Next
       '- ReCalcualte Array for Exploitation Rates
       For Stk = 1 To 17
@@ -272,4 +272,7 @@ Public Class FVS_PSCCohoERScreen
 
    End Sub
 
+    Private Sub PSCERGrid_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles PSCERGrid.CellContentClick
+
+    End Sub
 End Class
