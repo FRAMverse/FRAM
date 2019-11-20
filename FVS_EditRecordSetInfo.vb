@@ -31,6 +31,7 @@ Public Class FVS_EditRecordSetInfo
          ModifyInputDateLabel.Text = RunIDModifyInputDateSelect.ToString
             RunTimeDateLabel.Text = RunIDRunTimeDateSelect.ToString
             RunYearTextBox.Text = RunIDYearSelect.ToString
+            txtRunType.Text = RunIDTypeSelect.ToString
         ElseIf RecordsetSelectionType = 4 Or RecordsetSelectionType = 5 Then
             '- EDIT New RunID Header Information (from Copied Recordset)
             Dim drd1 As OleDb.OleDbDataReader
@@ -56,6 +57,7 @@ Public Class FVS_EditRecordSetInfo
             RunNameTextBox.Text = "COPY OF " & RunIDNameSelect.ToString
             RunTitleTextBox.Text = RunIDTitleSelect.ToString
             RunYearTextBox.Text = RunIDYearSelect.ToString
+            txtRunType.Text = RunIDTypeSelect.ToString
             CommentsRichTextBox.Text = RunIDCommentsSelect
             CreationDateLabel.Text = Now.ToString
             ModifyInputDateLabel.Text = ""
@@ -101,6 +103,9 @@ Public Class FVS_EditRecordSetInfo
         If RunYearTextBox.Text <> RunIDYearSelect.ToString Then
             AnyChange = True
         End If
+        If txtRunType.Text <> RunIDYearSelect.ToString Then
+            AnyChange = True
+        End If
 
         If RecordsetSelectionType = 4 Or RecordsetSelectionType = 5 Then
             If AnyChange = False Then
@@ -133,6 +138,7 @@ Public Class FVS_EditRecordSetInfo
         RunIDTitleSelect = RunTitleTextBox.Text
         RunIDCommentsSelect = CommentsRichTextBox.Text
         RunIDYearSelect = RunYearTextBox.Text
+        RunIDTypeSelect = txtRunType.Text
         Dim CmdStr As String
         '- DataApapter SELECT Statement
         CmdStr = "SELECT * FROM RunID WHERE RunID = " & RunIDSelect.ToString & " ORDER BY StockID, Age, TimeStep"

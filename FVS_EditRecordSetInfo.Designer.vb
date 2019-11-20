@@ -47,6 +47,8 @@ Partial Class FVS_EditRecordSetInfo
         Me.BasePeriodNameLabel = New System.Windows.Forms.Label
         Me.lblRunYear = New System.Windows.Forms.Label
         Me.RunYearTextBox = New System.Windows.Forms.TextBox
+        Me.Label11 = New System.Windows.Forms.Label
+        Me.txtRunType = New System.Windows.Forms.TextBox
         Me.SuspendLayout()
         '
         'RSETitle
@@ -103,7 +105,7 @@ Partial Class FVS_EditRecordSetInfo
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(98, 315)
+        Me.Label5.Location = New System.Drawing.Point(98, 337)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(82, 17)
         Me.Label5.TabIndex = 5
@@ -178,9 +180,9 @@ Partial Class FVS_EditRecordSetInfo
         'CommentsRichTextBox
         '
         Me.CommentsRichTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CommentsRichTextBox.Location = New System.Drawing.Point(246, 315)
+        Me.CommentsRichTextBox.Location = New System.Drawing.Point(245, 354)
         Me.CommentsRichTextBox.Name = "CommentsRichTextBox"
-        Me.CommentsRichTextBox.Size = New System.Drawing.Size(585, 204)
+        Me.CommentsRichTextBox.Size = New System.Drawing.Size(585, 178)
         Me.CommentsRichTextBox.TabIndex = 13
         Me.CommentsRichTextBox.Text = ""
         '
@@ -294,12 +296,32 @@ Partial Class FVS_EditRecordSetInfo
         Me.RunYearTextBox.Size = New System.Drawing.Size(188, 23)
         Me.RunYearTextBox.TabIndex = 24
         '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Location = New System.Drawing.Point(98, 308)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(73, 17)
+        Me.Label11.TabIndex = 25
+        Me.Label11.Text = "RunType"
+        '
+        'txtRunType
+        '
+        Me.txtRunType.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtRunType.Location = New System.Drawing.Point(246, 308)
+        Me.txtRunType.Name = "txtRunType"
+        Me.txtRunType.Size = New System.Drawing.Size(188, 23)
+        Me.txtRunType.TabIndex = 26
+        '
         'FVS_EditRecordSetInfo
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(874, 684)
+        Me.Controls.Add(Me.txtRunType)
+        Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.RunYearTextBox)
         Me.Controls.Add(Me.lblRunYear)
         Me.Controls.Add(Me.BasePeriodNameLabel)
@@ -332,29 +354,31 @@ Partial Class FVS_EditRecordSetInfo
         Me.PerformLayout()
 
     End Sub
-   Friend WithEvents RSETitle As System.Windows.Forms.Label
-   Friend WithEvents Label1 As System.Windows.Forms.Label
-   Friend WithEvents Label2 As System.Windows.Forms.Label
-   Friend WithEvents Label3 As System.Windows.Forms.Label
-   Friend WithEvents Label4 As System.Windows.Forms.Label
-   Friend WithEvents Label5 As System.Windows.Forms.Label
-   Friend WithEvents Label6 As System.Windows.Forms.Label
-   Friend WithEvents Label7 As System.Windows.Forms.Label
-   Friend WithEvents Label8 As System.Windows.Forms.Label
-   Friend WithEvents RunIDLabel As System.Windows.Forms.Label
-   Friend WithEvents SpeciesNameLabel As System.Windows.Forms.Label
-   Friend WithEvents RunNameTextBox As System.Windows.Forms.TextBox
-   Friend WithEvents RunTitleTextBox As System.Windows.Forms.TextBox
-   Friend WithEvents CommentsRichTextBox As System.Windows.Forms.RichTextBox
-   Friend WithEvents CreationDateLabel As System.Windows.Forms.Label
-   Friend WithEvents ModifyInputDateLabel As System.Windows.Forms.Label
-   Friend WithEvents RunTimeDateLabel As System.Windows.Forms.Label
-   Friend WithEvents REDoneButton As System.Windows.Forms.Button
-   Friend WithEvents RECancelButton As System.Windows.Forms.Button
-   Friend WithEvents Label9 As System.Windows.Forms.Label
-   Friend WithEvents Label10 As System.Windows.Forms.Label
-   Friend WithEvents BasePeriodIDLabel As System.Windows.Forms.Label
+    Friend WithEvents RSETitle As System.Windows.Forms.Label
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents RunIDLabel As System.Windows.Forms.Label
+    Friend WithEvents SpeciesNameLabel As System.Windows.Forms.Label
+    Friend WithEvents RunNameTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents RunTitleTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents CommentsRichTextBox As System.Windows.Forms.RichTextBox
+    Friend WithEvents CreationDateLabel As System.Windows.Forms.Label
+    Friend WithEvents ModifyInputDateLabel As System.Windows.Forms.Label
+    Friend WithEvents RunTimeDateLabel As System.Windows.Forms.Label
+    Friend WithEvents REDoneButton As System.Windows.Forms.Button
+    Friend WithEvents RECancelButton As System.Windows.Forms.Button
+    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents BasePeriodIDLabel As System.Windows.Forms.Label
     Friend WithEvents BasePeriodNameLabel As System.Windows.Forms.Label
     Friend WithEvents lblRunYear As System.Windows.Forms.Label
     Friend WithEvents RunYearTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents Label11 As System.Windows.Forms.Label
+    Friend WithEvents txtRunType As System.Windows.Forms.TextBox
 End Class
