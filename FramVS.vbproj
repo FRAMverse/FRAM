@@ -93,6 +93,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="FVS_ActiveRateScaler.Designer.vb">
+      <DependentUpon>FVS_ActiveRateScaler.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FVS_ActiveRateScaler.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FVS_AdminPassword.Designer.vb">
       <DependentUpon>FVS_AdminPassword.vb</DependentUpon>
     </Compile>
@@ -268,7 +274,6 @@
       <DependentUpon>FVS_PSCMaxER.vb</DependentUpon>
     </Compile>
     <Compile Include="FVS_PSCMaxER.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="FVS_ModelRunSelection.Designer.vb">
       <DependentUpon>FVS_ModelRunSelection.vb</DependentUpon>
@@ -361,6 +366,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FVS_ActiveRateScaler.resx">
+      <DependentUpon>FVS_ActiveRateScaler.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="FVS_AdminPassword.resx">
       <DependentUpon>FVS_AdminPassword.vb</DependentUpon>
       <SubType>Designer</SubType>

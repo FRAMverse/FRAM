@@ -33,6 +33,7 @@ Partial Class FVS_StockFisheryScalerEdit
         Me.DatabaseNameLabel = New System.Windows.Forms.Label
         Me.RecordSetTextLabel = New System.Windows.Forms.Label
         Me.DatabaseTextLabel = New System.Windows.Forms.Label
+        Me.BtnShowScalers = New System.Windows.Forms.Button
         CType(Me.StockFisheryGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -73,7 +74,7 @@ Partial Class FVS_StockFisheryScalerEdit
         Me.SFTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SFTitle.Location = New System.Drawing.Point(203, 18)
         Me.SFTitle.Name = "SFTitle"
-        Me.SFTitle.Size = New System.Drawing.Size(560, 29)
+        Me.SFTitle.Size = New System.Drawing.Size(444, 24)
         Me.SFTitle.TabIndex = 3
         Me.SFTitle.Text = "Stock/Fishery Specific Exploitation Rate Scaler"
         '
@@ -83,7 +84,7 @@ Partial Class FVS_StockFisheryScalerEdit
         Me.SFSTitleLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SFSTitleLabel.Location = New System.Drawing.Point(24, 40)
         Me.SFSTitleLabel.Name = "SFSTitleLabel"
-        Me.SFSTitleLabel.Size = New System.Drawing.Size(120, 17)
+        Me.SFSTitleLabel.Size = New System.Drawing.Size(93, 13)
         Me.SFSTitleLabel.TabIndex = 19
         Me.SFSTitleLabel.Text = "Choose Fishery"
         '
@@ -94,7 +95,7 @@ Partial Class FVS_StockFisheryScalerEdit
         Me.SFSComboBox.FormattingEnabled = True
         Me.SFSComboBox.Location = New System.Drawing.Point(27, 57)
         Me.SFSComboBox.Name = "SFSComboBox"
-        Me.SFSComboBox.Size = New System.Drawing.Size(374, 28)
+        Me.SFSComboBox.Size = New System.Drawing.Size(374, 25)
         Me.SFSComboBox.TabIndex = 18
         '
         'SFSSelectedLabel
@@ -104,7 +105,7 @@ Partial Class FVS_StockFisheryScalerEdit
         Me.SFSSelectedLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SFSSelectedLabel.Location = New System.Drawing.Point(407, 65)
         Me.SFSSelectedLabel.Name = "SFSSelectedLabel"
-        Me.SFSSelectedLabel.Size = New System.Drawing.Size(156, 20)
+        Me.SFSSelectedLabel.Size = New System.Drawing.Size(134, 17)
         Me.SFSSelectedLabel.TabIndex = 17
         Me.SFSSelectedLabel.Text = "Fishery-Selection"
         '
@@ -115,7 +116,7 @@ Partial Class FVS_StockFisheryScalerEdit
         Me.RecordSetNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetNameLabel.Location = New System.Drawing.Point(103, 821)
         Me.RecordSetNameLabel.Name = "RecordSetNameLabel"
-        Me.RecordSetNameLabel.Size = New System.Drawing.Size(140, 20)
+        Me.RecordSetNameLabel.Size = New System.Drawing.Size(121, 17)
         Me.RecordSetNameLabel.TabIndex = 30
         Me.RecordSetNameLabel.Text = "recordset name"
         '
@@ -126,7 +127,7 @@ Partial Class FVS_StockFisheryScalerEdit
         Me.DatabaseNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseNameLabel.Location = New System.Drawing.Point(103, 787)
         Me.DatabaseNameLabel.Name = "DatabaseNameLabel"
-        Me.DatabaseNameLabel.Size = New System.Drawing.Size(136, 20)
+        Me.DatabaseNameLabel.Size = New System.Drawing.Size(119, 17)
         Me.DatabaseNameLabel.TabIndex = 29
         Me.DatabaseNameLabel.Text = "database name"
         '
@@ -136,7 +137,7 @@ Partial Class FVS_StockFisheryScalerEdit
         Me.RecordSetTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetTextLabel.Location = New System.Drawing.Point(20, 821)
         Me.RecordSetTextLabel.Name = "RecordSetTextLabel"
-        Me.RecordSetTextLabel.Size = New System.Drawing.Size(84, 17)
+        Me.RecordSetTextLabel.Size = New System.Drawing.Size(67, 13)
         Me.RecordSetTextLabel.TabIndex = 28
         Me.RecordSetTextLabel.Text = "RecordSet"
         '
@@ -146,9 +147,20 @@ Partial Class FVS_StockFisheryScalerEdit
         Me.DatabaseTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseTextLabel.Location = New System.Drawing.Point(20, 787)
         Me.DatabaseTextLabel.Name = "DatabaseTextLabel"
-        Me.DatabaseTextLabel.Size = New System.Drawing.Size(77, 17)
+        Me.DatabaseTextLabel.Size = New System.Drawing.Size(61, 13)
         Me.DatabaseTextLabel.TabIndex = 27
         Me.DatabaseTextLabel.Text = "Database"
+        '
+        'BtnShowScalers
+        '
+        Me.BtnShowScalers.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.BtnShowScalers.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnShowScalers.Location = New System.Drawing.Point(726, 57)
+        Me.BtnShowScalers.Name = "BtnShowScalers"
+        Me.BtnShowScalers.Size = New System.Drawing.Size(181, 37)
+        Me.BtnShowScalers.TabIndex = 31
+        Me.BtnShowScalers.Text = "Show Active Scalers"
+        Me.BtnShowScalers.UseVisualStyleBackColor = False
         '
         'FVS_StockFisheryScalerEdit
         '
@@ -156,6 +168,7 @@ Partial Class FVS_StockFisheryScalerEdit
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(967, 848)
+        Me.Controls.Add(Me.BtnShowScalers)
         Me.Controls.Add(Me.RecordSetNameLabel)
         Me.Controls.Add(Me.DatabaseNameLabel)
         Me.Controls.Add(Me.RecordSetTextLabel)
@@ -175,15 +188,16 @@ Partial Class FVS_StockFisheryScalerEdit
         Me.PerformLayout()
 
     End Sub
-   Friend WithEvents SFDoneButton As System.Windows.Forms.Button
-   Friend WithEvents SFCancelButton As System.Windows.Forms.Button
-   Friend WithEvents StockFisheryGrid As System.Windows.Forms.DataGridView
-   Friend WithEvents SFTitle As System.Windows.Forms.Label
-   Friend WithEvents SFSTitleLabel As System.Windows.Forms.Label
-   Friend WithEvents SFSComboBox As System.Windows.Forms.ComboBox
-   Friend WithEvents SFSSelectedLabel As System.Windows.Forms.Label
-   Friend WithEvents RecordSetNameLabel As System.Windows.Forms.Label
-   Friend WithEvents DatabaseNameLabel As System.Windows.Forms.Label
-   Friend WithEvents RecordSetTextLabel As System.Windows.Forms.Label
-   Friend WithEvents DatabaseTextLabel As System.Windows.Forms.Label
+    Friend WithEvents SFDoneButton As System.Windows.Forms.Button
+    Friend WithEvents SFCancelButton As System.Windows.Forms.Button
+    Friend WithEvents StockFisheryGrid As System.Windows.Forms.DataGridView
+    Friend WithEvents SFTitle As System.Windows.Forms.Label
+    Friend WithEvents SFSTitleLabel As System.Windows.Forms.Label
+    Friend WithEvents SFSComboBox As System.Windows.Forms.ComboBox
+    Friend WithEvents SFSSelectedLabel As System.Windows.Forms.Label
+    Friend WithEvents RecordSetNameLabel As System.Windows.Forms.Label
+    Friend WithEvents DatabaseNameLabel As System.Windows.Forms.Label
+    Friend WithEvents RecordSetTextLabel As System.Windows.Forms.Label
+    Friend WithEvents DatabaseTextLabel As System.Windows.Forms.Label
+    Friend WithEvents BtnShowScalers As System.Windows.Forms.Button
 End Class

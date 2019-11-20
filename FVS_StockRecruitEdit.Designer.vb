@@ -22,19 +22,19 @@ Partial Class FVS_StockRecruitEdit
    'Do not modify it using the code editor.
    <System.Diagnostics.DebuggerStepThrough()> _
    Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.StockRecruitGrid = New System.Windows.Forms.DataGridView()
-        Me.SRDoneButton = New System.Windows.Forms.Button()
-        Me.SRCancelButton = New System.Windows.Forms.Button()
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.RecordSetNameLabel = New System.Windows.Forms.Label()
-        Me.DatabaseNameLabel = New System.Windows.Forms.Label()
-        Me.RecordSetTextLabel = New System.Windows.Forms.Label()
-        Me.DatabaseTextLabel = New System.Windows.Forms.Label()
-        Me.ReadRecruitsButton = New System.Windows.Forms.Button()
-        Me.FillRecruitSSButton = New System.Windows.Forms.Button()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.StockRecruitGrid = New System.Windows.Forms.DataGridView
+        Me.SRDoneButton = New System.Windows.Forms.Button
+        Me.SRCancelButton = New System.Windows.Forms.Button
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
+        Me.RecordSetNameLabel = New System.Windows.Forms.Label
+        Me.DatabaseNameLabel = New System.Windows.Forms.Label
+        Me.RecordSetTextLabel = New System.Windows.Forms.Label
+        Me.DatabaseTextLabel = New System.Windows.Forms.Label
+        Me.ReadRecruitsButton = New System.Windows.Forms.Button
+        Me.FillRecruitSSButton = New System.Windows.Forms.Button
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog
         CType(Me.StockRecruitGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -190,7 +190,7 @@ Partial Class FVS_StockRecruitEdit
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
-End Sub
+    End Sub
    Friend WithEvents Label1 As System.Windows.Forms.Label
    Friend WithEvents StockRecruitGrid As System.Windows.Forms.DataGridView
    Friend WithEvents SRDoneButton As System.Windows.Forms.Button

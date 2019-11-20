@@ -691,7 +691,7 @@ End Sub
             Me.Visible = False
             FVS_ModelRunSelection.ShowDialog()
             If RecordsetSelectionType = 9 Then
-                MsgBox("Model Run Transfer Cancelled", MsgBoxStyle.OkOnly)
+                MsgBox("Base Period Transfer Cancelled", MsgBoxStyle.OkOnly)
                 Exit Sub
             End If
             Me.Refresh()

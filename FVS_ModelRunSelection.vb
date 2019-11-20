@@ -153,8 +153,12 @@ Public Class FVS_ModelRunSelection
          RSTitle.Text = "FRAM Model Run DELETE Selection"
          ListBox1.SelectionMode = SelectionMode.One
          TransferButton.Visible = False
-        ElseIf RecordsetSelectionType = 3 Or RecordsetSelectionType = 11 Then
+        ElseIf RecordsetSelectionType = 3 Then
             RSTitle.Text = "Model Run TRANSFER Selections"
+            ListBox1.SelectionMode = SelectionMode.MultiExtended
+            TransferButton.Visible = True
+        ElseIf RecordsetSelectionType = 11 Then
+            RSTitle.Text = "Base Period TRANSFER Selections"
             ListBox1.SelectionMode = SelectionMode.MultiExtended
             TransferButton.Visible = True
       End If
@@ -858,6 +862,9 @@ FoundNewColumn:
             End If
             NonRetentionFlag(Fish, TStep) = FramDataSet.Tables("NonRetention").Rows(RecNum)(4)
             NonRetentionInput(Fish, TStep, 1) = FramDataSet.Tables("NonRetention").Rows(RecNum)(5)
+            If FramDataSet.Tables("NonRetention").Columns.IndexOf("Comment") <> -1 Then
+                NonRetentionComment(Fish, TStep) = FramDataSet.Tables("NonRetention").Rows(RecNum)(9)
+            End If
             If SpeciesName = "CHINOOK" Then
                 NonRetentionInput(Fish, TStep, 2) = FramDataSet.Tables("NonRetention").Rows(RecNum)(6)
                 NonRetentionInput(Fish, TStep, 3) = FramDataSet.Tables("NonRetention").Rows(RecNum)(7)

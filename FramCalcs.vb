@@ -102,6 +102,10 @@ Module FramCalcs
 
             Call NatMort()
 
+            If TStep = 4 Then
+                Jim = 1
+            End If
+
             Call CompCatch(PTerm)
 
             Call IncMort(PTerm)
@@ -334,6 +338,12 @@ Module FramCalcs
         If KeepIter = True Then
             Call RunCalcs()
         End If
+
+        If AnyNegativeEscapement = 1 Then
+            MsgBox("You have negative escapements. Please check the PopStat report!")
+        End If
+        AnyNegativeEscapement = 0
+
 
     End Sub
 
@@ -924,7 +934,9 @@ SkipTami2:
         If SkipJim = 1 Then sw.WriteLine(PrnLine)
         
         For Fish As Integer = 1 To NumFish
-            
+            If Fish = 39 And TStep = 3 Then
+                Jim = 1
+            End If
 
             If AnyBaseRate(Fish, TStep) = 0 Then GoTo NextScalerFishery ' if there is no catch in the base period
             '- Fishery/Time-Step can only be Terminal or Pre-Terminal
@@ -950,7 +962,7 @@ SkipTami2:
 
                     For Stk As Integer = 1 To NumStk
                         For Age As Integer = MinAge To MaxAge
-                            
+
                             '- Zero Calculation Arrays for TAMM Iteration Calculations
                             LandedCatch(Stk, Age, Fish, TStep) = 0
                             DropOff(Stk, Age, Fish, TStep) = 0
@@ -963,7 +975,7 @@ SkipTami2:
 
                             '- Compute Legal Proportion by Stock, Age, and Time-Step
                             ChinookBaseLegProp = False
-                            
+
                             Call CompLegProp(Stk, Age, Fish, TerminalType)
 
                             ''- Check if New Size Limit is different from Base Period Size Limit
@@ -977,7 +989,7 @@ SkipTami2:
                             ''############################# BEGIN NEW CODE ############################ Pete-Jan. 2013
                             ''Only use different legal and sublegal proportions for 1) scenarios involving <22" limits,
                             ''2) Puget Sound sport fisheries, and 3) combo fisheries with different limits during NS & MSF periods
-                           
+
 
 
                             'If SizeLimitScenario = True Then
@@ -1001,7 +1013,7 @@ SkipTami2:
                             'End If
                             ''############################# END NEW CODE ############################ Pete-Jan. 2013
                             ''****************************************************************************************
-                            If Stk = 2 And Age = 3 And Fish = 119 And TStep = 4 Then
+                            If Fish = 39 And TStep = 3 Then
                                 Jim = 1
                             End If
 
@@ -1032,7 +1044,7 @@ SkipTami2:
                                        LegalProportion
 
                                     JimD = LandedCatch(Stk, Age, Fish, TStep)
-                                   
+
                                     '- DEBUG Code to Check CompCatch Calculations
                                     'If SkipJim = 1 And (Fish = 1) And TStep = 2 And LandedCatch(Stk, Age, Fish, TStep) <> 0 Then
                                     'If SkipJim = 1 And LandedCatch(Stk, Age, Fish, TStep) <> 0 Then
@@ -1053,7 +1065,7 @@ SkipTami2:
                                     ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
                                     'NSEncountersTotal(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
                                     ''#################### Size Limit & External Shaker Code ###########################  -- Pete Dec 2012.
-                                    End If
+                                End If
                             End If
 
 
@@ -1140,14 +1152,14 @@ SkipTami2:
                                 If TStep = 1 And Stk = 123 And Fish = 3 Then
                                     Jim = 1
                                 End If
-                               
-                               
+
+
 
                                 LandedCatch(Stk, Age, Fish, TStep) = StockFishRateScalers(Stk, Fish, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * Cohort(Stk, Age, TerminalType, TStep) * LegalProportion
                                 'Encounters(Stk, Age, Fish, TStep) += Encounters(Stk, Age, Fish, TStep) + LandedCatch(Stk, Age, Fish, TStep)
                                 'TotalEncounters(Fish, TStep) = TotalEncounters(Fish, TStep) + LandedCatch(Stk, Age, Fish, TStep)
                                 NSFQuotaTotal(Fish, TStep) += LandedCatch(Stk, Age, Fish, TStep)
-                                
+
                                 If Double.IsNaN(LandedCatch(Stk, Age, Fish, TStep)) Then
                                     MsgBox("Invalid Landed Catch for Stk " & Stk & ", Fishery " & Fish & ", Time Step " & TStep & ".")
                                 End If
@@ -1219,9 +1231,9 @@ NextScalerFishery:
       'Pass #2 - COMPUTE CATCH IN FISHERIES WITH QUOTAS 
 
         For Fish As Integer = 1 To NumFish
-            If Fish = 112 Then
-                Jim = 1
-            End If
+            
+            
+
 
             If TerminalFisheryFlag(Fish, TStep) = TerminalType Then
 
@@ -1413,6 +1425,10 @@ NextScalerFishery:
 
         ReDim ERgtrOne(NumSteps, NumStk)
 
+        If TammIteration = 1 And TStep = 5 And TerminalType = 1 Then
+            Jim = 1
+        End If
+
 
       '- Compute biased proportion of encounters that die, proportion landed, release morts, and incidental morts in MSF
 
@@ -1546,11 +1562,14 @@ SecondPassEntry:
                 If StkERRateTilde(Stk) > 1 Then
                     Jim = 1
                 End If
-
+                If StkERRate(Stk) > 1 And MSFBiasCount > 5 Then
+                    MsgBox("Stock " & StockName(Stk) & " may produce negative escapements. Please finish the run and look for negative escapements in the PopStat report. Do not use this run for official results!")
+                    Exit Sub
+                End If
 NextERateFish:
             Next
       Next
-
+        
       Dim c1, c2, c3, c4 As Double
 
       '- Compute Bias Corrected Time Step ER & UnBiased Time Step ER
@@ -1615,7 +1634,9 @@ NextERateFish:
       '- Compute Mortalities
       For Stk As Integer = 1 To NumStk
             '- Test for Zero
-
+            If Stk = 33 Then
+                Jim = 1
+            End If
             
          If Cohort(Stk, Age, TerminalType, TStep) = 0 Or Meeew(Stk) = 0 Then
             StkMort(Stk) = 0
@@ -1981,6 +2002,7 @@ NextTolerCheck:
                     End If
                 Next Fish
             Next Age
+           
         Next Stk
 
         '- CHINOOK TAMM Escapement Arrays
@@ -4182,7 +4204,7 @@ SkipNoSat:
         'Call CHKSPRCH(3, 15, 70, 11, 14) 'White River 13A NT Net TStep 3
         'Call CHKSPRCH(3, 16, 71, 12, 14) 'White River 13A TR Net TStep 3
 
-        If TammIteration = 14 Then Jim = 1
+        If TammIteration = 13 Then Jim = 1
 
         '------------ Check for Time = 3 for All Fisheries then for other Time = 2
         TStep = 3
@@ -4469,6 +4491,7 @@ SkipNoSat:
             FVS_RunModel.RunProgressLabel.Text = "TAMM Iteration - " & TammIteration.ToString
             FVS_RunModel.RunProgressLabel.Refresh()
             For TStep = 2 To 3
+                If TStep = 3 Then Jim = 1
                 Call TCHNInit()
                 Call CompCatch(Term)
                 For Fish = 1 To NumFish
@@ -6324,6 +6347,11 @@ NextTaaETRS:
             PrnLine = " TAMM Iteration " & TammIteration.ToString
             sw.WriteLine(PrnLine)
             '- Sum Terminal Runsizes
+
+            If TammIteration = 2 Then
+                Jim = 1
+            End If
+
             For I = 1 To NumTRS
                 TRS(I) = 0
                 For J = 1 To TrsStk(I, 0)
@@ -6392,6 +6420,9 @@ NextTaaETRS:
                 Call CompCatch(PTerm)
                 Call IncMort(PTerm)
                 Call Mature()
+                If TStep = 5 Then
+                    Jim = 1
+                End If
                 Call CompCatch(Term)
                 Call IncMort(Term)
                 Call CompEscape()

@@ -1371,3 +1371,4 @@ C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.FVS_StockFisheryScaler
 C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.vbproj.GenerateResource.Cache
 C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.exe.manifest
 C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.application
+C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.FVS_ActiveRateScaler.resources

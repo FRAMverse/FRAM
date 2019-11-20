@@ -153,7 +153,8 @@ Public Module FramVar
    Public FisheryScaler(,) As Double
     Public FisheryQuota(,) As Double
     Public FisheryQuotaCompare(NumFish, NumSteps) As Double
-   Public FisheryFlag(,) As Integer
+    Public FisheryFlag(,) As Integer
+    Public NonRetentionComment(,)
    Public NonRetentionFlag(,) As Integer
    Public NonRetentionInput(,,) As Double
    Public MSFFisheryScaler(,) As Double
@@ -404,6 +405,7 @@ Public Module FramVar
    Public FVS_StockRecruitEdit_ReSize As Boolean
    Public FVS_StockSelect_ReSize As Boolean
    Public FVS_PopStatScreen_ReSize As Boolean
-   Public FVS_Coweeman_ReSize As Boolean
+    Public FVS_Coweeman_ReSize As Boolean
+    Public FVS_ActiveRateScaler_ReSize As Boolean
 
 End Module

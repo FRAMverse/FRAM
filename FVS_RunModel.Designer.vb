@@ -247,7 +247,9 @@ Partial Class FVS_RunModel
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(155, 57)
         Me.Button2.TabIndex = 34
-        Me.Button2.Text = "S:L Ratio Update (password req'd)"
+        Me.Button2.Text = "S:L Ratio Update "
+        Me.ToolTip1.SetToolTip(Me.Button2, "Only use in conjunction with ""No Size Limit Fix"" option as S:L ratios are otherwi" & _
+                "se automatically updated.")
         Me.Button2.UseVisualStyleBackColor = False
         '
         'OldCohort
