@@ -45,7 +45,7 @@ Public Class FVS_Output
    Private Sub PSCCohoReportButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles PSCCohoReportButton.Click
       If SpeciesName = "CHINOOK" Then Exit Sub
       Me.Cursor = Cursors.WaitCursor
-      PSCCohoSpreadsheet()
+        ' PSCCohoSpreadsheet()
       Me.Cursor = Cursors.Default
    End Sub
 End Class
