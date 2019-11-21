@@ -118,4 +118,8 @@ End Sub
    Private Sub FisheryMortalityCheckBox_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles FisheryMortalityCheckBox.CheckedChanged
 
    End Sub
+
+    Private Sub FisheryScalerCheckBox_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FisheryScalerCheckBox.CheckedChanged
+
+    End Sub
 End Class
