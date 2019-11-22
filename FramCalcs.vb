@@ -377,10 +377,12 @@ Module FramCalcs
          End If
       Next
       xlWorkBook = xlApp.Workbooks.Open(TAMMSpreadSheet)
-      xlApp.WindowState = Excel.XlWindowState.xlMinimized
+        xlApp.WindowState = Excel.XlWindowState.xlMinimized
+        xlApp.Application.Interactive = False
 SkipWBOpen:
       xlWorkSheet = xlWorkBook.Sheets("Tami")
-      xlApp.Application.DisplayAlerts = False
+        xlApp.Application.DisplayAlerts = False
+        xlApp.Application.Interactive = False
 
       '- Save Original FisheryQuota and FisheryFlag Values before iteration to restore when done
       For Fish As Integer = 80 To 166
@@ -691,7 +693,8 @@ SkipWBOpen:
       '   xlApp.WindowState = Excel.XlWindowState.xlMinimized
       'End If
       xlApp.Visible = True
-      xlApp.Application.DisplayAlerts = True
+        xlApp.Application.DisplayAlerts = True
+
       'xlApp = Nothing
 
       '--- Chinook Quota and Effort Data is replaced by TAMM Input Variables when
@@ -1984,7 +1987,9 @@ NextTolerCheck:
     End Sub
 
     Sub CompEscape()
-
+        If AnyNegativeEscapement = -1 And RunTAMMIter = 1 And TStep = 5 Then
+            AnyNegativeEscapement = 0 ' reset negative escapement flag to zero if escapements are recomputed during TAMM iterations
+        End If
         '- COMPUTE ESCAPE BY SUBTRACTING CATCH AND INCIDENTAL
         '- MORTALITY FROM THE MATURE POPULATION
         For Stk As Integer = 1 To NumStk
@@ -2002,9 +2007,11 @@ NextTolerCheck:
                     End If
                 Next Fish
             Next Age
-           
-        Next Stk
 
+        Next Stk
+        If TStep = 5 Then
+            Jim = 1
+        End If
         '- CHINOOK TAMM Escapement Arrays
         If (RunTAMMIter = 1 And SpeciesName = "CHINOOK") Then
             If NumStk < 50 Then
@@ -5752,6 +5759,8 @@ NotFish:
 
         '------- Print Version Number and Command File Number ---
 
+       
+
         xlWorkSheet = xlWorkBook.Sheets("TAMX")
         xlWorkSheet.Range("B1").Value = FramVersion
         xlWorkSheet.Range("B2").Value = RunIDNameSelect
@@ -5781,7 +5790,7 @@ NotFish:
         TamxLineNum(17) = 30
         TamxLineNum(18) = 31
         TamxLineNum(19) = 32
-
+        xlApp.Application.Interactive = False
         '----- Put Terminal and Extreme Terminal Run Sizes into TAMX WorkSheet---
         Dim RngVal1 As String
         For Stk = 1 To 17
@@ -6166,6 +6175,7 @@ NooksackSpringReEntry2:
         'End If
         xlApp.Visible = True
         xlApp.Application.DisplayAlerts = True
+        xlApp.Application.Interactive = True
         'xlApp = Nothing
 
     End Sub
@@ -6216,6 +6226,7 @@ NooksackSpringReEntry2:
             'End If
             xlApp.Visible = True
             xlApp.Application.DisplayAlerts = True
+            xlApp.Application.Interactive = True
             'xlApp = Nothing
             Exit Sub
         End If
@@ -7129,6 +7140,7 @@ SkipTermCatch2:
         '- test Excel without saving or closing
         xlApp.Visible = True
         xlApp.Application.DisplayAlerts = True
+        xlApp.Application.Interactive = True
 
     End Sub
 
