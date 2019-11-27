@@ -86,7 +86,7 @@ Public Class FVS_NonRetentionEdit
       NonRetentionGrid.DefaultCellStyle.Font = New Font("Microsoft San Serif", CInt(10 / FormWidthScaler), FontStyle.Bold)
       If SpeciesName = "COHO" Then
          NonRetentionGrid.Columns.Add("FisheryName", "Name")
-         NonRetentionGrid.Columns("FisheryName").Width = 200 / FormWidthScaler
+            NonRetentionGrid.Columns("FisheryName").Width = 120 / FormWidthScaler
          NonRetentionGrid.Columns("FisheryName").ReadOnly = True
          NonRetentionGrid.Columns("FisheryName").DefaultCellStyle.BackColor = Color.Aquamarine
          NonRetentionGrid.Columns.Add("FishNum", "#")
@@ -112,7 +112,7 @@ Public Class FVS_NonRetentionEdit
 
          NonRetentionGrid.Columns.Add("Time5Estimate", "Oct-Dec")
          NonRetentionGrid.Columns("Time5Estimate").Width = 150 / FormWidthScaler
-         NonRetentionGrid.Columns("Time5Estimate").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
+            NonRetentionGrid.Columns("Time5Estimate").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
 
          NonRetentionGrid.RowCount = NumFish
 

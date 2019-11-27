@@ -1987,7 +1987,7 @@ NextTolerCheck:
     End Sub
 
     Sub CompEscape()
-        If AnyNegativeEscapement = -1 And RunTAMMIter = 1 And TStep = 5 Then
+        If RunTAMMIter = 1 And TStep = 5 Then
             AnyNegativeEscapement = 0 ' reset negative escapement flag to zero if escapements are recomputed during TAMM iterations
         End If
         '- COMPUTE ESCAPE BY SUBTRACTING CATCH AND INCIDENTAL
@@ -6436,6 +6436,9 @@ NextTaaETRS:
                 End If
                 Call CompCatch(Term)
                 Call IncMort(Term)
+                If TStep = 5 Then
+                    Jim = 1
+                End If
                 Call CompEscape()
                 '- Put Cohort Numbers into Next Time Step
                 For Stk = 1 To NumStk
