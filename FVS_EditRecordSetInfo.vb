@@ -161,7 +161,7 @@ Public Class FVS_EditRecordSetInfo
         RIC.Connection = FramDB
         RIC.Transaction = RITrans
         '- INSERT Record into DataBase Table
-        RIC.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear,RunType) " & _
+        RIC.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear,RunType,TAMMName,CoastalIterations,FRAMVersion) " & _
               "VALUES(" & RunIDSelect.ToString & "," & _
               Chr(34) & SpeciesName.ToString & Chr(34) & "," & _
             Chr(34) & RunIDNameSelect.ToString & Chr(34) & "," & _
@@ -172,7 +172,15 @@ Public Class FVS_EditRecordSetInfo
             Chr(35) & Now().ToString & Chr(35) & "," & _
             Chr(35) & RunIDRunTimeDateSelect.ToString & Chr(35) & "," & _
             Chr(34) & RunIDYearSelect & Chr(34) & "," & _
-            Chr(34) & RunIDTypeSelect & Chr(34) & ");"
+            Chr(34) & RunIDTypeSelect & Chr(34) & "," & _
+            Chr(34) & TAMMName & Chr(34) & "," & _
+            Chr(34) & CoastalIter & Chr(34) & "," & _
+            Chr(34) & FRAMVers & Chr(34) & ");"
+
+
+
+
+
 
         'Chr(35) & "1/1/1" & Chr(35) & "," & _
         'Chr(35) & "1/1/1" & Chr(35) & "," & _
@@ -217,6 +225,10 @@ Public Class FVS_EditRecordSetInfo
     End Sub
 
     Private Sub RunYearTextBox_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RunYearTextBox.TextChanged
+
+    End Sub
+
+    Private Sub ToolTip1_Popup(ByVal sender As System.Object, ByVal e As System.Windows.Forms.PopupEventArgs)
 
     End Sub
 End Class

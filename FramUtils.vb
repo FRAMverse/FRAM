@@ -723,7 +723,7 @@ NewCohoOldFormat:
         RIC.Connection = FramDB
 
       RIC.Transaction = FramTrans
-        RIC.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear,RunType) " & _
+        RIC.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear,RunType,TAMMName,CoastalIterations,FRAMVersion) " & _
             "VALUES(" & NewRunID.ToString & "," & _
                 Chr(34) & SpeciesName.ToString & Chr(34) & "," & _
               Chr(34) & RunIDNameSelect.ToString & Chr(34) & "," & _
@@ -734,9 +734,10 @@ NewCohoOldFormat:
               Chr(35) & Now().ToString & Chr(35) & "," & _
               Chr(35) & RunIDRunTimeDateSelect.ToString & Chr(35) & "," & _
             Chr(34) & RunIDYearSelect & Chr(34) & "," & _
-            Chr(34) & RunIDTypeSelect & Chr(34) & ");"
-
-
+            Chr(34) & RunIDTypeSelect & Chr(34) & "," & _
+            Chr(34) & TAMMName & Chr(34) & "," & _
+            Chr(34) & CoastalIter & Chr(34) & "," & _
+            Chr(34) & FRAMVers & Chr(34) & ");"
 
         '"VALUES(" & NewRunID.ToString & "," & _
         'Chr(34) & SpeciesName.ToString & Chr(34) & "," & _
@@ -3592,7 +3593,7 @@ SkipSR:
          RID.Transaction = RIDTrans
             RecNum = 0
          TransferBaseID = TransferDataSet.Tables("RunID").Rows(RecNum)(5)
-            RID.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear,RunType) " & _
+            RID.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear,RunType,TAMMName,CoastalIterations,FRAMVersion) " & _
             "VALUES(" & RunIDTransfer(TransID).ToString & "," & _
             Chr(34) & TransferDataSet.Tables("RunID").Rows(RecNum)(2) & Chr(34) & "," & _
             Chr(34) & TransferDataSet.Tables("RunID").Rows(RecNum)(3) & Chr(34) & "," & _
@@ -3603,11 +3604,17 @@ SkipSR:
             Chr(35) & TransferDataSet.Tables("RunID").Rows(RecNum)(8) & Chr(35) & "," & _
             Chr(35) & TransferDataSet.Tables("RunID").Rows(RecNum)(9) & Chr(35) & "," & _
             Chr(34) & TransferDataSet.Tables("RunID").Rows(RecNum)(10) & Chr(34) & "," & _
-            Chr(34) & TransferDataSet.Tables("RunID").Rows(RecNum)(11) & Chr(34) & ")"
+            Chr(34) & TransferDataSet.Tables("RunID").Rows(RecNum)(11) & Chr(34) & "," & _
+            Chr(34) & TransferDataSet.Tables("RunID").Rows(RecNum)(12) & Chr(34) & "," & _
+            Chr(34) & TransferDataSet.Tables("RunID").Rows(RecNum)(13) & Chr(34) & "," & _
+            Chr(34) & TransferDataSet.Tables("RunID").Rows(RecNum)(14) & Chr(34) & ")"
+             
+
+
             Try
                 RID.ExecuteNonQuery()
             Catch ex As Exception
-                MsgBox("Please select TransferFile version 5 or higher")
+                MsgBox("Please select TransferFile version 6 or higher")
                 GoTo ExitTransfer
             End Try
 
@@ -3695,7 +3702,7 @@ SkipSR:
                     Try
                         BFC.ExecuteNonQuery()
                     Catch ex As Exception
-                        MsgBox("Please select TransferFile version 5 or higher")
+                        MsgBox("Please select TransferFile version 6 or higher")
                         GoTo ExitTransfer
                     End Try
                 Else
@@ -3769,7 +3776,7 @@ FoundNewColumn:
                     Try
                         FSC.ExecuteNonQuery()
                     Catch ex As Exception
-                        MsgBox("Please select TransferFile version 5c or higher")
+                        MsgBox("Please select TransferFile version 6 or higher")
                         GoTo ExitTransfer
                     End Try
                 Else
@@ -5244,15 +5251,27 @@ ExitTransfer:
                 TransferDataSet.Tables("RunID").Columns.Add("RunYear", GetType(String))
             End If
 
-            x = 1
             x = TransferDataSet.Tables("RunID").Columns.IndexOf("RunType")
             If x = -1 Then 'This Column is missing so add it
                 TransferDataSet.Tables("RunID").Columns.Add("RunType", GetType(String))
             End If
 
+            x = TransferDataSet.Tables("RunID").Columns.IndexOf("TAMMName")
+            If x = -1 Then 'This Column is missing so add it
+                TransferDataSet.Tables("RunID").Columns.Add("TAMMName", GetType(String))
+            End If
 
+            x = TransferDataSet.Tables("RunID").Columns.IndexOf("CoastalIterations")
+            If x = -1 Then 'This Column is missing so add it
+                TransferDataSet.Tables("RunID").Columns.Add("CoastalIterations", GetType(String))
+            End If
 
-            RID.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear,RunType) " & _
+            x = TransferDataSet.Tables("RunID").Columns.IndexOf("FRAMVersion")
+            If x = -1 Then 'This Column is missing so add it
+                TransferDataSet.Tables("RunID").Columns.Add("FRAMVersion", GetType(String))
+            End If
+
+            RID.CommandText = "INSERT INTO RunID (RunID,SpeciesName,RunName,RunTitle,BasePeriodID,RunComments,CreationDate,ModifyInputDate,RunTimeDate,RunYear,RunType,TAMMName,CoastalIterations,FRAMVersion) " & _
                "VALUES(" & NewRunID.ToString & "," & _
                Chr(34) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(2) & Chr(34) & "," & _
                Chr(34) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(3) & Chr(34) & "," & _
@@ -5261,9 +5280,12 @@ ExitTransfer:
                Chr(34) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(6) & Chr(34) & "," & _
                Chr(35) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(7) & Chr(35) & "," & _
                Chr(35) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(8) & Chr(35) & "," & _
-            Chr(35) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(9) & Chr(35) & "," & _
-            Chr(34) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(10) & Chr(34) & "," & _
-            Chr(34) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(11) & Chr(34) & ")"
+               Chr(35) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(9) & Chr(35) & "," & _
+               Chr(34) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(10) & Chr(34) & "," & _
+               Chr(34) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(11) & Chr(34) & "," & _
+               Chr(34) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(12) & Chr(34) & "," & _
+               Chr(34) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(13) & Chr(34) & "," & _
+               Chr(34) & TransferDataSet.Tables("RunID").Rows(TransID - 1)(14) & Chr(34) & ")"
             RID.ExecuteNonQuery()
             RIDTrans.Commit()
             FramDB.Close()

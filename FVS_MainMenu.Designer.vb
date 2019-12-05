@@ -76,7 +76,7 @@ Partial Class FVS_MainMenu
         '
         Me.OpenDB.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.OpenDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.OpenDB.Location = New System.Drawing.Point(279, 186)
+        Me.OpenDB.Location = New System.Drawing.Point(279, 174)
         Me.OpenDB.Name = "OpenDB"
         Me.OpenDB.Size = New System.Drawing.Size(258, 50)
         Me.OpenDB.TabIndex = 4
@@ -87,7 +87,7 @@ Partial Class FVS_MainMenu
         '
         Me.InputOptions.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.InputOptions.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.InputOptions.Location = New System.Drawing.Point(278, 320)
+        Me.InputOptions.Location = New System.Drawing.Point(279, 313)
         Me.InputOptions.Name = "InputOptions"
         Me.InputOptions.Size = New System.Drawing.Size(258, 50)
         Me.InputOptions.TabIndex = 5
@@ -98,7 +98,7 @@ Partial Class FVS_MainMenu
         '
         Me.ModelRun.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.ModelRun.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ModelRun.Location = New System.Drawing.Point(278, 452)
+        Me.ModelRun.Location = New System.Drawing.Point(279, 451)
         Me.ModelRun.Name = "ModelRun"
         Me.ModelRun.Size = New System.Drawing.Size(258, 50)
         Me.ModelRun.TabIndex = 6
@@ -109,7 +109,7 @@ Partial Class FVS_MainMenu
         '
         Me.OutputResults.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.OutputResults.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.OutputResults.Location = New System.Drawing.Point(279, 517)
+        Me.OutputResults.Location = New System.Drawing.Point(278, 523)
         Me.OutputResults.Name = "OutputResults"
         Me.OutputResults.Size = New System.Drawing.Size(258, 50)
         Me.OutputResults.TabIndex = 7
@@ -121,7 +121,7 @@ Partial Class FVS_MainMenu
         Me.PostSeason.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.PostSeason.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.HelpProvider1.SetHelpString(Me.PostSeason, """Backwards"" FRAM using known catches and escapements")
-        Me.PostSeason.Location = New System.Drawing.Point(574, 452)
+        Me.PostSeason.Location = New System.Drawing.Point(563, 451)
         Me.PostSeason.Name = "PostSeason"
         Me.HelpProvider1.SetShowHelp(Me.PostSeason, True)
         Me.PostSeason.Size = New System.Drawing.Size(212, 50)
@@ -133,7 +133,7 @@ Partial Class FVS_MainMenu
         '
         Me.FVS_Exit.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.FVS_Exit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FVS_Exit.Location = New System.Drawing.Point(279, 582)
+        Me.FVS_Exit.Location = New System.Drawing.Point(278, 591)
         Me.FVS_Exit.Name = "FVS_Exit"
         Me.FVS_Exit.Size = New System.Drawing.Size(258, 50)
         Me.FVS_Exit.TabIndex = 9
@@ -210,7 +210,7 @@ Partial Class FVS_MainMenu
         '
         Me.FramUtilButton.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.FramUtilButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FramUtilButton.Location = New System.Drawing.Point(574, 253)
+        Me.FramUtilButton.Location = New System.Drawing.Point(563, 243)
         Me.FramUtilButton.Name = "FramUtilButton"
         Me.FramUtilButton.Size = New System.Drawing.Size(212, 50)
         Me.FramUtilButton.TabIndex = 16
@@ -221,7 +221,7 @@ Partial Class FVS_MainMenu
         '
         Me.SelectRecordset.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.SelectRecordset.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SelectRecordset.Location = New System.Drawing.Point(279, 253)
+        Me.SelectRecordset.Location = New System.Drawing.Point(278, 243)
         Me.SelectRecordset.Name = "SelectRecordset"
         Me.SelectRecordset.Size = New System.Drawing.Size(258, 50)
         Me.SelectRecordset.TabIndex = 17
@@ -232,7 +232,7 @@ Partial Class FVS_MainMenu
         '
         Me.SaveInputButton.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.SaveInputButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SaveInputButton.Location = New System.Drawing.Point(279, 386)
+        Me.SaveInputButton.Location = New System.Drawing.Point(279, 382)
         Me.SaveInputButton.Name = "SaveInputButton"
         Me.SaveInputButton.Size = New System.Drawing.Size(258, 50)
         Me.SaveInputButton.TabIndex = 18
@@ -243,7 +243,7 @@ Partial Class FVS_MainMenu
         '
         Me.VersionChangesButton.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.VersionChangesButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.VersionChangesButton.Location = New System.Drawing.Point(574, 186)
+        Me.VersionChangesButton.Location = New System.Drawing.Point(563, 174)
         Me.VersionChangesButton.Name = "VersionChangesButton"
         Me.VersionChangesButton.Size = New System.Drawing.Size(212, 50)
         Me.VersionChangesButton.TabIndex = 19
@@ -304,5 +304,5 @@ Partial Class FVS_MainMenu
    Friend WithEvents FramUtilButton As System.Windows.Forms.Button
    Friend WithEvents SelectRecordset As System.Windows.Forms.Button
    Friend WithEvents SaveInputButton As System.Windows.Forms.Button
-   Friend WithEvents VersionChangesButton As System.Windows.Forms.Button
+    Friend WithEvents VersionChangesButton As System.Windows.Forms.Button
 End Class

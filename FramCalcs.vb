@@ -3445,6 +3445,10 @@ SelctFsh:
 
         '*********************End Pete 2/27/13 BC Flag Change to Run Name
 
+        FramDataSet.Tables("RunID").Rows(0)(12) = TAMMName
+        FramDataSet.Tables("RunID").Rows(0)(13) = CoastalIter
+        FramDataSet.Tables("RunID").Rows(0)(14) = FRAMVers
+
         RunIDDA.Update(FramDataSet, "RunID")
         RunIDDA = Nothing
         '- UpDate Memory Variable for Run Time!

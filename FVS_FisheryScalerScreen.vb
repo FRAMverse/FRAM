@@ -155,4 +155,12 @@ Public Class FVS_FisheryScalerScreen
     ' Private Sub FisheryScalerGrid_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles FisheryScalerGrid.CellContentClick
 
     'End Sub
+
+    Private Sub ClipBoardCopyToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ClipBoardCopyToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub MenuStrip1_ItemClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles MenuStrip1.ItemClicked
+
+    End Sub
 End Class

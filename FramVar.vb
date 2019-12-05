@@ -51,7 +51,11 @@ Public Module FramVar
     Public SizeLimitOnly As Boolean
    Public RunIDmultiDelete() As Integer 'Pete 12/13 variable for multi-run deletion code
    Public multiRunPass As String 'Pete 12/13 variable for passing multi-run deletion during loop
-   Public multiRunDeleteMode As Boolean 'Pete 12/13 variable for bypassing some content in delete mode
+    Public multiRunDeleteMode As Boolean 'Pete 12/13 variable for bypassing some content in delete mode
+    Public TAMMName As String
+    Public CoastalIter As String
+    Public FRAMVers As String
+
 
    '- Input Edit Change Variables
    Public ChangeAnyInput As Boolean

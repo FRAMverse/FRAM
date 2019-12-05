@@ -20,18 +20,19 @@ Partial Class FVS_Welcome
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FVS_Welcome))
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.FVS_Continue = New System.Windows.Forms.Button()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.VersionLabel = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.FVS_Continue = New System.Windows.Forms.Button
+        Me.Label3 = New System.Windows.Forms.Label
+        Me.VersionLabel = New System.Windows.Forms.Label
+        Me.TextBox1 = New System.Windows.Forms.TextBox
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                    Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.White
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -44,8 +45,8 @@ Partial Class FVS_Welcome
         'Label2
         '
         Me.Label2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                    Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.White
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -69,8 +70,8 @@ Partial Class FVS_Welcome
         'Label3
         '
         Me.Label3.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                    Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(218, 272)
@@ -89,6 +90,17 @@ Partial Class FVS_Welcome
         Me.VersionLabel.TabIndex = 4
         Me.VersionLabel.Text = "Version 2.00"
         '
+        'TextBox1
+        '
+        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox1.Location = New System.Drawing.Point(187, 446)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(416, 19)
+        Me.TextBox1.TabIndex = 5
+        Me.TextBox1.Text = "User Manual: https://wdfw-fp.github.io/framvs_doc/"
+        Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'FVS_Welcome
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
@@ -97,7 +109,8 @@ Partial Class FVS_Welcome
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.ClientSize = New System.Drawing.Size(811, 399)
+        Me.ClientSize = New System.Drawing.Size(850, 519)
+        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.VersionLabel)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.FVS_Continue)
@@ -109,11 +122,12 @@ Partial Class FVS_Welcome
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
-End Sub
+    End Sub
    Friend WithEvents Label1 As System.Windows.Forms.Label
    Friend WithEvents Label2 As System.Windows.Forms.Label
    Friend WithEvents FVS_Continue As System.Windows.Forms.Button
    Friend WithEvents Label3 As System.Windows.Forms.Label
-   Friend WithEvents VersionLabel As System.Windows.Forms.Label
+    Friend WithEvents VersionLabel As System.Windows.Forms.Label
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
 
 End Class

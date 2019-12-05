@@ -49,6 +49,7 @@ Partial Class FVS_EditRecordSetInfo
         Me.RunYearTextBox = New System.Windows.Forms.TextBox
         Me.Label11 = New System.Windows.Forms.Label
         Me.txtRunType = New System.Windows.Forms.TextBox
+        Me.TextBox1 = New System.Windows.Forms.TextBox
         Me.SuspendLayout()
         '
         'RSETitle
@@ -314,12 +315,24 @@ Partial Class FVS_EditRecordSetInfo
         Me.txtRunType.Size = New System.Drawing.Size(188, 23)
         Me.txtRunType.TabIndex = 26
         '
+        'TextBox1
+        '
+        Me.TextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox1.Location = New System.Drawing.Point(454, 311)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(356, 15)
+        Me.TextBox1.TabIndex = 27
+        Me.TextBox1.Text = "Enter Pre for preseason or Post for postseason run"
+        '
         'FVS_EditRecordSetInfo
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(874, 684)
+        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.txtRunType)
         Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.RunYearTextBox)
@@ -381,4 +394,5 @@ Partial Class FVS_EditRecordSetInfo
     Friend WithEvents RunYearTextBox As System.Windows.Forms.TextBox
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents txtRunType As System.Windows.Forms.TextBox
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
 End Class

@@ -304,12 +304,32 @@ Public Class FVS_ModelRunSelection
             RunID1cm.ExecuteNonQuery()   'executes the SQL code in cmd without querry
         End If
 
-        i = 1
+
         i = FramDataSet.Tables(RunIDTable).Columns.IndexOf("RunType")
         If i = -1 Then 'This Column is missing so add it
             RunID1cm.CommandText = "ALTER TABLE " & RunIDTable & " ADD " & "RunType" & " " & "String"
             RunID1cm.ExecuteNonQuery()   'executes the SQL code in cmd without querry
         End If
+
+        i = FramDataSet.Tables(RunIDTable).Columns.IndexOf("TAMMName")
+        If i = -1 Then 'This Column is missing so add it
+            RunID1cm.CommandText = "ALTER TABLE " & RunIDTable & " ADD " & "TAMMName" & " " & "String"
+            RunID1cm.ExecuteNonQuery()   'executes the SQL code in cmd without querry
+        End If
+
+        i = FramDataSet.Tables(RunIDTable).Columns.IndexOf("CoastalIterations")
+        If i = -1 Then 'This Column is missing so add it
+            RunID1cm.CommandText = "ALTER TABLE " & RunIDTable & " ADD " & "CoastalIterations" & " " & "String"
+            RunID1cm.ExecuteNonQuery()   'executes the SQL code in cmd without querry
+        End If
+
+        i = FramDataSet.Tables(RunIDTable).Columns.IndexOf("FRAMVersion")
+        If i = -1 Then 'This Column is missing so add it
+            RunID1cm.CommandText = "ALTER TABLE " & RunIDTable & " ADD " & "FRAMVersion" & " " & "String"
+            RunID1cm.ExecuteNonQuery()   'executes the SQL code in cmd without querry
+        End If
+
+        
 
         '*****************************************************************
 
@@ -338,11 +358,29 @@ Public Class FVS_ModelRunSelection
             RunIDTypeSelect = drd1.GetString(11)
         Catch Ex As Exception
             'MsgBox("Please provide a Run Type (Pre or Post)in the RunID table of the AccessDB for RunType. " & RunIDSelect & ". You can also enter the run year under FRAMUtilities/EditModelRunInfo.")
-            RunIDTypeSelect = 0
+            RunIDTypeSelect = ""
         End Try
 
+        Try
+            TAMMName = drd1.GetString(12)
+        Catch Ex As Exception
+            'MsgBox("Please provide a Run Type (Pre or Post)in the RunID table of the AccessDB for RunType. " & RunIDSelect & ". You can also enter the run year under FRAMUtilities/EditModelRunInfo.")
+            TAMMName = "unknown"
+        End Try
 
+        Try
+            CoastalIter = drd1.GetString(13)
+        Catch Ex As Exception
+            'MsgBox("Please provide a Run Type (Pre or Post)in the RunID table of the AccessDB for RunType. " & RunIDSelect & ". You can also enter the run year under FRAMUtilities/EditModelRunInfo.")
+            CoastalIter = ""
+        End Try
 
+        Try
+            FRAMVers = drd1.GetString(14)
+        Catch Ex As Exception
+            'MsgBox("Please provide a Run Type (Pre or Post)in the RunID table of the AccessDB for RunType. " & RunIDSelect & ". You can also enter the run year under FRAMUtilities/EditModelRunInfo.")
+            FRAMVers = "unknown"
+        End Try
 
         cmd1.Dispose()
         drd1.Dispose()

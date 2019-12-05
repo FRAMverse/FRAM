@@ -5,7 +5,7 @@ Public Class FVS_Welcome
 
    Private Sub FVS_Welcome_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        FramVersion = "2.19b"
+        FramVersion = "2.20"
       VersionLabel.Text = "Version " & FramVersion
       ReDim VersionNumberChanges(100)
       For Stk As Integer = 0 To 100
@@ -88,6 +88,7 @@ Public Class FVS_Welcome
         VersionNumberChanges(35) = "(2.18) made overwriting modeling NooksackEarlies in B'hamNet with TAMM a function of Flag-88, if modeled as a rate it will still overwrite for backwards compatibility" 'AHB 8/18/17
         VersionNumberChanges(36) = "(2.19) fixed Coho bkFRAM convergence issues"
         VersionNumberChanges(37) = "(2.19b) added Pass 1 Pass 2 automation; automatic SubLegal updating and size limit correction with each model run 3/5/19"
+        VersionNumberChanges(38) = "(2.20) see updates described in  - Proposed FRAM Changes for 2020 Pre-season Modeling - Dec 2019"
     End Sub
 
    Private Sub FVS_Continue_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles FVS_Continue.Click

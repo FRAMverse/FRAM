@@ -352,7 +352,16 @@ Public Class FVS_RunModel
                             RunIDNameSelect = RunIDNameSelect.Substring(3, RunIDNameSelect.Length - 3)
                         End If
                     End If
+
+                    If CoastalIterations = True Then
+                        CoastalIter = "Yes"
+                    Else
+                        CoastalIter = "No"
+                    End If
                 End If
+
+                TAMMName = TAMMSpreadSheet
+                FRAMVers = FramVersion
 
                 FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
                 '****************End PETE-2/27/13-Code for adding Delineation to Model Run Name if Bias Correction Is Applied
