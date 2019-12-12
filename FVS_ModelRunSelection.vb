@@ -1235,7 +1235,10 @@ FoundNewColumn:
         
 
         '- Read PSC Max ER Data for COHO
+        'On Error Resume Next
+
         CmdStr = "SELECT * FROM PSCMaxER WHERE RunID = " & RunIDSelect.ToString
+        
         Dim MEcm As New OleDb.OleDbCommand(CmdStr, FramDB)
         Dim MEDA As New System.Data.OleDb.OleDbDataAdapter
         MEDA.SelectCommand = MEcm
@@ -1244,7 +1247,12 @@ FoundNewColumn:
         If FramDataSet.Tables.Contains("PSCMaxER") Then
             FramDataSet.Tables("PSCMaxER").Clear()
         End If
+        ' Try
         MEDA.Fill(FramDataSet, "PSCMaxER")
+        'Catch Ex As Exception
+        'GoTo SkipCalcArrays
+        'End Try
+
         Dim NumME As Integer
         NumME = FramDataSet.Tables("PSCMaxER").Rows.Count
         '- Loop through Table Records for Actual Values
