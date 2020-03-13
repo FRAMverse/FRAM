@@ -252,15 +252,15 @@ Public Class FVS_RunModel
 
             'tag111
             ' - Check for TAMM Selection
-            'If TAMMSpreadSheet <> "" Then
-            '    RunTAMMIter = 1
-            '    result = MsgBox("Do You Want to SAVE TAMM Tranfer Values into TAMM SpreadSheet?", MsgBoxStyle.YesNo)
-            '    If result = vbYes Then
-            '        TammTransferSave = True
-            '    Else
-            '        TammTransferSave = False
-            '    End If
-            'End If
+            If TAMMSpreadSheet <> "" Then
+                RunTAMMIter = 1
+                result = MsgBox("Do You Want to SAVE TAMM Tranfer Values into TAMM SpreadSheet?", MsgBoxStyle.YesNo)
+                If result = vbYes Then
+                    TammTransferSave = True
+                Else
+                    TammTransferSave = False
+                End If
+            End If
             MRProgressBar.Visible = True
             FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
             '****************End PETE-2/27/13-Code for adding Delineation to Model Run Name if Bias Correction Is Applied
