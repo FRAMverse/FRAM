@@ -1060,7 +1060,7 @@ SkipWBOpen:
         xlWorkSheet = xlWorkBook.Sheets("Pass2Inputs")
 
         'This has the rows for the Pass 2 sheet - it allows for looping
-        Dim SptRowIndex(67) As Integer
+        Dim SptRowIndex(68) As Integer
         SptRowIndex(36) = 5
         SptRowIndex(42) = 6
         SptRowIndex(45) = 7
@@ -1072,7 +1072,7 @@ SkipWBOpen:
         SptRowIndex(67) = 13
 
         'Annndddd this one is for NR Rows
-        Dim NRRowIndex(67) As Integer
+        Dim NRRowIndex(68) As Integer
         NRRowIndex(36) = 19
         NRRowIndex(42) = 23
         NRRowIndex(45) = 27

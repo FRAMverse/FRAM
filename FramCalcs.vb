@@ -102,7 +102,7 @@ Module FramCalcs
 
             Call NatMort()
 
-            If TStep = 4 Then
+            If TStep = 3 Then
                 Jim = 1
             End If
 
@@ -937,9 +937,7 @@ SkipTami2:
         If SkipJim = 1 Then sw.WriteLine(PrnLine)
         
         For Fish As Integer = 1 To NumFish
-            If Fish = 39 And TStep = 3 Then
-                Jim = 1
-            End If
+            
 
             If AnyBaseRate(Fish, TStep) = 0 Then GoTo NextScalerFishery ' if there is no catch in the base period
             '- Fishery/Time-Step can only be Terminal or Pre-Terminal
@@ -1016,9 +1014,7 @@ SkipTami2:
                             'End If
                             ''############################# END NEW CODE ############################ Pete-Jan. 2013
                             ''****************************************************************************************
-                            If Fish = 39 And TStep = 3 Then
-                                Jim = 1
-                            End If
+                            
 
                             '- Retention Fishery Scalers 
                             If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Then

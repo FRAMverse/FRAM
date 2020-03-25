@@ -500,6 +500,12 @@ Public Class FVS_RunModel
                             leg(Fish, TStep) += MSFNonRetention(Stk, Age, Fish, TStep) / MarkSelectiveMortRate(Fish, TStep)
                         End If
                         subleg(Fish, TStep) += Shakers(Stk, Age, Fish, TStep) / ShakerMortRate(Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) / ShakerMortRate(Fish, TStep)
+                        If Fish = 67 And TStep = 3 And c = 3 Then
+                            If LandedCatch(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) > 0 Then
+                                Debug.Print("Fishery =, " & Fish & ",stock =, " & Stk & ",Tstep =, " & TStep & ",iteration = ," & c.ToString & " ,Age =," & Age.ToString & " ,MSFNR =," & MSFNonRetention(Stk, Age, Fish, TStep) _
+                                           & " ,Landed =," & LandedCatch(Stk, Age, Fish, TStep) & " ,MSFLanded =," & MSFLandedCatch(Stk, Age, Fish, TStep) & " ,Shakers =," & Shakers(Stk, Age, Fish, TStep) & " ,MSFShakers =," & MSFShakers(Stk, Age, Fish, TStep))
+                            End If
+                        End If
                     Next
                 Next
             Next
@@ -507,13 +513,11 @@ Public Class FVS_RunModel
         Dim F, A, T As Integer
         For F = 1 To NumFish
             For T = 1 To NumSteps
-                'If F = 70 And T = 4 Then
-                '    Jim = 1
-                'End If
-                'Dim str As String = "FisheryID = " & F.ToString & " AND TimeStep = " & T.ToString
-                'Dim dr() As DataRow
+                
                 Dim kfatold As Double
-
+                If F = 67 And T = 3 Then
+                    Jim = 1
+                End If
 
                 'tag111
                 'Dim leg2, subleg2, subrat2, kfatold2 As Double
@@ -536,6 +540,7 @@ Public Class FVS_RunModel
                         Kfat(F, A, T) = 1 'Leave it at 1.00 = no adjustment.
                     Else
                         If TargetRatio(F, A, T) <> -1 Then 'Only compute new adjustments for fisheries providing an estimate of SL ratio 
+
                             subrat(F, T) = subleg(F, T) / leg(F, T) '<-FRAM SL Ratio
                             Kfat(F, A, T) = TargetRatio(F, A, T) / subrat(F, T)
                             RunEncounterRateAdjustment(F, A, T) = RunEncounterRateAdjustment(F, A, T) * Kfat(F, A, T) 'Put it here for correct update/storage for saving
