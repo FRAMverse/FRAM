@@ -5517,21 +5517,21 @@ SkipFS:
             NRC.Transaction = NRTrans
             For RecNum = 0 To NumRecs - 1
                 '- Check to see if record matches OldRunID being Tranferred in this RunID Loop
-                If OldRunID = TransferDataSet.Tables("FisheryScalers").Rows(RecNum)(1) Then
+                If OldRunID = TransferDataSet.Tables("NonRetention").Rows(RecNum)(1) Then
                     If j = -1 Then
                         '- Check to see if record matches OldRunID being Tranferred in this RunID Loop
-                        If OldRunID = TransferDataSet.Tables("NonRetention").Rows(RecNum)(1) Then
-                            NRC.CommandText = "INSERT INTO NonRetention (RunID,FisheryID,TimeStep,NonRetentionFlag,CNRInput1,CNRInput2,CNRInput3,CNRInput4) " & _
-                           "VALUES(" & NewRunID.ToString & "," & _
-                           TransferDataSet.Tables("NonRetention").Rows(RecNum)(2).ToString & "," & _
-                           TransferDataSet.Tables("NonRetention").Rows(RecNum)(3).ToString & "," & _
-                           TransferDataSet.Tables("NonRetention").Rows(RecNum)(4).ToString & "," & _
-                           TransferDataSet.Tables("NonRetention").Rows(RecNum)(5).ToString & "," & _
-                           TransferDataSet.Tables("NonRetention").Rows(RecNum)(6).ToString & "," & _
-                           TransferDataSet.Tables("NonRetention").Rows(RecNum)(7).ToString & "," & _
-                           TransferDataSet.Tables("NonRetention").Rows(RecNum)(8).ToString & ")"
-                            NRC.ExecuteNonQuery()
-                        End If
+
+                        NRC.CommandText = "INSERT INTO NonRetention (RunID,FisheryID,TimeStep,NonRetentionFlag,CNRInput1,CNRInput2,CNRInput3,CNRInput4) " & _
+                       "VALUES(" & NewRunID.ToString & "," & _
+                       TransferDataSet.Tables("NonRetention").Rows(RecNum)(2).ToString & "," & _
+                       TransferDataSet.Tables("NonRetention").Rows(RecNum)(3).ToString & "," & _
+                       TransferDataSet.Tables("NonRetention").Rows(RecNum)(4).ToString & "," & _
+                       TransferDataSet.Tables("NonRetention").Rows(RecNum)(5).ToString & "," & _
+                       TransferDataSet.Tables("NonRetention").Rows(RecNum)(6).ToString & "," & _
+                       TransferDataSet.Tables("NonRetention").Rows(RecNum)(7).ToString & "," & _
+                       TransferDataSet.Tables("NonRetention").Rows(RecNum)(8).ToString & ")"
+                        NRC.ExecuteNonQuery()
+
 
                     Else 'comment column exists
                         NRC.CommandText = "INSERT INTO NonRetention (RunID,FisheryID,TimeStep,NonRetentionFlag,CNRInput1,CNRInput2,CNRInput3,CNRInput4,Comment) " & _
@@ -5548,7 +5548,6 @@ SkipFS:
                         NRC.ExecuteNonQuery()
                     End If
                 End If
-
             Next
             NRTrans.Commit()
             FramDB.Close()
