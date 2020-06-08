@@ -6757,6 +6757,7 @@ NextTaaETRS:
                 Option5 = ""
             Else
                 Option5 = FramDataSet.Tables("ReportDriver").Rows(RecNum)(7)
+                
             End If
             If IsDBNull(FramDataSet.Tables("ReportDriver").Rows(RecNum)(8)) Then
                 Option6 = ""
