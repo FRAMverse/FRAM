@@ -22,7 +22,8 @@ Module FramCalcs
 
       '- ReDim Calculation Arrays
       ReDim LandedCatch(NumStk, MaxAge, NumFish, NumSteps)
-      ReDim NonRetention(NumStk, MaxAge, NumFish, NumSteps)
+        ReDim NonRetention(NumStk, MaxAge, NumFish, NumSteps)
+        ReDim NRLegal(2, NumStk, MaxAge, NumFish, NumSteps)
       ReDim Shakers(NumStk, MaxAge, NumFish, NumSteps)
       ReDim DropOff(NumStk, MaxAge, NumFish, NumSteps)
       ReDim MSFLandedCatch(NumStk, MaxAge, NumFish, NumSteps)
@@ -1854,11 +1855,14 @@ NextTolerCheck:
                   '- PS Sport legal size rel mort rate set now to 50% of shaker release rate (10 vs 20)
                   If Fish >= 36 And InStr(FisheryTitle(Fish), "Sport") > 0 Then
                      NonRetention(Stk, Age, Fish, TStep) = (LegProp * NonRetentionInput(Fish, TStep, 1) * ModelStockProportion(Fish) * (ShakerMortRate(Fish, TStep) / 2))
-                  Else
-                     NonRetention(Stk, Age, Fish, TStep) = (LegProp * NonRetentionInput(Fish, TStep, 1) * ModelStockProportion(Fish) * ShakerMortRate(Fish, TStep))
-                  End If
+                            NRLegal(1, Stk, Age, Fish, TStep) = LegProp * NonRetentionInput(Fish, TStep, 1)
+                        Else
+                            NonRetention(Stk, Age, Fish, TStep) = (LegProp * NonRetentionInput(Fish, TStep, 1) * ModelStockProportion(Fish) * ShakerMortRate(Fish, TStep))
+                            NRLegal(1, Stk, Age, Fish, TStep) = LegProp * NonRetentionInput(Fish, TStep, 1)
+                        End If
                   NonRetention(Stk, Age, Fish, TStep) += (SubLegProp * NonRetentionInput(Fish, TStep, 2) * ModelStockProportion(Fish) * ShakerMortRate(Fish, TStep))
-                  TotalNonRetention(Fish, TStep) += NonRetention(Stk, Age, Fish, TStep)
+                        NRLegal(2, Stk, Age, Fish, TStep) = SubLegProp * NonRetentionInput(Fish, TStep, 2)
+                        TotalNonRetention(Fish, TStep) += NonRetention(Stk, Age, Fish, TStep)
                Next Age
                 Next Stk
 
@@ -1912,16 +1916,20 @@ NextTolerCheck:
                   CNREncounter += CNREncStkAge(Stk, Age)
                   '- PS Sport legal size rel mort rate set now to 50 of shaker release rate (10 vs 20)
                   If Fish >= 36 And InStr(FisheryTitle(Fish), "Sport") > 0 Then
-                     NonRetention(Stk, Age, Fish, TStep) += (CNREncStkAge(Stk, Age) * (ShakerMortRate(Fish, TStep) / 2))
+                            NonRetention(Stk, Age, Fish, TStep) += (CNREncStkAge(Stk, Age) * (ShakerMortRate(Fish, TStep) / 2))
+                            NRLegal(1, Stk, Age, Fish, TStep) = NonRetention(Stk, Age, Fish, TStep) / (ShakerMortRate(Fish, TStep) / 2)
                   Else
-                     NonRetention(Stk, Age, Fish, TStep) += (CNREncStkAge(Stk, Age) * ShakerMortRate(Fish, TStep))
+                            NonRetention(Stk, Age, Fish, TStep) += (CNREncStkAge(Stk, Age) * ShakerMortRate(Fish, TStep))
+                            NRLegal(1, Stk, Age, Fish, TStep) = NonRetention(Stk, Age, Fish, TStep) / ShakerMortRate(Fish, TStep)
                   End If
                   PreSubCNR = NonRetention(Stk, Age, Fish, TStep)
                   '- SubLegal Size Encounters and Mortality - PFMC Mar 2006 ... Added StkHRScale
                   CNREncStkAge(Stk, Age) += (SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep))
                   CNREncounter += (SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep))
                   NonRetention(Stk, Age, Fish, TStep) += (SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep))
-                  SubCNR = (SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep))
+                        'NRLegal(1, Stk, Age, Fish, TStep) += LegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
+                        NRLegal(2, Stk, Age, Fish, TStep) += SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
+                        SubCNR = (SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep))
                Next Age
                 Next Stk
                 '- Calculate scaler so the Total Encounters will equal Input Value
@@ -1937,7 +1945,9 @@ NextTolerCheck:
                   If CNREncStkAge(Stk, Age) <> 0 Then
                      CNREncStkAge(Stk, Age) = CNREncStkAge(Stk, Age) * CNRScale * ModelStockProportion(Fish)
                      NonRetention(Stk, Age, Fish, TStep) = NonRetention(Stk, Age, Fish, TStep) * CNRScale * ModelStockProportion(Fish)
-                     CNREncounter += Encounters(Stk, Age, Fish, TStep)
+                            NRLegal(1, Stk, Age, Fish, TStep) = NRLegal(1, Stk, Age, Fish, TStep) * CNRScale
+                            NRLegal(2, Stk, Age, Fish, TStep) = NRLegal(2, Stk, Age, Fish, TStep) * CNRScale
+                            CNREncounter += Encounters(Stk, Age, Fish, TStep)
                      TotalNonRetention(Fish, TStep) += NonRetention(Stk, Age, Fish, TStep)
                   End If
                Next Age
@@ -3247,6 +3257,13 @@ SelctFsh:
         FVS_RunModel.Refresh()
 
         Dim FishMortDA As New System.Data.OleDb.OleDbDataAdapter
+        Dim NonRetEnc As String
+        '*************************************Produce Output of NR Encounters************************************
+        NonRetEnc = FVSdatabasepath & RunIDYearSelect & "NonRetention.txt"
+        FileOpen(53, NonRetEnc, OpenMode.Output)
+        Print(53, "Nonretention Encounters by legal(1) and sublegal (2) divided by model stock proportion" & vbCrLf)
+        Print(53, "Year" & "," & "Tstep" & "," & "Stk" & "," & "Fish" & "," & "Age" & "," & "SizeStatus" & "," & "#Encounters" & vbCrLf)
+
 
         CmdStr = "SELECT * FROM Mortality WHERE RunID = " & RunIDSelect.ToString & " ORDER BY StockID, Age, FisheryID, TimeStep"
         Dim FMcm As New OleDb.OleDbCommand(CmdStr, FramDB)
@@ -3299,13 +3316,19 @@ SelctFsh:
                      MSFShakers(Stk, Age, Fish, TimeStep).ToString("######0.000000") & "," & _
                      MSFDropOff(Stk, Age, Fish, TimeStep).ToString("######0.000000") & "," & _
                      MSFEncounters(Stk, Age, Fish, TimeStep).ToString("######0.000000") & ")"
-                     FIC.ExecuteNonQuery()
-                  End If
-               Next
+                            FIC.ExecuteNonQuery()
+                            If NRLegal(1, Stk, Age, Fish, TimeStep) > 0 Then
+                                Print(53, RunIDYearSelect & "," & TimeStep & "," & Stk & "," & Fish & "," & Age & "," & 1 & "," & NRLegal(1, Stk, Age, Fish, TimeStep) & vbCrLf)
+                            End If
+                            If NRLegal(2, Stk, Age, Fish, TimeStep) > 0 Then
+                                Print(53, RunIDYearSelect & "," & TimeStep & "," & Stk & "," & Fish & "," & Age & "," & 2 & "," & NRLegal(2, Stk, Age, Fish, TimeStep) & vbCrLf)
+                            End If
+                        End If
+                    Next
             Next
          Next
         Next
-
+        FileClose(53)
         FramTrans.Commit()
         FramDB.Close()
 

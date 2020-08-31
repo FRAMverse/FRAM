@@ -1372,3 +1372,5 @@ C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.vbproj.GenerateResourc
 C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.exe.manifest
 C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.application
 C:\data\FramVS\program\FRAMGITRepository\obj\Debug\FramVS.FVS_ActiveRateScaler.resources
+C:\Data\FramVS\program\FRAMGITRepository\obj\Debug\Interop.Microsoft.Office.Core.dll
+C:\Data\FramVS\program\FRAMGITRepository\bin\Debug\Interop.Microsoft.Office.Core.dll

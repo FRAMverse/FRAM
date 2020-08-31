@@ -105,7 +105,8 @@ Public Module FramVar
 
    '- FramCalcs Variables
    Public LandedCatch(,,,) As Double
-   Public NonRetention(,,,) As Double
+    Public NonRetention(,,,) As Double
+    Public NRLegal(,,,,) As Double
    Public Shakers(,,,) As Double
     Public LegalShakers(76, 5, 73, 4) As Double
    Public DropOff(,,,) As Double

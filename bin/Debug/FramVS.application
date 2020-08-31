@@ -4,14 +4,14 @@
   <description asmv2:publisher="FramVS" asmv2:product="FramVS" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <deployment install="true" mapFileExtensions="true" />
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="FramVS.exe.manifest" size="5860">
+    <dependentAssembly dependencyType="install" codebase="FramVS.exe.manifest" size="6519">
       <assemblyIdentity name="FramVS.exe" version="1.0.0.4" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>dT7CVDEAsQbXSE51dB4uQ1+r9SU=</dsig:DigestValue>
+        <dsig:DigestValue>RuPb5N6U5VaVCRMCeBVq0KSy5MU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

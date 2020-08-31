@@ -568,7 +568,7 @@
       <VersionMajor>2</VersionMajor>
       <VersionMinor>4</VersionMinor>
       <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
+      <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
     <COMReference Include="stdole">

@@ -51,14 +51,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FramVS.exe" size="1048576">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FramVS.exe" size="1050112">
       <assemblyIdentity name="FramVS" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Pt4t7bIXNScX54m78dVsCcL3JN0=</dsig:DigestValue>
+        <dsig:DigestValue>eb2lQ7UL8vJT5ATjLygRzDI/JzA=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Interop.Microsoft.Office.Core.dll" size="409600">
+      <assemblyIdentity name="Interop.Microsoft.Office.Core" version="2.4.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>GJt7kSxnYo9v9JkwcOvHib/9NXs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
