@@ -98,7 +98,8 @@ Module FramUtils
       ReDim MaturationRate(NumStk, MaxAge, NumSteps)
       ReDim AEQ(NumStk, MaxAge, NumSteps)
       ReDim StockFishRateScalers(NumStk, NumFish, NumSteps)
-      ReDim ModelStockProportion(NumFish)
+        ReDim ModelStockProportion(NumFish)
+        ReDim TAMMArea(NumStk + 1)
       '- ModelStockProportion only applies to CHINOOK
       If SpeciesName = "COHO" Then
          For Fish = 1 To NumFish

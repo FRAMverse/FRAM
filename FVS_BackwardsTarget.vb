@@ -52,7 +52,7 @@ Public Class FVS_BackwardsTarget
             BFTargetGrid.Columns("Flag").Width = 60 / FormWidthScaler
             BFTargetGrid.Columns("Flag").DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomCenter
 
-            BFTargetGrid.RowCount = NumStk
+            BFTargetGrid.RowCount = NumStk * 1.5 + 1
 
             For Stk As Integer = 1 To NumStk
                 BFTargetGrid.Item(0, Stk - 1).Value = StockTitle(Stk)
@@ -64,13 +64,13 @@ Public Class FVS_BackwardsTarget
         ElseIf SpeciesName = "CHINOOK" Then
             BTFillSSButton.Visible = False
 
-            If NumStk = 38 Or NumStk = 76 Then
-                NumChinTermRuns = 37
-            ElseIf NumStk = 33 Or NumStk = 66 Then
-                NumChinTermRuns = 32
-            Else
-                NumChinTermRuns = NumStk / 2 - 1
-            End If
+            'If NumStk = 38 Or NumStk = 76 Then
+            '    NumChinTermRuns = 37
+            'ElseIf NumStk = 33 Or NumStk = 66 Then
+            '    NumChinTermRuns = 32
+            'Else
+            NumChinTermRuns = NumStk / 2 + 1
+            'End If
 
             Call FVS_BackwardsFram.BackChinArrays()
 
@@ -104,62 +104,62 @@ Public Class FVS_BackwardsTarget
 
             End If
 
-            BFTargetGrid.RowCount = NumStk + NumChinTermRuns
+            BFTargetGrid.RowCount = NumStk * 1.5 + 3
 
             'Put Stock Names into Array using DRV File order
             For Stk As Integer = 1 To NumStk
-                Select Case NumStk
-                    Case Is > 65
-                        If Stk = 1 Or Stk = 2 Then
-                            BFTargetGrid.Item(0, Stk).Value = "-----  " & StockTitle(Stk)
-                            BFTargetGrid.Item(1, Stk).Value = "-- " & StockName(Stk)
-                        ElseIf Stk > 2 And Stk < 7 Then
-                            BFTargetGrid.Item(0, Stk + 1).Value = "-----  " & StockTitle(Stk)
-                            BFTargetGrid.Item(1, Stk + 1).Value = "-- " & StockName(Stk)
-                        Else
-                            If (Stk Mod 2) = 0 Then
-                                '- Marked Name
-                                BFTargetGrid.Item(0, TermRunStock(Stk) * 3 + 1).Value = "-----  " & StockTitle(Stk)
-                                BFTargetGrid.Item(1, TermRunStock(Stk) * 3 + 1).Value = "-- " & StockName(Stk)
-                            Else
-                                '- UnMarked Name
-                                BFTargetGrid.Item(0, TermRunStock(Stk) * 3).Value = "-----  " & StockTitle(Stk)
-                                BFTargetGrid.Item(1, TermRunStock(Stk) * 3).Value = "-- " & StockName(Stk)
-                            End If
-                        End If
-                    Case 33, 38
-                        If Stk = 1 Then
-                            BFTargetGrid.Item(0, Stk).Value = "-----  " & StockTitle(Stk)
-                            BFTargetGrid.Item(1, Stk).Value = "-- " & StockName(Stk)
-                        ElseIf Stk > 1 And Stk < 4 Then
-                            BFTargetGrid.Item(0, Stk + 1).Value = "-----  " & StockTitle(Stk)
-                            BFTargetGrid.Item(1, Stk + 1).Value = "-- " & StockName(Stk)
-                        Else
-                            BFTargetGrid.Item(0, TermRunStock(Stk) * 2).Value = "-----  " & StockTitle(Stk)
-                            BFTargetGrid.Item(1, TermRunStock(Stk) * 2).Value = "-- " & StockName(Stk)
-                        End If
-                End Select
+                'Select Case NumStk
+                '    Case Is > 65
+                '        If Stk = 1 Or Stk = 2 Then
+                '            BFTargetGrid.Item(0, Stk).Value = "-----  " & StockTitle(Stk)
+                '            BFTargetGrid.Item(1, Stk).Value = "-- " & StockName(Stk)
+                '        ElseIf Stk > 2 And Stk < 7 Then
+                '            BFTargetGrid.Item(0, Stk + 1).Value = "-----  " & StockTitle(Stk)
+                '            BFTargetGrid.Item(1, Stk + 1).Value = "-- " & StockName(Stk)
+                '        Else
+                If (Stk Mod 2) <> 0 Then
+                    '- UnMarked Name
+                    BFTargetGrid.Item(0, TermRunStock(Stk) * 3 - 2).Value = "-----  " & StockTitle(Stk)
+                    BFTargetGrid.Item(1, TermRunStock(Stk) * 3 - 2).Value = "-- " & StockName(Stk)
+                Else
+                    '- Marked Name
+                    BFTargetGrid.Item(0, TermRunStock(Stk) * 3 - 1).Value = "-----  " & StockTitle(Stk)
+                    BFTargetGrid.Item(1, TermRunStock(Stk) * 3 - 1).Value = "-- " & StockName(Stk)
+                End If
+                '                End If
+                '            Case 33, 38
+                'If Stk = 1 Then
+                '    BFTargetGrid.Item(0, Stk).Value = "-----  " & StockTitle(Stk)
+                '    BFTargetGrid.Item(1, Stk).Value = "-- " & StockName(Stk)
+                'ElseIf Stk > 1 And Stk < 4 Then
+                '    BFTargetGrid.Item(0, Stk + 1).Value = "-----  " & StockTitle(Stk)
+                '    BFTargetGrid.Item(1, Stk + 1).Value = "-- " & StockName(Stk)
+                'Else
+                '    BFTargetGrid.Item(0, TermRunStock(Stk) * 2).Value = "-----  " & StockTitle(Stk)
+                '    BFTargetGrid.Item(1, TermRunStock(Stk) * 2).Value = "-- " & StockName(Stk)
+                'End If
+                '        End Select
             Next Stk
             '- Term Run Names
             For Stk As Integer = 1 To NumChinTermRuns
 
-                If NumStk > 65 Then
-                    If Stk > 2 Then
-                        BFTargetGrid.Item(0, Stk * 3 - 1).Value = TermRunName(Stk)
-                        BFTargetGrid.Item(1, Stk * 3 - 1).Value = "TOTAL TermRun"
-                    Else
-                        BFTargetGrid.Item(0, Stk * 3 - 3).Value = TermRunName(Stk)
-                        BFTargetGrid.Item(1, Stk * 3 - 3).Value = "TOTAL TermRun"
-                    End If
-                Else
-                    If Stk > 2 Then
-                        BFTargetGrid.Item(0, Stk * 2 - 1).Value = TermRunName(Stk)
-                        BFTargetGrid.Item(1, Stk * 2 - 1).Value = "*NOT USED*"
-                    Else
-                        BFTargetGrid.Item(0, Stk * 2 - 2).Value = TermRunName(Stk)
-                        BFTargetGrid.Item(1, Stk * 2 - 2).Value = "*NOT USED*"
-                    End If
-                End If
+                'If NumStk > 65 Then
+                ' If Stk > 2 Then
+                BFTargetGrid.Item(0, Stk * 3 - 3).Value = TermRunName(Stk)
+                BFTargetGrid.Item(1, Stk * 3 - 3).Value = "TOTAL TermRun"
+                'Else
+                'BFTargetGrid.Item(0, Stk * 3 - 3).Value = TermRunName(Stk)
+                'BFTargetGrid.Item(1, Stk * 3 - 3).Value = "TOTAL TermRun"
+                'End If
+                'Else
+                'If Stk > 2 Then
+                '    BFTargetGrid.Item(0, Stk * 2 - 1).Value = TermRunName(Stk)
+                '    BFTargetGrid.Item(1, Stk * 2 - 1).Value = "*NOT USED*"
+                'Else
+                '    BFTargetGrid.Item(0, Stk * 2 - 2).Value = TermRunName(Stk)
+                '    BFTargetGrid.Item(1, Stk * 2 - 2).Value = "*NOT USED*"
+                'End If
+                ''End If
             Next Stk
 
             For Stk As Integer = 1 To NumStk + NumChinTermRuns

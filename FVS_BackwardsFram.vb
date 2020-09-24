@@ -1055,7 +1055,7 @@ NextTRun:
         ElseIf NumStk = 33 Or NumStk = 66 Then
             NumChinTermRuns = 32
         Else
-            NumChinTermRuns = NumStk / 2 - 1
+            NumChinTermRuns = NumStk / 2
         End If
         '- Backwards Chinook Terminal Run Names
         Select Case NumStk
@@ -1136,22 +1136,22 @@ NextTRun:
             Case Else
                 ReDim TermRunName(NumChinTermRuns)
                 For n = 1 To NumChinTermRuns
-                    Select Case n
-                        Case 1, 2
-                            TermRunName(n) = Mid(StockName(n * 2), 3, 20)
-                        Case 3 To 17
-                            TermRunName(n) = Mid(StockName(n * 2 + 2), 3, 20)
-                        Case 18
-                            TermRunName(n) = Mid(StockName(n * 2 + 30), 3, 20)
-                        Case 19
-                            TermRunName(n) = Mid(StockName(n * 2 + 38), 3, 20)
-                        Case 20 To 33
-                            TermRunName(n) = Mid(StockName(n * 2 - 2), 3, 20)
-                        Case 34 To 37
-                            TermRunName(n) = Mid(StockName(n * 2), 3, 20)
-                        Case Is > 37
-                            TermRunName(n) = Mid(StockName(n * 2 + 2), 3, 20)
-                    End Select
+                    'Select Case n
+                    '    Case 1, 2
+                    '        TermRunName(n) = Mid(StockName(n * 2), 3, 20)
+                    '    Case 3 To 17
+                    '        TermRunName(n) = Mid(StockName(n * 2 + 2), 3, 20)
+                    '    Case 18
+                    '        TermRunName(n) = Mid(StockName(n * 2 + 30), 3, 20)
+                    '    Case 19
+                    '        TermRunName(n) = Mid(StockName(n * 2 + 38), 3, 20)
+                    '    Case 20 To 33
+                    '        TermRunName(n) = Mid(StockName(n * 2 - 2), 3, 20)
+                    '    Case 34 To 37
+                    '        TermRunName(n) = Mid(StockName(n * 2), 3, 20)
+                    '    Case Is > 37
+                    TermRunName(n) = Mid(StockName(n * 2), 3, 20)
+                    ' End Select
                 Next n
         End Select
 
@@ -1164,746 +1164,763 @@ NextTRun:
         Else
             ReDim TermRunStock(NumStk + NumStk / 2 - 1)
         End If
-        For Stk As Integer = 1 To NumStk
-            Select Case NumStk
-                Case 33
-                    Select Case Stk
-                        Case 1, 2
-                            TermRunStock(Stk) = Stk
-                        Case 3 To 18
-                            TermRunStock(Stk) = Stk - 1
-                        Case 19 To 32
-                            TermRunStock(Stk) = Stk
-                        Case 33
-                            TermRunStock(Stk) = 18
-                    End Select
-                Case 38
-                    Select Case Stk
-                        Case 1, 2, 34, 35, 36, 37
-                            TermRunStock(Stk) = Stk
-                        Case 3 To 18
-                            TermRunStock(Stk) = Stk - 1
-                        Case 19 To 32
-                            TermRunStock(Stk) = Stk + 1
-                        Case 33
-                            TermRunStock(Stk) = 18
-                        Case 34 To 37
-                            TermRunStock(Stk) = Stk
-                        Case 38
-                            TermRunStock(Stk) = 19
-                    End Select
-                Case 66
-                    Select Case Stk
-                        Case 1, 2
-                            TermRunStock(Stk) = 1
-                        Case 3 To 6
-                            TermRunStock(Stk) = 2
-                        Case 7, 8
-                            TermRunStock(Stk) = 3
-                        Case 9, 10
-                            TermRunStock(Stk) = 4
-                        Case 11, 12
-                            TermRunStock(Stk) = 5
-                        Case 13, 14
-                            TermRunStock(Stk) = 6
-                        Case 15, 16
-                            TermRunStock(Stk) = 7
-                        Case 17, 18
-                            TermRunStock(Stk) = 8
-                        Case 19, 20
-                            TermRunStock(Stk) = 9
-                        Case 21, 22
-                            TermRunStock(Stk) = 10
-                        Case 23, 24
-                            TermRunStock(Stk) = 11
-                        Case 25, 26
-                            TermRunStock(Stk) = 12
-                        Case 27, 28
-                            TermRunStock(Stk) = 13
-                        Case 29, 30
-                            TermRunStock(Stk) = 14
-                        Case 31, 32
-                            TermRunStock(Stk) = 15
-                        Case 33, 34
-                            TermRunStock(Stk) = 16
-                        Case 35, 36
-                            TermRunStock(Stk) = 17
-                        Case 37, 38
-                            TermRunStock(Stk) = 19
-                        Case 39, 40
-                            TermRunStock(Stk) = 20
-                        Case 41, 42
-                            TermRunStock(Stk) = 21
-                        Case 43, 44
-                            TermRunStock(Stk) = 22
-                        Case 45, 46
-                            TermRunStock(Stk) = 23
-                        Case 47, 48
-                            TermRunStock(Stk) = 24
-                        Case 49, 50
-                            TermRunStock(Stk) = 25
-                        Case 51, 52
-                            TermRunStock(Stk) = 26
-                        Case 53, 54
-                            TermRunStock(Stk) = 27
-                        Case 55, 56
-                            TermRunStock(Stk) = 28
-                        Case 57, 58
-                            TermRunStock(Stk) = 29
-                        Case 59, 60
-                            TermRunStock(Stk) = 30
-                        Case 61, 62
-                            TermRunStock(Stk) = 31
-                        Case 63, 64
-                            TermRunStock(Stk) = 32
-                        Case 65, 66
-                            TermRunStock(Stk) = 18
-                    End Select
-                Case 76
-                    Select Case Stk
-                        Case 1, 2
-                            TermRunStock(Stk) = 1
-                        Case 3 To 6
-                            TermRunStock(Stk) = 2
-                        Case 7, 8
-                            TermRunStock(Stk) = 3
-                        Case 9, 10
-                            TermRunStock(Stk) = 4
-                        Case 11, 12
-                            TermRunStock(Stk) = 5
-                        Case 13, 14
-                            TermRunStock(Stk) = 6
-                        Case 15, 16
-                            TermRunStock(Stk) = 7
-                        Case 17, 18
-                            TermRunStock(Stk) = 8
-                        Case 19, 20
-                            TermRunStock(Stk) = 9
-                        Case 21, 22
-                            TermRunStock(Stk) = 10
-                        Case 23, 24
-                            TermRunStock(Stk) = 11
-                        Case 25, 26
-                            TermRunStock(Stk) = 12
-                        Case 27, 28
-                            TermRunStock(Stk) = 13
-                        Case 29, 30
-                            TermRunStock(Stk) = 14
-                        Case 31, 32
-                            TermRunStock(Stk) = 15
-                        Case 33, 34
-                            TermRunStock(Stk) = 16
-                        Case 35, 36
-                            TermRunStock(Stk) = 17
-                        Case 37, 38
-                            TermRunStock(Stk) = 20
-                        Case 39, 40
-                            TermRunStock(Stk) = 21
-                        Case 41, 42
-                            TermRunStock(Stk) = 22
-                        Case 43, 44
-                            TermRunStock(Stk) = 23
-                        Case 45, 46
-                            TermRunStock(Stk) = 24
-                        Case 47, 48
-                            TermRunStock(Stk) = 25
-                        Case 49, 50
-                            TermRunStock(Stk) = 26
-                        Case 51, 52
-                            TermRunStock(Stk) = 27
-                        Case 53, 54
-                            TermRunStock(Stk) = 28
-                        Case 55, 56
-                            TermRunStock(Stk) = 29
-                        Case 57, 58
-                            TermRunStock(Stk) = 30
-                        Case 59, 60
-                            TermRunStock(Stk) = 31
-                        Case 61, 62
-                            TermRunStock(Stk) = 32
-                        Case 63, 64
-                            TermRunStock(Stk) = 33
-                        Case 65, 66
-                            TermRunStock(Stk) = 18
-                        Case 67, 68
-                            TermRunStock(Stk) = 34
-                        Case 69, 70
-                            TermRunStock(Stk) = 35
-                        Case 71, 72
-                            TermRunStock(Stk) = 36
-                        Case 73, 74
-                            TermRunStock(Stk) = 37
-                        Case 75, 76
-                            TermRunStock(Stk) = 19
-                    End Select
-                Case Is > 76
-                    Select Case Stk
-                        Case 1, 2
-                            TermRunStock(Stk) = 1
-                        Case 3 To 6
-                            TermRunStock(Stk) = 2
-                        Case 7, 8
-                            TermRunStock(Stk) = 3
-                        Case 9, 10
-                            TermRunStock(Stk) = 4
-                        Case 11, 12
-                            TermRunStock(Stk) = 5
-                        Case 13, 14
-                            TermRunStock(Stk) = 6
-                        Case 15, 16
-                            TermRunStock(Stk) = 7
-                        Case 17, 18
-                            TermRunStock(Stk) = 8
-                        Case 19, 20
-                            TermRunStock(Stk) = 9
-                        Case 21, 22
-                            TermRunStock(Stk) = 10
-                        Case 23, 24
-                            TermRunStock(Stk) = 11
-                        Case 25, 26
-                            TermRunStock(Stk) = 12
-                        Case 27, 28
-                            TermRunStock(Stk) = 13
-                        Case 29, 30
-                            TermRunStock(Stk) = 14
-                        Case 31, 32
-                            TermRunStock(Stk) = 15
-                        Case 33, 34
-                            TermRunStock(Stk) = 16
-                        Case 35, 36
-                            TermRunStock(Stk) = 17
-                        Case 37, 38
-                            TermRunStock(Stk) = 20
-                        Case 39, 40
-                            TermRunStock(Stk) = 21
-                        Case 41, 42
-                            TermRunStock(Stk) = 22
-                        Case 43, 44
-                            TermRunStock(Stk) = 23
-                        Case 45, 46
-                            TermRunStock(Stk) = 24
-                        Case 47, 48
-                            TermRunStock(Stk) = 25
-                        Case 49, 50
-                            TermRunStock(Stk) = 26
-                        Case 51, 52
-                            TermRunStock(Stk) = 27
-                        Case 53, 54
-                            TermRunStock(Stk) = 28
-                        Case 55, 56
-                            TermRunStock(Stk) = 29
-                        Case 57, 58
-                            TermRunStock(Stk) = 30
-                        Case 59, 60
-                            TermRunStock(Stk) = 31
-                        Case 61, 62
-                            TermRunStock(Stk) = 32
-                        Case 63, 64
-                            TermRunStock(Stk) = 33
-                        Case 65, 66
-                            TermRunStock(Stk) = 18
-                        Case 67, 68
-                            TermRunStock(Stk) = 34
-                        Case 69, 70
-                            TermRunStock(Stk) = 35
-                        Case 71, 72
-                            TermRunStock(Stk) = 36
-                        Case 73, 74
-                            TermRunStock(Stk) = 37
-                        Case 75, 76
-                            TermRunStock(Stk) = 19
-                        Case Is > 76
-                            If Stk Mod 2 = 0 Then
-                                TermRunStock(Stk) = Stk / 2 - 0.5
-                            Else
-                                TermRunStock(Stk) = Stk / 2 - 1
-                            End If
-                    End Select
-            End Select
-        Next Stk
-
+        'For Stk As Integer = 1 To NumStk
+        '    Select Case NumStk
+        '        Case 33
+        '            Select Case Stk
+        '                Case 1, 2
+        '                    TermRunStock(Stk) = Stk
+        '                Case 3 To 18
+        '                    TermRunStock(Stk) = Stk - 1
+        '                Case 19 To 32
+        '                    TermRunStock(Stk) = Stk
+        '                Case 33
+        '                    TermRunStock(Stk) = 18
+        '            End Select
+        '        Case 38
+        '            Select Case Stk
+        '                Case 1, 2, 34, 35, 36, 37
+        '                    TermRunStock(Stk) = Stk
+        '                Case 3 To 18
+        '                    TermRunStock(Stk) = Stk - 1
+        '                Case 19 To 32
+        '                    TermRunStock(Stk) = Stk + 1
+        '                Case 33
+        '                    TermRunStock(Stk) = 18
+        '                Case 34 To 37
+        '                    TermRunStock(Stk) = Stk
+        '                Case 38
+        '                    TermRunStock(Stk) = 19
+        '            End Select
+        '        Case 66
+        '            Select Case Stk
+        '                Case 1, 2
+        '                    TermRunStock(Stk) = 1
+        '                Case 3 To 6
+        '                    TermRunStock(Stk) = 2
+        '                Case 7, 8
+        '                    TermRunStock(Stk) = 3
+        '                Case 9, 10
+        '                    TermRunStock(Stk) = 4
+        '                Case 11, 12
+        '                    TermRunStock(Stk) = 5
+        '                Case 13, 14
+        '                    TermRunStock(Stk) = 6
+        '                Case 15, 16
+        '                    TermRunStock(Stk) = 7
+        '                Case 17, 18
+        '                    TermRunStock(Stk) = 8
+        '                Case 19, 20
+        '                    TermRunStock(Stk) = 9
+        '                Case 21, 22
+        '                    TermRunStock(Stk) = 10
+        '                Case 23, 24
+        '                    TermRunStock(Stk) = 11
+        '                Case 25, 26
+        '                    TermRunStock(Stk) = 12
+        '                Case 27, 28
+        '                    TermRunStock(Stk) = 13
+        '                Case 29, 30
+        '                    TermRunStock(Stk) = 14
+        '                Case 31, 32
+        '                    TermRunStock(Stk) = 15
+        '                Case 33, 34
+        '                    TermRunStock(Stk) = 16
+        '                Case 35, 36
+        '                    TermRunStock(Stk) = 17
+        '                Case 37, 38
+        '                    TermRunStock(Stk) = 19
+        '                Case 39, 40
+        '                    TermRunStock(Stk) = 20
+        '                Case 41, 42
+        '                    TermRunStock(Stk) = 21
+        '                Case 43, 44
+        '                    TermRunStock(Stk) = 22
+        '                Case 45, 46
+        '                    TermRunStock(Stk) = 23
+        '                Case 47, 48
+        '                    TermRunStock(Stk) = 24
+        '                Case 49, 50
+        '                    TermRunStock(Stk) = 25
+        '                Case 51, 52
+        '                    TermRunStock(Stk) = 26
+        '                Case 53, 54
+        '                    TermRunStock(Stk) = 27
+        '                Case 55, 56
+        '                    TermRunStock(Stk) = 28
+        '                Case 57, 58
+        '                    TermRunStock(Stk) = 29
+        '                Case 59, 60
+        '                    TermRunStock(Stk) = 30
+        '                Case 61, 62
+        '                    TermRunStock(Stk) = 31
+        '                Case 63, 64
+        '                    TermRunStock(Stk) = 32
+        '                Case 65, 66
+        '                    TermRunStock(Stk) = 18
+        '            End Select
+        '        Case 76
+        '            Select Case Stk
+        '                Case 1, 2
+        '                    TermRunStock(Stk) = 1
+        '                Case 3 To 6
+        '                    TermRunStock(Stk) = 2
+        '                Case 7, 8
+        '                    TermRunStock(Stk) = 3
+        '                Case 9, 10
+        '                    TermRunStock(Stk) = 4
+        '                Case 11, 12
+        '                    TermRunStock(Stk) = 5
+        '                Case 13, 14
+        '                    TermRunStock(Stk) = 6
+        '                Case 15, 16
+        '                    TermRunStock(Stk) = 7
+        '                Case 17, 18
+        '                    TermRunStock(Stk) = 8
+        '                Case 19, 20
+        '                    TermRunStock(Stk) = 9
+        '                Case 21, 22
+        '                    TermRunStock(Stk) = 10
+        '                Case 23, 24
+        '                    TermRunStock(Stk) = 11
+        '                Case 25, 26
+        '                    TermRunStock(Stk) = 12
+        '                Case 27, 28
+        '                    TermRunStock(Stk) = 13
+        '                Case 29, 30
+        '                    TermRunStock(Stk) = 14
+        '                Case 31, 32
+        '                    TermRunStock(Stk) = 15
+        '                Case 33, 34
+        '                    TermRunStock(Stk) = 16
+        '                Case 35, 36
+        '                    TermRunStock(Stk) = 17
+        '                Case 37, 38
+        '                    TermRunStock(Stk) = 20
+        '                Case 39, 40
+        '                    TermRunStock(Stk) = 21
+        '                Case 41, 42
+        '                    TermRunStock(Stk) = 22
+        '                Case 43, 44
+        '                    TermRunStock(Stk) = 23
+        '                Case 45, 46
+        '                    TermRunStock(Stk) = 24
+        '                Case 47, 48
+        '                    TermRunStock(Stk) = 25
+        '                Case 49, 50
+        '                    TermRunStock(Stk) = 26
+        '                Case 51, 52
+        '                    TermRunStock(Stk) = 27
+        '                Case 53, 54
+        '                    TermRunStock(Stk) = 28
+        '                Case 55, 56
+        '                    TermRunStock(Stk) = 29
+        '                Case 57, 58
+        '                    TermRunStock(Stk) = 30
+        '                Case 59, 60
+        '                    TermRunStock(Stk) = 31
+        '                Case 61, 62
+        '                    TermRunStock(Stk) = 32
+        '                Case 63, 64
+        '                    TermRunStock(Stk) = 33
+        '                Case 65, 66
+        '                    TermRunStock(Stk) = 18
+        '                Case 67, 68
+        '                    TermRunStock(Stk) = 34
+        '                Case 69, 70
+        '                    TermRunStock(Stk) = 35
+        '                Case 71, 72
+        '                    TermRunStock(Stk) = 36
+        '                Case 73, 74
+        '                    TermRunStock(Stk) = 37
+        '                Case 75, 76
+        '                    TermRunStock(Stk) = 19
+        '            End Select
+        '        Case Is > 76
+        '            Select Case Stk
+        '                Case 1, 2
+        '                    TermRunStock(Stk) = 1
+        '                Case 3 To 6
+        '                    TermRunStock(Stk) = 2
+        '                Case 7, 8
+        '                    TermRunStock(Stk) = 3
+        '                Case 9, 10
+        '                    TermRunStock(Stk) = 4
+        '                Case 11, 12
+        '                    TermRunStock(Stk) = 5
+        '                Case 13, 14
+        '                    TermRunStock(Stk) = 6
+        '                Case 15, 16
+        '                    TermRunStock(Stk) = 7
+        '                Case 17, 18
+        '                    TermRunStock(Stk) = 8
+        '                Case 19, 20
+        '                    TermRunStock(Stk) = 9
+        '                Case 21, 22
+        '                    TermRunStock(Stk) = 10
+        '                Case 23, 24
+        '                    TermRunStock(Stk) = 11
+        '                Case 25, 26
+        '                    TermRunStock(Stk) = 12
+        '                Case 27, 28
+        '                    TermRunStock(Stk) = 13
+        '                Case 29, 30
+        '                    TermRunStock(Stk) = 14
+        '                Case 31, 32
+        '                    TermRunStock(Stk) = 15
+        '                Case 33, 34
+        '                    TermRunStock(Stk) = 16
+        '                Case 35, 36
+        '                    TermRunStock(Stk) = 17
+        '                Case 37, 38
+        '                    TermRunStock(Stk) = 20
+        '                Case 39, 40
+        '                    TermRunStock(Stk) = 21
+        '                Case 41, 42
+        '                    TermRunStock(Stk) = 22
+        '                Case 43, 44
+        '                    TermRunStock(Stk) = 23
+        '                Case 45, 46
+        '                    TermRunStock(Stk) = 24
+        '                Case 47, 48
+        '                    TermRunStock(Stk) = 25
+        '                Case 49, 50
+        '                    TermRunStock(Stk) = 26
+        '                Case 51, 52
+        '                    TermRunStock(Stk) = 27
+        '                Case 53, 54
+        '                    TermRunStock(Stk) = 28
+        '                Case 55, 56
+        '                    TermRunStock(Stk) = 29
+        '                Case 57, 58
+        '                    TermRunStock(Stk) = 30
+        '                Case 59, 60
+        '                    TermRunStock(Stk) = 31
+        '                Case 61, 62
+        '                    TermRunStock(Stk) = 32
+        '                Case 63, 64
+        '                    TermRunStock(Stk) = 33
+        '                Case 65, 66
+        '                    TermRunStock(Stk) = 18
+        '                Case 67, 68
+        '                    TermRunStock(Stk) = 34
+        '                Case 69, 70
+        '                    TermRunStock(Stk) = 35
+        '                Case 71, 72
+        '                    TermRunStock(Stk) = 36
+        '                Case 73, 74
+        '                    TermRunStock(Stk) = 37
+        '                Case 75, 76
+        '                    TermRunStock(Stk) = 19
+        '                Case Is > 76
+        '                    If Stk Mod 2 = 0 Then
+        '                        TermRunStock(Stk) = Stk / 2 - 0.5
+        '                    Else
+        '                        TermRunStock(Stk) = Stk / 2 - 1
+        '                    End If
+        '            End Select
+        '    End Select
+        'Next Stk
+        For Stk = 1 To NumStk
+            If Stk Mod 2 <> 0 Then
+                TermRunStock(Stk) = Stk / 2 + 0.5
+            Else
+                TermRunStock(Stk) = Stk / 2
+            End If
+        Next
 
         '--- TermStockNum for Backwards CHINOOK FRAM
         '--- Used to Index Stocks with defined Terminal Runs
-        Select Case NumStk
-            Case 33
-                ReDim TermStockNum(NumStk + 32)
-                TermStockNum(1) = -1
-                TermStockNum(2) = 1
-                TermStockNum(3) = -2
-                TermStockNum(4) = 2
-                TermStockNum(5) = 3
-                TermStockNum(6) = -3
-                TermStockNum(7) = 4
-                TermStockNum(8) = -4
-                TermStockNum(9) = 5
-                TermStockNum(10) = -5
-                TermStockNum(11) = 6
-                TermStockNum(12) = -6
-                TermStockNum(13) = 7
-                TermStockNum(14) = -7
-                TermStockNum(15) = 8
-                TermStockNum(16) = -8
-                TermStockNum(17) = 9
-                TermStockNum(18) = -9
-                TermStockNum(19) = 10
-                TermStockNum(20) = -10
-                TermStockNum(21) = 11
-                TermStockNum(22) = -11
-                TermStockNum(23) = 12
-                TermStockNum(24) = -12
-                TermStockNum(25) = 13
-                TermStockNum(26) = -13
-                TermStockNum(27) = 14
-                TermStockNum(28) = -14
-                TermStockNum(29) = 15
-                TermStockNum(30) = -15
-                TermStockNum(31) = 16
-                TermStockNum(32) = -16
-                TermStockNum(33) = 17
-                TermStockNum(34) = -17
-                TermStockNum(35) = 18
-                TermStockNum(36) = -18
-                TermStockNum(37) = 33
-                TermStockNum(38) = -19
-                TermStockNum(39) = 38
-                TermStockNum(40) = -20
-                TermStockNum(41) = 19
-                TermStockNum(42) = -21
-                TermStockNum(43) = 20
-                TermStockNum(44) = -22
-                TermStockNum(45) = 21
-                TermStockNum(46) = -23
-                TermStockNum(47) = 22
-                TermStockNum(48) = -24
-                TermStockNum(49) = 23
-                TermStockNum(50) = -25
-                TermStockNum(51) = 24
-                TermStockNum(52) = -26
-                TermStockNum(53) = 25
-                TermStockNum(54) = -27
-                TermStockNum(55) = 26
-                TermStockNum(56) = -28
-                TermStockNum(57) = 27
-                TermStockNum(58) = -29
-                TermStockNum(59) = 28
-                TermStockNum(60) = -30
-                TermStockNum(61) = 29
-                TermStockNum(62) = -31
-                TermStockNum(63) = 30
-                TermStockNum(64) = -32
-                TermStockNum(65) = 31
-            Case 38
-                ReDim TermStockNum(NumStk + 37)
-                TermStockNum(1) = -1
-                TermStockNum(2) = 1
-                TermStockNum(3) = -2
-                TermStockNum(4) = 2
-                TermStockNum(5) = 3
-                TermStockNum(6) = -3
-                TermStockNum(7) = 4
-                TermStockNum(8) = -4
-                TermStockNum(9) = 5
-                TermStockNum(10) = -5
-                TermStockNum(11) = 6
-                TermStockNum(12) = -6
-                TermStockNum(13) = 7
-                TermStockNum(14) = -7
-                TermStockNum(15) = 8
-                TermStockNum(16) = -8
-                TermStockNum(17) = 9
-                TermStockNum(18) = -9
-                TermStockNum(19) = 10
-                TermStockNum(20) = -10
-                TermStockNum(21) = 11
-                TermStockNum(22) = -11
-                TermStockNum(23) = 12
-                TermStockNum(24) = -12
-                TermStockNum(25) = 13
-                TermStockNum(26) = -13
-                TermStockNum(27) = 14
-                TermStockNum(28) = -14
-                TermStockNum(29) = 15
-                TermStockNum(30) = -15
-                TermStockNum(31) = 16
-                TermStockNum(32) = -16
-                TermStockNum(33) = 17
-                TermStockNum(34) = -17
-                TermStockNum(35) = 18
-                TermStockNum(36) = -18
-                TermStockNum(37) = 33
-                TermStockNum(38) = -19
-                TermStockNum(39) = 38
-                TermStockNum(40) = -20
-                TermStockNum(41) = 19
-                TermStockNum(42) = -21
-                TermStockNum(43) = 20
-                TermStockNum(44) = -22
-                TermStockNum(45) = 21
-                TermStockNum(46) = -23
-                TermStockNum(47) = 22
-                TermStockNum(48) = -24
-                TermStockNum(49) = 23
-                TermStockNum(50) = -25
-                TermStockNum(51) = 24
-                TermStockNum(52) = -26
-                TermStockNum(53) = 25
-                TermStockNum(54) = -27
-                TermStockNum(55) = 26
-                TermStockNum(56) = -28
-                TermStockNum(57) = 27
-                TermStockNum(58) = -29
-                TermStockNum(59) = 28
-                TermStockNum(60) = -30
-                TermStockNum(61) = 29
-                TermStockNum(62) = -31
-                TermStockNum(63) = 30
-                TermStockNum(64) = -32
-                TermStockNum(65) = 31
-                TermStockNum(66) = -33
-                TermStockNum(67) = 32
-                TermStockNum(68) = -34
-                TermStockNum(69) = 34
-                TermStockNum(70) = -35
-                TermStockNum(71) = 35
-                TermStockNum(72) = -36
-                TermStockNum(73) = 36
-                TermStockNum(74) = -37
-                TermStockNum(75) = 37
-            Case 66
-                ReDim TermStockNum(NumStk + 32)
-                TermStockNum(1) = -1
-                TermStockNum(2) = 1
-                TermStockNum(3) = 2
-                TermStockNum(4) = -2
-                TermStockNum(5) = 3
-                TermStockNum(6) = 4
-                TermStockNum(7) = 5
-                TermStockNum(8) = 6
-                TermStockNum(9) = -3
-                TermStockNum(10) = 7
-                TermStockNum(11) = 8
-                TermStockNum(12) = -4
-                TermStockNum(13) = 9
-                TermStockNum(14) = 10
-                TermStockNum(15) = -5
-                TermStockNum(16) = 11
-                TermStockNum(17) = 12
-                TermStockNum(18) = -6
-                TermStockNum(19) = 13
-                TermStockNum(20) = 14
-                TermStockNum(21) = -7
-                TermStockNum(22) = 15
-                TermStockNum(23) = 16
-                TermStockNum(24) = -8
-                TermStockNum(25) = 17
-                TermStockNum(26) = 18
-                TermStockNum(27) = -9
-                TermStockNum(28) = 19
-                TermStockNum(29) = 20
-                TermStockNum(30) = -10
-                TermStockNum(31) = 21
-                TermStockNum(32) = 22
-                TermStockNum(33) = -11
-                TermStockNum(34) = 23
-                TermStockNum(35) = 24
-                TermStockNum(36) = -12
-                TermStockNum(37) = 25
-                TermStockNum(38) = 26
-                TermStockNum(39) = -13
-                TermStockNum(40) = 27
-                TermStockNum(41) = 28
-                TermStockNum(42) = -14
-                TermStockNum(43) = 29
-                TermStockNum(44) = 30
-                TermStockNum(45) = -15
-                TermStockNum(46) = 31
-                TermStockNum(47) = 32
-                TermStockNum(48) = -16
-                TermStockNum(49) = 33
-                TermStockNum(50) = 34
-                TermStockNum(51) = -17
-                TermStockNum(52) = 35
-                TermStockNum(53) = 36
-                TermStockNum(54) = -18
-                TermStockNum(55) = 65
-                TermStockNum(56) = 66
-                TermStockNum(57) = -19
-                TermStockNum(58) = 37
-                TermStockNum(59) = 38
-                TermStockNum(60) = -20
-                TermStockNum(61) = 39
-                TermStockNum(62) = 40
-                TermStockNum(63) = -21
-                TermStockNum(64) = 41
-                TermStockNum(65) = 42
-                TermStockNum(66) = -22
-                TermStockNum(67) = 43
-                TermStockNum(68) = 44
-                TermStockNum(69) = -23
-                TermStockNum(70) = 45
-                TermStockNum(71) = 46
-                TermStockNum(72) = -24
-                TermStockNum(73) = 47
-                TermStockNum(74) = 48
-                TermStockNum(75) = -25
-                TermStockNum(76) = 49
-                TermStockNum(77) = 50
-                TermStockNum(78) = -26
-                TermStockNum(79) = 51
-                TermStockNum(80) = 52
-                TermStockNum(81) = -27
-                TermStockNum(82) = 53
-                TermStockNum(83) = 54
-                TermStockNum(84) = -28
-                TermStockNum(85) = 55
-                TermStockNum(86) = 56
-                TermStockNum(87) = -29
-                TermStockNum(88) = 57
-                TermStockNum(89) = 58
-                TermStockNum(90) = -30
-                TermStockNum(91) = 59
-                TermStockNum(92) = 60
-                TermStockNum(93) = -31
-                TermStockNum(94) = 61
-                TermStockNum(95) = 62
-                TermStockNum(96) = -32
-                TermStockNum(97) = 63
-                TermStockNum(98) = 64
-            Case 76
-                ReDim TermStockNum(NumStk + 37)
-                TermStockNum(1) = -1
-                TermStockNum(2) = 1
-                TermStockNum(3) = 2
-                TermStockNum(4) = -2
-                TermStockNum(5) = 3
-                TermStockNum(6) = 4
-                TermStockNum(7) = 5
-                TermStockNum(8) = 6
-                TermStockNum(9) = -3
-                TermStockNum(10) = 7
-                TermStockNum(11) = 8
-                TermStockNum(12) = -4
-                TermStockNum(13) = 9
-                TermStockNum(14) = 10
-                TermStockNum(15) = -5
-                TermStockNum(16) = 11
-                TermStockNum(17) = 12
-                TermStockNum(18) = -6
-                TermStockNum(19) = 13
-                TermStockNum(20) = 14
-                TermStockNum(21) = -7
-                TermStockNum(22) = 15
-                TermStockNum(23) = 16
-                TermStockNum(24) = -8
-                TermStockNum(25) = 17
-                TermStockNum(26) = 18
-                TermStockNum(27) = -9
-                TermStockNum(28) = 19
-                TermStockNum(29) = 20
-                TermStockNum(30) = -10
-                TermStockNum(31) = 21
-                TermStockNum(32) = 22
-                TermStockNum(33) = -11
-                TermStockNum(34) = 23
-                TermStockNum(35) = 24
-                TermStockNum(36) = -12
-                TermStockNum(37) = 25
-                TermStockNum(38) = 26
-                TermStockNum(39) = -13
-                TermStockNum(40) = 27
-                TermStockNum(41) = 28
-                TermStockNum(42) = -14
-                TermStockNum(43) = 29
-                TermStockNum(44) = 30
-                TermStockNum(45) = -15
-                TermStockNum(46) = 31
-                TermStockNum(47) = 32
-                TermStockNum(48) = -16
-                TermStockNum(49) = 33
-                TermStockNum(50) = 34
-                TermStockNum(51) = -17
-                TermStockNum(52) = 35
-                TermStockNum(53) = 36
-                TermStockNum(54) = -18
-                TermStockNum(55) = 65
-                TermStockNum(56) = 66
-                TermStockNum(57) = -19
-                TermStockNum(58) = 75
-                TermStockNum(59) = 76
-                TermStockNum(60) = -20
-                TermStockNum(61) = 37
-                TermStockNum(62) = 38
-                TermStockNum(63) = -21
-                TermStockNum(64) = 39
-                TermStockNum(65) = 40
-                TermStockNum(66) = -22
-                TermStockNum(67) = 41
-                TermStockNum(68) = 42
-                TermStockNum(69) = -23
-                TermStockNum(70) = 43
-                TermStockNum(71) = 44
-                TermStockNum(72) = -24
-                TermStockNum(73) = 45
-                TermStockNum(74) = 46
-                TermStockNum(75) = -25
-                TermStockNum(76) = 47
-                TermStockNum(77) = 48
-                TermStockNum(78) = -26
-                TermStockNum(79) = 49
-                TermStockNum(80) = 50
-                TermStockNum(81) = -27
-                TermStockNum(82) = 51
-                TermStockNum(83) = 52
-                TermStockNum(84) = -28
-                TermStockNum(85) = 53
-                TermStockNum(86) = 54
-                TermStockNum(87) = -29
-                TermStockNum(88) = 55
-                TermStockNum(89) = 56
-                TermStockNum(90) = -30
-                TermStockNum(91) = 57
-                TermStockNum(92) = 58
-                TermStockNum(93) = -31
-                TermStockNum(94) = 59
-                TermStockNum(95) = 60
-                TermStockNum(96) = -32
-                TermStockNum(97) = 61
-                TermStockNum(98) = 62
-                TermStockNum(99) = -33
-                TermStockNum(100) = 63
-                TermStockNum(101) = 64
-                TermStockNum(102) = -34
-                TermStockNum(103) = 67
-                TermStockNum(104) = 68
-                TermStockNum(105) = -35
-                TermStockNum(106) = 69
-                TermStockNum(107) = 70
-                TermStockNum(108) = -36
-                TermStockNum(109) = 71
-                TermStockNum(110) = 72
-                TermStockNum(111) = -37
-                TermStockNum(112) = 73
-                TermStockNum(113) = 74
-            Case Is > 76
-                ReDim TermStockNum(NumStk + NumStk / 2 - 1)
-                TermStockNum(1) = -1
-                TermStockNum(2) = 1
-                TermStockNum(3) = 2
-                TermStockNum(4) = -2
-                TermStockNum(5) = 3
-                TermStockNum(6) = 4
-                TermStockNum(7) = 5
-                TermStockNum(8) = 6
-                TermStockNum(9) = -3
-                TermStockNum(10) = 7
-                TermStockNum(11) = 8
-                TermStockNum(12) = -4
-                TermStockNum(13) = 9
-                TermStockNum(14) = 10
-                TermStockNum(15) = -5
-                TermStockNum(16) = 11
-                TermStockNum(17) = 12
-                TermStockNum(18) = -6
-                TermStockNum(19) = 13
-                TermStockNum(20) = 14
-                TermStockNum(21) = -7
-                TermStockNum(22) = 15
-                TermStockNum(23) = 16
-                TermStockNum(24) = -8
-                TermStockNum(25) = 17
-                TermStockNum(26) = 18
-                TermStockNum(27) = -9
-                TermStockNum(28) = 19
-                TermStockNum(29) = 20
-                TermStockNum(30) = -10
-                TermStockNum(31) = 21
-                TermStockNum(32) = 22
-                TermStockNum(33) = -11
-                TermStockNum(34) = 23
-                TermStockNum(35) = 24
-                TermStockNum(36) = -12
-                TermStockNum(37) = 25
-                TermStockNum(38) = 26
-                TermStockNum(39) = -13
-                TermStockNum(40) = 27
-                TermStockNum(41) = 28
-                TermStockNum(42) = -14
-                TermStockNum(43) = 29
-                TermStockNum(44) = 30
-                TermStockNum(45) = -15
-                TermStockNum(46) = 31
-                TermStockNum(47) = 32
-                TermStockNum(48) = -16
-                TermStockNum(49) = 33
-                TermStockNum(50) = 34
-                TermStockNum(51) = -17
-                TermStockNum(52) = 35
-                TermStockNum(53) = 36
-                TermStockNum(54) = -18
-                TermStockNum(55) = 65
-                TermStockNum(56) = 66
-                TermStockNum(57) = -19
-                TermStockNum(58) = 75
-                TermStockNum(59) = 76
-                TermStockNum(60) = -20
-                TermStockNum(61) = 37
-                TermStockNum(62) = 38
-                TermStockNum(63) = -21
-                TermStockNum(64) = 39
-                TermStockNum(65) = 40
-                TermStockNum(66) = -22
-                TermStockNum(67) = 41
-                TermStockNum(68) = 42
-                TermStockNum(69) = -23
-                TermStockNum(70) = 43
-                TermStockNum(71) = 44
-                TermStockNum(72) = -24
-                TermStockNum(73) = 45
-                TermStockNum(74) = 46
-                TermStockNum(75) = -25
-                TermStockNum(76) = 47
-                TermStockNum(77) = 48
-                TermStockNum(78) = -26
-                TermStockNum(79) = 49
-                TermStockNum(80) = 50
-                TermStockNum(81) = -27
-                TermStockNum(82) = 51
-                TermStockNum(83) = 52
-                TermStockNum(84) = -28
-                TermStockNum(85) = 53
-                TermStockNum(86) = 54
-                TermStockNum(87) = -29
-                TermStockNum(88) = 55
-                TermStockNum(89) = 56
-                TermStockNum(90) = -30
-                TermStockNum(91) = 57
-                TermStockNum(92) = 58
-                TermStockNum(93) = -31
-                TermStockNum(94) = 59
-                TermStockNum(95) = 60
-                TermStockNum(96) = -32
-                TermStockNum(97) = 61
-                TermStockNum(98) = 62
-                TermStockNum(99) = -33
-                TermStockNum(100) = 63
-                TermStockNum(101) = 64
-                TermStockNum(102) = -34
-                TermStockNum(103) = 67
-                TermStockNum(104) = 68
-                TermStockNum(105) = -35
-                TermStockNum(106) = 69
-                TermStockNum(107) = 70
-                TermStockNum(108) = -36
-                TermStockNum(109) = 71
-                TermStockNum(110) = 72
-                TermStockNum(111) = -37
-                TermStockNum(112) = 73
-                TermStockNum(113) = 74
-                TermStockNum(114) = -38
-                TermStockNum(115) = 77
-                TermStockNum(116) = 78
-        End Select
+        'Select Case NumStk
+        '    Case 33
+        '        ReDim TermStockNum(NumStk + 32)
+        '        TermStockNum(1) = -1
+        '        TermStockNum(2) = 1
+        '        TermStockNum(3) = -2
+        '        TermStockNum(4) = 2
+        '        TermStockNum(5) = 3
+        '        TermStockNum(6) = -3
+        '        TermStockNum(7) = 4
+        '        TermStockNum(8) = -4
+        '        TermStockNum(9) = 5
+        '        TermStockNum(10) = -5
+        '        TermStockNum(11) = 6
+        '        TermStockNum(12) = -6
+        '        TermStockNum(13) = 7
+        '        TermStockNum(14) = -7
+        '        TermStockNum(15) = 8
+        '        TermStockNum(16) = -8
+        '        TermStockNum(17) = 9
+        '        TermStockNum(18) = -9
+        '        TermStockNum(19) = 10
+        '        TermStockNum(20) = -10
+        '        TermStockNum(21) = 11
+        '        TermStockNum(22) = -11
+        '        TermStockNum(23) = 12
+        '        TermStockNum(24) = -12
+        '        TermStockNum(25) = 13
+        '        TermStockNum(26) = -13
+        '        TermStockNum(27) = 14
+        '        TermStockNum(28) = -14
+        '        TermStockNum(29) = 15
+        '        TermStockNum(30) = -15
+        '        TermStockNum(31) = 16
+        '        TermStockNum(32) = -16
+        '        TermStockNum(33) = 17
+        '        TermStockNum(34) = -17
+        '        TermStockNum(35) = 18
+        '        TermStockNum(36) = -18
+        '        TermStockNum(37) = 33
+        '        TermStockNum(38) = -19
+        '        TermStockNum(39) = 38
+        '        TermStockNum(40) = -20
+        '        TermStockNum(41) = 19
+        '        TermStockNum(42) = -21
+        '        TermStockNum(43) = 20
+        '        TermStockNum(44) = -22
+        '        TermStockNum(45) = 21
+        '        TermStockNum(46) = -23
+        '        TermStockNum(47) = 22
+        '        TermStockNum(48) = -24
+        '        TermStockNum(49) = 23
+        '        TermStockNum(50) = -25
+        '        TermStockNum(51) = 24
+        '        TermStockNum(52) = -26
+        '        TermStockNum(53) = 25
+        '        TermStockNum(54) = -27
+        '        TermStockNum(55) = 26
+        '        TermStockNum(56) = -28
+        '        TermStockNum(57) = 27
+        '        TermStockNum(58) = -29
+        '        TermStockNum(59) = 28
+        '        TermStockNum(60) = -30
+        '        TermStockNum(61) = 29
+        '        TermStockNum(62) = -31
+        '        TermStockNum(63) = 30
+        '        TermStockNum(64) = -32
+        '        TermStockNum(65) = 31
+        '    Case 38
+        '        ReDim TermStockNum(NumStk + 37)
+        '        TermStockNum(1) = -1
+        '        TermStockNum(2) = 1
+        '        TermStockNum(3) = -2
+        '        TermStockNum(4) = 2
+        '        TermStockNum(5) = 3
+        '        TermStockNum(6) = -3
+        '        TermStockNum(7) = 4
+        '        TermStockNum(8) = -4
+        '        TermStockNum(9) = 5
+        '        TermStockNum(10) = -5
+        '        TermStockNum(11) = 6
+        '        TermStockNum(12) = -6
+        '        TermStockNum(13) = 7
+        '        TermStockNum(14) = -7
+        '        TermStockNum(15) = 8
+        '        TermStockNum(16) = -8
+        '        TermStockNum(17) = 9
+        '        TermStockNum(18) = -9
+        '        TermStockNum(19) = 10
+        '        TermStockNum(20) = -10
+        '        TermStockNum(21) = 11
+        '        TermStockNum(22) = -11
+        '        TermStockNum(23) = 12
+        '        TermStockNum(24) = -12
+        '        TermStockNum(25) = 13
+        '        TermStockNum(26) = -13
+        '        TermStockNum(27) = 14
+        '        TermStockNum(28) = -14
+        '        TermStockNum(29) = 15
+        '        TermStockNum(30) = -15
+        '        TermStockNum(31) = 16
+        '        TermStockNum(32) = -16
+        '        TermStockNum(33) = 17
+        '        TermStockNum(34) = -17
+        '        TermStockNum(35) = 18
+        '        TermStockNum(36) = -18
+        '        TermStockNum(37) = 33
+        '        TermStockNum(38) = -19
+        '        TermStockNum(39) = 38
+        '        TermStockNum(40) = -20
+        '        TermStockNum(41) = 19
+        '        TermStockNum(42) = -21
+        '        TermStockNum(43) = 20
+        '        TermStockNum(44) = -22
+        '        TermStockNum(45) = 21
+        '        TermStockNum(46) = -23
+        '        TermStockNum(47) = 22
+        '        TermStockNum(48) = -24
+        '        TermStockNum(49) = 23
+        '        TermStockNum(50) = -25
+        '        TermStockNum(51) = 24
+        '        TermStockNum(52) = -26
+        '        TermStockNum(53) = 25
+        '        TermStockNum(54) = -27
+        '        TermStockNum(55) = 26
+        '        TermStockNum(56) = -28
+        '        TermStockNum(57) = 27
+        '        TermStockNum(58) = -29
+        '        TermStockNum(59) = 28
+        '        TermStockNum(60) = -30
+        '        TermStockNum(61) = 29
+        '        TermStockNum(62) = -31
+        '        TermStockNum(63) = 30
+        '        TermStockNum(64) = -32
+        '        TermStockNum(65) = 31
+        '        TermStockNum(66) = -33
+        '        TermStockNum(67) = 32
+        '        TermStockNum(68) = -34
+        '        TermStockNum(69) = 34
+        '        TermStockNum(70) = -35
+        '        TermStockNum(71) = 35
+        '        TermStockNum(72) = -36
+        '        TermStockNum(73) = 36
+        '        TermStockNum(74) = -37
+        '        TermStockNum(75) = 37
+        '    Case 66
+        '        ReDim TermStockNum(NumStk + 32)
+        '        TermStockNum(1) = -1
+        '        TermStockNum(2) = 1
+        '        TermStockNum(3) = 2
+        '        TermStockNum(4) = -2
+        '        TermStockNum(5) = 3
+        '        TermStockNum(6) = 4
+        '        TermStockNum(7) = 5
+        '        TermStockNum(8) = 6
+        '        TermStockNum(9) = -3
+        '        TermStockNum(10) = 7
+        '        TermStockNum(11) = 8
+        '        TermStockNum(12) = -4
+        '        TermStockNum(13) = 9
+        '        TermStockNum(14) = 10
+        '        TermStockNum(15) = -5
+        '        TermStockNum(16) = 11
+        '        TermStockNum(17) = 12
+        '        TermStockNum(18) = -6
+        '        TermStockNum(19) = 13
+        '        TermStockNum(20) = 14
+        '        TermStockNum(21) = -7
+        '        TermStockNum(22) = 15
+        '        TermStockNum(23) = 16
+        '        TermStockNum(24) = -8
+        '        TermStockNum(25) = 17
+        '        TermStockNum(26) = 18
+        '        TermStockNum(27) = -9
+        '        TermStockNum(28) = 19
+        '        TermStockNum(29) = 20
+        '        TermStockNum(30) = -10
+        '        TermStockNum(31) = 21
+        '        TermStockNum(32) = 22
+        '        TermStockNum(33) = -11
+        '        TermStockNum(34) = 23
+        '        TermStockNum(35) = 24
+        '        TermStockNum(36) = -12
+        '        TermStockNum(37) = 25
+        '        TermStockNum(38) = 26
+        '        TermStockNum(39) = -13
+        '        TermStockNum(40) = 27
+        '        TermStockNum(41) = 28
+        '        TermStockNum(42) = -14
+        '        TermStockNum(43) = 29
+        '        TermStockNum(44) = 30
+        '        TermStockNum(45) = -15
+        '        TermStockNum(46) = 31
+        '        TermStockNum(47) = 32
+        '        TermStockNum(48) = -16
+        '        TermStockNum(49) = 33
+        '        TermStockNum(50) = 34
+        '        TermStockNum(51) = -17
+        '        TermStockNum(52) = 35
+        '        TermStockNum(53) = 36
+        '        TermStockNum(54) = -18
+        '        TermStockNum(55) = 65
+        '        TermStockNum(56) = 66
+        '        TermStockNum(57) = -19
+        '        TermStockNum(58) = 37
+        '        TermStockNum(59) = 38
+        '        TermStockNum(60) = -20
+        '        TermStockNum(61) = 39
+        '        TermStockNum(62) = 40
+        '        TermStockNum(63) = -21
+        '        TermStockNum(64) = 41
+        '        TermStockNum(65) = 42
+        '        TermStockNum(66) = -22
+        '        TermStockNum(67) = 43
+        '        TermStockNum(68) = 44
+        '        TermStockNum(69) = -23
+        '        TermStockNum(70) = 45
+        '        TermStockNum(71) = 46
+        '        TermStockNum(72) = -24
+        '        TermStockNum(73) = 47
+        '        TermStockNum(74) = 48
+        '        TermStockNum(75) = -25
+        '        TermStockNum(76) = 49
+        '        TermStockNum(77) = 50
+        '        TermStockNum(78) = -26
+        '        TermStockNum(79) = 51
+        '        TermStockNum(80) = 52
+        '        TermStockNum(81) = -27
+        '        TermStockNum(82) = 53
+        '        TermStockNum(83) = 54
+        '        TermStockNum(84) = -28
+        '        TermStockNum(85) = 55
+        '        TermStockNum(86) = 56
+        '        TermStockNum(87) = -29
+        '        TermStockNum(88) = 57
+        '        TermStockNum(89) = 58
+        '        TermStockNum(90) = -30
+        '        TermStockNum(91) = 59
+        '        TermStockNum(92) = 60
+        '        TermStockNum(93) = -31
+        '        TermStockNum(94) = 61
+        '        TermStockNum(95) = 62
+        '        TermStockNum(96) = -32
+        '        TermStockNum(97) = 63
+        '        TermStockNum(98) = 64
+        '    Case 76
+        '        ReDim TermStockNum(NumStk + 37)
+        '        TermStockNum(1) = -1
+        '        TermStockNum(2) = 1
+        '        TermStockNum(3) = 2
+        '        TermStockNum(4) = -2
+        '        TermStockNum(5) = 3
+        '        TermStockNum(6) = 4
+        '        TermStockNum(7) = 5
+        '        TermStockNum(8) = 6
+        '        TermStockNum(9) = -3
+        '        TermStockNum(10) = 7
+        '        TermStockNum(11) = 8
+        '        TermStockNum(12) = -4
+        '        TermStockNum(13) = 9
+        '        TermStockNum(14) = 10
+        '        TermStockNum(15) = -5
+        '        TermStockNum(16) = 11
+        '        TermStockNum(17) = 12
+        '        TermStockNum(18) = -6
+        '        TermStockNum(19) = 13
+        '        TermStockNum(20) = 14
+        '        TermStockNum(21) = -7
+        '        TermStockNum(22) = 15
+        '        TermStockNum(23) = 16
+        '        TermStockNum(24) = -8
+        '        TermStockNum(25) = 17
+        '        TermStockNum(26) = 18
+        '        TermStockNum(27) = -9
+        '        TermStockNum(28) = 19
+        '        TermStockNum(29) = 20
+        '        TermStockNum(30) = -10
+        '        TermStockNum(31) = 21
+        '        TermStockNum(32) = 22
+        '        TermStockNum(33) = -11
+        '        TermStockNum(34) = 23
+        '        TermStockNum(35) = 24
+        '        TermStockNum(36) = -12
+        '        TermStockNum(37) = 25
+        '        TermStockNum(38) = 26
+        '        TermStockNum(39) = -13
+        '        TermStockNum(40) = 27
+        '        TermStockNum(41) = 28
+        '        TermStockNum(42) = -14
+        '        TermStockNum(43) = 29
+        '        TermStockNum(44) = 30
+        '        TermStockNum(45) = -15
+        '        TermStockNum(46) = 31
+        '        TermStockNum(47) = 32
+        '        TermStockNum(48) = -16
+        '        TermStockNum(49) = 33
+        '        TermStockNum(50) = 34
+        '        TermStockNum(51) = -17
+        '        TermStockNum(52) = 35
+        '        TermStockNum(53) = 36
+        '        TermStockNum(54) = -18
+        '        TermStockNum(55) = 65
+        '        TermStockNum(56) = 66
+        '        TermStockNum(57) = -19
+        '        TermStockNum(58) = 75
+        '        TermStockNum(59) = 76
+        '        TermStockNum(60) = -20
+        '        TermStockNum(61) = 37
+        '        TermStockNum(62) = 38
+        '        TermStockNum(63) = -21
+        '        TermStockNum(64) = 39
+        '        TermStockNum(65) = 40
+        '        TermStockNum(66) = -22
+        '        TermStockNum(67) = 41
+        '        TermStockNum(68) = 42
+        '        TermStockNum(69) = -23
+        '        TermStockNum(70) = 43
+        '        TermStockNum(71) = 44
+        '        TermStockNum(72) = -24
+        '        TermStockNum(73) = 45
+        '        TermStockNum(74) = 46
+        '        TermStockNum(75) = -25
+        '        TermStockNum(76) = 47
+        '        TermStockNum(77) = 48
+        '        TermStockNum(78) = -26
+        '        TermStockNum(79) = 49
+        '        TermStockNum(80) = 50
+        '        TermStockNum(81) = -27
+        '        TermStockNum(82) = 51
+        '        TermStockNum(83) = 52
+        '        TermStockNum(84) = -28
+        '        TermStockNum(85) = 53
+        '        TermStockNum(86) = 54
+        '        TermStockNum(87) = -29
+        '        TermStockNum(88) = 55
+        '        TermStockNum(89) = 56
+        '        TermStockNum(90) = -30
+        '        TermStockNum(91) = 57
+        '        TermStockNum(92) = 58
+        '        TermStockNum(93) = -31
+        '        TermStockNum(94) = 59
+        '        TermStockNum(95) = 60
+        '        TermStockNum(96) = -32
+        '        TermStockNum(97) = 61
+        '        TermStockNum(98) = 62
+        '        TermStockNum(99) = -33
+        '        TermStockNum(100) = 63
+        '        TermStockNum(101) = 64
+        '        TermStockNum(102) = -34
+        '        TermStockNum(103) = 67
+        '        TermStockNum(104) = 68
+        '        TermStockNum(105) = -35
+        '        TermStockNum(106) = 69
+        '        TermStockNum(107) = 70
+        '        TermStockNum(108) = -36
+        '        TermStockNum(109) = 71
+        '        TermStockNum(110) = 72
+        '        TermStockNum(111) = -37
+        '        TermStockNum(112) = 73
+        '        TermStockNum(113) = 74
+        '    Case Is > 76
+        '        ReDim TermStockNum(NumStk + NumStk / 2 - 1)
+        '        TermStockNum(1) = -1
+        '        TermStockNum(2) = 1
+        '        TermStockNum(3) = 2
+        '        TermStockNum(4) = -2
+        '        TermStockNum(5) = 3
+        '        TermStockNum(6) = 4
+        '        TermStockNum(7) = 5
+        '        TermStockNum(8) = 6
+        '        TermStockNum(9) = -3
+        '        TermStockNum(10) = 7
+        '        TermStockNum(11) = 8
+        '        TermStockNum(12) = -4
+        '        TermStockNum(13) = 9
+        '        TermStockNum(14) = 10
+        '        TermStockNum(15) = -5
+        '        TermStockNum(16) = 11
+        '        TermStockNum(17) = 12
+        '        TermStockNum(18) = -6
+        '        TermStockNum(19) = 13
+        '        TermStockNum(20) = 14
+        '        TermStockNum(21) = -7
+        '        TermStockNum(22) = 15
+        '        TermStockNum(23) = 16
+        '        TermStockNum(24) = -8
+        '        TermStockNum(25) = 17
+        '        TermStockNum(26) = 18
+        '        TermStockNum(27) = -9
+        '        TermStockNum(28) = 19
+        '        TermStockNum(29) = 20
+        '        TermStockNum(30) = -10
+        '        TermStockNum(31) = 21
+        '        TermStockNum(32) = 22
+        '        TermStockNum(33) = -11
+        '        TermStockNum(34) = 23
+        '        TermStockNum(35) = 24
+        '        TermStockNum(36) = -12
+        '        TermStockNum(37) = 25
+        '        TermStockNum(38) = 26
+        '        TermStockNum(39) = -13
+        '        TermStockNum(40) = 27
+        '        TermStockNum(41) = 28
+        '        TermStockNum(42) = -14
+        '        TermStockNum(43) = 29
+        '        TermStockNum(44) = 30
+        '        TermStockNum(45) = -15
+        '        TermStockNum(46) = 31
+        '        TermStockNum(47) = 32
+        '        TermStockNum(48) = -16
+        '        TermStockNum(49) = 33
+        '        TermStockNum(50) = 34
+        '        TermStockNum(51) = -17
+        '        TermStockNum(52) = 35
+        '        TermStockNum(53) = 36
+        '        TermStockNum(54) = -18
+        '        TermStockNum(55) = 65
+        '        TermStockNum(56) = 66
+        '        TermStockNum(57) = -19
+        '        TermStockNum(58) = 75
+        '        TermStockNum(59) = 76
+        '        TermStockNum(60) = -20
+        '        TermStockNum(61) = 37
+        '        TermStockNum(62) = 38
+        '        TermStockNum(63) = -21
+        '        TermStockNum(64) = 39
+        '        TermStockNum(65) = 40
+        '        TermStockNum(66) = -22
+        '        TermStockNum(67) = 41
+        '        TermStockNum(68) = 42
+        '        TermStockNum(69) = -23
+        '        TermStockNum(70) = 43
+        '        TermStockNum(71) = 44
+        '        TermStockNum(72) = -24
+        '        TermStockNum(73) = 45
+        '        TermStockNum(74) = 46
+        '        TermStockNum(75) = -25
+        '        TermStockNum(76) = 47
+        '        TermStockNum(77) = 48
+        '        TermStockNum(78) = -26
+        '        TermStockNum(79) = 49
+        '        TermStockNum(80) = 50
+        '        TermStockNum(81) = -27
+        '        TermStockNum(82) = 51
+        '        TermStockNum(83) = 52
+        '        TermStockNum(84) = -28
+        '        TermStockNum(85) = 53
+        '        TermStockNum(86) = 54
+        '        TermStockNum(87) = -29
+        '        TermStockNum(88) = 55
+        '        TermStockNum(89) = 56
+        '        TermStockNum(90) = -30
+        '        TermStockNum(91) = 57
+        '        TermStockNum(92) = 58
+        '        TermStockNum(93) = -31
+        '        TermStockNum(94) = 59
+        '        TermStockNum(95) = 60
+        '        TermStockNum(96) = -32
+        '        TermStockNum(97) = 61
+        '        TermStockNum(98) = 62
+        '        TermStockNum(99) = -33
+        '        TermStockNum(100) = 63
+        '        TermStockNum(101) = 64
+        '        TermStockNum(102) = -34
+        '        TermStockNum(103) = 67
+        '        TermStockNum(104) = 68
+        '        TermStockNum(105) = -35
+        '        TermStockNum(106) = 69
+        '        TermStockNum(107) = 70
+        '        TermStockNum(108) = -36
+        '        TermStockNum(109) = 71
+        '        TermStockNum(110) = 72
+        '        TermStockNum(111) = -37
+        '        TermStockNum(112) = 73
+        '        TermStockNum(113) = 74
+        '        TermStockNum(114) = -38
+        '        TermStockNum(115) = 77
+        '        TermStockNum(116) = 78
+        'End Select
+
+        ReDim TermStockNum(NumStk + NumStk / 2 + 1)
+        For Stk = 1 To NumStk / 2
+            'If (Stk * 3 - 2) Mod 3 = 0 Then
+            TermStockNum(Stk * 3 - 2) = -1 * Stk
+            'ElseIf (Stk * 1.5 + 0.5) Mod 3 = 0 Then
+            TermStockNum(Stk * 3 - 1) = Stk * 2 - 1
+            'Else
+            TermStockNum(Stk * 3) = Stk * 2
+            'End If
+        Next Stk
 
         '- TFish is Array of Terminal Fisheries for each Terminal Run
         ReDim TFish(NumStk / 2, 10)

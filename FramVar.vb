@@ -233,7 +233,8 @@ Public Module FramVar
 
 
 
-   '- Chinook TAMM Variables
+    '- Chinook TAMM Variables
+    Public TAMMArea() As Integer
    Public TammCatch(,) As Double
    Public TammEscape(,) As Double
    Public TammEstimate(,) As Double
@@ -274,7 +275,8 @@ Public Module FramVar
     Public BackwardsFlag(Stk + 1) As Integer
    Public BackwardsFRAMFlag As Integer
    Public BackwardsTarget() As Double
-   Public BackwardsChinook(,) As Double
+    Public BackwardsChinook(,) As Double
+    Public gridcount As Integer
 
    Public BFYearSelection As Integer
    Public BFYearSelectType As Integer

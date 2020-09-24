@@ -1036,7 +1036,7 @@ SkipTami2:
 
 
                                     '--- Main FRAM Harvest Algorithm --------------------
-                                    If Stk = 7 And TStep = 5 And Fish = 98 Then
+                                    If Stk = 2 And TStep = 3 And Fish = 40 And Age = 3 Then
                                         Jim = 1
                                     End If
 
@@ -2039,7 +2039,7 @@ NextTolerCheck:
                 TammEscape(6, TStep) = Escape(2, 3, TStep) + Escape(2, 4, TStep) + Escape(2, 5, TStep) + Escape(3, 3, TStep) + Escape(3, 4, TStep) + Escape(3, 5, TStep)
                 '------ South Sound Spring Yearling (White River at Minter Crk)
                 TammEscape(7, TStep) = Escape(15, 3, TStep) + Escape(15, 4, TStep) + Escape(15, 5, TStep)
-            Else
+            ElseIf NumStk < 100 Then
                 '------ Nooksack Fall Chinook
                 TammEscape(1, TStep) = Escape(1, 3, TStep) + Escape(1, 4, TStep) + Escape(1, 5, TStep) + Escape(2, 3, TStep) + Escape(2, 4, TStep) + Escape(2, 5, TStep)
                 '------ Skagit Fall Fingerling and Yearling Chinook
@@ -2055,6 +2055,15 @@ NextTolerCheck:
                 TammEscape(6, TStep) = Escape(3, 3, TStep) + Escape(3, 4, TStep) + Escape(3, 5, TStep) + Escape(4, 3, TStep) + Escape(4, 4, TStep) + Escape(4, 5, TStep) + Escape(5, 3, TStep) + Escape(5, 4, TStep) + Escape(5, 5, TStep) + Escape(6, 3, TStep) + Escape(6, 4, TStep) + Escape(6, 5, TStep)
                 '------ South Sound Spring Yearling (White River at Minter Crk)
                 TammEscape(7, TStep) = Escape(29, 3, TStep) + Escape(29, 4, TStep) + Escape(29, 5, TStep) + Escape(30, 3, TStep) + Escape(30, 4, TStep) + Escape(30, 5, TStep) + Escape(65, 3, TStep) + Escape(65, 4, TStep) + Escape(65, 5, TStep) + Escape(66, 3, TStep) + Escape(66, 4, TStep) + Escape(66, 5, TStep)
+            Else
+                For Stk = 1 To NumStk
+                    If TAMMArea(Stk) <> 0 Then
+                        For Age = 3 To MaxAge
+                            TammEscape(TAMMArea(Stk), TStep) = 1
+                        Next Age
+                    End If
+                Next
+
             End If
         End If
 

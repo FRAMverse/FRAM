@@ -462,6 +462,7 @@ Public Class FVS_ModelRunSelection
             ManagementUnit(StkNum) = drd1.GetInt32(4)       '- MU Number
             StockName(StkNum) = drd1.GetString(5)           '- Stock Short Name
             StockTitle(StkNum) = drd1.GetString(6)          '- Stock Long Name
+            'TAMMArea(StkNum) = drd1.GetInt32(7)             '- Terminal area associated with stock 
         Loop
         If StkNum <> NumStk Then
             If ImportStock = False Then
