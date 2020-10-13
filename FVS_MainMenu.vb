@@ -102,7 +102,7 @@ TryDBAgain:
       'Me.Cursor = Cursors.Default
 
       '- DB Connection String
-      FramDB.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & FVSdatabasename
+        FramDB.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & FVSdatabasename
       Me.Visible = False
 
 
