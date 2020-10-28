@@ -121,8 +121,13 @@ Public Class FVS_RunModel
             SizeLimitFix = True
 
         End If
+        If TAMMSpreadSheet <> "" Then
+            TAMMName = My.Computer.FileSystem.GetFileInfo(TAMMSpreadSheet).Name
+        Else
+            TAMMName = ""
+        End If
 
-        
+        FRAMVers = FramVersion
 
 
 
@@ -164,7 +169,7 @@ Public Class FVS_RunModel
 
             'STEP 2: S:L Update Run
             'Does not ask to load in from spreadsheet
-            
+
             UpdateRunEncounterRateAdjustment = True
             WhoUpdated = Environment.UserName
 
@@ -360,8 +365,7 @@ Public Class FVS_RunModel
                     End If
                 End If
 
-                TAMMName = TAMMSpreadSheet
-                FRAMVers = FramVersion
+
 
                 FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
                 '****************End PETE-2/27/13-Code for adding Delineation to Model Run Name if Bias Correction Is Applied
@@ -388,7 +392,10 @@ Public Class FVS_RunModel
         UpdateRunEncounterRateAdjustment = False
         RunTAMMIter = 0 'This Needs to be zero OR things will get goofy on sequential runs.
         'PPPPPP---(end of closing Pete 12/13 Block)------------------------------------------------------------------------
-
+        If AnyNegativeEscapement = 1 Then
+            MsgBox("You have negative escapements. Please check the PopStat report!")
+        End If
+        AnyNegativeEscapement = 0
 
         Me.Close()
         FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
@@ -579,9 +586,9 @@ Public Class FVS_RunModel
         Next
 
         'Set the boolean to true once FRAM has made all update passes; the last one will just be a calculation pass
-        If c = iters - 1 Then
-            FinalUpdatePass = True
-        End If
+        'If c = iters - 1 Then
+        '    FinalUpdatePass = True
+        'End If
 
    End Sub
 

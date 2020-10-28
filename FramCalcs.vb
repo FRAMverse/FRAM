@@ -339,10 +339,10 @@ Module FramCalcs
             Call RunCalcs()
         End If
 
-        If AnyNegativeEscapement = 1 Then
-            MsgBox("You have negative escapements. Please check the PopStat report!")
-        End If
-        AnyNegativeEscapement = 0
+        'If AnyNegativeEscapement = 1 Then
+        '    MsgBox("You have negative escapements. Please check the PopStat report!")
+        'End If
+        'AnyNegativeEscapement = 0
 
 
     End Sub
@@ -1547,7 +1547,7 @@ SecondPassEntry:
                     MSFStkERRateTilde(Stk, Fish) += FishERRate
                 End If
 
-                'If FishERRate <> 0 Then
+                '' ''If FishERRate <> 0 Then
                 '   PrnLine = String.Format("MSF{0,8}", StockName(Stk))
                 '   PrnLine &= String.Format("{0,11}", FisheryName(Fish))
                 '   PrnLine &= String.Format("{0,2}", TStep.ToString(" 0"))
@@ -1561,10 +1561,10 @@ SecondPassEntry:
                 If StkERRateTilde(Stk) > 1 Then
                     Jim = 1
                 End If
-                If StkERRate(Stk) > 1 And MSFBiasCount > 5 Then
-                    MsgBox("Stock " & StockName(Stk) & " may produce negative escapements. Please finish the run and look for negative escapements in the PopStat report. Do not use this run for official results!")
-                    Exit Sub
-                End If
+                'If StkERRate(Stk) > 1 And MSFBiasCount > 5 Then
+                '    MsgBox("Stock " & StockName(Stk) & " may produce negative escapements. Please finish the run and look for negative escapements in the PopStat report. Do not use this run for official results!")
+                '    Exit Sub
+                'End If
 NextERateFish:
             Next
       Next
