@@ -58,19 +58,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>QXJ3YNH/vdwxaxi7eXP52t7UFbs=</dsig:DigestValue>
+        <dsig:DigestValue>vpgzj35fAqsN/Q48LVicFanGxjw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Interop.Microsoft.Office.Core.dll" size="409600">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Interop.Microsoft.Office.Core.dll" size="417792">
       <assemblyIdentity name="Interop.Microsoft.Office.Core" version="2.4.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Co6+1bK1/9eP2G26c25isepwZOw=</dsig:DigestValue>
+        <dsig:DigestValue>3VgefZq7JWIf7nEBoj0gt+V2GmI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
