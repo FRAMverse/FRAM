@@ -1036,7 +1036,7 @@ SkipTami2:
 
 
                                     '--- Main FRAM Harvest Algorithm --------------------
-                                    If Stk = 7 And TStep = 5 And Fish = 98 Then
+                                    If Stk = 53 And TStep = 2 And Fish = 30 And Age = 4 Then
                                         Jim = 1
                                     End If
 
@@ -1153,7 +1153,7 @@ SkipTami2:
                             '- Retention Quota Fishery
                             If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
                                 '- First Pass for Quota Fisheries - Landed Catch as if FisheryScaler = 1
-                                If TStep = 1 And Stk = 123 And Fish = 3 Then
+                                If TStep = 4 And Stk = 29 And Fish = 15 And Age = 4 Then
                                     Jim = 1
                                 End If
 
@@ -1247,7 +1247,7 @@ NextScalerFishery:
                         FisheryScaler(Fish, TStep) = ModelStockProportion(Fish) * FisheryQuota(Fish, TStep) / NSFQuotaTotal(Fish, TStep)
                         For Stk As Integer = 1 To NumStk
                             For Age As Integer = MinAge To MaxAge
-                                If Stk = 34 And Age = 5 And TStep = 2 And Fish = 10 Then
+                                If Stk = 29 And Age = 4 And TStep = 4 And Fish = 15 Then
                                     Jim = 1
                                 End If
                                 '- Subtract Landed Catch from 1st Pass from Total
@@ -2073,7 +2073,7 @@ NextTolerCheck:
             Exit Sub
         End If
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        If TStep = 2 And Fish = 30 And Stk = 45 And Age = 3 Then 'used to break code
+        If Stk = 1 And Age = 2 And Fish = 36 And TStep = 2 Then 'used to break code
             Jim = 1
         End If
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -3259,7 +3259,7 @@ SelctFsh:
         Dim FishMortDA As New System.Data.OleDb.OleDbDataAdapter
         Dim NonRetEnc As String
         '*************************************Produce Output of NR Encounters************************************
-        NonRetEnc = FVSdatabasepath & RunIDYearSelect & "NonRetention.txt"
+        NonRetEnc = FVSdatabasepath & "\" & RunIDYearSelect & "NonRetention.txt"
         FileOpen(53, NonRetEnc, OpenMode.Output)
         Print(53, "Nonretention Encounters by legal(1) and sublegal (2) divided by model stock proportion" & vbCrLf)
         Print(53, "Year" & "," & "Tstep" & "," & "Stk" & "," & "Fish" & "," & "Age" & "," & "SizeStatus" & "," & "#Encounters" & vbCrLf)
