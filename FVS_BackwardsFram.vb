@@ -207,6 +207,9 @@ Public Class FVS_BackwardsFram
             'DiffSpan2 = Endtime - StartTime
             'PrnLine = "Iteration " & BackFRAMIteration.ToString & " - CheckBFm Secs=" & DiffSpan2.Seconds
             'bfsw.WriteLine(PrnLine)
+            If DoneIterating = 0 Then
+                Exit For
+            End If
 
         Next BackFRAMIteration
 

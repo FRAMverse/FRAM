@@ -179,7 +179,8 @@ Public Module FramVar
 
    '- Run Calculation Variables
    Public TotalLandedCatch(,) As Double
-   Public TotalNonRetention(,) As Double
+    Public TotalNonRetention(,) As Double
+    Public FTNonRetention(,) As Double
    Public TotalEncounters(,) As Double
     Public TotalLegalShakers(73, 4) As Double
    Public TotalShakers(,) As Double

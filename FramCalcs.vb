@@ -313,7 +313,7 @@ Module FramCalcs
                 'sw.WriteLine(PrnLine)
                 MessageBox.Show("The ER Exceeded 100% for the following stocks & time steps:" & vbCrLf & vbCrLf & _
                        ProbStkList & vbCrLf & _
-                       "Bias-corrected MSF calculations may be invalid for some stocks." & vbCrLf & _
+                       "Bias-corrected MSF calculations may be invalid." & vbCrLf & _
                        "Modify fishery inputs & re-run as necessary.")
             End If
         End If
@@ -1561,10 +1561,10 @@ SecondPassEntry:
                 If StkERRateTilde(Stk) > 1 Then
                     Jim = 1
                 End If
-                'If StkERRate(Stk) > 1 And MSFBiasCount > 5 Then
-                '    MsgBox("Stock " & StockName(Stk) & " may produce negative escapements. Please finish the run and look for negative escapements in the PopStat report. Do not use this run for official results!")
-                '    Exit Sub
-                'End If
+                If StkERRate(Stk) > 1 And MSFBiasCount > 5 Then
+                    MsgBox("Stock " & StockName(Stk) & "TStep " & TStep & " may produce negative escapements. Please finish the run and look for negative escapements in the PopStat report. Do not use this run for official results!")
+                    Exit Sub
+                End If
 NextERateFish:
             Next
       Next
@@ -3611,7 +3611,7 @@ SelctFsh:
                 MSFBiasFlag = SaveInitialFlag
             End If
             If BackFRAMIteration < 2 Then
-                'start with a recruit scalar on first iteration that is sufficiently large to hold potentially hugh catch inputs
+                'start with a recruit scalar on first iteration that is sufficiently large to hold potentially huge catch inputs
                 'without producing negative escapements and ER>100%
                 For Stk = 1 To NumStk
                     If Stk = 5 Then
@@ -6284,6 +6284,9 @@ NextTaaETRS:
 
                 If K = 4 Then
                     For Fish = 45 To 74
+                        If Fish = 68 Then
+                            Jim = 1
+                        End If
                         Select Case Fish
                             Case 45
                                 If BaseExploitationRate(161, 3, 45, 4) <> 0 Then

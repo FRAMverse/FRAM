@@ -397,6 +397,40 @@ Public Class FVS_RunModel
         End If
         AnyNegativeEscapement = 0
 
+        'provide a warning when a sublegal nonretention input does not result in mortality (due to small size limit in net)
+
+        If SpeciesName = "CHINOOK" Then
+            ReDim FTNonRetention(NumFish, NumSteps)
+            For Fish = 1 To NumFish
+                For TStep = 1 To NumSteps
+                    For Stk = 1 To NumStk
+                        For Age = 1 To MaxAge
+                            FTNonRetention(Fish, TStep) += NonRetention(Stk, Age, Fish, TStep) / ModelStockProportion(Fish)
+                        Next Age
+                    Next Stk
+                Next TStep
+            Next Fish
+            For Fish = 1 To NumFish
+                For TStep = 1 To NumSteps
+                    If Fish = 2 And TStep = 3 Then
+                        Jim = 1
+                    End If
+                    If NonRetentionFlag(Fish, TStep) = 3 Then
+                        If Fish >= 36 And InStr(FisheryTitle(Fish), "Sport") > 0 Then
+                            If FTNonRetention(Fish, TStep) - (NonRetentionInput(Fish, TStep, 1) * ShakerMortRate(Fish, TStep) / 2 + NonRetentionInput(Fish, TStep, 2) * ShakerMortRate(Fish, TStep)) > 1 Then
+                                MsgBox("Sublegal nonretention input for fishery " & Fish & " does not produce a mortality. Consider modeling fishery as 'Total Encounters'")
+                            End If
+                        Else
+                            If Math.Abs(FTNonRetention(Fish, TStep) - (NonRetentionInput(Fish, TStep, 1) * ShakerMortRate(Fish, TStep) + NonRetentionInput(Fish, TStep, 2) * ShakerMortRate(Fish, TStep))) > 1 Then
+                                MsgBox("Sublegal nonretention input for fishery " & Fish & " does not produce a mortality. Consider modeling fishery as 'Total Encounters'")
+                            End If
+                        End If
+                    End If
+                Next
+            Next
+        End If
+
+
         Me.Close()
         FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
         FVS_MainMenu.Visible = True
