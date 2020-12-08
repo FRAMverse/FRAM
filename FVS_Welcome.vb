@@ -5,7 +5,7 @@ Public Class FVS_Welcome
 
    Private Sub FVS_Welcome_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        FramVersion = "2.20March25"
+        FramVersion = "2.21Dec15"
       VersionLabel.Text = "Version " & FramVersion
       ReDim VersionNumberChanges(100)
       For Stk As Integer = 0 To 100
@@ -89,6 +89,7 @@ Public Class FVS_Welcome
         VersionNumberChanges(36) = "(2.19) fixed Coho bkFRAM convergence issues"
         VersionNumberChanges(37) = "(2.19b) added Pass 1 Pass 2 automation; automatic SubLegal updating and size limit correction with each model run 3/5/19"
         VersionNumberChanges(38) = "(2.20) see updates described in  - Proposed FRAM Changes for 2020 Pre-season Modeling - Dec 2019"
+        VersionNumberChanges(39) = "(2.21) see updates described in  - Proposed FRAM Changes for 2021 Pre-season Modeling - Dec 2020"
     End Sub
 
    Private Sub FVS_Continue_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles FVS_Continue.Click

@@ -22,7 +22,6 @@ Partial Class FVS_BPTransfer
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.BPSizeLimitchk = New System.Windows.Forms.CheckBox
         Me.Stockschk = New System.Windows.Forms.CheckBox
         Me.Fisherieschk = New System.Windows.Forms.CheckBox
         Me.TimeStepschk = New System.Windows.Forms.CheckBox
@@ -34,20 +33,10 @@ Partial Class FVS_BPTransfer
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
-        'BPSizeLimitchk
-        '
-        Me.BPSizeLimitchk.AutoSize = True
-        Me.BPSizeLimitchk.Location = New System.Drawing.Point(24, 32)
-        Me.BPSizeLimitchk.Name = "BPSizeLimitchk"
-        Me.BPSizeLimitchk.Size = New System.Drawing.Size(207, 22)
-        Me.BPSizeLimitchk.TabIndex = 0
-        Me.BPSizeLimitchk.Text = "Base Period Size Limits"
-        Me.BPSizeLimitchk.UseVisualStyleBackColor = True
-        '
         'Stockschk
         '
         Me.Stockschk.AutoSize = True
-        Me.Stockschk.Location = New System.Drawing.Point(24, 75)
+        Me.Stockschk.Location = New System.Drawing.Point(24, 45)
         Me.Stockschk.Name = "Stockschk"
         Me.Stockschk.Size = New System.Drawing.Size(80, 22)
         Me.Stockschk.TabIndex = 1
@@ -57,7 +46,7 @@ Partial Class FVS_BPTransfer
         'Fisherieschk
         '
         Me.Fisherieschk.AutoSize = True
-        Me.Fisherieschk.Location = New System.Drawing.Point(24, 119)
+        Me.Fisherieschk.Location = New System.Drawing.Point(24, 100)
         Me.Fisherieschk.Name = "Fisherieschk"
         Me.Fisherieschk.Size = New System.Drawing.Size(96, 22)
         Me.Fisherieschk.TabIndex = 2
@@ -67,7 +56,7 @@ Partial Class FVS_BPTransfer
         'TimeStepschk
         '
         Me.TimeStepschk.AutoSize = True
-        Me.TimeStepschk.Location = New System.Drawing.Point(24, 164)
+        Me.TimeStepschk.Location = New System.Drawing.Point(24, 155)
         Me.TimeStepschk.Name = "TimeStepschk"
         Me.TimeStepschk.Size = New System.Drawing.Size(112, 22)
         Me.TimeStepschk.TabIndex = 3
@@ -94,7 +83,6 @@ Partial Class FVS_BPTransfer
         Me.GroupBox1.Controls.Add(Me.TimeStepschk)
         Me.GroupBox1.Controls.Add(Me.Fisherieschk)
         Me.GroupBox1.Controls.Add(Me.Stockschk)
-        Me.GroupBox1.Controls.Add(Me.BPSizeLimitchk)
         Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.GroupBox1.Location = New System.Drawing.Point(32, 176)
@@ -157,7 +145,6 @@ Partial Class FVS_BPTransfer
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents BPSizeLimitchk As System.Windows.Forms.CheckBox
     Friend WithEvents Stockschk As System.Windows.Forms.CheckBox
     Friend WithEvents Fisherieschk As System.Windows.Forms.CheckBox
     Friend WithEvents TimeStepschk As System.Windows.Forms.CheckBox

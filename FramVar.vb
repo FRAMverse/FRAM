@@ -71,7 +71,8 @@ Public Module FramVar
    '- Base Period Variables
    Public BasePeriodID As Integer
    Public BasePeriodIDSelect As Integer
-   Public BasePeriodName As String
+    Public BasePeriodName As String
+    Public BPSL_No_ID As Boolean
    Public SpeciesName As String
    Public NumStk As Integer
    Public NumFish As Integer

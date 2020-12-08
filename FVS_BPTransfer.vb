@@ -4,14 +4,10 @@
         Me.Hide()
     End Sub
 
-    Private Sub BPSizeLimitchk_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BPSizeLimitchk.CheckedChanged
-        If BPSizeLimitchk.Checked = True Then
-            ImportBP = True
-        End If
-    End Sub
+    
 
     Private Sub FVS_BPTransfer_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        BPSizeLimitchk.Checked = False
+        'BPSizeLimitchk.Checked = False
         Fisherieschk.Checked = False
         Stockschk.Checked = False
         TimeStepschk.Checked = False
