@@ -756,7 +756,11 @@ Public Class FVS_ModelRunSelection
             BSLDA.SelectCommand = BSLcm
             Dim BSLcb As New OleDb.OleDbCommandBuilder
             BSLcb = New OleDb.OleDbCommandBuilder(BSLDA)
+            'BSLDA.Update(FramDataSet, "ChinookBaseSizeLimit")
+            'FramDataSet.Clear()
             BSLDA.Fill(FramDataSet, "ChinookBaseSizeLimit")
+            ' FramDataSet.Tables("ChinookBaseSizeLimit").Clear()
+            'BSLDA.Fill(FramDataSet, "ChinookBaseSizeLimit")
 
 
             i = FramDataSet.Tables("ChinookBaseSizeLimit").Columns.IndexOf("BasePeriodID")

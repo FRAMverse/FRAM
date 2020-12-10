@@ -165,7 +165,8 @@ Public Class FVS_FisheryScalerEdit
                Else
                   FisheryScalerGrid.Item(3, Fish - 1).Value = FisheryScaler(Fish, 1).ToString("####0.0000")
                   FisheryScalerGrid.Item(3, Fish - 1).Style.BackColor = Color.White
-                  FisheryScalerGrid.Item(4, Fish - 1).Value = CDbl(FisheryQuota(Fish, 1))
+                        'FisheryScalerGrid.Item(4, Fish - 1).Value = CDbl(FisheryQuota(Fish, 1))
+                        FisheryScalerGrid.Item(4, Fish - 1).Value = FisheryQuota(Fish, 1).ToString("####0.0")
                   FisheryScalerGrid.Item(4, Fish - 1).Style.BackColor = Color.LavenderBlush
                End If
             Else
@@ -188,7 +189,8 @@ Public Class FVS_FisheryScalerEdit
                Else
                   FisheryScalerGrid.Item(6, Fish - 1).Value = FisheryScaler(Fish, 2).ToString("####0.0000")
                   FisheryScalerGrid.Item(6, Fish - 1).Style.BackColor = Color.White
-                  FisheryScalerGrid.Item(7, Fish - 1).Value = CDbl(FisheryQuota(Fish, 2))
+                        'FisheryScalerGrid.Item(7, Fish - 1).Value = CDbl(FisheryQuota(Fish, 2))
+                        FisheryScalerGrid.Item(7, Fish - 1).Value = FisheryQuota(Fish, 2).ToString("####0.0")
                   FisheryScalerGrid.Item(7, Fish - 1).Style.BackColor = Color.LavenderBlush
                End If
             Else
@@ -211,7 +213,8 @@ Public Class FVS_FisheryScalerEdit
                Else
                   FisheryScalerGrid.Item(9, Fish - 1).Value = FisheryScaler(Fish, 3).ToString("####0.0000")
                   FisheryScalerGrid.Item(9, Fish - 1).Style.BackColor = Color.White
-                  FisheryScalerGrid.Item(10, Fish - 1).Value = CDbl(FisheryQuota(Fish, 3))
+                        'FisheryScalerGrid.Item(10, Fish - 1).Value = CDbl(FisheryQuota(Fish, 3))
+                        FisheryScalerGrid.Item(10, Fish - 1).Value = FisheryQuota(Fish, 3).ToString("####0.0")
                   FisheryScalerGrid.Item(10, Fish - 1).Style.BackColor = Color.LavenderBlush
                End If
             Else
@@ -234,7 +237,8 @@ Public Class FVS_FisheryScalerEdit
                Else
                   FisheryScalerGrid.Item(12, Fish - 1).Value = FisheryScaler(Fish, 4).ToString("####0.0000")
                   FisheryScalerGrid.Item(12, Fish - 1).Style.BackColor = Color.White
-                  FisheryScalerGrid.Item(13, Fish - 1).Value = CDbl(FisheryQuota(Fish, 4))
+                        'FisheryScalerGrid.Item(13, Fish - 1).Value = CDbl(FisheryQuota(Fish, 4))
+                        FisheryScalerGrid.Item(13, Fish - 1).Value = FisheryQuota(Fish, 4).ToString("####0.0")
                   FisheryScalerGrid.Item(13, Fish - 1).Style.BackColor = Color.LavenderBlush
                End If
             Else
@@ -257,7 +261,8 @@ Public Class FVS_FisheryScalerEdit
                Else
                   FisheryScalerGrid.Item(15, Fish - 1).Value = FisheryScaler(Fish, 5).ToString("####0.0000")
                   FisheryScalerGrid.Item(15, Fish - 1).Style.BackColor = Color.White
-                  FisheryScalerGrid.Item(16, Fish - 1).Value = CDbl(FisheryQuota(Fish, 5))
+                        'FisheryScalerGrid.Item(16, Fish - 1).Value = CDbl(FisheryQuota(Fish, 5))
+                        FisheryScalerGrid.Item(16, Fish - 1).Value = FisheryQuota(Fish, 5).ToString("####0.0")
                   FisheryScalerGrid.Item(16, Fish - 1).Style.BackColor = Color.LavenderBlush
                End If
             Else
@@ -339,7 +344,8 @@ Public Class FVS_FisheryScalerEdit
                Else
                   FisheryScalerGrid.Item(3, Fish - 1).Value = FisheryScaler(Fish, 1).ToString("####0.0000")
                   FisheryScalerGrid.Item(3, Fish - 1).Style.BackColor = Color.White
-                  FisheryScalerGrid.Item(4, Fish - 1).Value = CLng(FisheryQuota(Fish, 1))
+                        'FisheryScalerGrid.Item(4, Fish - 1).Value = CLng(FisheryQuota(Fish, 1))
+                        FisheryScalerGrid.Item(4, Fish - 1).Value = FisheryQuota(Fish, 1).ToString("####0.0")
                   FisheryScalerGrid.Item(4, Fish - 1).Style.BackColor = Color.LavenderBlush
                End If
             Else
@@ -362,7 +368,8 @@ Public Class FVS_FisheryScalerEdit
                Else
                   FisheryScalerGrid.Item(6, Fish - 1).Value = FisheryScaler(Fish, 2).ToString("####0.0000")
                   FisheryScalerGrid.Item(6, Fish - 1).Style.BackColor = Color.White
-                  FisheryScalerGrid.Item(7, Fish - 1).Value = CLng(FisheryQuota(Fish, 2))
+                        'FisheryScalerGrid.Item(7, Fish - 1).Value = CLng(FisheryQuota(Fish, 2))
+                        FisheryScalerGrid.Item(7, Fish - 1).Value = FisheryQuota(Fish, 2).ToString("####0.0")
                   FisheryScalerGrid.Item(7, Fish - 1).Style.BackColor = Color.LavenderBlush
                End If
             Else
@@ -385,7 +392,8 @@ Public Class FVS_FisheryScalerEdit
                Else
                   FisheryScalerGrid.Item(9, Fish - 1).Value = FisheryScaler(Fish, 3).ToString("####0.0000")
                   FisheryScalerGrid.Item(9, Fish - 1).Style.BackColor = Color.White
-                  FisheryScalerGrid.Item(10, Fish - 1).Value = CLng(FisheryQuota(Fish, 3))
+                        'FisheryScalerGrid.Item(10, Fish - 1).Value = CLng(FisheryQuota(Fish, 3))
+                        FisheryScalerGrid.Item(10, Fish - 1).Value = FisheryQuota(Fish, 3).ToString("####0.0")
                   FisheryScalerGrid.Item(10, Fish - 1).Style.BackColor = Color.LavenderBlush
                End If
             Else
@@ -408,7 +416,8 @@ Public Class FVS_FisheryScalerEdit
                Else
                   FisheryScalerGrid.Item(12, Fish - 1).Value = FisheryScaler(Fish, 4).ToString("####0.0000")
                   FisheryScalerGrid.Item(12, Fish - 1).Style.BackColor = Color.White
-                  FisheryScalerGrid.Item(13, Fish - 1).Value = CLng(FisheryQuota(Fish, 4))
+                        'FisheryScalerGrid.Item(13, Fish - 1).Value = CLng(FisheryQuota(Fish, 4))
+                        FisheryScalerGrid.Item(13, Fish - 1).Value = FisheryQuota(Fish, 4).ToString("####0.0")
                   FisheryScalerGrid.Item(13, Fish - 1).Style.BackColor = Color.LavenderBlush
                End If
             Else
@@ -455,7 +464,7 @@ Public Class FVS_FisheryScalerEdit
                         MSFFisheryScaler(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(4, NumMSF - 1).Value)
                         ChangeFishScalers = True
                     End If
-                    If Math.Round(MSFFisheryQuota(MSFFish, MSFTStep), 4, MidpointRounding.AwayFromZero) <> CDbl(FisheryScalerGrid.Item(5, NumMSF - 1).Value) Then
+                    If Math.Round(MSFFisheryQuota(MSFFish, MSFTStep), 1, MidpointRounding.AwayFromZero) <> CDbl(FisheryScalerGrid.Item(5, NumMSF - 1).Value) Then
                         ChangeFishScalers = True
                         MSFFisheryQuota(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(5, NumMSF - 1).Value)
                     End If
@@ -526,7 +535,7 @@ NextMTStep:
                         FisheryScaler(Fish, TStep) = CDbl(FisheryScalerGrid.Item(TStep * 3, Fish - 1).Value)
                         ChangeFishScalers = True
                     End If
-                    If Math.Round(FisheryQuota(Fish, TStep), 4, MidpointRounding.AwayFromZero) <> CDbl(FisheryScalerGrid.Item(TStep * 3 + 1, Fish - 1).Value) Then
+                    If Math.Round(FisheryQuota(Fish, TStep), 1, MidpointRounding.AwayFromZero) <> CDbl(FisheryScalerGrid.Item(TStep * 3 + 1, Fish - 1).Value) Then
                         FisheryQuota(Fish, TStep) = CDbl(FisheryScalerGrid.Item(TStep * 3 + 1, Fish - 1).Value)
                         ChangeFishScalers = True
                     End If
@@ -627,7 +636,8 @@ NextTStep:
                FisheryScalerGrid.Item(2, NumMSF).Value = TStep.ToString
                FisheryScalerGrid.Item(3, NumMSF).Value = FisheryFlag(Fish, TStep).ToString("0")
                FisheryScalerGrid.Item(4, NumMSF).Value = MSFFisheryScaler(Fish, TStep).ToString("###0.0000")
-                    FisheryScalerGrid.Item(5, NumMSF).Value = CDbl(MSFFisheryQuota(Fish, TStep)).ToString("######0.0000")
+                    ' FisheryScalerGrid.Item(5, NumMSF).Value = CDbl(MSFFisheryQuota(Fish, TStep)).ToString("######0.0000")
+                    FisheryScalerGrid.Item(5, NumMSF).Value = MSFFisheryQuota(Fish, TStep).ToString("######0.0")
                FisheryScalerGrid.Item(6, NumMSF).Value = MarkSelectiveMortRate(Fish, TStep).ToString("0.0000")
                FisheryScalerGrid.Item(7, NumMSF).Value = MarkSelectiveMarkMisID(Fish, TStep).ToString("0.0000")
                FisheryScalerGrid.Item(8, NumMSF).Value = MarkSelectiveUnMarkMisID(Fish, TStep).ToString("0.0000")

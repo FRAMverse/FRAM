@@ -3163,18 +3163,21 @@ SkipSR:
 
                 Dim CmdStr1 As String
                 CmdStr = "SELECT * FROM ChinookBaseSizeLimit;"
-                Dim ChinookBaseSizeLimitTDBcm As New OleDb.OleDbCommand(CmdStr, TransDB)
-                Dim ChinookBaseSizeLimitTDBIDDA As New System.Data.OleDb.OleDbDataAdapter
-                ChinookBaseSizeLimitTDBIDDA.SelectCommand = ChinookBaseSizeLimitTDBcm
-                Dim ChinookBaseSizeLimitTDBcb As New OleDb.OleDbCommandBuilder
-                ChinookBaseSizeLimitTDBcb = New OleDb.OleDbCommandBuilder(ChinookBaseSizeLimitTDBIDDA)
+
+                'TransDB.Open()
+                
+                ''Dim ChinookBaseSizeLimitTDBcm As New OleDb.OleDbCommand(CmdStr, TransDB)
+                Dim ChinookBaseSizeLimitTDBIDDA As New System.Data.OleDb.OleDbDataAdapter(CmdStr, TransDB)
+                ''ChinookBaseSizeLimitTDBIDDA.SelectCommand = ChinookBaseSizeLimitTDBcm
+                ''Dim ChinookBaseSizeLimitTDBcb As New OleDb.OleDbCommandBuilder
+                ''ChinookBaseSizeLimitTDBcb = New OleDb.OleDbCommandBuilder(ChinookBaseSizeLimitTDBIDDA)
                 ChinookBaseSizeLimitTDBIDDA.Fill(TransferDataSet, "ChinookBaseSizeLimit")
                 
-                If TransferDataSet.Tables("ChinookBaseSizeLimit").Columns.IndexOf("BasePeriodID") = -1 Then
-                    CmdStr = "SELECT * FROM ChinookBaseSizeLimit"
-                Else
-                    CmdStr = "SELECT * FROM ChinookBaseSizeLimit WHERE BasePeriodID = " & TransferBaseID & ";"
-                End If
+                'If TransferDataSet.Tables("ChinookBaseSizeLimit").Columns.IndexOf("BasePeriodID") = -1 Then
+                '    CmdStr = "SELECT * FROM ChinookBaseSizeLimit"
+                'Else
+                '    CmdStr = "SELECT * FROM ChinookBaseSizeLimit WHERE BasePeriodID = " & TransferBaseID & ";"
+                'End If
 
                 If BPSL_No_ID = True Then
                     CmdStr1 = "SELECT * FROM ChinookBaseSizeLimit"
@@ -3202,7 +3205,7 @@ SkipSR:
                 ChinookBaseSizeLimitTrans = TransDB.BeginTransaction
                 ChinookBaseSizeLimit.Connection = TransDB
                 ChinookBaseSizeLimit.Transaction = ChinookBaseSizeLimitTrans
-
+                
 
                 If BPSL_No_ID = False Then 'FRAMDB has BaseID field
                     If TransferDataSet.Tables("ChinookBaseSizeLimit").Columns.IndexOf("BasePeriodID") = -1 Then
@@ -3246,7 +3249,7 @@ SkipSR:
                     End If
                 End If
                 ChinookBaseSizeLimitTrans.Commit()
-                TransferDataSet.Clear()
+                'TransferDataSet.Clear()
                 TransDB.Close()
 
 
