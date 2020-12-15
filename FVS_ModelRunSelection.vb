@@ -756,12 +756,17 @@ Public Class FVS_ModelRunSelection
             BSLDA.SelectCommand = BSLcm
             Dim BSLcb As New OleDb.OleDbCommandBuilder
             BSLcb = New OleDb.OleDbCommandBuilder(BSLDA)
-            'BSLDA.Update(FramDataSet, "ChinookBaseSizeLimit")
+
             'FramDataSet.Clear()
             BSLDA.Fill(FramDataSet, "ChinookBaseSizeLimit")
+            BSLDA.Update(FramDataSet, "ChinookBaseSizeLimit")
             ' FramDataSet.Tables("ChinookBaseSizeLimit").Clear()
             'BSLDA.Fill(FramDataSet, "ChinookBaseSizeLimit")
 
+            If FramDataSet.Tables.Contains("ChinookBaseSizeLimit") Then
+                FramDataSet.Tables.Remove("ChinookBaseSizeLimit")
+            End If
+            BSLDA.Fill(FramDataSet, "ChinookBaseSizeLimit")
 
             i = FramDataSet.Tables("ChinookBaseSizeLimit").Columns.IndexOf("BasePeriodID")
             If i = -1 Then 'This Column is missing 
@@ -769,8 +774,9 @@ Public Class FVS_ModelRunSelection
             Else
                 BPSL_No_ID = False
             End If
-            i = FramDataSet.Tables("ChinookBaseSizeLimit").Rows.Count
-            For RecNum = 0 To i - 1
+            Dim k As Integer
+            k = FramDataSet.Tables("ChinookBaseSizeLimit").Rows.Count
+            For RecNum = 0 To k - 1
                 If BPSL_No_ID = False Then 'table has BaseID field       
                     BPID = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(0)
                     If BPID = BasePeriodIDSelect Then

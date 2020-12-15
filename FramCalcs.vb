@@ -937,7 +937,9 @@ SkipTami2:
         If SkipJim = 1 Then sw.WriteLine(PrnLine)
         
         For Fish As Integer = 1 To NumFish
-            
+            If Fish = 4 And TStep = 3 Then
+                Jim = 1
+            End If
 
             If AnyBaseRate(Fish, TStep) = 0 Then GoTo NextScalerFishery ' if there is no catch in the base period
             '- Fishery/Time-Step can only be Terminal or Pre-Terminal
@@ -1148,9 +1150,7 @@ SkipTami2:
                             '- Retention Quota Fishery
                             If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
                                 '- First Pass for Quota Fisheries - Landed Catch as if FisheryScaler = 1
-                                If TStep = 1 And Stk = 123 And Fish = 3 Then
-                                    Jim = 1
-                                End If
+                                
 
 
 
