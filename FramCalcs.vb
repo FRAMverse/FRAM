@@ -1989,10 +1989,11 @@ NextTolerCheck:
         '- COMPUTE ESCAPE BY SUBTRACTING CATCH AND INCIDENTAL
         '- MORTALITY FROM THE MATURE POPULATION
         For Stk As Integer = 1 To NumStk
-            If Stk = 38 Then
-                Stk = 38
-            End If
+            
             For Age As Integer = MinAge To MaxAge
+                If Age = 3 Then
+                    Jim = 1
+                End If
                 Escape(Stk, Age, TStep) = Cohort(Stk, Age, Term, TStep)
                 For Fish As Integer = 1 To NumFish
                     If TerminalFisheryFlag(Fish, TStep) = Term Then
@@ -3120,9 +3121,10 @@ SelctFsh:
 
       For Stk As Integer = 1 To NumStk
             For Age As Integer = MinAge To MaxAge
-                If Stk = 123 And Age = 3 And PTerm = 0 And TStep = 1 Then
+                If Stk = 19 And Age = 3 And TStep = 3 Then
                     Jim = 1
                 End If
+
                 For Fish As Integer = 1 To NumFish
                     If Fish = 198 Then
                         Jim = 1
