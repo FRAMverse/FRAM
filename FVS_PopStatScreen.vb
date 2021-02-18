@@ -221,21 +221,22 @@
          l = 0
          For Stk As Integer = 1 To NumStk
             For Age As Integer = 2 To MaxAge
-               For TStep As Integer = 1 To NumSteps
-                  PopStatGrid.Item(0, l).Value = StockName(Stk)
-                  PopStatGrid.Item(1, l).Value = Age
-                  '- Starting Cohort Time Step 1
-                  Col = 5 * (TStep - 1)
-                  PopStatGrid.Item(Col + 2, l).Value = Cohort(Stk, Age, 4, TStep).ToString("########0")
-                  '-After Nat Mort
-                  PopStatGrid.Item(Col + 3, l).Value = Cohort(Stk, Age, 3, TStep).ToString("########0")
-                  '-After PT Fishing
-                  PopStatGrid.Item(Col + 4, l).Value = Cohort(Stk, Age, 2, TStep).ToString("########0")
-                  '- Mature Cohort
-                  PopStatGrid.Item(Col + 5, l).Value = Cohort(Stk, Age, 1, TStep).ToString("########0")
-                  '- Escapement
-                  PopStatGrid.Item(Col + 6, l).Value = Escape(Stk, Age, TStep).ToString("########0")
-               Next TStep
+                    For TStep As Integer = 1 To NumSteps
+                        
+                        PopStatGrid.Item(0, l).Value = StockName(Stk)
+                        PopStatGrid.Item(1, l).Value = Age
+                        '- Starting Cohort Time Step 1
+                        Col = 5 * (TStep - 1)
+                        PopStatGrid.Item(Col + 2, l).Value = Cohort(Stk, Age, 4, TStep).ToString("########0")
+                        '-After Nat Mort
+                        PopStatGrid.Item(Col + 3, l).Value = Cohort(Stk, Age, 3, TStep).ToString("########0")
+                        '-After PT Fishing
+                        PopStatGrid.Item(Col + 4, l).Value = Cohort(Stk, Age, 2, TStep).ToString("########0")
+                        '- Mature Cohort
+                        PopStatGrid.Item(Col + 5, l).Value = Cohort(Stk, Age, 1, TStep).ToString("########0")
+                        '- Escapement
+                        PopStatGrid.Item(Col + 6, l).Value = Escape(Stk, Age, TStep).ToString("########0")
+                    Next TStep
                l = l + 1
             Next Age
          Next Stk

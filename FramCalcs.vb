@@ -103,7 +103,7 @@ Module FramCalcs
 
             Call NatMort()
 
-            If TStep = 4 Then
+            If TStep = 3 Then
                 Jim = 1
             End If
 
@@ -314,7 +314,7 @@ Module FramCalcs
                 'sw.WriteLine(PrnLine)
                 MessageBox.Show("The ER Exceeded 100% for the following stocks & time steps:" & vbCrLf & vbCrLf & _
                        ProbStkList & vbCrLf & _
-                       "Bias-corrected MSF calculations may be invalid for some stocks." & vbCrLf & _
+                       "Bias-corrected MSF calculations may be invalid." & vbCrLf & _
                        "Modify fishery inputs & re-run as necessary.")
             End If
         End If
@@ -340,10 +340,10 @@ Module FramCalcs
             Call RunCalcs()
         End If
 
-        If AnyNegativeEscapement = 1 Then
-            MsgBox("You have negative escapements. Please check the PopStat report!")
-        End If
-        AnyNegativeEscapement = 0
+        'If AnyNegativeEscapement = 1 Then
+        '    MsgBox("You have negative escapements. Please check the PopStat report!")
+        'End If
+        'AnyNegativeEscapement = 0
 
 
     End Sub
@@ -938,7 +938,7 @@ SkipTami2:
         If SkipJim = 1 Then sw.WriteLine(PrnLine)
         
         For Fish As Integer = 1 To NumFish
-            If Fish = 39 And TStep = 3 Then
+            If Fish = 4 And TStep = 3 Then
                 Jim = 1
             End If
 
@@ -1017,9 +1017,7 @@ SkipTami2:
                             'End If
                             ''############################# END NEW CODE ############################ Pete-Jan. 2013
                             ''****************************************************************************************
-                            If Fish = 39 And TStep = 3 Then
-                                Jim = 1
-                            End If
+                            
 
                             '- Retention Fishery Scalers 
                             If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Then
@@ -1153,9 +1151,13 @@ SkipTami2:
                             '- Retention Quota Fishery
                             If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
                                 '- First Pass for Quota Fisheries - Landed Catch as if FisheryScaler = 1
+<<<<<<< HEAD
                                 If TStep = 4 And Stk = 29 And Fish = 15 And Age = 4 Then
                                     Jim = 1
                                 End If
+=======
+                                
+>>>>>>> 20_21Updates
 
 
 
@@ -1552,7 +1554,7 @@ SecondPassEntry:
                     MSFStkERRateTilde(Stk, Fish) += FishERRate
                 End If
 
-                'If FishERRate <> 0 Then
+                '' ''If FishERRate <> 0 Then
                 '   PrnLine = String.Format("MSF{0,8}", StockName(Stk))
                 '   PrnLine &= String.Format("{0,11}", FisheryName(Fish))
                 '   PrnLine &= String.Format("{0,2}", TStep.ToString(" 0"))
@@ -1567,7 +1569,7 @@ SecondPassEntry:
                     Jim = 1
                 End If
                 If StkERRate(Stk) > 1 And MSFBiasCount > 5 Then
-                    MsgBox("Stock " & StockName(Stk) & " may produce negative escapements. Please finish the run and look for negative escapements in the PopStat report. Do not use this run for official results!")
+                    MsgBox("Stock " & StockName(Stk) & "TStep " & TStep & " may produce negative escapements. Please finish the run and look for negative escapements in the PopStat report. Do not use this run for official results!")
                     Exit Sub
                 End If
 NextERateFish:
@@ -2003,10 +2005,11 @@ NextTolerCheck:
         '- COMPUTE ESCAPE BY SUBTRACTING CATCH AND INCIDENTAL
         '- MORTALITY FROM THE MATURE POPULATION
         For Stk As Integer = 1 To NumStk
-            If Stk = 38 Then
-                Stk = 38
-            End If
+            
             For Age As Integer = MinAge To MaxAge
+                If Age = 3 Then
+                    Jim = 1
+                End If
                 Escape(Stk, Age, TStep) = Cohort(Stk, Age, Term, TStep)
                 For Fish As Integer = 1 To NumFish
                     If TerminalFisheryFlag(Fish, TStep) = Term Then
@@ -3134,9 +3137,10 @@ SelctFsh:
 
       For Stk As Integer = 1 To NumStk
             For Age As Integer = MinAge To MaxAge
-                If Stk = 123 And Age = 3 And PTerm = 0 And TStep = 1 Then
+                If Stk = 19 And Age = 3 And TStep = 3 Then
                     Jim = 1
                 End If
+
                 For Fish As Integer = 1 To NumFish
                     If Fish = 198 Then
                         Jim = 1
@@ -3638,7 +3642,7 @@ SelctFsh:
                 MSFBiasFlag = SaveInitialFlag
             End If
             If BackFRAMIteration < 2 Then
-                'start with a recruit scalar on first iteration that is sufficiently large to hold potentially hugh catch inputs
+                'start with a recruit scalar on first iteration that is sufficiently large to hold potentially huge catch inputs
                 'without producing negative escapements and ER>100%
                 For Stk = 1 To NumStk
                     If Stk = 5 Then
@@ -6311,6 +6315,9 @@ NextTaaETRS:
 
                 If K = 4 Then
                     For Fish = 45 To 74
+                        If Fish = 68 Then
+                            Jim = 1
+                        End If
                         Select Case Fish
                             Case 45
                                 If BaseExploitationRate(161, 3, 45, 4) <> 0 Then
@@ -6784,6 +6791,7 @@ NextTaaETRS:
                 Option5 = ""
             Else
                 Option5 = FramDataSet.Tables("ReportDriver").Rows(RecNum)(7)
+                
             End If
             If IsDBNull(FramDataSet.Tables("ReportDriver").Rows(RecNum)(8)) Then
                 Option6 = ""

@@ -121,8 +121,13 @@ Public Class FVS_RunModel
             SizeLimitFix = True
 
         End If
+        If TAMMSpreadSheet <> "" Then
+            TAMMName = My.Computer.FileSystem.GetFileInfo(TAMMSpreadSheet).Name
+        Else
+            TAMMName = ""
+        End If
 
-        
+        FRAMVers = FramVersion
 
 
 
@@ -164,7 +169,7 @@ Public Class FVS_RunModel
 
             'STEP 2: S:L Update Run
             'Does not ask to load in from spreadsheet
-            
+
             UpdateRunEncounterRateAdjustment = True
             WhoUpdated = Environment.UserName
 
@@ -252,15 +257,15 @@ Public Class FVS_RunModel
 
             'tag111
             ' - Check for TAMM Selection
-            'If TAMMSpreadSheet <> "" Then
-            '    RunTAMMIter = 1
-            '    result = MsgBox("Do You Want to SAVE TAMM Tranfer Values into TAMM SpreadSheet?", MsgBoxStyle.YesNo)
-            '    If result = vbYes Then
-            '        TammTransferSave = True
-            '    Else
-            '        TammTransferSave = False
-            '    End If
-            'End If
+            If TAMMSpreadSheet <> "" Then
+                RunTAMMIter = 1
+                result = MsgBox("Do You Want to SAVE TAMM Tranfer Values into TAMM SpreadSheet?", MsgBoxStyle.YesNo)
+                If result = vbYes Then
+                    TammTransferSave = True
+                Else
+                    TammTransferSave = False
+                End If
+            End If
             MRProgressBar.Visible = True
             FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
             '****************End PETE-2/27/13-Code for adding Delineation to Model Run Name if Bias Correction Is Applied
@@ -272,10 +277,10 @@ Public Class FVS_RunModel
             SizeLimitFix = False
 
 
-            ChangeAnyInput = True
-            ChangeFishScalers = True
-            ChangeNonRetention = True
-            ChangeSizeLimit = True
+            'ChangeAnyInput = True
+            'ChangeFishScalers = True
+            'ChangeNonRetention = True
+            'ChangeSizeLimit = True
 
 
         Else 'Auto SizeLimitFix = False @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -360,8 +365,7 @@ Public Class FVS_RunModel
                     End If
                 End If
 
-                TAMMName = TAMMSpreadSheet
-                FRAMVers = FramVersion
+
 
                 FVS_MainMenu.RecordSetNameLabel.Text = RunIDNameSelect
                 '****************End PETE-2/27/13-Code for adding Delineation to Model Run Name if Bias Correction Is Applied
@@ -388,6 +392,43 @@ Public Class FVS_RunModel
         UpdateRunEncounterRateAdjustment = False
         RunTAMMIter = 0 'This Needs to be zero OR things will get goofy on sequential runs.
         'PPPPPP---(end of closing Pete 12/13 Block)------------------------------------------------------------------------
+        If AnyNegativeEscapement = 1 Then
+            MsgBox("You have negative escapements. Please check the PopStat report!")
+        End If
+        AnyNegativeEscapement = 0
+
+        'provide a warning when a sublegal nonretention input does not result in mortality (due to small size limit in net)
+
+        If SpeciesName = "CHINOOK" Then
+            ReDim FTNonRetention(NumFish, NumSteps)
+            For Fish = 1 To NumFish
+                For TStep = 1 To NumSteps
+                    For Stk = 1 To NumStk
+                        For Age = 1 To MaxAge
+                            FTNonRetention(Fish, TStep) += NonRetention(Stk, Age, Fish, TStep) / ModelStockProportion(Fish)
+                        Next Age
+                    Next Stk
+                Next TStep
+            Next Fish
+            For Fish = 1 To NumFish
+                For TStep = 1 To NumSteps
+                    If Fish = 2 And TStep = 3 Then
+                        Jim = 1
+                    End If
+                    If NonRetentionFlag(Fish, TStep) = 3 Then
+                        If Fish >= 36 And InStr(FisheryTitle(Fish), "Sport") > 0 Then
+                            If FTNonRetention(Fish, TStep) - (NonRetentionInput(Fish, TStep, 1) * ShakerMortRate(Fish, TStep) / 2 + NonRetentionInput(Fish, TStep, 2) * ShakerMortRate(Fish, TStep)) > 1 Then
+                                MsgBox("Sublegal nonretention input for fishery " & Fish & " does not produce a mortality. Consider modeling fishery as 'Total Encounters'")
+                            End If
+                        Else
+                            If Math.Abs(FTNonRetention(Fish, TStep) - (NonRetentionInput(Fish, TStep, 1) * ShakerMortRate(Fish, TStep) + NonRetentionInput(Fish, TStep, 2) * ShakerMortRate(Fish, TStep))) > 1 Then
+                                MsgBox("Sublegal nonretention input for fishery " & Fish & " does not produce a mortality. Consider modeling fishery as 'Total Encounters'")
+                            End If
+                        End If
+                    End If
+                Next
+            Next
+        End If
 
 
         Me.Close()
@@ -500,6 +541,12 @@ Public Class FVS_RunModel
                             leg(Fish, TStep) += MSFNonRetention(Stk, Age, Fish, TStep) / MarkSelectiveMortRate(Fish, TStep)
                         End If
                         subleg(Fish, TStep) += Shakers(Stk, Age, Fish, TStep) / ShakerMortRate(Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) / ShakerMortRate(Fish, TStep)
+                        If Fish = 67 And TStep = 3 And c = 3 Then
+                            If LandedCatch(Stk, Age, Fish, TStep) + MSFLandedCatch(Stk, Age, Fish, TStep) + Shakers(Stk, Age, Fish, TStep) + MSFShakers(Stk, Age, Fish, TStep) + MSFNonRetention(Stk, Age, Fish, TStep) > 0 Then
+                                Debug.Print("Fishery =, " & Fish & ",stock =, " & Stk & ",Tstep =, " & TStep & ",iteration = ," & c.ToString & " ,Age =," & Age.ToString & " ,MSFNR =," & MSFNonRetention(Stk, Age, Fish, TStep) _
+                                           & " ,Landed =," & LandedCatch(Stk, Age, Fish, TStep) & " ,MSFLanded =," & MSFLandedCatch(Stk, Age, Fish, TStep) & " ,Shakers =," & Shakers(Stk, Age, Fish, TStep) & " ,MSFShakers =," & MSFShakers(Stk, Age, Fish, TStep))
+                            End If
+                        End If
                     Next
                 Next
             Next
@@ -507,13 +554,11 @@ Public Class FVS_RunModel
         Dim F, A, T As Integer
         For F = 1 To NumFish
             For T = 1 To NumSteps
-                'If F = 70 And T = 4 Then
-                '    Jim = 1
-                'End If
-                'Dim str As String = "FisheryID = " & F.ToString & " AND TimeStep = " & T.ToString
-                'Dim dr() As DataRow
+                
                 Dim kfatold As Double
-
+                If F = 67 And T = 3 Then
+                    Jim = 1
+                End If
 
                 'tag111
                 'Dim leg2, subleg2, subrat2, kfatold2 As Double
@@ -536,6 +581,7 @@ Public Class FVS_RunModel
                         Kfat(F, A, T) = 1 'Leave it at 1.00 = no adjustment.
                     Else
                         If TargetRatio(F, A, T) <> -1 Then 'Only compute new adjustments for fisheries providing an estimate of SL ratio 
+
                             subrat(F, T) = subleg(F, T) / leg(F, T) '<-FRAM SL Ratio
                             Kfat(F, A, T) = TargetRatio(F, A, T) / subrat(F, T)
                             RunEncounterRateAdjustment(F, A, T) = RunEncounterRateAdjustment(F, A, T) * Kfat(F, A, T) 'Put it here for correct update/storage for saving
@@ -574,9 +620,9 @@ Public Class FVS_RunModel
         Next
 
         'Set the boolean to true once FRAM has made all update passes; the last one will just be a calculation pass
-        If c = iters - 1 Then
-            FinalUpdatePass = True
-        End If
+        'If c = iters - 1 Then
+        '    FinalUpdatePass = True
+        'End If
 
    End Sub
 

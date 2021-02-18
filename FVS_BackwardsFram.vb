@@ -207,6 +207,9 @@ Public Class FVS_BackwardsFram
             'DiffSpan2 = Endtime - StartTime
             'PrnLine = "Iteration " & BackFRAMIteration.ToString & " - CheckBFm Secs=" & DiffSpan2.Seconds
             'bfsw.WriteLine(PrnLine)
+            If DoneIterating = 0 Then
+                Exit For
+            End If
 
         Next BackFRAMIteration
 
@@ -774,7 +777,7 @@ NextStockRecruitr:
                 Call SumChinTermRun(TRun, TermStockNum(TRun), IterNum)
                 Stk = TermStockNum(TRun)
                 For Age = 3 To 5
-                    If Stk = 34 And Age = 5 And IterNum = 12 Then
+                    If Stk = 19 And Age = 3 Then
                         Jim = 1
                     End If
 

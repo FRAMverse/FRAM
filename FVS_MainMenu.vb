@@ -280,4 +280,8 @@ TryDBAgain:
     Private Sub RecordSetNameLabel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RecordSetNameLabel.Click
 
     End Sub
+
+    Private Sub OpenFVSdatabase_FileOk(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles OpenFVSdatabase.FileOk
+
+    End Sub
 End Class

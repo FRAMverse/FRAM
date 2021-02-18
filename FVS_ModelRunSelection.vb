@@ -176,7 +176,8 @@ Public Class FVS_ModelRunSelection
         Dim cmd1 As New OleDb.OleDbCommand()
 
 
-      Me.Cursor = Cursors.WaitCursor
+        Me.Cursor = Cursors.WaitCursor
+
       ModelRunBPSelect = False
 
       '- Set Common Variables for Pre-Terminal and Terminal States
@@ -746,22 +747,61 @@ Public Class FVS_ModelRunSelection
             drd1.Dispose()
 
             '- Read Chinook Base Calibration Size Limit Data by Fishery, TimeStep
-            cmd1.Connection = FramDB
-            cmd1.CommandText = "SELECT * FROM ChinookBaseSizeLimit"
-            drd1 = cmd1.ExecuteReader
-            Do While drd1.Read
-                Fish = drd1.GetInt32(0)
-                If Fish > NumFish Then
-                    MsgBox("ERROR in ChinookBaseSizeLimit Table", MsgBoxStyle.OkOnly)
-                End If
-                ChinookBaseSizeLimit(Fish, 1) = drd1.GetInt32(1)
-                ChinookBaseSizeLimit(Fish, 2) = drd1.GetInt32(2)
-                ChinookBaseSizeLimit(Fish, 3) = drd1.GetInt32(3)
-                ChinookBaseSizeLimit(Fish, 4) = drd1.GetInt32(4)
-            Loop
-            cmd1.Dispose()
-            drd1.Dispose()
+            'cmd1.Connection = FramDB
 
+
+            CmdStr = "SELECT * FROM ChinookBaseSizeLimit"
+            Dim BSLcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim BSLDA As New System.Data.OleDb.OleDbDataAdapter
+            BSLDA.SelectCommand = BSLcm
+            Dim BSLcb As New OleDb.OleDbCommandBuilder
+            BSLcb = New OleDb.OleDbCommandBuilder(BSLDA)
+
+            'FramDataSet.Clear()
+            BSLDA.Fill(FramDataSet, "ChinookBaseSizeLimit")
+            BSLDA.Update(FramDataSet, "ChinookBaseSizeLimit")
+            ' FramDataSet.Tables("ChinookBaseSizeLimit").Clear()
+            'BSLDA.Fill(FramDataSet, "ChinookBaseSizeLimit")
+
+            If FramDataSet.Tables.Contains("ChinookBaseSizeLimit") Then
+                FramDataSet.Tables.Remove("ChinookBaseSizeLimit")
+            End If
+            BSLDA.Fill(FramDataSet, "ChinookBaseSizeLimit")
+
+            i = FramDataSet.Tables("ChinookBaseSizeLimit").Columns.IndexOf("BasePeriodID")
+            If i = -1 Then 'This Column is missing 
+                BPSL_No_ID = True
+            Else
+                BPSL_No_ID = False
+            End If
+            Dim k As Integer
+            k = FramDataSet.Tables("ChinookBaseSizeLimit").Rows.Count
+            For RecNum = 0 To k - 1
+                If BPSL_No_ID = False Then 'table has BaseID field       
+                    BPID = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(0)
+                    If BPID = BasePeriodIDSelect Then
+                        Fish = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(1)
+                        If Fish > NumFish Then
+                            MsgBox("ERROR in ChinookBaseSizeLimit Table", MsgBoxStyle.OkOnly)
+                        End If
+                        ChinookBaseSizeLimit(Fish, 1) = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(2)
+                        ChinookBaseSizeLimit(Fish, 2) = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(3)
+                        ChinookBaseSizeLimit(Fish, 3) = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(4)
+                        ChinookBaseSizeLimit(Fish, 4) = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(5)
+                    Else
+                        Jim = 1
+                    End If
+                Else 'table does not have BaseID field
+                    Fish = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(0)
+                    If Fish > NumFish Then
+                        MsgBox("ERROR in ChinookBaseSizeLimit Table", MsgBoxStyle.OkOnly)
+                    End If
+                    ChinookBaseSizeLimit(Fish, 1) = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(1)
+                    ChinookBaseSizeLimit(Fish, 2) = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(2)
+                    ChinookBaseSizeLimit(Fish, 3) = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(3)
+                    ChinookBaseSizeLimit(Fish, 4) = FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(4)
+                End If
+            Next
         End If
 
         '------- Finished with Base Data Reads for Populating Arrays --------------
@@ -866,7 +906,7 @@ FoundNewColumn:
                 StockRecruit(Stk, Age, 2) = SRCohort
             End If
         Next
-        
+
 
         '- Read NonRetention Flag and Input Data
         CmdStr = "SELECT * FROM NonRetention WHERE RunID = " & RunIDSelect.ToString & " ORDER BY FisheryID, TimeStep"
@@ -1232,13 +1272,13 @@ FoundNewColumn:
             TotalEncounters(Fish, TStep) = FramDataSet.Tables("FisheryMortality").Rows(RecNum)(8)
         Next
         TFMDA = Nothing
-        
+
 
         '- Read PSC Max ER Data for COHO
         'On Error Resume Next
 
         CmdStr = "SELECT * FROM PSCMaxER WHERE RunID = " & RunIDSelect.ToString
-        
+
         Dim MEcm As New OleDb.OleDbCommand(CmdStr, FramDB)
         Dim MEDA As New System.Data.OleDb.OleDbDataAdapter
         MEDA.SelectCommand = MEcm

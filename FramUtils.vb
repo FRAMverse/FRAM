@@ -2288,173 +2288,193 @@ SkipChinookME:
       BCcb = New OleDb.OleDbCommandBuilder(BCDA)
       FramDB.Open()
       BCDA.DeleteCommand.ExecuteScalar()
-      FramDB.Close()
+        FramDB.Close()
 
-      '- BaseExploitationRate SELECT Statement
-      CmdStr = "SELECT * FROM BaseExploitationRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
-      Dim BEcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      Dim BEDA As New System.Data.OleDb.OleDbDataAdapter
-      BEDA.SelectCommand = BEcm
-      '- BaseExploitationRate DELETE Statement
-      CmdStr = "DELETE * FROM BaseExploitationRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
-      Dim BEDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      BEDA.DeleteCommand = BEDcm
-      '- Command Builder
-      Dim BEcb As New OleDb.OleDbCommandBuilder
-      BEcb = New OleDb.OleDbCommandBuilder(BEDA)
-      FramDB.Open()
-      BEDA.DeleteCommand.ExecuteScalar()
-      FramDB.Close()
 
-      '- IncidentalRate SELECT Statement
-      CmdStr = "SELECT * FROM IncidentalRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
-      Dim IRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      Dim IRDA As New System.Data.OleDb.OleDbDataAdapter
-      IRDA.SelectCommand = IRcm
-      '- IncidentalRate DELETE Statement
-      CmdStr = "DELETE * FROM IncidentalRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
-      Dim IRDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      IRDA.DeleteCommand = IRDcm
-      '- Command Builder
-      Dim IRcb As New OleDb.OleDbCommandBuilder
-      IRcb = New OleDb.OleDbCommandBuilder(IRDA)
-      FramDB.Open()
-      IRDA.DeleteCommand.ExecuteScalar()
-      FramDB.Close()
+        '- ChinookBaseSizeLimit delete
 
-      '- ShakerMortRate SELECT Statement
-      CmdStr = "SELECT * FROM ShakerMortRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
-      Dim SMcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      Dim SMDA As New System.Data.OleDb.OleDbDataAdapter
-      SMDA.SelectCommand = SMcm
-      '- ShakerMortRate DELETE Statement
-      CmdStr = "DELETE * FROM ShakerMortRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
-      Dim SMDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      SMDA.DeleteCommand = SMDcm
-      '- Command Builder
-      Dim SMcb As New OleDb.OleDbCommandBuilder
-      SMcb = New OleDb.OleDbCommandBuilder(SMDA)
-      FramDB.Open()
-      SMDA.DeleteCommand.ExecuteScalar()
-      FramDB.Close()
+        If BPSL_No_ID = False Then
+            CmdStr = "SELECT * FROM ChinookBaseSizeLimit WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+            Dim BPSLcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim BPSLDA As New System.Data.OleDb.OleDbDataAdapter
+            BPSLDA.SelectCommand = BPSLcm
+            '- BaseCohort DELETE Statement
+            CmdStr = "DELETE * FROM ChinookBaseSizeLimit WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
+            Dim BPSL1cm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            BPSLDA.DeleteCommand = BPSL1cm
+            '- Command Builder
+            Dim BPSLcb As New OleDb.OleDbCommandBuilder
+            BPSLcb = New OleDb.OleDbCommandBuilder(BPSLDA)
+            FramDB.Open()
+            BPSLDA.DeleteCommand.ExecuteScalar()
+            FramDB.Close()
+        End If
 
-      '- MaturationRate SELECT Statement
-      CmdStr = "SELECT * FROM MaturationRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
-      Dim MRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      Dim MRDA As New System.Data.OleDb.OleDbDataAdapter
-      MRDA.SelectCommand = MRcm
-      '- MaturationRate DELETE Statement
-      CmdStr = "DELETE * FROM MaturationRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
-      Dim MRDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      MRDA.DeleteCommand = MRDcm
-      '- Command Builder
-      Dim MRcb As New OleDb.OleDbCommandBuilder
-      MRcb = New OleDb.OleDbCommandBuilder(MRDA)
-      FramDB.Open()
-      MRDA.DeleteCommand.ExecuteScalar()
-      FramDB.Close()
+        '- BaseExploitationRate SELECT Statement
+        CmdStr = "SELECT * FROM BaseExploitationRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+        Dim BEcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        Dim BEDA As New System.Data.OleDb.OleDbDataAdapter
+        BEDA.SelectCommand = BEcm
+        '- BaseExploitationRate DELETE Statement
+        CmdStr = "DELETE * FROM BaseExploitationRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
+        Dim BEDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        BEDA.DeleteCommand = BEDcm
+        '- Command Builder
+        Dim BEcb As New OleDb.OleDbCommandBuilder
+        BEcb = New OleDb.OleDbCommandBuilder(BEDA)
+        FramDB.Open()
+        BEDA.DeleteCommand.ExecuteScalar()
+        FramDB.Close()
 
-      '- NaturalMortality SELECT Statement
-      CmdStr = "SELECT * FROM NaturalMortality WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
-      Dim NRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      Dim NRDA As New System.Data.OleDb.OleDbDataAdapter
-      NRDA.SelectCommand = NRcm
-      '- NaturalMortality DELETE Statement
-      CmdStr = "DELETE * FROM NaturalMortality WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
-      Dim NRDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      NRDA.DeleteCommand = NRDcm
-      '- Command Builder
-      Dim NRcb As New OleDb.OleDbCommandBuilder
-      NRcb = New OleDb.OleDbCommandBuilder(NRDA)
-      FramDB.Open()
-      NRDA.DeleteCommand.ExecuteScalar()
-      FramDB.Close()
+        '- IncidentalRate SELECT Statement
+        CmdStr = "SELECT * FROM IncidentalRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+        Dim IRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        Dim IRDA As New System.Data.OleDb.OleDbDataAdapter
+        IRDA.SelectCommand = IRcm
+        '- IncidentalRate DELETE Statement
+        CmdStr = "DELETE * FROM IncidentalRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
+        Dim IRDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        IRDA.DeleteCommand = IRDcm
+        '- Command Builder
+        Dim IRcb As New OleDb.OleDbCommandBuilder
+        IRcb = New OleDb.OleDbCommandBuilder(IRDA)
+        FramDB.Open()
+        IRDA.DeleteCommand.ExecuteScalar()
+        FramDB.Close()
 
-      '- TerminalFisheryFlag SELECT Statement
-      CmdStr = "SELECT * FROM TerminalFisheryFlag WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
-      Dim TFcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      Dim TFDA As New System.Data.OleDb.OleDbDataAdapter
-      TFDA.SelectCommand = TFcm
-      '- TerminalFisheryFlag DELETE Statement
-      CmdStr = "DELETE * FROM TerminalFisheryFlag WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
-      Dim TFDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      TFDA.DeleteCommand = TFDcm
-      '- Command Builder
-      Dim TFcb As New OleDb.OleDbCommandBuilder
-      TFcb = New OleDb.OleDbCommandBuilder(TFDA)
-      FramDB.Open()
-      TFDA.DeleteCommand.ExecuteScalar()
-      FramDB.Close()
+        '- ShakerMortRate SELECT Statement
+        CmdStr = "SELECT * FROM ShakerMortRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+        Dim SMcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        Dim SMDA As New System.Data.OleDb.OleDbDataAdapter
+        SMDA.SelectCommand = SMcm
+        '- ShakerMortRate DELETE Statement
+        CmdStr = "DELETE * FROM ShakerMortRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
+        Dim SMDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        SMDA.DeleteCommand = SMDcm
+        '- Command Builder
+        Dim SMcb As New OleDb.OleDbCommandBuilder
+        SMcb = New OleDb.OleDbCommandBuilder(SMDA)
+        FramDB.Open()
+        SMDA.DeleteCommand.ExecuteScalar()
+        FramDB.Close()
 
-      If DeleteSpeciesName = "COHO" Then GoTo SkipFMSP
+        '- MaturationRate SELECT Statement
+        CmdStr = "SELECT * FROM MaturationRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+        Dim MRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        Dim MRDA As New System.Data.OleDb.OleDbDataAdapter
+        MRDA.SelectCommand = MRcm
+        '- MaturationRate DELETE Statement
+        CmdStr = "DELETE * FROM MaturationRate WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
+        Dim MRDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        MRDA.DeleteCommand = MRDcm
+        '- Command Builder
+        Dim MRcb As New OleDb.OleDbCommandBuilder
+        MRcb = New OleDb.OleDbCommandBuilder(MRDA)
+        FramDB.Open()
+        MRDA.DeleteCommand.ExecuteScalar()
+        FramDB.Close()
 
-      '- FisheryModelStockProportion SELECT Statement ... CHINOOK Only
-      CmdStr = "SELECT * FROM FisheryModelStockProportion WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
-      Dim SPcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      Dim SPDA As New System.Data.OleDb.OleDbDataAdapter
-      SPDA.SelectCommand = SPcm
-      '- TerminalFisheryFlag DELETE Statement
-      CmdStr = "DELETE * FROM FisheryModelStockProportion WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
-      Dim SPDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      SPDA.DeleteCommand = SPDcm
-      '- Command Builder
-      Dim SPcb As New OleDb.OleDbCommandBuilder
-      SPcb = New OleDb.OleDbCommandBuilder(SPDA)
-      FramDB.Open()
-      SPDA.DeleteCommand.ExecuteScalar()
-      FramDB.Close()
+        '- NaturalMortality SELECT Statement
+        CmdStr = "SELECT * FROM NaturalMortality WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+        Dim NRcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        Dim NRDA As New System.Data.OleDb.OleDbDataAdapter
+        NRDA.SelectCommand = NRcm
+        '- NaturalMortality DELETE Statement
+        CmdStr = "DELETE * FROM NaturalMortality WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
+        Dim NRDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        NRDA.DeleteCommand = NRDcm
+        '- Command Builder
+        Dim NRcb As New OleDb.OleDbCommandBuilder
+        NRcb = New OleDb.OleDbCommandBuilder(NRDA)
+        FramDB.Open()
+        NRDA.DeleteCommand.ExecuteScalar()
+        FramDB.Close()
 
-      '- EncounterRateAdjustment SELECT Statement ... CHINOOK Only
-      CmdStr = "SELECT * FROM EncounterRateAdjustment WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
-      Dim EAcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      Dim EADA As New System.Data.OleDb.OleDbDataAdapter
-      EADA.SelectCommand = EAcm
-      '- EncounterRateAdjustment DELETE Statement
-      CmdStr = "DELETE * FROM EncounterRateAdjustment WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
-      Dim EADcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      EADA.DeleteCommand = EADcm
-      '- Command Builder
-      Dim EAcb As New OleDb.OleDbCommandBuilder
-      EAcb = New OleDb.OleDbCommandBuilder(EADA)
-      FramDB.Open()
-      EADA.DeleteCommand.ExecuteScalar()
-      FramDB.Close()
+        '- TerminalFisheryFlag SELECT Statement
+        CmdStr = "SELECT * FROM TerminalFisheryFlag WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+        Dim TFcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        Dim TFDA As New System.Data.OleDb.OleDbDataAdapter
+        TFDA.SelectCommand = TFcm
+        '- TerminalFisheryFlag DELETE Statement
+        CmdStr = "DELETE * FROM TerminalFisheryFlag WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
+        Dim TFDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        TFDA.DeleteCommand = TFDcm
+        '- Command Builder
+        Dim TFcb As New OleDb.OleDbCommandBuilder
+        TFcb = New OleDb.OleDbCommandBuilder(TFDA)
+        FramDB.Open()
+        TFDA.DeleteCommand.ExecuteScalar()
+        FramDB.Close()
 
-      '- Growth SELECT Statement ... CHINOOK Only
-      CmdStr = "SELECT * FROM Growth WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
-      Dim Gcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      Dim GDA As New System.Data.OleDb.OleDbDataAdapter
-      GDA.SelectCommand = Gcm
-      '- EncounterRateAdjustment DELETE Statement
-      CmdStr = "DELETE * FROM Growth WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
-      Dim GDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      GDA.DeleteCommand = GDcm
-      '- Command Builder
-      Dim Gcb As New OleDb.OleDbCommandBuilder
-      Gcb = New OleDb.OleDbCommandBuilder(GDA)
-      FramDB.Open()
-      GDA.DeleteCommand.ExecuteScalar()
-      FramDB.Close()
+        If DeleteSpeciesName = "COHO" Then GoTo SkipFMSP
 
-      '- AEQ SELECT Statement ... CHINOOK Only
-      CmdStr = "SELECT * FROM AEQ WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
-      Dim Acm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      Dim ADA As New System.Data.OleDb.OleDbDataAdapter
-      ADA.SelectCommand = Acm
-      '- EncounterRateAdjustment DELETE Statement
-      CmdStr = "DELETE * FROM AEQ WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
-      Dim ADcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-      ADA.DeleteCommand = ADcm
-      '- Command Builder
-      Dim Acb As New OleDb.OleDbCommandBuilder
-      Acb = New OleDb.OleDbCommandBuilder(ADA)
-      FramDB.Open()
-      ADA.DeleteCommand.ExecuteScalar()
-      FramDB.Close()
+        '- FisheryModelStockProportion SELECT Statement ... CHINOOK Only
+        CmdStr = "SELECT * FROM FisheryModelStockProportion WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+        Dim SPcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        Dim SPDA As New System.Data.OleDb.OleDbDataAdapter
+        SPDA.SelectCommand = SPcm
+        '- TerminalFisheryFlag DELETE Statement
+        CmdStr = "DELETE * FROM FisheryModelStockProportion WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
+        Dim SPDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        SPDA.DeleteCommand = SPDcm
+        '- Command Builder
+        Dim SPcb As New OleDb.OleDbCommandBuilder
+        SPcb = New OleDb.OleDbCommandBuilder(SPDA)
+        FramDB.Open()
+        SPDA.DeleteCommand.ExecuteScalar()
+        FramDB.Close()
+
+        '- EncounterRateAdjustment SELECT Statement ... CHINOOK Only
+        CmdStr = "SELECT * FROM EncounterRateAdjustment WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+        Dim EAcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        Dim EADA As New System.Data.OleDb.OleDbDataAdapter
+        EADA.SelectCommand = EAcm
+        '- EncounterRateAdjustment DELETE Statement
+        CmdStr = "DELETE * FROM EncounterRateAdjustment WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
+        Dim EADcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        EADA.DeleteCommand = EADcm
+        '- Command Builder
+        Dim EAcb As New OleDb.OleDbCommandBuilder
+        EAcb = New OleDb.OleDbCommandBuilder(EADA)
+        FramDB.Open()
+        EADA.DeleteCommand.ExecuteScalar()
+        FramDB.Close()
+
+        '- Growth SELECT Statement ... CHINOOK Only
+        CmdStr = "SELECT * FROM Growth WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+        Dim Gcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        Dim GDA As New System.Data.OleDb.OleDbDataAdapter
+        GDA.SelectCommand = Gcm
+        '- EncounterRateAdjustment DELETE Statement
+        CmdStr = "DELETE * FROM Growth WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
+        Dim GDcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        GDA.DeleteCommand = GDcm
+        '- Command Builder
+        Dim Gcb As New OleDb.OleDbCommandBuilder
+        Gcb = New OleDb.OleDbCommandBuilder(GDA)
+        FramDB.Open()
+        GDA.DeleteCommand.ExecuteScalar()
+        FramDB.Close()
+
+        '- AEQ SELECT Statement ... CHINOOK Only
+        CmdStr = "SELECT * FROM AEQ WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+        Dim Acm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        Dim ADA As New System.Data.OleDb.OleDbDataAdapter
+        ADA.SelectCommand = Acm
+        '- EncounterRateAdjustment DELETE Statement
+        CmdStr = "DELETE * FROM AEQ WHERE BasePeriodID = " & BasePeriodIDSelect.ToString & ";"
+        Dim ADcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+        ADA.DeleteCommand = ADcm
+        '- Command Builder
+        Dim Acb As New OleDb.OleDbCommandBuilder
+        Acb = New OleDb.OleDbCommandBuilder(ADA)
+        FramDB.Open()
+        ADA.DeleteCommand.ExecuteScalar()
+        FramDB.Close()
 
 SkipFMSP:
 
-   End Sub
+    End Sub
 
    Sub ReadTaaEtrsFile()
 
@@ -2953,12 +2973,12 @@ SkipSR:
             BaseIDDA.SelectCommand = BIDcm
             Dim BIDcb As New OleDb.OleDbCommandBuilder
             BIDcb = New OleDb.OleDbCommandBuilder(BaseIDDA)
-            If TransferDataSet.Tables.Contains("BaseID") Then
-                TransferDataSet.Tables("BaseID").Clear()
+            If FramDataSet.Tables.Contains("BaseID") Then
+                FramDataSet.Tables("BaseID").Clear()
             End If
-            BaseIDDA.Fill(TransferDataSet, "BaseID")
+            BaseIDDA.Fill(FramDataSet, "BaseID")
             Dim NumBID As Integer
-            NumBID = TransferDataSet.Tables("BaseID").Rows.Count
+            NumBID = FramDataSet.Tables("BaseID").Rows.Count
             If NumBID <> 1 Then
                 MsgBox("ERROR in BaseID Table of Database ... Duplicate Record", MsgBoxStyle.OkOnly)
             End If
@@ -2970,20 +2990,20 @@ SkipSR:
             BID.Transaction = BIDTrans
             RecNum = 0
             BID.CommandText = "INSERT INTO BaseID (BasePeriodID,BasePeriodName,SpeciesName,NumStocks,NumFisheries,NumTimeSteps,NumAges,MinAge,MaxAge,DateCreated,BaseComments,StockVersion,FisheryVersion,TimeStepVersion) " & _
-               "VALUES(" & TransferDataSet.Tables("BaseID").Rows(RecNum)(1) & "," & _
-               Chr(34) & TransferDataSet.Tables("BaseID").Rows(RecNum)(2) & Chr(34) & "," & _
-               Chr(34) & TransferDataSet.Tables("BaseID").Rows(RecNum)(3) & Chr(34) & "," & _
-               TransferDataSet.Tables("BaseID").Rows(RecNum)(4).ToString & "," & _
-               TransferDataSet.Tables("BaseID").Rows(RecNum)(5).ToString & "," & _
-               TransferDataSet.Tables("BaseID").Rows(RecNum)(6).ToString & "," & _
-               TransferDataSet.Tables("BaseID").Rows(RecNum)(7).ToString & "," & _
-               TransferDataSet.Tables("BaseID").Rows(RecNum)(8).ToString & "," & _
-               TransferDataSet.Tables("BaseID").Rows(RecNum)(9).ToString & "," & _
-               Chr(35) & TransferDataSet.Tables("BaseID").Rows(RecNum)(10) & Chr(35) & "," & _
-               Chr(34) & TransferDataSet.Tables("BaseID").Rows(RecNum)(11) & Chr(34) & "," & _
-               TransferDataSet.Tables("BaseID").Rows(RecNum)(12).ToString & "," & _
-               TransferDataSet.Tables("BaseID").Rows(RecNum)(13).ToString & "," & _
-               TransferDataSet.Tables("BaseID").Rows(RecNum)(14).ToString & ")"
+               "VALUES(" & FramDataSet.Tables("BaseID").Rows(RecNum)(1) & "," & _
+               Chr(34) & FramDataSet.Tables("BaseID").Rows(RecNum)(2) & Chr(34) & "," & _
+               Chr(34) & FramDataSet.Tables("BaseID").Rows(RecNum)(3) & Chr(34) & "," & _
+               FramDataSet.Tables("BaseID").Rows(RecNum)(4).ToString & "," & _
+               FramDataSet.Tables("BaseID").Rows(RecNum)(5).ToString & "," & _
+               FramDataSet.Tables("BaseID").Rows(RecNum)(6).ToString & "," & _
+               FramDataSet.Tables("BaseID").Rows(RecNum)(7).ToString & "," & _
+               FramDataSet.Tables("BaseID").Rows(RecNum)(8).ToString & "," & _
+               FramDataSet.Tables("BaseID").Rows(RecNum)(9).ToString & "," & _
+               Chr(35) & FramDataSet.Tables("BaseID").Rows(RecNum)(10) & Chr(35) & "," & _
+               Chr(34) & FramDataSet.Tables("BaseID").Rows(RecNum)(11) & Chr(34) & "," & _
+               FramDataSet.Tables("BaseID").Rows(RecNum)(12).ToString & "," & _
+               FramDataSet.Tables("BaseID").Rows(RecNum)(13).ToString & "," & _
+               FramDataSet.Tables("BaseID").Rows(RecNum)(14).ToString & ")"
             BID.ExecuteNonQuery()
             BIDTrans.Commit()
             TransDB.Close()
@@ -2997,12 +3017,12 @@ SkipSR:
             BaseCohortIDDA.SelectCommand = BaseCohortcm
             Dim BaseCohortcb As New OleDb.OleDbCommandBuilder
             BaseCohortcb = New OleDb.OleDbCommandBuilder(BaseCohortIDDA)
-            If TransferDataSet.Tables.Contains("BaseCohort") Then
-                TransferDataSet.Tables("BaseCohort").Clear()
+            If FramDataSet.Tables.Contains("BaseCohort") Then
+                FramDataSet.Tables("BaseCohort").Clear()
             End If
-            BaseCohortIDDA.Fill(TransferDataSet, "BaseCohort")
+            BaseCohortIDDA.Fill(FramDataSet, "BaseCohort")
             Dim NumBaseCohort As Integer
-            NumBaseCohort = TransferDataSet.Tables("BaseCohort").Rows.Count
+            NumBaseCohort = FramDataSet.Tables("BaseCohort").Rows.Count
 
             Dim BaseCohortTrans As OleDb.OleDbTransaction
             Dim BaseCohort As New OleDbCommand
@@ -3010,13 +3030,13 @@ SkipSR:
             BaseCohortTrans = TransDB.BeginTransaction
             BaseCohort.Connection = TransDB
             BaseCohort.Transaction = BaseCohortTrans
-            NumRecs = TransferDataSet.Tables("BaseCohort").Rows.Count
+            NumRecs = FramDataSet.Tables("BaseCohort").Rows.Count
             For RecNum = 0 To NumRecs - 1
                 BaseCohort.CommandText = "INSERT INTO BaseCohort (BasePeriodID,StockID,Age,BaseCohortSize) " & _
-                   "VALUES(" & TransferDataSet.Tables("BaseCohort").Rows(RecNum)(0) & "," & _
-                    TransferDataSet.Tables("BaseCohort").Rows(RecNum)(1) & "," & _
-                    TransferDataSet.Tables("BaseCohort").Rows(RecNum)(2) & "," & _
-                   TransferDataSet.Tables("BaseCohort").Rows(RecNum)(3) & ")"
+                   "VALUES(" & FramDataSet.Tables("BaseCohort").Rows(RecNum)(0) & "," & _
+                    FramDataSet.Tables("BaseCohort").Rows(RecNum)(1) & "," & _
+                    FramDataSet.Tables("BaseCohort").Rows(RecNum)(2) & "," & _
+                   FramDataSet.Tables("BaseCohort").Rows(RecNum)(3) & ")"
 
                 BaseCohort.ExecuteNonQuery()
             Next
@@ -3032,12 +3052,12 @@ SkipSR:
                 AEQIDDA.SelectCommand = AEQcm
                 Dim AEQcb As New OleDb.OleDbCommandBuilder
                 AEQcb = New OleDb.OleDbCommandBuilder(AEQIDDA)
-                If TransferDataSet.Tables.Contains("AEQ") Then
-                    TransferDataSet.Tables("AEQ").Clear()
+                If FramDataSet.Tables.Contains("AEQ") Then
+                    FramDataSet.Tables("AEQ").Clear()
                 End If
-                AEQIDDA.Fill(TransferDataSet, "AEQ")
+                AEQIDDA.Fill(FramDataSet, "AEQ")
                 Dim NumAEQ As Integer
-                NumAEQ = TransferDataSet.Tables("AEQ").Rows.Count
+                NumAEQ = FramDataSet.Tables("AEQ").Rows.Count
 
                 Dim AEQTrans As OleDb.OleDbTransaction
                 Dim AEQ As New OleDbCommand
@@ -3045,14 +3065,14 @@ SkipSR:
                 AEQTrans = TransDB.BeginTransaction
                 AEQ.Connection = TransDB
                 AEQ.Transaction = AEQTrans
-                NumRecs = TransferDataSet.Tables("AEQ").Rows.Count
+                NumRecs = FramDataSet.Tables("AEQ").Rows.Count
                 For RecNum = 0 To NumRecs - 1
                     AEQ.CommandText = "INSERT INTO AEQ (BasePeriodID,StockID,Age,TimeStep, AEQ) " & _
-                       "VALUES(" & TransferDataSet.Tables("AEQ").Rows(RecNum)(0) & "," & _
-                        TransferDataSet.Tables("AEQ").Rows(RecNum)(1) & "," & _
-                        TransferDataSet.Tables("AEQ").Rows(RecNum)(2) & "," & _
-                        TransferDataSet.Tables("AEQ").Rows(RecNum)(3) & "," & _
-                       TransferDataSet.Tables("AEQ").Rows(RecNum)(4) & ")"
+                       "VALUES(" & FramDataSet.Tables("AEQ").Rows(RecNum)(0) & "," & _
+                        FramDataSet.Tables("AEQ").Rows(RecNum)(1) & "," & _
+                        FramDataSet.Tables("AEQ").Rows(RecNum)(2) & "," & _
+                        FramDataSet.Tables("AEQ").Rows(RecNum)(3) & "," & _
+                       FramDataSet.Tables("AEQ").Rows(RecNum)(4) & ")"
                     AEQ.ExecuteNonQuery()
                 Next
                 AEQTrans.Commit()
@@ -3066,12 +3086,12 @@ SkipSR:
             BaseExploitationRateIDDA.SelectCommand = BaseExploitationRatecm
             Dim BaseExploitationRatecb As New OleDb.OleDbCommandBuilder
             BaseExploitationRatecb = New OleDb.OleDbCommandBuilder(BaseExploitationRateIDDA)
-            If TransferDataSet.Tables.Contains("BaseExploitationRate") Then
-                TransferDataSet.Tables("BaseExploitationRate").Clear()
+            If FramDataSet.Tables.Contains("BaseExploitationRate") Then
+                FramDataSet.Tables("BaseExploitationRate").Clear()
             End If
-            BaseExploitationRateIDDA.Fill(TransferDataSet, "BaseExploitationRate")
+            BaseExploitationRateIDDA.Fill(FramDataSet, "BaseExploitationRate")
             Dim NumBaseExploitationRate As Integer
-            NumBaseExploitationRate = TransferDataSet.Tables("BaseExploitationRate").Rows.Count
+            NumBaseExploitationRate = FramDataSet.Tables("BaseExploitationRate").Rows.Count
 
             Dim BaseExploitationRateTrans As OleDb.OleDbTransaction
             Dim BaseExploitationRate As New OleDbCommand
@@ -3079,16 +3099,16 @@ SkipSR:
             BaseExploitationRateTrans = TransDB.BeginTransaction
             BaseExploitationRate.Connection = TransDB
             BaseExploitationRate.Transaction = BaseExploitationRateTrans
-            NumRecs = TransferDataSet.Tables("BaseExploitationRate").Rows.Count
+            NumRecs = FramDataSet.Tables("BaseExploitationRate").Rows.Count
             For RecNum = 0 To NumRecs - 1
                 BaseExploitationRate.CommandText = "INSERT INTO BaseExploitationRate (BasePeriodID,StockID,Age,FisheryID,TimeStep,ExploitationRate,SublegalEncounterRate) " & _
-                   "VALUES(" & TransferDataSet.Tables("BaseExploitationRate").Rows(RecNum)(0) & "," & _
-                    TransferDataSet.Tables("BaseExploitationRate").Rows(RecNum)(1) & "," & _
-                    TransferDataSet.Tables("BaseExploitationRate").Rows(RecNum)(2) & "," & _
-                    TransferDataSet.Tables("BaseExploitationRate").Rows(RecNum)(3) & "," & _
-                    TransferDataSet.Tables("BaseExploitationRate").Rows(RecNum)(4) & "," & _
-                    TransferDataSet.Tables("BaseExploitationRate").Rows(RecNum)(5) & "," & _
-                   TransferDataSet.Tables("BaseExploitationRate").Rows(RecNum)(6) & ")"
+                   "VALUES(" & FramDataSet.Tables("BaseExploitationRate").Rows(RecNum)(0) & "," & _
+                    FramDataSet.Tables("BaseExploitationRate").Rows(RecNum)(1) & "," & _
+                    FramDataSet.Tables("BaseExploitationRate").Rows(RecNum)(2) & "," & _
+                    FramDataSet.Tables("BaseExploitationRate").Rows(RecNum)(3) & "," & _
+                    FramDataSet.Tables("BaseExploitationRate").Rows(RecNum)(4) & "," & _
+                    FramDataSet.Tables("BaseExploitationRate").Rows(RecNum)(5) & "," & _
+                   FramDataSet.Tables("BaseExploitationRate").Rows(RecNum)(6) & ")"
 
                 BaseExploitationRate.ExecuteNonQuery()
             Next
@@ -3103,12 +3123,12 @@ SkipSR:
                 ChinookBaseEncounterAdjustmentIDDA.SelectCommand = ChinookBaseEncounterAdjustmentcm
                 Dim ChinookBaseEncounterAdjustmentcb As New OleDb.OleDbCommandBuilder
                 ChinookBaseEncounterAdjustmentcb = New OleDb.OleDbCommandBuilder(ChinookBaseEncounterAdjustmentIDDA)
-                If TransferDataSet.Tables.Contains("ChinookBaseEncounterAdjustment") Then
-                    TransferDataSet.Tables("ChinookBaseEncounterAdjustment").Clear()
+                If FramDataSet.Tables.Contains("ChinookBaseEncounterAdjustment") Then
+                    FramDataSet.Tables("ChinookBaseEncounterAdjustment").Clear()
                 End If
-                ChinookBaseEncounterAdjustmentIDDA.Fill(TransferDataSet, "ChinookBaseEncounterAdjustment")
+                ChinookBaseEncounterAdjustmentIDDA.Fill(FramDataSet, "ChinookBaseEncounterAdjustment")
                 Dim NumChinookBaseEncounterAdjustment As Integer
-                NumChinookBaseEncounterAdjustment = TransferDataSet.Tables("ChinookBaseEncounterAdjustment").Rows.Count
+                NumChinookBaseEncounterAdjustment = FramDataSet.Tables("ChinookBaseEncounterAdjustment").Rows.Count
 
                 Dim ChinookBaseEncounterAdjustmentTrans As OleDb.OleDbTransaction
                 Dim ChinookBaseEncounterAdjustment As New OleDbCommand
@@ -3116,14 +3136,14 @@ SkipSR:
                 ChinookBaseEncounterAdjustmentTrans = TransDB.BeginTransaction
                 ChinookBaseEncounterAdjustment.Connection = TransDB
                 ChinookBaseEncounterAdjustment.Transaction = ChinookBaseEncounterAdjustmentTrans
-                NumRecs = TransferDataSet.Tables("ChinookBaseEncounterAdjustment").Rows.Count
+                NumRecs = FramDataSet.Tables("ChinookBaseEncounterAdjustment").Rows.Count
                 For RecNum = 0 To NumRecs - 1
                     ChinookBaseEncounterAdjustment.CommandText = "INSERT INTO ChinookBaseEncounterAdjustment (FisheryID,Time1Adjustment,Time2Adjustment,Time3Adjustment,Time4Adjustment) " & _
-                       "VALUES(" & TransferDataSet.Tables("ChinookBaseEncounterAdjustment").Rows(RecNum)(0) & "," & _
-                        TransferDataSet.Tables("ChinookBaseEncounterAdjustment").Rows(RecNum)(1) & "," & _
-                        TransferDataSet.Tables("ChinookBaseEncounterAdjustment").Rows(RecNum)(2) & "," & _
-                        TransferDataSet.Tables("ChinookBaseEncounterAdjustment").Rows(RecNum)(3) & "," & _
-                       TransferDataSet.Tables("ChinookBaseEncounterAdjustment").Rows(RecNum)(4) & ")"
+                       "VALUES(" & FramDataSet.Tables("ChinookBaseEncounterAdjustment").Rows(RecNum)(0) & "," & _
+                        FramDataSet.Tables("ChinookBaseEncounterAdjustment").Rows(RecNum)(1) & "," & _
+                        FramDataSet.Tables("ChinookBaseEncounterAdjustment").Rows(RecNum)(2) & "," & _
+                        FramDataSet.Tables("ChinookBaseEncounterAdjustment").Rows(RecNum)(3) & "," & _
+                       FramDataSet.Tables("ChinookBaseEncounterAdjustment").Rows(RecNum)(4) & ")"
 
                     ChinookBaseEncounterAdjustment.ExecuteNonQuery()
                 Next
@@ -3133,18 +3153,47 @@ SkipSR:
 
             'ChinookBaseSizeLimit
             If SpeciesName = "CHINOOK" Then
-                CmdStr = "SELECT * FROM ChinookBaseSizeLimit"
-                Dim ChinookBaseSizeLimitcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                
+                'Dim ChinookBaseSizeLimitTrans As OleDb.OleDbTransaction
+                'Dim ChinookBaseSizeLimit As New OleDbCommand
+                'TransDB.Open()
+                'ChinookBaseSizeLimitTrans = TransDB.BeginTransaction
+                'ChinookBaseSizeLimit.Connection = TransDB
+                'ChinookBaseSizeLimit.Transaction = ChinookBaseSizeLimitTrans
+                Dim i As Integer
+                Dim CmdStr1 As String
+                CmdStr = "SELECT * FROM ChinookBaseSizeLimit;"
+
+                'Test of TransferDatabase contains BaseID field
+                
+                ''Dim ChinookBaseSizeLimitTDBcm As New OleDb.OleDbCommand(CmdStr, TransDB)
+                Dim ChinookBaseSizeLimitTDBIDDA As New System.Data.OleDb.OleDbDataAdapter(CmdStr, TransDB)
+                ''ChinookBaseSizeLimitTDBIDDA.SelectCommand = ChinookBaseSizeLimitTDBcm
+                ''Dim ChinookBaseSizeLimitTDBcb As New OleDb.OleDbCommandBuilder
+                ''ChinookBaseSizeLimitTDBcb = New OleDb.OleDbCommandBuilder(ChinookBaseSizeLimitTDBIDDA)
+                If TransferDataSet.Tables.Contains("ChinookBaseSizeLimit") Then
+                    TransferDataSet.Tables.Remove("ChinookBaseSizeLimit")
+                End If
+
+                ChinookBaseSizeLimitTDBIDDA.Fill(TransferDataSet, "ChinookBaseSizeLimit")
+                If BPSL_No_ID = False Then
+                    CmdStr1 = "SELECT * FROM ChinookBaseSizeLimit WHERE BasePeriodID = " & BasePeriodIDSelect.ToString
+                Else
+                    CmdStr1 = "SELECT * FROM ChinookBaseSizeLimit;"
+                End If
+
+                Dim ChinookBaseSizeLimitcm As New OleDb.OleDbCommand(CmdStr1, FramDB)
                 Dim ChinookBaseSizeLimitIDDA As New System.Data.OleDb.OleDbDataAdapter
                 ChinookBaseSizeLimitIDDA.SelectCommand = ChinookBaseSizeLimitcm
                 Dim ChinookBaseSizeLimitcb As New OleDb.OleDbCommandBuilder
                 ChinookBaseSizeLimitcb = New OleDb.OleDbCommandBuilder(ChinookBaseSizeLimitIDDA)
-                If TransferDataSet.Tables.Contains("ChinookBaseSizeLimit") Then
-                    TransferDataSet.Tables("ChinookBaseSizeLimit").Clear()
+                If FramDataSet.Tables.Contains("ChinookBaseSizeLimit") Then
+                    FramDataSet.Tables.Remove("ChinookBaseSizeLimit")
                 End If
-                ChinookBaseSizeLimitIDDA.Fill(TransferDataSet, "ChinookBaseSizeLimit")
-                Dim NumChinookBaseSizeLimit As Integer
-                NumChinookBaseSizeLimit = TransferDataSet.Tables("ChinookBaseSizeLimit").Rows.Count
+                ChinookBaseSizeLimitIDDA.Fill(FramDataSet, "ChinookBaseSizeLimit")
+
+                NumRecs = FramDataSet.Tables("ChinookBaseSizeLimit").Rows.Count
+
 
                 Dim ChinookBaseSizeLimitTrans As OleDb.OleDbTransaction
                 Dim ChinookBaseSizeLimit As New OleDbCommand
@@ -3152,19 +3201,53 @@ SkipSR:
                 ChinookBaseSizeLimitTrans = TransDB.BeginTransaction
                 ChinookBaseSizeLimit.Connection = TransDB
                 ChinookBaseSizeLimit.Transaction = ChinookBaseSizeLimitTrans
-                NumRecs = TransferDataSet.Tables("ChinookBaseSizeLimit").Rows.Count
-                For RecNum = 0 To NumRecs - 1
-                    ChinookBaseSizeLimit.CommandText = "INSERT INTO ChinookBaseSizeLimit (FisheryID,Time1SizeLimit,Time2SizeLimit,Time3SizeLimit,Time4SizeLimit) " & _
-                       "VALUES(" & TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(0) & "," & _
-                        TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(1) & "," & _
-                        TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(2) & "," & _
-                        TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(3) & "," & _
-                       TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(4) & ")"
 
-                    ChinookBaseSizeLimit.ExecuteNonQuery()
-                Next
+
+                If BPSL_No_ID = False Then 'FRAMDB has BaseID field
+                    If TransferDataSet.Tables("ChinookBaseSizeLimit").Columns.IndexOf("BasePeriodID") = -1 Then
+                        MsgBox("You selected a Transferdatabase without a BasePeriod ID field in ChinookBaseSizeLimit table. Please select a TransferDB version 2 or higher")
+                        TransDB.Close()
+                        Exit Sub
+                    Else 'TransferDB has BaseID field
+                        For RecNum = 0 To NumRecs - 1
+                            ChinookBaseSizeLimit.CommandText = "INSERT INTO ChinookBaseSizeLimit (BasePeriodID, FisheryID,Time1SizeLimit,Time2SizeLimit,Time3SizeLimit,Time4SizeLimit) " & _
+                               "VALUES(" & TransferBaseID & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(1) & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(2) & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(3) & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(4) & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(5) & ")"
+                            ChinookBaseSizeLimit.ExecuteNonQuery()
+                        Next
+                    End If
+                Else 'FRAMDB does not have BaseID field
+                    If TransferDataSet.Tables("ChinookBaseSizeLimit").Columns.IndexOf("BasePeriodID") = -1 Then
+                        For RecNum = 0 To NumRecs - 1
+                            ChinookBaseSizeLimit.CommandText = "INSERT INTO ChinookBaseSizeLimit (FisheryID,Time1SizeLimit,Time2SizeLimit,Time3SizeLimit,Time4SizeLimit) " & _
+                               "VALUES(" & FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(0) & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(1) & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(2) & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(3) & "," & _
+                               FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(4) & ")"
+                            ChinookBaseSizeLimit.ExecuteNonQuery()
+                        Next
+                    Else 'TransferDB has BaseID field
+                        For RecNum = 0 To NumRecs - 1
+                            ChinookBaseSizeLimit.CommandText = "INSERT INTO ChinookBaseSizeLimit (BasePeriodID,FisheryID,Time1SizeLimit,Time2SizeLimit,Time3SizeLimit,Time4SizeLimit) " & _
+                               "VALUES(" & TransferBaseID & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(0) & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(1) & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(2) & "," & _
+                                FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(3) & "," & _
+                               FramDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(4) & ")"
+                            ChinookBaseSizeLimit.ExecuteNonQuery()
+                        Next
+                    End If
+                End If
                 ChinookBaseSizeLimitTrans.Commit()
+                'TransferDataSet.Clear()
                 TransDB.Close()
+
 
                 'EncounterRateAdjustment
                 CmdStr = "SELECT * FROM EncounterRateAdjustment WHERE BasePeriodID = " & TransferBaseID.ToString & ";"
@@ -3173,12 +3256,12 @@ SkipSR:
                 EncounterRateAdjustmentIDDA.SelectCommand = EncounterRateAdjustmentcm
                 Dim EncounterRateAdjustmentcb As New OleDb.OleDbCommandBuilder
                 EncounterRateAdjustmentcb = New OleDb.OleDbCommandBuilder(EncounterRateAdjustmentIDDA)
-                If TransferDataSet.Tables.Contains("EncounterRateAdjustment") Then
-                    TransferDataSet.Tables("EncounterRateAdjustment").Clear()
+                If FramDataSet.Tables.Contains("EncounterRateAdjustment") Then
+                    FramDataSet.Tables("EncounterRateAdjustment").Clear()
                 End If
-                EncounterRateAdjustmentIDDA.Fill(TransferDataSet, "EncounterRateAdjustment")
+                EncounterRateAdjustmentIDDA.Fill(FramDataSet, "EncounterRateAdjustment")
                 Dim NumEncounterRateAdjustment As Integer
-                NumEncounterRateAdjustment = TransferDataSet.Tables("EncounterRateAdjustment").Rows.Count
+                NumEncounterRateAdjustment = FramDataSet.Tables("EncounterRateAdjustment").Rows.Count
 
                 Dim EncounterRateAdjustmentTrans As OleDb.OleDbTransaction
                 Dim EncounterRateAdjustment As New OleDbCommand
@@ -3186,14 +3269,14 @@ SkipSR:
                 EncounterRateAdjustmentTrans = TransDB.BeginTransaction
                 EncounterRateAdjustment.Connection = TransDB
                 EncounterRateAdjustment.Transaction = EncounterRateAdjustmentTrans
-                NumRecs = TransferDataSet.Tables("EncounterRateAdjustment").Rows.Count
+                NumRecs = FramDataSet.Tables("EncounterRateAdjustment").Rows.Count
                 For RecNum = 0 To NumRecs - 1
                     EncounterRateAdjustment.CommandText = "INSERT INTO EncounterRateAdjustment (BasePeriodID,Age,FisheryID,TimeStep,EncounterRateAdjustment) " & _
-                       "VALUES(" & TransferDataSet.Tables("EncounterRateAdjustment").Rows(RecNum)(0) & "," & _
-                        TransferDataSet.Tables("EncounterRateAdjustment").Rows(RecNum)(1) & "," & _
-                        TransferDataSet.Tables("EncounterRateAdjustment").Rows(RecNum)(2) & "," & _
-                    TransferDataSet.Tables("EncounterRateAdjustment").Rows(RecNum)(3) & "," & _
-                       TransferDataSet.Tables("EncounterRateAdjustment").Rows(RecNum)(4) & ")"
+                       "VALUES(" & FramDataSet.Tables("EncounterRateAdjustment").Rows(RecNum)(0) & "," & _
+                        FramDataSet.Tables("EncounterRateAdjustment").Rows(RecNum)(1) & "," & _
+                        FramDataSet.Tables("EncounterRateAdjustment").Rows(RecNum)(2) & "," & _
+                    FramDataSet.Tables("EncounterRateAdjustment").Rows(RecNum)(3) & "," & _
+                       FramDataSet.Tables("EncounterRateAdjustment").Rows(RecNum)(4) & ")"
 
                     EncounterRateAdjustment.ExecuteNonQuery()
                 Next
@@ -3209,12 +3292,12 @@ SkipSR:
                 FisheryIDDA.SelectCommand = Fisherycm
                 Dim Fisherycb As New OleDb.OleDbCommandBuilder
                 Fisherycb = New OleDb.OleDbCommandBuilder(FisheryIDDA)
-                If TransferDataSet.Tables.Contains("Fishery") Then
-                    TransferDataSet.Tables("Fishery").Clear()
+                If FramDataSet.Tables.Contains("Fishery") Then
+                    FramDataSet.Tables("Fishery").Clear()
                 End If
-                FisheryIDDA.Fill(TransferDataSet, "Fishery")
+                FisheryIDDA.Fill(FramDataSet, "Fishery")
                 Dim NumFishery As Integer
-                NumFishery = TransferDataSet.Tables("Fishery").Rows.Count
+                NumFishery = FramDataSet.Tables("Fishery").Rows.Count
 
                 Dim FisheryTrans As OleDb.OleDbTransaction
                 Dim Fishery As New OleDbCommand
@@ -3222,14 +3305,14 @@ SkipSR:
                 FisheryTrans = TransDB.BeginTransaction
                 Fishery.Connection = TransDB
                 Fishery.Transaction = FisheryTrans
-                NumRecs = TransferDataSet.Tables("Fishery").Rows.Count
+                NumRecs = FramDataSet.Tables("Fishery").Rows.Count
                 For RecNum = 0 To NumRecs - 1
                     Fishery.CommandText = "INSERT INTO Fishery (Species,VersionNumber,FisheryID,FisheryName,FisheryTitle) " & _
-                       "VALUES(" & Chr(34) & TransferDataSet.Tables("Fishery").Rows(RecNum)(0) & Chr(34) & "," & _
-                        TransferDataSet.Tables("Fishery").Rows(RecNum)(1) & "," & _
-                        TransferDataSet.Tables("Fishery").Rows(RecNum)(2) & "," & _
-                        Chr(34) & TransferDataSet.Tables("Fishery").Rows(RecNum)(3) & Chr(34) & "," & _
-                       Chr(34) & TransferDataSet.Tables("Fishery").Rows(RecNum)(4) & Chr(34) & ")"
+                       "VALUES(" & Chr(34) & FramDataSet.Tables("Fishery").Rows(RecNum)(0) & Chr(34) & "," & _
+                        FramDataSet.Tables("Fishery").Rows(RecNum)(1) & "," & _
+                        FramDataSet.Tables("Fishery").Rows(RecNum)(2) & "," & _
+                        Chr(34) & FramDataSet.Tables("Fishery").Rows(RecNum)(3) & Chr(34) & "," & _
+                       Chr(34) & FramDataSet.Tables("Fishery").Rows(RecNum)(4) & Chr(34) & ")"
 
                     Fishery.ExecuteNonQuery()
                 Next
@@ -3243,12 +3326,12 @@ SkipSR:
                 FisheryModelStockProportionIDDA.SelectCommand = FisheryModelStockProportioncm
                 Dim FisheryModelStockProportioncb As New OleDb.OleDbCommandBuilder
                 FisheryModelStockProportioncb = New OleDb.OleDbCommandBuilder(FisheryModelStockProportionIDDA)
-                If TransferDataSet.Tables.Contains("FisheryModelStockProportion") Then
-                    TransferDataSet.Tables("FisheryModelStockProportion").Clear()
+                If FramDataSet.Tables.Contains("FisheryModelStockProportion") Then
+                    FramDataSet.Tables("FisheryModelStockProportion").Clear()
                 End If
-                FisheryModelStockProportionIDDA.Fill(TransferDataSet, "FisheryModelStockProportion")
+                FisheryModelStockProportionIDDA.Fill(FramDataSet, "FisheryModelStockProportion")
                 Dim NumFisheryModelStockProportion As Integer
-                NumFisheryModelStockProportion = TransferDataSet.Tables("FisheryModelStockProportion").Rows.Count
+                NumFisheryModelStockProportion = FramDataSet.Tables("FisheryModelStockProportion").Rows.Count
 
                 Dim FisheryModelStockProportionTrans As OleDb.OleDbTransaction
                 Dim FisheryModelStockProportion As New OleDbCommand
@@ -3256,12 +3339,12 @@ SkipSR:
                 FisheryModelStockProportionTrans = TransDB.BeginTransaction
                 FisheryModelStockProportion.Connection = TransDB
                 FisheryModelStockProportion.Transaction = FisheryModelStockProportionTrans
-                NumRecs = TransferDataSet.Tables("FisheryModelStockProportion").Rows.Count
+                NumRecs = FramDataSet.Tables("FisheryModelStockProportion").Rows.Count
                 For RecNum = 0 To NumRecs - 1
                     FisheryModelStockProportion.CommandText = "INSERT INTO FisheryModelStockProportion (BasePeriodID,FisheryID,ModelStockProportion) " & _
-                       "VALUES(" & TransferDataSet.Tables("FisheryModelStockProportion").Rows(RecNum)(0) & "," & _
-                        TransferDataSet.Tables("FisheryModelStockProportion").Rows(RecNum)(1) & "," & _
-                       TransferDataSet.Tables("FisheryModelStockProportion").Rows(RecNum)(2) & ")"
+                       "VALUES(" & FramDataSet.Tables("FisheryModelStockProportion").Rows(RecNum)(0) & "," & _
+                        FramDataSet.Tables("FisheryModelStockProportion").Rows(RecNum)(1) & "," & _
+                       FramDataSet.Tables("FisheryModelStockProportion").Rows(RecNum)(2) & ")"
 
                     FisheryModelStockProportion.ExecuteNonQuery()
                 Next
@@ -3275,12 +3358,12 @@ SkipSR:
                 GrowthIDDA.SelectCommand = Growthcm
                 Dim Growthcb As New OleDb.OleDbCommandBuilder
                 Growthcb = New OleDb.OleDbCommandBuilder(GrowthIDDA)
-                If TransferDataSet.Tables.Contains("Growth") Then
-                    TransferDataSet.Tables("Growth").Clear()
+                If FramDataSet.Tables.Contains("Growth") Then
+                    FramDataSet.Tables("Growth").Clear()
                 End If
-                GrowthIDDA.Fill(TransferDataSet, "Growth")
+                GrowthIDDA.Fill(FramDataSet, "Growth")
                 Dim NumGrowth As Integer
-                NumGrowth = TransferDataSet.Tables("Growth").Rows.Count
+                NumGrowth = FramDataSet.Tables("Growth").Rows.Count
 
                 Dim GrowthTrans As OleDb.OleDbTransaction
                 Dim Growth As New OleDbCommand
@@ -3288,25 +3371,25 @@ SkipSR:
                 GrowthTrans = TransDB.BeginTransaction
                 Growth.Connection = TransDB
                 Growth.Transaction = GrowthTrans
-                NumRecs = TransferDataSet.Tables("Growth").Rows.Count
+                NumRecs = FramDataSet.Tables("Growth").Rows.Count
                 For RecNum = 0 To NumRecs - 1
                     Growth.CommandText = "INSERT INTO Growth (BasePeriodID,StockID,LImmature,KImmature,TImmature,CV2Immature,CV3Immature,CV4Immature,CV5Immature,LMature,KMature,TMature,CV2Mature,CV3Mature,CV4Mature,CV5Mature) " & _
-                       "VALUES(" & TransferDataSet.Tables("Growth").Rows(RecNum)(0) & "," & _
-                        TransferDataSet.Tables("Growth").Rows(RecNum)(1) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(2) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(3) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(4) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(5) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(6) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(7) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(8) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(9) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(10) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(11) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(12) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(13) & "," & _
-                     TransferDataSet.Tables("Growth").Rows(RecNum)(14) & "," & _
-                       TransferDataSet.Tables("Growth").Rows(RecNum)(15) & ")"
+                       "VALUES(" & FramDataSet.Tables("Growth").Rows(RecNum)(0) & "," & _
+                        FramDataSet.Tables("Growth").Rows(RecNum)(1) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(2) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(3) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(4) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(5) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(6) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(7) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(8) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(9) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(10) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(11) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(12) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(13) & "," & _
+                     FramDataSet.Tables("Growth").Rows(RecNum)(14) & "," & _
+                       FramDataSet.Tables("Growth").Rows(RecNum)(15) & ")"
 
                     Growth.ExecuteNonQuery()
                 Next
@@ -3315,246 +3398,246 @@ SkipSR:
             End If
 
 
-            'IncidentalRate
-            CmdStr = "SELECT * FROM IncidentalRate WHERE BasePeriodID = " & TransferBaseID.ToString & ";"
-            Dim IncidentalRatecm As New OleDb.OleDbCommand(CmdStr, FramDB)
-            Dim IncidentalRateIDDA As New System.Data.OleDb.OleDbDataAdapter
-            IncidentalRateIDDA.SelectCommand = IncidentalRatecm
-            Dim IncidentalRatecb As New OleDb.OleDbCommandBuilder
-            IncidentalRatecb = New OleDb.OleDbCommandBuilder(IncidentalRateIDDA)
-            If TransferDataSet.Tables.Contains("IncidentalRate") Then
-                TransferDataSet.Tables("IncidentalRate").Clear()
-            End If
-            IncidentalRateIDDA.Fill(TransferDataSet, "IncidentalRate")
-            Dim NumIncidentalRate As Integer
-            NumIncidentalRate = TransferDataSet.Tables("IncidentalRate").Rows.Count
-
-            Dim IncidentalRateTrans As OleDb.OleDbTransaction
-            Dim IncidentalRate As New OleDbCommand
-            TransDB.Open()
-            IncidentalRateTrans = TransDB.BeginTransaction
-            IncidentalRate.Connection = TransDB
-            IncidentalRate.Transaction = IncidentalRateTrans
-            NumRecs = TransferDataSet.Tables("IncidentalRate").Rows.Count
-            For RecNum = 0 To NumRecs - 1
-                IncidentalRate.CommandText = "INSERT INTO IncidentalRate (BasePeriodID,FisheryID,TimeStep,IncidentalRate) " & _
-                   "VALUES(" & TransferDataSet.Tables("IncidentalRate").Rows(RecNum)(0) & "," & _
-                    TransferDataSet.Tables("IncidentalRate").Rows(RecNum)(1) & "," & _
-                    TransferDataSet.Tables("IncidentalRate").Rows(RecNum)(2) & "," & _
-                    TransferDataSet.Tables("IncidentalRate").Rows(RecNum)(3) & ")"
-
-                IncidentalRate.ExecuteNonQuery()
-            Next
-            IncidentalRateTrans.Commit()
-            TransDB.Close()
-
-            'MaturationRate
-
-            CmdStr = "SELECT * FROM MaturationRate WHERE BasePeriodID = " & TransferBaseID.ToString & ";"
-            Dim MaturationRatecm As New OleDb.OleDbCommand(CmdStr, FramDB)
-            Dim MaturationRateIDDA As New System.Data.OleDb.OleDbDataAdapter
-            MaturationRateIDDA.SelectCommand = MaturationRatecm
-            Dim MaturationRatecb As New OleDb.OleDbCommandBuilder
-            MaturationRatecb = New OleDb.OleDbCommandBuilder(MaturationRateIDDA)
-            If TransferDataSet.Tables.Contains("MaturationRate") Then
-                TransferDataSet.Tables("MaturationRate").Clear()
-            End If
-            MaturationRateIDDA.Fill(TransferDataSet, "MaturationRate")
-            Dim NumMaturationRate As Integer
-            NumMaturationRate = TransferDataSet.Tables("MaturationRate").Rows.Count
-
-            Dim MaturationRateTrans As OleDb.OleDbTransaction
-            Dim MaturationRate As New OleDbCommand
-            TransDB.Open()
-            MaturationRateTrans = TransDB.BeginTransaction
-            MaturationRate.Connection = TransDB
-            MaturationRate.Transaction = MaturationRateTrans
-            NumRecs = TransferDataSet.Tables("MaturationRate").Rows.Count
-            For RecNum = 0 To NumRecs - 1
-                MaturationRate.CommandText = "INSERT INTO MaturationRate (BasePeriodID,StockID,Age,TimeStep,MaturationRate) " & _
-                   "VALUES(" & TransferDataSet.Tables("MaturationRate").Rows(RecNum)(0) & "," & _
-                    TransferDataSet.Tables("MaturationRate").Rows(RecNum)(1) & "," & _
-                    TransferDataSet.Tables("MaturationRate").Rows(RecNum)(2) & "," & _
-                    TransferDataSet.Tables("MaturationRate").Rows(RecNum)(3) & "," & _
-                    TransferDataSet.Tables("MaturationRate").Rows(RecNum)(4) & ")"
-
-                MaturationRate.ExecuteNonQuery()
-            Next
-            MaturationRateTrans.Commit()
-            TransDB.Close()
-
-            'NaturalMortality
-            CmdStr = "SELECT * FROM NaturalMortality WHERE BasePeriodID = " & TransferBaseID.ToString & ";"
-            Dim NaturalMortalitycm As New OleDb.OleDbCommand(CmdStr, FramDB)
-            Dim NaturalMortalityIDDA As New System.Data.OleDb.OleDbDataAdapter
-            NaturalMortalityIDDA.SelectCommand = NaturalMortalitycm
-            Dim NaturalMortalitycb As New OleDb.OleDbCommandBuilder
-            NaturalMortalitycb = New OleDb.OleDbCommandBuilder(NaturalMortalityIDDA)
-            If TransferDataSet.Tables.Contains("NaturalMortality") Then
-                TransferDataSet.Tables("NaturalMortality").Clear()
-            End If
-            NaturalMortalityIDDA.Fill(TransferDataSet, "NaturalMortality")
-            Dim NumNaturalMortality As Integer
-            NumNaturalMortality = TransferDataSet.Tables("NaturalMortality").Rows.Count
-
-            Dim NaturalMortalityTrans As OleDb.OleDbTransaction
-            Dim NaturalMortality As New OleDbCommand
-            TransDB.Open()
-            NaturalMortalityTrans = TransDB.BeginTransaction
-            NaturalMortality.Connection = TransDB
-            NaturalMortality.Transaction = NaturalMortalityTrans
-            NumRecs = TransferDataSet.Tables("NaturalMortality").Rows.Count
-            For RecNum = 0 To NumRecs - 1
-                NaturalMortality.CommandText = "INSERT INTO NaturalMortality (BasePeriodID,Age,TimeStep,NaturalMortalityRate) " & _
-                   "VALUES(" & TransferDataSet.Tables("NaturalMortality").Rows(RecNum)(0) & "," & _
-                    TransferDataSet.Tables("NaturalMortality").Rows(RecNum)(1) & "," & _
-                    TransferDataSet.Tables("NaturalMortality").Rows(RecNum)(2) & "," & _
-                    TransferDataSet.Tables("NaturalMortality").Rows(RecNum)(3) & ")"
-
-                NaturalMortality.ExecuteNonQuery()
-            Next
-            NaturalMortalityTrans.Commit()
-            TransDB.Close()
-
-            'ShakerMortRate
-            CmdStr = "SELECT * FROM ShakerMortRate WHERE BasePeriodID = " & TransferBaseID.ToString & ";"
-            Dim ShakerMortRatecm As New OleDb.OleDbCommand(CmdStr, FramDB)
-            Dim ShakerMortRateIDDA As New System.Data.OleDb.OleDbDataAdapter
-            ShakerMortRateIDDA.SelectCommand = ShakerMortRatecm
-            Dim ShakerMortRatecb As New OleDb.OleDbCommandBuilder
-            ShakerMortRatecb = New OleDb.OleDbCommandBuilder(ShakerMortRateIDDA)
-            If TransferDataSet.Tables.Contains("ShakerMortRate") Then
-                TransferDataSet.Tables("ShakerMortRate").Clear()
-            End If
-            ShakerMortRateIDDA.Fill(TransferDataSet, "ShakerMortRate")
-            Dim NumShakerMortRate As Integer
-            NumShakerMortRate = TransferDataSet.Tables("ShakerMortRate").Rows.Count
-
-            Dim ShakerMortRateTrans As OleDb.OleDbTransaction
-            Dim ShakerMortRate As New OleDbCommand
-            TransDB.Open()
-            ShakerMortRateTrans = TransDB.BeginTransaction
-            ShakerMortRate.Connection = TransDB
-            ShakerMortRate.Transaction = ShakerMortRateTrans
-            NumRecs = TransferDataSet.Tables("ShakerMortRate").Rows.Count
-            For RecNum = 0 To NumRecs - 1
-                ShakerMortRate.CommandText = "INSERT INTO ShakerMortRate (BasePeriodID,FisheryID,TimeStep,ShakerMortRate) " & _
-                   "VALUES(" & TransferDataSet.Tables("ShakerMortRate").Rows(RecNum)(0) & "," & _
-                    TransferDataSet.Tables("ShakerMortRate").Rows(RecNum)(1) & "," & _
-                    TransferDataSet.Tables("ShakerMortRate").Rows(RecNum)(2) & "," & _
-                    TransferDataSet.Tables("ShakerMortRate").Rows(RecNum)(3) & ")"
-
-                ShakerMortRate.ExecuteNonQuery()
-            Next
-            ShakerMortRateTrans.Commit()
-            TransDB.Close()
-
-            'Stock
-            If SpeciesName = "CHINOOK" Then
-                CmdStr = "SELECT * FROM Stock"
-                Dim Stockcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-                Dim StockIDDA As New System.Data.OleDb.OleDbDataAdapter
-                StockIDDA.SelectCommand = Stockcm
-                Dim Stockcb As New OleDb.OleDbCommandBuilder
-                Stockcb = New OleDb.OleDbCommandBuilder(StockIDDA)
-                If TransferDataSet.Tables.Contains("Stock") Then
-                    TransferDataSet.Tables("Stock").Clear()
+                'IncidentalRate
+                CmdStr = "SELECT * FROM IncidentalRate WHERE BasePeriodID = " & TransferBaseID.ToString & ";"
+                Dim IncidentalRatecm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                Dim IncidentalRateIDDA As New System.Data.OleDb.OleDbDataAdapter
+                IncidentalRateIDDA.SelectCommand = IncidentalRatecm
+                Dim IncidentalRatecb As New OleDb.OleDbCommandBuilder
+                IncidentalRatecb = New OleDb.OleDbCommandBuilder(IncidentalRateIDDA)
+                If FramDataSet.Tables.Contains("IncidentalRate") Then
+                    FramDataSet.Tables("IncidentalRate").Clear()
                 End If
-                StockIDDA.Fill(TransferDataSet, "Stock")
-                Dim NumStock As Integer
-                NumStock = TransferDataSet.Tables("Stock").Rows.Count
+                IncidentalRateIDDA.Fill(FramDataSet, "IncidentalRate")
+                Dim NumIncidentalRate As Integer
+                NumIncidentalRate = FramDataSet.Tables("IncidentalRate").Rows.Count
 
-                Dim StockTrans As OleDb.OleDbTransaction
-                Dim Stock As New OleDbCommand
+                Dim IncidentalRateTrans As OleDb.OleDbTransaction
+                Dim IncidentalRate As New OleDbCommand
                 TransDB.Open()
-                StockTrans = TransDB.BeginTransaction
-                Stock.Connection = TransDB
-                Stock.Transaction = StockTrans
-                NumRecs = TransferDataSet.Tables("Stock").Rows.Count
+                IncidentalRateTrans = TransDB.BeginTransaction
+                IncidentalRate.Connection = TransDB
+                IncidentalRate.Transaction = IncidentalRateTrans
+                NumRecs = FramDataSet.Tables("IncidentalRate").Rows.Count
                 For RecNum = 0 To NumRecs - 1
-                    Stock.CommandText = "INSERT INTO Stock (Species,StockVersion,StockID,ProductionRegionNumber,ManagementUnitNumber,StockName,StockLongName) " & _
-                       "VALUES(" & Chr(34) & TransferDataSet.Tables("Stock").Rows(RecNum)(0) & Chr(34) & "," & _
-                        TransferDataSet.Tables("Stock").Rows(RecNum)(1) & "," & _
-                        TransferDataSet.Tables("Stock").Rows(RecNum)(2) & "," & _
-                        TransferDataSet.Tables("Stock").Rows(RecNum)(3) & "," & _
-                        TransferDataSet.Tables("Stock").Rows(RecNum)(4) & "," & _
-                        Chr(34) & TransferDataSet.Tables("Stock").Rows(RecNum)(5) & Chr(34) & "," & _
-                       Chr(34) & TransferDataSet.Tables("Stock").Rows(RecNum)(6) & Chr(34) & ")"
+                    IncidentalRate.CommandText = "INSERT INTO IncidentalRate (BasePeriodID,FisheryID,TimeStep,IncidentalRate) " & _
+                       "VALUES(" & FramDataSet.Tables("IncidentalRate").Rows(RecNum)(0) & "," & _
+                        FramDataSet.Tables("IncidentalRate").Rows(RecNum)(1) & "," & _
+                        FramDataSet.Tables("IncidentalRate").Rows(RecNum)(2) & "," & _
+                        FramDataSet.Tables("IncidentalRate").Rows(RecNum)(3) & ")"
 
-                    Stock.ExecuteNonQuery()
+                    IncidentalRate.ExecuteNonQuery()
                 Next
-                StockTrans.Commit()
+                IncidentalRateTrans.Commit()
                 TransDB.Close()
-            End If
 
-            'TerminalFisheryFlag
-            CmdStr = "SELECT * FROM TerminalFisheryFlag WHERE BasePeriodID = " & TransferBaseID.ToString & ";"
-            Dim TerminalFisheryFlagcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-            Dim TerminalFisheryFlagIDDA As New System.Data.OleDb.OleDbDataAdapter
-            TerminalFisheryFlagIDDA.SelectCommand = TerminalFisheryFlagcm
-            Dim TerminalFisheryFlagcb As New OleDb.OleDbCommandBuilder
-            TerminalFisheryFlagcb = New OleDb.OleDbCommandBuilder(TerminalFisheryFlagIDDA)
-            If TransferDataSet.Tables.Contains("TerminalFisheryFlag") Then
-                TransferDataSet.Tables("TerminalFisheryFlag").Clear()
-            End If
-            TerminalFisheryFlagIDDA.Fill(TransferDataSet, "TerminalFisheryFlag")
-            Dim NumTerminalFisheryFlag As Integer
-            NumTerminalFisheryFlag = TransferDataSet.Tables("TerminalFisheryFlag").Rows.Count
+                'MaturationRate
 
-            Dim TerminalFisheryFlagTrans As OleDb.OleDbTransaction
-            Dim TerminalFisheryFlag As New OleDbCommand
-            TransDB.Open()
-            TerminalFisheryFlagTrans = TransDB.BeginTransaction
-            TerminalFisheryFlag.Connection = TransDB
-            TerminalFisheryFlag.Transaction = TerminalFisheryFlagTrans
-            NumRecs = TransferDataSet.Tables("TerminalFisheryFlag").Rows.Count
-            For RecNum = 0 To NumRecs - 1
-                TerminalFisheryFlag.CommandText = "INSERT INTO TerminalFisheryFlag (BasePeriodID,FisheryID,TimeStep,TerminalFlag) " & _
-                   "VALUES(" & TransferDataSet.Tables("TerminalFisheryFlag").Rows(RecNum)(0) & "," & _
-                    TransferDataSet.Tables("TerminalFisheryFlag").Rows(RecNum)(1) & "," & _
-                    TransferDataSet.Tables("TerminalFisheryFlag").Rows(RecNum)(2) & "," & _
-                    TransferDataSet.Tables("TerminalFisheryFlag").Rows(RecNum)(3) & ")"
-
-                TerminalFisheryFlag.ExecuteNonQuery()
-            Next
-            TerminalFisheryFlagTrans.Commit()
-            TransDB.Close()
-
-            'TimeStep
-            If SpeciesName = "CHINOOK" Then
-                CmdStr = "SELECT * FROM TimeStep"
-                Dim TimeStepcm As New OleDb.OleDbCommand(CmdStr, FramDB)
-                Dim TimeStepIDDA As New System.Data.OleDb.OleDbDataAdapter
-                TimeStepIDDA.SelectCommand = TimeStepcm
-                Dim TimeStepcb As New OleDb.OleDbCommandBuilder
-                TimeStepcb = New OleDb.OleDbCommandBuilder(TimeStepIDDA)
-                If TransferDataSet.Tables.Contains("TimeStep") Then
-                    TransferDataSet.Tables("TimeStep").Clear()
+                CmdStr = "SELECT * FROM MaturationRate WHERE BasePeriodID = " & TransferBaseID.ToString & ";"
+                Dim MaturationRatecm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                Dim MaturationRateIDDA As New System.Data.OleDb.OleDbDataAdapter
+                MaturationRateIDDA.SelectCommand = MaturationRatecm
+                Dim MaturationRatecb As New OleDb.OleDbCommandBuilder
+                MaturationRatecb = New OleDb.OleDbCommandBuilder(MaturationRateIDDA)
+                If FramDataSet.Tables.Contains("MaturationRate") Then
+                    FramDataSet.Tables("MaturationRate").Clear()
                 End If
-                TimeStepIDDA.Fill(TransferDataSet, "TimeStep")
-                Dim NumTimeStep As Integer
-                NumTimeStep = TransferDataSet.Tables("TimeStep").Rows.Count
+                MaturationRateIDDA.Fill(FramDataSet, "MaturationRate")
+                Dim NumMaturationRate As Integer
+                NumMaturationRate = FramDataSet.Tables("MaturationRate").Rows.Count
 
-                Dim TimeStepTrans As OleDb.OleDbTransaction
-                Dim TimeStep As New OleDbCommand
+                Dim MaturationRateTrans As OleDb.OleDbTransaction
+                Dim MaturationRate As New OleDbCommand
                 TransDB.Open()
-                TimeStepTrans = TransDB.BeginTransaction
-                TimeStep.Connection = TransDB
-                TimeStep.Transaction = TimeStepTrans
-                NumRecs = TransferDataSet.Tables("TimeStep").Rows.Count
+                MaturationRateTrans = TransDB.BeginTransaction
+                MaturationRate.Connection = TransDB
+                MaturationRate.Transaction = MaturationRateTrans
+                NumRecs = FramDataSet.Tables("MaturationRate").Rows.Count
                 For RecNum = 0 To NumRecs - 1
-                    TimeStep.CommandText = "INSERT INTO TimeStep (Species,VersionNumber,TimeStepID,TimeStepName,TimeStepTitle) " & _
-                       "VALUES(" & Chr(34) & TransferDataSet.Tables("TimeStep").Rows(RecNum)(0) & Chr(34) & "," & _
-                        TransferDataSet.Tables("TimeStep").Rows(RecNum)(1) & "," & _
-                        TransferDataSet.Tables("TimeStep").Rows(RecNum)(2) & "," & _
-                        Chr(34) & TransferDataSet.Tables("TimeStep").Rows(RecNum)(3) & Chr(34) & "," & _
-                        Chr(34) & TransferDataSet.Tables("TimeStep").Rows(RecNum)(4) & Chr(34) & ")"
+                    MaturationRate.CommandText = "INSERT INTO MaturationRate (BasePeriodID,StockID,Age,TimeStep,MaturationRate) " & _
+                       "VALUES(" & FramDataSet.Tables("MaturationRate").Rows(RecNum)(0) & "," & _
+                        FramDataSet.Tables("MaturationRate").Rows(RecNum)(1) & "," & _
+                        FramDataSet.Tables("MaturationRate").Rows(RecNum)(2) & "," & _
+                        FramDataSet.Tables("MaturationRate").Rows(RecNum)(3) & "," & _
+                        FramDataSet.Tables("MaturationRate").Rows(RecNum)(4) & ")"
 
-                    TimeStep.ExecuteNonQuery()
+                    MaturationRate.ExecuteNonQuery()
                 Next
-                TimeStepTrans.Commit()
+                MaturationRateTrans.Commit()
                 TransDB.Close()
-            End If
+
+                'NaturalMortality
+                CmdStr = "SELECT * FROM NaturalMortality WHERE BasePeriodID = " & TransferBaseID.ToString & ";"
+                Dim NaturalMortalitycm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                Dim NaturalMortalityIDDA As New System.Data.OleDb.OleDbDataAdapter
+                NaturalMortalityIDDA.SelectCommand = NaturalMortalitycm
+                Dim NaturalMortalitycb As New OleDb.OleDbCommandBuilder
+                NaturalMortalitycb = New OleDb.OleDbCommandBuilder(NaturalMortalityIDDA)
+                If FramDataSet.Tables.Contains("NaturalMortality") Then
+                    FramDataSet.Tables("NaturalMortality").Clear()
+                End If
+                NaturalMortalityIDDA.Fill(FramDataSet, "NaturalMortality")
+                Dim NumNaturalMortality As Integer
+                NumNaturalMortality = FramDataSet.Tables("NaturalMortality").Rows.Count
+
+                Dim NaturalMortalityTrans As OleDb.OleDbTransaction
+                Dim NaturalMortality As New OleDbCommand
+                TransDB.Open()
+                NaturalMortalityTrans = TransDB.BeginTransaction
+                NaturalMortality.Connection = TransDB
+                NaturalMortality.Transaction = NaturalMortalityTrans
+                NumRecs = FramDataSet.Tables("NaturalMortality").Rows.Count
+                For RecNum = 0 To NumRecs - 1
+                    NaturalMortality.CommandText = "INSERT INTO NaturalMortality (BasePeriodID,Age,TimeStep,NaturalMortalityRate) " & _
+                       "VALUES(" & FramDataSet.Tables("NaturalMortality").Rows(RecNum)(0) & "," & _
+                        FramDataSet.Tables("NaturalMortality").Rows(RecNum)(1) & "," & _
+                        FramDataSet.Tables("NaturalMortality").Rows(RecNum)(2) & "," & _
+                        FramDataSet.Tables("NaturalMortality").Rows(RecNum)(3) & ")"
+
+                    NaturalMortality.ExecuteNonQuery()
+                Next
+                NaturalMortalityTrans.Commit()
+                TransDB.Close()
+
+                'ShakerMortRate
+                CmdStr = "SELECT * FROM ShakerMortRate WHERE BasePeriodID = " & TransferBaseID.ToString & ";"
+                Dim ShakerMortRatecm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                Dim ShakerMortRateIDDA As New System.Data.OleDb.OleDbDataAdapter
+                ShakerMortRateIDDA.SelectCommand = ShakerMortRatecm
+                Dim ShakerMortRatecb As New OleDb.OleDbCommandBuilder
+                ShakerMortRatecb = New OleDb.OleDbCommandBuilder(ShakerMortRateIDDA)
+                If FramDataSet.Tables.Contains("ShakerMortRate") Then
+                    FramDataSet.Tables("ShakerMortRate").Clear()
+                End If
+                ShakerMortRateIDDA.Fill(FramDataSet, "ShakerMortRate")
+                Dim NumShakerMortRate As Integer
+                NumShakerMortRate = FramDataSet.Tables("ShakerMortRate").Rows.Count
+
+                Dim ShakerMortRateTrans As OleDb.OleDbTransaction
+                Dim ShakerMortRate As New OleDbCommand
+                TransDB.Open()
+                ShakerMortRateTrans = TransDB.BeginTransaction
+                ShakerMortRate.Connection = TransDB
+                ShakerMortRate.Transaction = ShakerMortRateTrans
+                NumRecs = FramDataSet.Tables("ShakerMortRate").Rows.Count
+                For RecNum = 0 To NumRecs - 1
+                    ShakerMortRate.CommandText = "INSERT INTO ShakerMortRate (BasePeriodID,FisheryID,TimeStep,ShakerMortRate) " & _
+                       "VALUES(" & FramDataSet.Tables("ShakerMortRate").Rows(RecNum)(0) & "," & _
+                        FramDataSet.Tables("ShakerMortRate").Rows(RecNum)(1) & "," & _
+                        FramDataSet.Tables("ShakerMortRate").Rows(RecNum)(2) & "," & _
+                        FramDataSet.Tables("ShakerMortRate").Rows(RecNum)(3) & ")"
+
+                    ShakerMortRate.ExecuteNonQuery()
+                Next
+                ShakerMortRateTrans.Commit()
+                TransDB.Close()
+
+                'Stock
+                If SpeciesName = "CHINOOK" Then
+                    CmdStr = "SELECT * FROM Stock"
+                    Dim Stockcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                    Dim StockIDDA As New System.Data.OleDb.OleDbDataAdapter
+                    StockIDDA.SelectCommand = Stockcm
+                    Dim Stockcb As New OleDb.OleDbCommandBuilder
+                    Stockcb = New OleDb.OleDbCommandBuilder(StockIDDA)
+                    If FramDataSet.Tables.Contains("Stock") Then
+                        FramDataSet.Tables("Stock").Clear()
+                    End If
+                    StockIDDA.Fill(FramDataSet, "Stock")
+                    Dim NumStock As Integer
+                    NumStock = FramDataSet.Tables("Stock").Rows.Count
+
+                    Dim StockTrans As OleDb.OleDbTransaction
+                    Dim Stock As New OleDbCommand
+                    TransDB.Open()
+                    StockTrans = TransDB.BeginTransaction
+                    Stock.Connection = TransDB
+                    Stock.Transaction = StockTrans
+                    NumRecs = FramDataSet.Tables("Stock").Rows.Count
+                    For RecNum = 0 To NumRecs - 1
+                        Stock.CommandText = "INSERT INTO Stock (Species,StockVersion,StockID,ProductionRegionNumber,ManagementUnitNumber,StockName,StockLongName) " & _
+                           "VALUES(" & Chr(34) & FramDataSet.Tables("Stock").Rows(RecNum)(0) & Chr(34) & "," & _
+                            FramDataSet.Tables("Stock").Rows(RecNum)(1) & "," & _
+                            FramDataSet.Tables("Stock").Rows(RecNum)(2) & "," & _
+                            FramDataSet.Tables("Stock").Rows(RecNum)(3) & "," & _
+                            FramDataSet.Tables("Stock").Rows(RecNum)(4) & "," & _
+                            Chr(34) & FramDataSet.Tables("Stock").Rows(RecNum)(5) & Chr(34) & "," & _
+                           Chr(34) & FramDataSet.Tables("Stock").Rows(RecNum)(6) & Chr(34) & ")"
+
+                        Stock.ExecuteNonQuery()
+                    Next
+                    StockTrans.Commit()
+                    TransDB.Close()
+                End If
+
+                'TerminalFisheryFlag
+                CmdStr = "SELECT * FROM TerminalFisheryFlag WHERE BasePeriodID = " & TransferBaseID.ToString & ";"
+                Dim TerminalFisheryFlagcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                Dim TerminalFisheryFlagIDDA As New System.Data.OleDb.OleDbDataAdapter
+                TerminalFisheryFlagIDDA.SelectCommand = TerminalFisheryFlagcm
+                Dim TerminalFisheryFlagcb As New OleDb.OleDbCommandBuilder
+                TerminalFisheryFlagcb = New OleDb.OleDbCommandBuilder(TerminalFisheryFlagIDDA)
+                If FramDataSet.Tables.Contains("TerminalFisheryFlag") Then
+                    FramDataSet.Tables("TerminalFisheryFlag").Clear()
+                End If
+                TerminalFisheryFlagIDDA.Fill(FramDataSet, "TerminalFisheryFlag")
+                Dim NumTerminalFisheryFlag As Integer
+                NumTerminalFisheryFlag = FramDataSet.Tables("TerminalFisheryFlag").Rows.Count
+
+                Dim TerminalFisheryFlagTrans As OleDb.OleDbTransaction
+                Dim TerminalFisheryFlag As New OleDbCommand
+                TransDB.Open()
+                TerminalFisheryFlagTrans = TransDB.BeginTransaction
+                TerminalFisheryFlag.Connection = TransDB
+                TerminalFisheryFlag.Transaction = TerminalFisheryFlagTrans
+                NumRecs = FramDataSet.Tables("TerminalFisheryFlag").Rows.Count
+                For RecNum = 0 To NumRecs - 1
+                    TerminalFisheryFlag.CommandText = "INSERT INTO TerminalFisheryFlag (BasePeriodID,FisheryID,TimeStep,TerminalFlag) " & _
+                       "VALUES(" & FramDataSet.Tables("TerminalFisheryFlag").Rows(RecNum)(0) & "," & _
+                        FramDataSet.Tables("TerminalFisheryFlag").Rows(RecNum)(1) & "," & _
+                        FramDataSet.Tables("TerminalFisheryFlag").Rows(RecNum)(2) & "," & _
+                        FramDataSet.Tables("TerminalFisheryFlag").Rows(RecNum)(3) & ")"
+
+                    TerminalFisheryFlag.ExecuteNonQuery()
+                Next
+                TerminalFisheryFlagTrans.Commit()
+                TransDB.Close()
+
+                'TimeStep
+                If SpeciesName = "CHINOOK" Then
+                    CmdStr = "SELECT * FROM TimeStep"
+                    Dim TimeStepcm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                    Dim TimeStepIDDA As New System.Data.OleDb.OleDbDataAdapter
+                    TimeStepIDDA.SelectCommand = TimeStepcm
+                    Dim TimeStepcb As New OleDb.OleDbCommandBuilder
+                    TimeStepcb = New OleDb.OleDbCommandBuilder(TimeStepIDDA)
+                    If FramDataSet.Tables.Contains("TimeStep") Then
+                        FramDataSet.Tables("TimeStep").Clear()
+                    End If
+                    TimeStepIDDA.Fill(FramDataSet, "TimeStep")
+                    Dim NumTimeStep As Integer
+                    NumTimeStep = FramDataSet.Tables("TimeStep").Rows.Count
+
+                    Dim TimeStepTrans As OleDb.OleDbTransaction
+                    Dim TimeStep As New OleDbCommand
+                    TransDB.Open()
+                    TimeStepTrans = TransDB.BeginTransaction
+                    TimeStep.Connection = TransDB
+                    TimeStep.Transaction = TimeStepTrans
+                    NumRecs = FramDataSet.Tables("TimeStep").Rows.Count
+                    For RecNum = 0 To NumRecs - 1
+                        TimeStep.CommandText = "INSERT INTO TimeStep (Species,VersionNumber,TimeStepID,TimeStepName,TimeStepTitle) " & _
+                           "VALUES(" & Chr(34) & FramDataSet.Tables("TimeStep").Rows(RecNum)(0) & Chr(34) & "," & _
+                            FramDataSet.Tables("TimeStep").Rows(RecNum)(1) & "," & _
+                            FramDataSet.Tables("TimeStep").Rows(RecNum)(2) & "," & _
+                            Chr(34) & FramDataSet.Tables("TimeStep").Rows(RecNum)(3) & Chr(34) & "," & _
+                            Chr(34) & FramDataSet.Tables("TimeStep").Rows(RecNum)(4) & Chr(34) & ")"
+
+                        TimeStep.ExecuteNonQuery()
+                    Next
+                    TimeStepTrans.Commit()
+                    TransDB.Close()
+                End If
         Next
     End Sub
    Sub TransferModelRunTables()
@@ -4209,8 +4292,41 @@ ExitTransfer:
         '- This SubRoutine is the opposite of the TransferBaseRunTables and reads in a new base period
 
 
+        'declare local variables
         Dim CmdStr As String
         Dim RecNum, NumRecs, TransID, NewRunID, OldRunID As Integer
+
+        
+        ' terminate transfer if FRAMDB does not contain BaseID field in ChinookBaseSizeLimit table, but TransferDB has this field
+        CmdStr = "SELECT * FROM ChinookBaseSizeLimit;"
+        Dim BaseSizeLimcm As New OleDb.OleDbCommand(CmdStr, TransBP)
+        Dim BaseSizeLimIDDA As New System.Data.OleDb.OleDbDataAdapter
+        BaseSizeLimIDDA.SelectCommand = BaseSizeLimcm
+        Dim BaseSizeLimcb As New OleDb.OleDbCommandBuilder
+        BaseSizeLimcb = New OleDb.OleDbCommandBuilder(BaseSizeLimIDDA)
+
+        'If FramDataSet.Tables.Contains("ChinookBaseSizeLimit") Then
+        '    FramDataSet.Tables.Remove("ChinookBaseSizeLimit")
+        'End If
+
+
+        BaseSizeLimIDDA.Fill(TransferDataSet, "ChinookBaseSizeLimit")
+        BaseSizeLimIDDA = Nothing
+
+        If BPSL_No_ID = True Then 'FRAM BPSL table does not contain BPID
+            If TransferDataSet.Tables("ChinookBaseSizeLimit").Columns.IndexOf("BasePeriodID") <> -1 Then 'TransferDB contains BPID
+                MsgBox("The FRAM Database does not contain a ChinookBaseSizeLimit table with a BasePeriodID field. Please load the Transfer File into a newer FRAM database including this field")
+                TransDB.Close()
+                Exit Sub
+            End If
+        End If
+
+
+        'Open FRAM database
+        Dim drd2 As OleDb.OleDbDataReader
+        Dim cmd2 As New OleDb.OleDbCommand()
+        cmd2.Connection = FramDB
+        FramDB.Open()
 
 
         CmdStr = "SELECT * FROM BaseID;"
@@ -4225,54 +4341,29 @@ ExitTransfer:
         BaseIDDA.Fill(TransferDataSet, "BaseID")
         BaseIDDA = Nothing
 
-
-
         Dim TransBaseID As Integer
-
-        'Dim drd2 As OleDb.OleDbDataReader
-        'Dim cmd2 As New OleDb.OleDbCommand()
-        'cmd2.Connection = FramDB
-        'FramDB.Open()
-
         Dim row As Integer
         Dim NewBasePeriodID As Integer
         'for each baser period in transfer database test if base period number already exists in database
         For i = 0 To TransferDataSet.Tables("BaseID").Rows.Count - 1
-
-            Dim drd2 As OleDb.OleDbDataReader
-            Dim cmd2 As New OleDb.OleDbCommand()
-            cmd2.Connection = FramDB
-            FramDB.Open()
-
-
-
-
-
-
             TransBaseID = TransferDataSet.Tables("BaseID").Rows(i)("BasePeriodID")
             cmd2.CommandText = "SELECT * FROM BaseID WHERE BasePeriodID = " & TransBaseID & " ORDER BY BasePeriodID;"
             drd2 = cmd2.ExecuteReader
-
             If drd2.Read() <> False Then
                 drd2.Close()
                 ' the transfer base ID already exists in the database
                 cmd2.CommandText = "Select BasePeriodID FROM BaseID ORDER BY BasePeriodID;"
                 drd2 = cmd2.ExecuteReader
-
                 Do While drd2.Read()
                     'Console.WriteLine(drd2.GetInt32(0))
                     NewBasePeriodID = drd2.GetValue(0) + 1 ' equals higher BPID in database plus 1
-
                 Loop
                 MsgBox("TransferBasePeriodID = '" & TransBaseID & "' already exists in FramVS Database. The new Transfer Database will receive Base Period ID " & NewBasePeriodID & ".")
             Else
                 NewBasePeriodID = TransBaseID
             End If
 
-
-
             'Add BaseID record from TransferDatabase to recipient database, replace BASEID in table 
-
             Dim BaseIDTrans As OleDb.OleDbTransaction
             Dim BaseID As New OleDbCommand
 
@@ -4298,7 +4389,101 @@ ExitTransfer:
                TransferDataSet.Tables("BaseID").Rows(i)(14).ToString & ")"
             BaseID.ExecuteNonQuery()
             BaseIDTrans.Commit()
+            'FramDB.Close()
+
+            'Dim cmd3 As New OleDb.OleDbCommand()
+            'cmd3.Connection = FramDB
+
+            'Process Chinook base period size limits
+            CmdStr = "SELECT * FROM ChinookBaseSizeLimit;"
+            Dim ChinookBaseSizeLimit2cm As New OleDb.OleDbCommand(CmdStr, FramDB)
+            Dim ChinookBaseSizeLimit2DA As New System.Data.OleDb.OleDbDataAdapter
+            ChinookBaseSizeLimit2DA.SelectCommand = ChinookBaseSizeLimit2cm
+
+            'fill FRAM with new Base Period Size Limits
+            CmdStr = "SELECT * FROM ChinookBaseSizeLimit;"
+            Dim BaseSizeLimcm20 As New OleDb.OleDbCommand(CmdStr, TransBP)
+            Dim BaseSizeLimIDDA20 As New System.Data.OleDb.OleDbDataAdapter
+            
+            BaseSizeLimIDDA20.SelectCommand = BaseSizeLimcm
+            Dim BaseSizeLimcb20 As New OleDb.OleDbCommandBuilder
+            BaseSizeLimcb20 = New OleDb.OleDbCommandBuilder(BaseSizeLimIDDA)
+            If TransferDataSet.Tables.Contains("ChinookBaseSizeLimit") Then
+                TransferDataSet.Tables("ChinookBaseSizeLimit").Clear()
+            End If
+            BaseSizeLimIDDA20.Fill(TransferDataSet, "ChinookBaseSizeLimit")
+            BaseSizeLimIDDA20 = Nothing
+
+
+            Dim BaseSizeLimitTrans As OleDb.OleDbTransaction
+            Dim BaseSizeLimit As New OleDbCommand
+
+            If BPSL_No_ID = True Then
+                CmdStr = "DELETE * FROM ChinookBaseSizeLimit;"
+                Dim ChinookBaseSizeLimit3cm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                Dim ChinookBaseSizeLimit3da As New System.Data.OleDb.OleDbDataAdapter
+                ChinookBaseSizeLimit3da.DeleteCommand = ChinookBaseSizeLimit3cm
+                '- Command Builder
+                Dim ChinookBaseSizeLimit3cb As New OleDb.OleDbCommandBuilder
+                ChinookBaseSizeLimit3cb = New OleDb.OleDbCommandBuilder(ChinookBaseSizeLimit3da)
+                'FramDB.Open()
+                ChinookBaseSizeLimit3da.DeleteCommand.ExecuteScalar()
+            Else
+                'Dim ChinookBaseSizeLimit3cm As New OleDb.OleDbCommand(CmdStr, FramDB)
+                Dim ChinookBaseSizeLimit3da As New System.Data.OleDb.OleDbDataAdapter
+                'ChinookBaseSizeLimit3da.DeleteCommand = ChinookBaseSizeLimit3cm
+                '- Command Builder
+                Dim ChinookBaseSizeLimit3cb As New OleDb.OleDbCommandBuilder
+                ChinookBaseSizeLimit3cb = New OleDb.OleDbCommandBuilder(ChinookBaseSizeLimit3da)
+                'FramDB.Open()
+            End If
+
+            BaseSizeLimitTrans = FramDB.BeginTransaction
+            BaseSizeLimit.Connection = FramDB
+            BaseSizeLimit.Transaction = BaseSizeLimitTrans
+            NumRecs = TransferDataSet.Tables("ChinookBaseSizeLimit").Rows.Count
+
+            If BPSL_No_ID = True Then 'FRAM BPSL table does not contain BPID
+                If TransferDataSet.Tables("ChinookBaseSizeLimit").Columns.IndexOf("BasePeriodID") = -1 Then 'TransferDB contains BPID
+                    For RecNum = 0 To NumRecs - 1
+                        BaseSizeLimit.CommandText = "INSERT INTO ChinookBaseSizeLimit (FisheryID,Time1SizeLimit,Time2SizeLimit,Time3SizeLimit,Time4SizeLimit) " & _
+                          "VALUES(" & TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(0) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(1) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(2) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(3) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(4) & ")"
+                        BaseSizeLimit.ExecuteNonQuery()
+                    Next
+                End If
+            Else ' FRAMDB has BaseIF field
+
+                'TransferDB does not have BaseID field, add BaseID to FRAMDB 
+                For RecNum = 0 To NumRecs - 1
+                    If TransferDataSet.Tables("ChinookBaseSizeLimit").Columns.IndexOf("BasePeriodID") = -1 Then
+                        BaseSizeLimit.CommandText = "INSERT INTO ChinookBaseSizeLimit (BasePeriodID,FisheryID,Time1SizeLimit,Time2SizeLimit,Time3SizeLimit,Time4SizeLimit) " & _
+                          "VALUES(" & NewBasePeriodID & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(0) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(1) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(2) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(3) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(4) & ")"
+
+                    Else
+                        BaseSizeLimit.CommandText = "INSERT INTO ChinookBaseSizeLimit (BasePeriodID,FisheryID,Time1SizeLimit,Time2SizeLimit,Time3SizeLimit,Time4SizeLimit) " & _
+                          "VALUES(" & NewBasePeriodID & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(1) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(2) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(3) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(4) & "," & _
+                            TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(5) & ")"
+                    End If
+                    BaseSizeLimit.ExecuteNonQuery()
+                Next
+            End If
+
+            BaseSizeLimitTrans.Commit()
             FramDB.Close()
+
 
 
             'populate remaining transfer datasets
@@ -4710,64 +4895,6 @@ ExitTransfer:
         '_____________________________________________________________________________
         'check whether to import new calibration tables without base period IDs. Will replace existing tables
 
-        Dim cmd3 As New OleDb.OleDbCommand()
-        cmd3.Connection = FramDB
-
-
-        'import base period size limits
-        If ImportBP = True Then
-            'delete existing BaseSizeLimits in FRAM database
-            'Dim CmdStr2 As String
-            CmdStr = "SELECT * FROM ChinookBaseSizeLimit;"
-            Dim ChinookBaseSizeLimit2cm As New OleDb.OleDbCommand(CmdStr, FramDB)
-            Dim ChinookBaseSizeLimit2DA As New System.Data.OleDb.OleDbDataAdapter
-            ChinookBaseSizeLimit2DA.SelectCommand = ChinookBaseSizeLimit2cm
-            '- DELETE Statement
-            CmdStr = "DELETE * FROM ChinookBaseSizeLimit;"
-            Dim ChinookBaseSizeLimit3cm As New OleDb.OleDbCommand(CmdStr, FramDB)
-            Dim ChinookBaseSizeLimit3da As New System.Data.OleDb.OleDbDataAdapter
-            ChinookBaseSizeLimit3DA.DeleteCommand = ChinookBaseSizeLimit3cm
-            '- Command Builder
-            Dim ChinookBaseSizeLimit3cb As New OleDb.OleDbCommandBuilder
-            ChinookBaseSizeLimit3cb = New OleDb.OleDbCommandBuilder(ChinookBaseSizeLimit3DA)
-            FramDB.Open()
-            ChinookBaseSizeLimit3DA.DeleteCommand.ExecuteScalar()
-
-            'fill FRAM with new Base Period Size Limits
-            CmdStr = "SELECT * FROM ChinookBaseSizeLimit;"
-            Dim BaseSizeLimcm As New OleDb.OleDbCommand(CmdStr, TransBP)
-            Dim BaseSizeLimIDDA As New System.Data.OleDb.OleDbDataAdapter
-            BaseSizeLimIDDA.SelectCommand = BaseSizeLimcm
-            Dim BaseSizeLimcb As New OleDb.OleDbCommandBuilder
-            BaseSizeLimcb = New OleDb.OleDbCommandBuilder(BaseSizeLimIDDA)
-            If TransferDataSet.Tables.Contains("ChinookBaseSizeLimit") Then
-                TransferDataSet.Tables("ChinookBaseSizeLimit").Clear()
-            End If
-            BaseSizeLimIDDA.Fill(TransferDataSet, "ChinookBaseSizeLimit")
-            BaseSizeLimIDDA = Nothing
-
-
-            Dim BaseSizeLimitTrans As OleDb.OleDbTransaction
-            Dim BaseSizeLimit As New OleDbCommand
-
-            BaseSizeLimitTrans = FramDB.BeginTransaction
-            BaseSizeLimit.Connection = FramDB
-            BaseSizeLimit.Transaction = BaseSizeLimitTrans
-            NumRecs = TransferDataSet.Tables("ChinookBaseSizeLimit").Rows.Count
-
-            For RecNum = 0 To NumRecs - 1
-                BaseSizeLimit.CommandText = "INSERT INTO ChinookBaseSizeLimit (FisheryID,Time1SizeLimit,Time2SizeLimit,Time3SizeLimit,Time4SizeLimit) " & _
-                  "VALUES(" & TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(0) & "," & _
-                    TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(1) & "," & _
-                    TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(2) & "," & _
-                    TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(3) & "," & _
-                    TransferDataSet.Tables("ChinookBaseSizeLimit").Rows(RecNum)(4) & ")"
-                BaseSizeLimit.ExecuteNonQuery()
-            Next
-            BaseSizeLimitTrans.Commit()
-            FramDB.Close()
-        End If
-
         'import stocks table
         If ImportStock = True Then
             'delete existing Stock Table in FRAM database
@@ -4934,7 +5061,7 @@ ExitTransfer:
             FramDB.Close()
         End If
 
-        cmd3.Dispose()
+        ' cmd3.Dispose()
         'FVS_FramUtils.Show()
     End Sub
     Sub GetTransferModelRunTables()
@@ -5517,10 +5644,10 @@ SkipFS:
             NRC.Transaction = NRTrans
             For RecNum = 0 To NumRecs - 1
                 '- Check to see if record matches OldRunID being Tranferred in this RunID Loop
+                If OldRunID = TransferDataSet.Tables("NonRetention").Rows(RecNum)(1) Then
+                    If j = -1 Then
+                        '- Check to see if record matches OldRunID being Tranferred in this RunID Loop
 
-                If j = -1 Then
-                    '- Check to see if record matches OldRunID being Tranferred in this RunID Loop
-                    If OldRunID = TransferDataSet.Tables("NonRetention").Rows(RecNum)(1) Then
                         NRC.CommandText = "INSERT INTO NonRetention (RunID,FisheryID,TimeStep,NonRetentionFlag,CNRInput1,CNRInput2,CNRInput3,CNRInput4) " & _
                        "VALUES(" & NewRunID.ToString & "," & _
                        TransferDataSet.Tables("NonRetention").Rows(RecNum)(2).ToString & "," & _
@@ -5531,23 +5658,23 @@ SkipFS:
                        TransferDataSet.Tables("NonRetention").Rows(RecNum)(7).ToString & "," & _
                        TransferDataSet.Tables("NonRetention").Rows(RecNum)(8).ToString & ")"
                         NRC.ExecuteNonQuery()
+
+
+                    Else 'comment column exists
+                        NRC.CommandText = "INSERT INTO NonRetention (RunID,FisheryID,TimeStep,NonRetentionFlag,CNRInput1,CNRInput2,CNRInput3,CNRInput4,Comment) " & _
+                          "VALUES(" & NewRunID.ToString & "," & _
+                          TransferDataSet.Tables("NonRetention").Rows(RecNum)(2).ToString & "," & _
+                          TransferDataSet.Tables("NonRetention").Rows(RecNum)(3).ToString & "," & _
+                          TransferDataSet.Tables("NonRetention").Rows(RecNum)(4).ToString & "," & _
+                          TransferDataSet.Tables("NonRetention").Rows(RecNum)(5).ToString & "," & _
+                          TransferDataSet.Tables("NonRetention").Rows(RecNum)(6).ToString & "," & _
+                          TransferDataSet.Tables("NonRetention").Rows(RecNum)(7).ToString & "," & _
+                          TransferDataSet.Tables("NonRetention").Rows(RecNum)(8).ToString & "," & _
+                            Chr(34) & TransferDataSet.Tables("NonRetention").Rows(RecNum)(9).ToString & Chr(34) & ")"
+
+                        NRC.ExecuteNonQuery()
                     End If
-
-                Else 'comment column exists
-                    NRC.CommandText = "INSERT INTO NonRetention (RunID,FisheryID,TimeStep,NonRetentionFlag,CNRInput1,CNRInput2,CNRInput3,CNRInput4,Comment) " & _
-                      "VALUES(" & NewRunID.ToString & "," & _
-                      TransferDataSet.Tables("NonRetention").Rows(RecNum)(2).ToString & "," & _
-                      TransferDataSet.Tables("NonRetention").Rows(RecNum)(3).ToString & "," & _
-                      TransferDataSet.Tables("NonRetention").Rows(RecNum)(4).ToString & "," & _
-                      TransferDataSet.Tables("NonRetention").Rows(RecNum)(5).ToString & "," & _
-                      TransferDataSet.Tables("NonRetention").Rows(RecNum)(6).ToString & "," & _
-                      TransferDataSet.Tables("NonRetention").Rows(RecNum)(7).ToString & "," & _
-                      TransferDataSet.Tables("NonRetention").Rows(RecNum)(8).ToString & "," & _
-                        Chr(34) & TransferDataSet.Tables("NonRetention").Rows(RecNum)(9).ToString & Chr(34) & ")"
-
-                    NRC.ExecuteNonQuery()
                 End If
-
             Next
             NRTrans.Commit()
             FramDB.Close()
