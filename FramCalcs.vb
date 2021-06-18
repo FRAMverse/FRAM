@@ -103,9 +103,7 @@ Module FramCalcs
 
             Call NatMort()
 
-            If TStep = 3 Then
-                Jim = 1
-            End If
+            
 
             Call CompCatch(PTerm)
 
@@ -861,9 +859,7 @@ SkipTami2:
             Call NatMort()
             Call CompCatch(PTerm)
             Call IncMort(PTerm)
-            If TStep = 3 Then
-                Jim = 1
-            End If
+            
             Call Mature()
             Call CompCatch(Term)
             Call IncMort(Term)
@@ -938,10 +934,7 @@ SkipTami2:
         If SkipJim = 1 Then sw.WriteLine(PrnLine)
         
         For Fish As Integer = 1 To NumFish
-            If Fish = 4 And TStep = 3 Then
-                Jim = 1
-            End If
-
+            
             If AnyBaseRate(Fish, TStep) = 0 Then GoTo NextScalerFishery ' if there is no catch in the base period
             '- Fishery/Time-Step can only be Terminal or Pre-Terminal
             If TerminalFisheryFlag(Fish, TStep) = TerminalType Then
@@ -1151,13 +1144,13 @@ SkipTami2:
                             '- Retention Quota Fishery
                             If FisheryFlag(Fish, TStep) = 2 Or FisheryFlag(Fish, TStep) = 27 Or FisheryFlag(Fish, TStep) = 28 Then
                                 '- First Pass for Quota Fisheries - Landed Catch as if FisheryScaler = 1
-<<<<<<< HEAD
+
                                 If TStep = 4 And Stk = 29 And Fish = 15 And Age = 4 Then
                                     Jim = 1
                                 End If
-=======
+
                                 
->>>>>>> 20_21Updates
+
 
 
 
@@ -4279,6 +4272,7 @@ SkipNoSat:
                     TammScaler(Area, TStep) = TammEstimate(Area, TStep) / TammCatch(Area, TStep)
                 End If
             End If
+
             TammDiff = Abs(TammEstimate(Area, TStep) - TammCatch(Area, TStep))
             If (TammScaler(Area, TStep) > 1.001 Or TammScaler(Area, TStep) < 0.999) Then
                 TammChinookConverge = 1
@@ -4516,6 +4510,11 @@ SkipNoSat:
         End If
 
         For TammIteration = 1 To 15
+
+            If TammIteration = 5 Then
+                Jim = 1
+            End If
+
             If NumStk < 50 Then
                 Call TCHNComp(TammIteration)
             Else
