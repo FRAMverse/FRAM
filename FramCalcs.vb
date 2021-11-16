@@ -6845,7 +6845,11 @@ NextTaaETRS:
             Next
             For Fish = 0 To NumFish - 1
                 For TStep = 0 To NumSteps
-                    TotMort(Fish, TStep) = CLng(TotMort(Fish, TStep))
+                    If RunIDYearSelect < 2022 Then
+                        TotMort(Fish, TStep) = CLng(TotMort(Fish, TStep))
+                    Else
+                        TotMort(Fish, TStep) = Math.Round(TotMort(Fish, TStep), 2)
+                    End If
                 Next
             Next
             'Transfer Stock TotalMortality array to the Table2 worksheet
@@ -6928,17 +6932,28 @@ NextTaaETRS:
             PageStk = 0
             For Stk = BegStk To EndStk
                 For Fish = 1 To NumFish + 1
-                    TransArray(Fish - 1, PageStk) = CLng(StockTotalMort(Stk, Fish))
+                    If RunIDYearSelect < 2022 Then
+                        TransArray(Fish - 1, PageStk) = CLng(StockTotalMort(Stk, Fish))
+                    Else
+                        TransArray(Fish - 1, PageStk) = Math.Round(StockTotalMort(Stk, Fish), 2)
+                    End If
                 Next
                 PageStk += 1
             Next
+
+            
             If LastPage = True Then
                 For Fish = 1 To NumFish
-                    TransArray(Fish - 1, PageStk) = CLng(StockTotalMort(NumStk + 1, Fish))
+                    If RunIDYearSelect < 2022 Then
+                        TransArray(Fish - 1, PageStk) = CLng(StockTotalMort(NumStk + 1, Fish))
+                    Else
+                        TransArray(Fish - 1, PageStk) = Math.Round(StockTotalMort(NumStk + 1, Fish), 2)
+                    End If
                 Next
             End If
             'Transfer Stock Total Mortality array to StockSumPRN worksheet
             RngVal1 = "B" & (Page * 205 - 195).ToString
+
             If BegStk <> EndStk - 9 Then
                 xlWorkSheet.Range(RngVal1).Resize(NumFish + 1, EndStk - BegStk + 2).Value = TransArray
             Else
@@ -7081,7 +7096,7 @@ SkipFishGroup:
                         Exit Sub
                     End If
                     CohoTermRun(RecNum, 0) += Escape(Stk, Age, TStep)
-                    CohoTermRun(RecNum, 1) += Escape(Stk, Age, TStep)     
+                    CohoTermRun(RecNum, 1) += Escape(Stk, Age, TStep)
                     CohoTermRun(RecNum, 2) += Escape(Stk, Age, TStep)
 
 
