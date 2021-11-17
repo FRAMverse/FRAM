@@ -773,11 +773,14 @@ NextStockRecruitr:
                 End If
 
             ElseIf BackwardsFlag(TRun) = 1 Or BackwardsFlag(TRun) = 3 Then
+                If TRun = 25 Then
+                    Jim = 1
+                End If
 
                 Call SumChinTermRun(TRun, TermStockNum(TRun), IterNum)
                 Stk = TermStockNum(TRun)
                 For Age = 3 To 5
-                    If Stk = 19 And Age = 3 Then
+                    If Stk = 17 And Age = 3 Then
                         Jim = 1
                     End If
 
@@ -910,6 +913,9 @@ NextTRun:
         '   On Error GoTo BackChinSumErr
         On Error GoTo 0
         'If Stock = -1
+        If TRun = 112 Then
+            Jim = 1
+        End If
         If TermStockNum(TRun) < 0 Then  '- Combined Terminal Run
             StartNum = TermRun + 1
             '- Non-Selective Type Base File

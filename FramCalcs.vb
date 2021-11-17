@@ -147,16 +147,17 @@ Module FramCalcs
                     '                  Note: The seemingly sloppy extra conditions are merely there to prevent recycling ages that are
                     '                  actually the end of days for a particular stock or single brood production cases (i.e., there aren't 3s behind 4s, etc.)
 
-                    If T4CohortFlag = False Then ' allows old style processing to recreate old runs
-                        If (StockRecruit(Stk, 2, 1) = 0 And StockRecruit(Stk, 3, 1) > 0 And StockRecruit(Stk, 4, 1) > 0 And StockRecruit(Stk, 5, 1) > 0) Then
+                    If T4CohortFlag = False Then
+                        If (StockRecruit(Stk, 2, 1) = 0 And StockRecruit(Stk, 3, 1) > 0 And StockRecruit(Stk, 4, 1) > 0) Then 'And StockRecruit(Stk, 5, 1) > 0) Then
                             Cohort(Stk, 3, 0, 4) = BaseCohortSize(Stk, 3) * StockRecruit(Stk, 3, 1)
                         End If
 
-                        If (StockRecruit(Stk, 3, 1) = 0 And StockRecruit(Stk, 4, 1) > 0 And StockRecruit(Stk, 5, 1) > 0) Then
+                        If (StockRecruit(Stk, 3, 1) = 0 And StockRecruit(Stk, 4, 1) > 0) Then 'And StockRecruit(Stk, 5, 1) > 0) Then
                             Cohort(Stk, 4, 0, 4) = BaseCohortSize(Stk, 4) * StockRecruit(Stk, 4, 1)
                         End If
                     End If
                     '-Pete Feb 2014----Code for recycling Age 3 fish in TS 4 for stocks lacking age 2s in the ocean
+                    'AHB 11/17/2021 eliminated the age 5>0 clause
 
                 End If
             Next
