@@ -148,18 +148,28 @@ Module FramCalcs
                     '                  actually the end of days for a particular stock or single brood production cases (i.e., there aren't 3s behind 4s, etc.)
 
                     If T4CohortFlag = False Then
-                        If (StockRecruit(Stk, 2, 1) = 0 And StockRecruit(Stk, 3, 1) > 0 And StockRecruit(Stk, 4, 1) > 0) Then 'And StockRecruit(Stk, 5, 1) > 0) Then
-                            Cohort(Stk, 3, 0, 4) = BaseCohortSize(Stk, 3) * StockRecruit(Stk, 3, 1)
-                        End If
+                        If RunIDYearSelect > 2021 Then 'recycle time 1 abundance even when age 5 abundance is zero
+                            If (StockRecruit(Stk, 2, 1) = 0 And StockRecruit(Stk, 3, 1) > 0 And StockRecruit(Stk, 4, 1) > 0) Then 'And StockRecruit(Stk, 5, 1) > 0) Then
+                                Cohort(Stk, 3, 0, 4) = BaseCohortSize(Stk, 3) * StockRecruit(Stk, 3, 1)
+                            End If
 
-                        If (StockRecruit(Stk, 3, 1) = 0 And StockRecruit(Stk, 4, 1) > 0) Then 'And StockRecruit(Stk, 5, 1) > 0) Then
-                            Cohort(Stk, 4, 0, 4) = BaseCohortSize(Stk, 4) * StockRecruit(Stk, 4, 1)
+                            If (StockRecruit(Stk, 3, 1) = 0 And StockRecruit(Stk, 4, 1) > 0) Then 'And StockRecruit(Stk, 5, 1) > 0) Then
+                                Cohort(Stk, 4, 0, 4) = BaseCohortSize(Stk, 4) * StockRecruit(Stk, 4, 1)
+                            End If
+                        Else ' old code for earlier year to reproduce old run results
+                            If (StockRecruit(Stk, 2, 1) = 0 And StockRecruit(Stk, 3, 1) > 0 And StockRecruit(Stk, 4, 1) > 0 And StockRecruit(Stk, 5, 1) > 0) Then
+                                Cohort(Stk, 3, 0, 4) = BaseCohortSize(Stk, 3) * StockRecruit(Stk, 3, 1)
+                            End If
+
+                            If (StockRecruit(Stk, 3, 1) = 0 And StockRecruit(Stk, 4, 1) > 0 And StockRecruit(Stk, 5, 1) > 0) Then
+                                Cohort(Stk, 4, 0, 4) = BaseCohortSize(Stk, 4) * StockRecruit(Stk, 4, 1)
+                            End If
                         End If
                     End If
-                    '-Pete Feb 2014----Code for recycling Age 3 fish in TS 4 for stocks lacking age 2s in the ocean
-                    'AHB 11/17/2021 eliminated the age 5>0 clause
+                        '-Pete Feb 2014----Code for recycling Age 3 fish in TS 4 for stocks lacking age 2s in the ocean
+                        'AHB 11/17/2021 eliminated the age 5>0 clause
 
-                End If
+                    End If
             Next
 
         Next TStep
@@ -6846,11 +6856,11 @@ NextTaaETRS:
             Next
             For Fish = 0 To NumFish - 1
                 For TStep = 0 To NumSteps
-                    If RunIDYearSelect < 2022 Then
-                        TotMort(Fish, TStep) = CLng(TotMort(Fish, TStep))
-                    Else
-                        TotMort(Fish, TStep) = Math.Round(TotMort(Fish, TStep), 2)
-                    End If
+                    'If RunIDYearSelect < 2022 Then
+                    TotMort(Fish, TStep) = CLng(TotMort(Fish, TStep))
+                    ' Else
+                    'TotMort(Fish, TStep) = Math.Round(TotMort(Fish, TStep), 2)
+                    'End If
                 Next
             Next
             'Transfer Stock TotalMortality array to the Table2 worksheet
@@ -6933,11 +6943,11 @@ NextTaaETRS:
             PageStk = 0
             For Stk = BegStk To EndStk
                 For Fish = 1 To NumFish + 1
-                    If RunIDYearSelect < 2022 Then
-                        TransArray(Fish - 1, PageStk) = CLng(StockTotalMort(Stk, Fish))
-                    Else
-                        TransArray(Fish - 1, PageStk) = Math.Round(StockTotalMort(Stk, Fish), 2)
-                    End If
+                    'If RunIDYearSelect < 2022 Then
+                    TransArray(Fish - 1, PageStk) = CLng(StockTotalMort(Stk, Fish))
+                    'Else
+                    'TransArray(Fish - 1, PageStk) = Math.Round(StockTotalMort(Stk, Fish), 2)
+                    'End If
                 Next
                 PageStk += 1
             Next
@@ -6945,11 +6955,11 @@ NextTaaETRS:
             
             If LastPage = True Then
                 For Fish = 1 To NumFish
-                    If RunIDYearSelect < 2022 Then
-                        TransArray(Fish - 1, PageStk) = CLng(StockTotalMort(NumStk + 1, Fish))
-                    Else
-                        TransArray(Fish - 1, PageStk) = Math.Round(StockTotalMort(NumStk + 1, Fish), 2)
-                    End If
+                    'If RunIDYearSelect < 2022 Then
+                    TransArray(Fish - 1, PageStk) = CLng(StockTotalMort(NumStk + 1, Fish))
+                    'Else
+                    'TransArray(Fish - 1, PageStk) = Math.Round(StockTotalMort(NumStk + 1, Fish), 2)
+                    'End If
                 Next
             End If
             'Transfer Stock Total Mortality array to StockSumPRN worksheet
