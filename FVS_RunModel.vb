@@ -52,6 +52,8 @@ Public Class FVS_RunModel
             OldCohort.Visible = False
             OldCohort.Enabled = False
             chkCoastalIterations.Visible = True
+            chkTS4.Visible = False
+            chkTS4.Enabled = False
             'MSFBiasFlag = True
             'GetBP.Visible = False
 
@@ -67,6 +69,8 @@ Public Class FVS_RunModel
             MSFBiasCorrectionCheckBox.Enabled = False
             OldCohort.Visible = True
             OldCohort.Enabled = True
+            chkTS4.Visible = True
+            chkTS4.Enabled = True
             MSFBiasFlag = False
             chkCoastalIterations.Visible = False
       End If
@@ -668,5 +672,15 @@ Public Class FVS_RunModel
     
     Private Sub ChinookSizeLimitCheck_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChinookSizeLimitCheck.CheckedChanged
 
+    End Sub
+
+    Private Sub chkTS4_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkTS4.CheckedChanged
+        'when T4CohortFlag2 = True then time 1 cohort will not be recycled in time 4 (for stocks missing age-1 abundance) when age 5 = 0
+
+        If chkTS4.Checked = True Then
+            T4CohortFlag2 = True
+        Else
+            T4CohortFlag2 = False
+        End If
     End Sub
 End Class

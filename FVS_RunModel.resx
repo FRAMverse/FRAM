@@ -123,4 +123,27 @@
   <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>159, 17</value>
   </metadata>
+  <data name="chkTS4.ToolTip" xml:space="preserve">
+    <value>If checked T1 abundance will not be used in time 4 when 
+Age 5 abundance = zero; for stocks without an age-1 abundance
+Example: Don't use Age 3 time 1 in time 4 for stocks without 
+age 2 abundance when age 5 = zero
+Needed to exactly rproduce runs between 2012-21
+See FRAM User Manual for more info
+</value>
+  </data>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>25</value>
+  </metadata>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value>If checked, T1 abundance will not be reused
+in T4 for stocks where age-1 abundance is missing 
+when age 5 abundance = zero. 
+This will allow reproducing runs between 2012 and 2021.
+Example when unchecked: If age 2 abundance is missing, age 3 time 4 
+abundance would be same as age 3 time 1 abundance, even if
+age 5 abundance = 0.
+For more information consult FRAM User Manual
+</value>
+  </data>
 </root>

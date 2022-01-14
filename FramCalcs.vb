@@ -148,7 +148,7 @@ Module FramCalcs
                     '                  actually the end of days for a particular stock or single brood production cases (i.e., there aren't 3s behind 4s, etc.)
 
                     If T4CohortFlag = False Then
-                        If RunIDYearSelect > 2021 Then 'recycle time 1 abundance even when age 5 abundance is zero
+                        If T4CohortFlag2 = False Then 'recycle time 1 abundance even when age 5 abundance is zero
                             If (StockRecruit(Stk, 2, 1) = 0 And StockRecruit(Stk, 3, 1) > 0 And StockRecruit(Stk, 4, 1) > 0) Then 'And StockRecruit(Stk, 5, 1) > 0) Then
                                 Cohort(Stk, 3, 0, 4) = BaseCohortSize(Stk, 3) * StockRecruit(Stk, 3, 1)
                             End If
@@ -156,7 +156,7 @@ Module FramCalcs
                             If (StockRecruit(Stk, 3, 1) = 0 And StockRecruit(Stk, 4, 1) > 0) Then 'And StockRecruit(Stk, 5, 1) > 0) Then
                                 Cohort(Stk, 4, 0, 4) = BaseCohortSize(Stk, 4) * StockRecruit(Stk, 4, 1)
                             End If
-                        Else ' old code for earlier year to reproduce old run results
+                        Else ' old code (2012-21) for earlier years to reproduce old run results
                             If (StockRecruit(Stk, 2, 1) = 0 And StockRecruit(Stk, 3, 1) > 0 And StockRecruit(Stk, 4, 1) > 0 And StockRecruit(Stk, 5, 1) > 0) Then
                                 Cohort(Stk, 3, 0, 4) = BaseCohortSize(Stk, 3) * StockRecruit(Stk, 3, 1)
                             End If
