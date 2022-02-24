@@ -3267,10 +3267,10 @@ SelctFsh:
         Dim FishMortDA As New System.Data.OleDb.OleDbDataAdapter
         Dim NonRetEnc As String
         '*************************************Produce Output of NR Encounters************************************
-        NonRetEnc = FVSdatabasepath & "\" & RunIDYearSelect & "NonRetention.txt"
-        FileOpen(53, NonRetEnc, OpenMode.Output)
-        Print(53, "Nonretention Encounters by legal(1) and sublegal (2) divided by model stock proportion" & vbCrLf)
-        Print(53, "Year" & "," & "Tstep" & "," & "Stk" & "," & "Fish" & "," & "Age" & "," & "SizeStatus" & "," & "#Encounters" & vbCrLf)
+        'NonRetEnc = FVSdatabasepath & "\" & RunIDYearSelect & "NonRetention.txt"
+        'FileOpen(53, NonRetEnc, OpenMode.Output)
+        'Print(53, "Nonretention Encounters by legal(1) and sublegal (2) divided by model stock proportion" & vbCrLf)
+        'Print(53, "Year" & "," & "Tstep" & "," & "Stk" & "," & "Fish" & "," & "Age" & "," & "SizeStatus" & "," & "#Encounters" & vbCrLf)
 
 
         CmdStr = "SELECT * FROM Mortality WHERE RunID = " & RunIDSelect.ToString & " ORDER BY StockID, Age, FisheryID, TimeStep"
@@ -3325,18 +3325,18 @@ SelctFsh:
                      MSFDropOff(Stk, Age, Fish, TimeStep).ToString("######0.000000") & "," & _
                      MSFEncounters(Stk, Age, Fish, TimeStep).ToString("######0.000000") & ")"
                             FIC.ExecuteNonQuery()
-                            If NRLegal(1, Stk, Age, Fish, TimeStep) > 0 Then
-                                Print(53, RunIDYearSelect & "," & TimeStep & "," & Stk & "," & Fish & "," & Age & "," & 1 & "," & NRLegal(1, Stk, Age, Fish, TimeStep) & vbCrLf)
-                            End If
-                            If NRLegal(2, Stk, Age, Fish, TimeStep) > 0 Then
-                                Print(53, RunIDYearSelect & "," & TimeStep & "," & Stk & "," & Fish & "," & Age & "," & 2 & "," & NRLegal(2, Stk, Age, Fish, TimeStep) & vbCrLf)
-                            End If
+                            'If NRLegal(1, Stk, Age, Fish, TimeStep) > 0 Then
+                            '    Print(53, RunIDYearSelect & "," & TimeStep & "," & Stk & "," & Fish & "," & Age & "," & 1 & "," & NRLegal(1, Stk, Age, Fish, TimeStep) & vbCrLf)
+                            'End If
+                            'If NRLegal(2, Stk, Age, Fish, TimeStep) > 0 Then
+                            '    Print(53, RunIDYearSelect & "," & TimeStep & "," & Stk & "," & Fish & "," & Age & "," & 2 & "," & NRLegal(2, Stk, Age, Fish, TimeStep) & vbCrLf)
+                            'End If
                         End If
                     Next
             Next
          Next
         Next
-        FileClose(53)
+        'FileClose(53)
         FramTrans.Commit()
         FramDB.Close()
 
