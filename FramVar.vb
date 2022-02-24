@@ -124,6 +124,7 @@ Public Module FramVar
     Public Quotacatch As Double
     Public MSFQuotaEncounters As Double
     Public T4CohortFlag As Boolean
+    Public T4CohortFlag2 As Boolean
 
    '- Base Stock Variables
    Public StockID() As Integer

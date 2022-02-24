@@ -23,6 +23,7 @@ Partial Class FVS_RunModel
    <System.Diagnostics.DebuggerStepThrough()> _
    Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FVS_RunModel))
         Me.ModelRunTitleLabel = New System.Windows.Forms.Label
         Me.RecordSetNameLabel = New System.Windows.Forms.Label
         Me.DatabaseNameLabel = New System.Windows.Forms.Label
@@ -45,6 +46,7 @@ Partial Class FVS_RunModel
         Me.OldCohort = New System.Windows.Forms.CheckBox
         Me.chkCoastalIterations = New System.Windows.Forms.CheckBox
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.chkTS4 = New System.Windows.Forms.CheckBox
         Me.SuspendLayout()
         '
         'ModelRunTitleLabel
@@ -280,12 +282,26 @@ Partial Class FVS_RunModel
         'ToolTip1
         '
         '
+        'chkTS4
+        '
+        Me.chkTS4.AutoSize = True
+        Me.chkTS4.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.chkTS4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkTS4.Location = New System.Drawing.Point(246, 399)
+        Me.chkTS4.Name = "chkTS4"
+        Me.chkTS4.Size = New System.Drawing.Size(205, 20)
+        Me.chkTS4.TabIndex = 37
+        Me.chkTS4.Text = "Don't reuse T1 when A5=0"
+        Me.ToolTip1.SetToolTip(Me.chkTS4, resources.GetString("chkTS4.ToolTip"))
+        Me.chkTS4.UseVisualStyleBackColor = False
+        '
         'FVS_RunModel
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(882, 678)
+        Me.Controls.Add(Me.chkTS4)
         Me.Controls.Add(Me.chkCoastalIterations)
         Me.Controls.Add(Me.OldCohort)
         Me.Controls.Add(Me.Button2)
@@ -309,6 +325,7 @@ Partial Class FVS_RunModel
         Me.Name = "FVS_RunModel"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FVS_ModelRun"
+        Me.ToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -335,4 +352,5 @@ Partial Class FVS_RunModel
     Friend WithEvents OldCohort As System.Windows.Forms.CheckBox
     Friend WithEvents chkCoastalIterations As System.Windows.Forms.CheckBox
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
+    Friend WithEvents chkTS4 As System.Windows.Forms.CheckBox
 End Class
