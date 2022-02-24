@@ -3325,7 +3325,7 @@ SelctFsh:
                      MSFDropOff(Stk, Age, Fish, TimeStep).ToString("######0.000000") & "," & _
                      MSFEncounters(Stk, Age, Fish, TimeStep).ToString("######0.000000") & ")"
                             FIC.ExecuteNonQuery()
-                            'If NRLegal(1, Stk, Age, Fish, TimeStep) > 0 Then
+                            '""If NRLegal(1, Stk, Age, Fish, TimeStep) > 0 Then
                             '    Print(53, RunIDYearSelect & "," & TimeStep & "," & Stk & "," & Fish & "," & Age & "," & 1 & "," & NRLegal(1, Stk, Age, Fish, TimeStep) & vbCrLf)
                             'End If
                             'If NRLegal(2, Stk, Age, Fish, TimeStep) > 0 Then
