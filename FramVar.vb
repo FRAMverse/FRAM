@@ -375,7 +375,8 @@ Public Module FramVar
    '- Multi Group Fishery Variables
    Public SelectFishery, SelectFisheryList(,), FisheryCheckList() As Integer
    Public NumGroupFisheries, NumFisheryGroups As Integer
-   Public SelectFisheryName, FisheryGroupNames() As String
+    Public SelectFisheryName, FisheryGroupNames() As String
+    Public STLNRReport As String
 
    '- Screen Scaling Variables
    Public FormWidthScaler As Double

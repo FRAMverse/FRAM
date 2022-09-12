@@ -1823,6 +1823,12 @@ NextTolerCheck:
         ReDim PropLegCatch(NumStk, MaxAge)
         Dim CNRScale, CNREncounter As Double
         Dim LegProp, SubLegProp As Double
+
+        'Testing pulling out CNR by legal/sublegal
+        STLNRReport = OldOUTFilePath & "STLNRReport.txt"
+        FileOpen(199, STLNRReport, OpenMode.Output)
+        Print(199, "Stock" & "," & "Age" & "," & "Fish" & "," & "TStep" & "," & "LegalNR" & "," & "SublegalNR" & vbCrLf)
+
         If TotalLandedCatch(Fish, TStep) = 0 And (NonRetentionFlag(Fish, TStep) = 1 Or NonRetentionFlag(Fish, TStep) = 2) Then
             MsgBox("CNR Method 1 or 2 cannot be used in fishery with no catch" & vbCrLf & "Fishery= " & FisheryName(Fish) & " TStep= " & TStep.ToString & vbCrLf & "Must Fix this Error before Continuing!", MsgBoxStyle.OkOnly)
             Exit Sub
@@ -1955,7 +1961,10 @@ NextTolerCheck:
                             NRLegal(2, Stk, Age, Fish, TStep) = NRLegal(2, Stk, Age, Fish, TStep) * CNRScale
                             CNREncounter += Encounters(Stk, Age, Fish, TStep)
                      TotalNonRetention(Fish, TStep) += NonRetention(Stk, Age, Fish, TStep)
-                  End If
+                        End If
+
+                        'Stillaguamish testing
+                        'Print(199, Stk & "," & Age & "," & Fish & "," & TStep & "," & NRLegal(1, Stk, Age, Fish, TStep) & "," & NRLegal(2, Stk, Age, Fish, TStep) & vbCrLf)
                Next Age
             Next Stk
                 PrnLine = "Total Model Stock Encounters/Morts=" & String.Format("{0,14}", CNREncounter.ToString(" #########0.00")) & String.Format("{0,14}", TotalNonRetention(Fish, TStep).ToString(" ######0.000"))
@@ -1964,6 +1973,26 @@ NextTolerCheck:
                 sw.WriteLine(PrnLine)
             Case Else
         End Select
+
+        For StkTest As Integer = 17 To 18
+            For AgeTest As Integer = MinAge To MaxAge
+                For FishTest As Integer = 1 To NumFish
+                    For TStepTest As Integer = 2 To 4
+                        'Stillaguamish(testing)
+
+                        '- PS Sport legal size rel mort rate set now to 50% of shaker release rate (10 vs 20)
+                        If Fish >= 36 And InStr(FisheryTitle(Fish), "Sport") > 0 Then
+                            Print(199, StkTest & "," & AgeTest & "," & FishTest & "," & TStepTest & "," & NRLegal(1, StkTest, AgeTest, FishTest, TStepTest) * ShakerMortRate(Fish, TStep) / 2 & "," & NRLegal(2, StkTest, AgeTest, FishTest, TStepTest) * ShakerMortRate(Fish, TStep) & vbCrLf)
+                        Else
+                            Print(199, StkTest & "," & AgeTest & "," & FishTest & "," & TStepTest & "," & NRLegal(1, StkTest, AgeTest, FishTest, TStepTest) * ShakerMortRate(Fish, TStep) & "," & NRLegal(2, StkTest, AgeTest, FishTest, TStepTest) * ShakerMortRate(Fish, TStep) & vbCrLf)
+                        End If
+                    Next
+                Next
+            Next
+        Next
+
+        'Close test file
+        FileClose(199)
 
     End Sub
 
