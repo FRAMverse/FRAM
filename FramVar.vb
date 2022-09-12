@@ -376,7 +376,6 @@ Public Module FramVar
    Public SelectFishery, SelectFisheryList(,), FisheryCheckList() As Integer
    Public NumGroupFisheries, NumFisheryGroups As Integer
     Public SelectFisheryName, FisheryGroupNames() As String
-    Public STLNRReport As String
 
    '- Screen Scaling Variables
    Public FormWidthScaler As Double
