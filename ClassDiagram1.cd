@@ -16,21 +16,21 @@
   <Class Name="FramVS.FVS_BackwardsFram" Collapsed="true">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAkAAAAAdCAiAAAACCCYJCAGEEIIAAEAgAAABAEACAA=</HashCode>
+      <HashCode>CQmAAAAAdCCiAAAACCCYJCAGEEIIQAEAgAAABAEACAQ=</HashCode>
       <FileName>FVS_BackwardsFram.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FramVS.FVS_BackwardsResults" Collapsed="true">
     <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAACBAAUCAAAAAAAACIAAACAAAAAAEIAAAAgAAAAAA=</HashCode>
+      <HashCode>CAAACBAAUCAAAAAAACCIAAACAAAAAAEIAAAAgAAAAAA=</HashCode>
       <FileName>FVS_BackwardsResults.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FramVS.FVS_BackwardsTarget" Collapsed="true">
     <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAIAAIAUSQAAAAEwACIAAACIEAAIAEASAAAAAAAEAA=</HashCode>
+      <HashCode>CAAIAAIAUSQAAAAEwACIAAACIEAAIAEASAAAEAAAEAA=</HashCode>
       <FileName>FVS_BackwardsTarget.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -58,7 +58,7 @@
   <Class Name="FramVS.FVS_EditRecordSetInfo" Collapsed="true">
     <Position X="11" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAAAAAECASAAIAAACAFAICBgBQAQAAAQAEEAAAAIE=</HashCode>
+      <HashCode>AgAAIAABECASAAIAAACAFQICBgBwAQAAARAEEIBQIIE=</HashCode>
       <FileName>FVS_EditRecordSetInfo.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -72,14 +72,14 @@
   <Class Name="FramVS.FVS_FisheryScalerEdit" Collapsed="true">
     <Position X="2.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>TAADAAAI0KAACAAQBAyIgAACAAAQAAEQAAAAAAkAQgA=</HashCode>
+      <HashCode>TAADAAAI0KAACAIQBAyIgAACAAAQAAEQAAAAAAkAQgA=</HashCode>
       <FileName>FVS_FisheryScalerEdit.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FramVS.FVS_FisheryScalerScreen" Collapsed="true">
     <Position X="4" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAAAAAAUCAAEAAAAACIAAACAIQAAAEAAAAAAAEAAgA=</HashCode>
+      <HashCode>CAAAAAAAUCAAAAAAAACIAAACAIQAAAEAAAAAAAGAAgA=</HashCode>
       <FileName>FVS_FisheryScalerScreen.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -100,7 +100,7 @@
   <Class Name="FramVS.FVS_FramUtils" Collapsed="true">
     <Position X="9.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAIBEAgBQCBEIAAQIQioAAICAQIgRUGAgEBAAAAEAAA=</HashCode>
+      <HashCode>CQOBEIkBQCBEIAAQIwioAAICCQIgRWGEgEBAAAAEAAA=</HashCode>
       <FileName>FVS_FramUtils.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -114,14 +114,14 @@
   <Class Name="FramVS.FVS_MainMenu" Collapsed="true">
     <Position X="0.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>OQBEggEAUCABIAAAAEiMUACCAAIACIWAAABAgAAQAAA=</HashCode>
+      <HashCode>OYBEggEAUCABIAAAAEmMUACCAAIACIWAAABAgAAQAAA=</HashCode>
       <FileName>FVS_MainMenu.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FramVS.FVS_ModelRunSelection" Collapsed="true">
     <Position X="2.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EQAAAAAAlGAABAAQAACBgAACAAAgIAAgABAEAAAIAEA=</HashCode>
+      <HashCode>EQAAAAABlGAIBAAQAACBgAACQAAgIAAgCBAEAAAIAEA=</HashCode>
       <FileName>FVS_ModelRunSelection.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -177,15 +177,14 @@
   <Class Name="FramVS.FVS_PSCCohoERScreen" Collapsed="true">
     <Position X="4" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAAAAAAUDIgAAAAAICIAAACAIAQAAEACAAAAQEAAgA=</HashCode>
+      <HashCode>CAAAAAAQUDIgAAAAAICIAAACAIAQAAEACAAAAQEAAgA=</HashCode>
       <FileName>FVS_PSCCohoERScreen.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FramVS.FVS_PSCMaxER" Collapsed="true">
     <Position X="5.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>KAEAAAIAUSAAAAAACACIAAACAADxHgEAAAAAAQAAAAA=</HashCode>
-      <FileName>FVS_PSCMaxER.vb</FileName>
+      <HashCode>KAAAAAAAUSAAAAAACACIAAACAADxHgEAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="FramVS.FVS_ReportSelection" Collapsed="true">
@@ -198,7 +197,7 @@
   <Class Name="FramVS.FVS_RunModel" Collapsed="true">
     <Position X="9.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>GgAgKBAAQCAAAAAgABCIAgACAMAAQAUiBFAACAAQAQA=</HashCode>
+      <HashCode>GgEgKBABRCAAAQAgABGIAhACQMAUYAUiBEAACEAVAQA=</HashCode>
       <FileName>FVS_RunModel.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -219,21 +218,21 @@
   <Class Name="FramVS.FVS_SelectiveFisheryScreen" Collapsed="true">
     <Position X="2.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CBAAEAAAUKAAGAAAAACIAAACYIAAAEEIAAgAAAEAAoA=</HashCode>
+      <HashCode>ChAAEAAAUKAAGAEAAACIAAACYIAAAEEIAAgAAAEAAoA=</HashCode>
       <FileName>FVS_SelectiveFisheryScreen.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FramVS.FVS_SizeLimitEdit" Collapsed="true">
     <Position X="4" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAAAAEAQCEAAEAAAAiIAAACAIACAAEAAAAAEAEAQAA=</HashCode>
+      <HashCode>CAAAAAEAQCEAAEAAAAiIAAACAIACAAEAAAAAEFEIQAA=</HashCode>
       <FileName>FVS_SizeLimitEdit.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FramVS.FVS_StockFisheryScalerEdit" Collapsed="true">
     <Position X="5.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAAAgAQQDgAAAAAAACIAAASAoAIAAFAAACAAAAAAAA=</HashCode>
+      <HashCode>CAAAAgAQQDgAAAAAAACIAAASAoAIAAFCAASAAAAAAAA=</HashCode>
       <FileName>FVS_StockFisheryScalerEdit.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -247,7 +246,7 @@
   <Class Name="FramVS.FVS_StockRecruitEdit" Collapsed="true">
     <Position X="9.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAEEAAAUCAAIAAAAAiIgAACAUCAAAECAAAgwQEAASA=</HashCode>
+      <HashCode>CAAFEAAAUCCAIAAAAAiIgAACAUCAAAECAAAgwQGAASA=</HashCode>
       <FileName>FVS_StockRecruitEdit.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -268,14 +267,14 @@
   <Class Name="FramVS.FVS_VersionChanges" Collapsed="true">
     <Position X="2.25" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACgCBAAAAACAAAASAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACgCBAAAAACAAAASAAAAEAAAAAAEAAAAAAA=</HashCode>
       <FileName>FVS_VersionChanges.vb</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="FramVS.FVS_Welcome" Collapsed="true">
     <Position X="4" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAECAAABAAgACAgAACQgAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAECAAABAAgACAgEACQgAQAAAAAAAAAAAAAAA=</HashCode>
       <FileName>FVS_Welcome.vb</FileName>
     </TypeIdentifier>
   </Class>
@@ -285,14 +284,13 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Module>
-  <Module Name="FramVS.FramCalcs" Collapsed="true">
+  <Module Name="FramVS.FramCalcs">
     <Position X="0.5" Y="6.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>JAAAICIQDIESBEgAAIWAAgAEAIRAFoECAAgEBwAKgAA=</HashCode>
+      <HashCode>JAAAICIwDIESBEgAAoWAggAEAIRAFoESAAgEBwAKgAA=</HashCode>
       <FileName>FramCalcs.vb</FileName>
     </TypeIdentifier>
   </Module>
@@ -306,14 +304,14 @@
   <Module Name="FramVS.FramUtils" Collapsed="true">
     <Position X="4" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAQBSAAAAQEAAAACAAAAAAAAQQABAIABAAAAAAA=</HashCode>
+      <HashCode>CIAAAAQBSAAAAQEAAAACAAAAAAAAQQABAIABAAAAAAA=</HashCode>
       <FileName>FramUtils.vb</FileName>
     </TypeIdentifier>
   </Module>
   <Module Name="FramVS.FramVar" Collapsed="true">
     <Position X="5.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>2ub2te37v671s817f//21yz5exfPtPtf36U72di5a78=</HashCode>
+      <HashCode>3u/2te37v679s917f//29zz5fzfvtP//36U/2dj5a78=</HashCode>
       <FileName>FramVar.vb</FileName>
     </TypeIdentifier>
   </Module>

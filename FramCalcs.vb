@@ -110,9 +110,6 @@ Module FramCalcs
             Call IncMort(PTerm)
 
             Call Mature()
-            If TStep = 4 Then
-                TStep = 4
-            End If
 
             Call CompCatch(Term)
 
@@ -1572,9 +1569,16 @@ SecondPassEntry:
                 If StkERRateTilde(Stk) > 1 Then
                     Jim = 1
                 End If
-                If StkERRate(Stk) > 1 And MSFBiasCount > 5 Then
-                    MsgBox("Stock " & StockName(Stk) & "TStep " & TStep & " may produce negative escapements. Please finish the run and look for negative escapements in the PopStat report. Do not use this run for official results!")
-                    Exit Sub
+                If Stk = 25 Then
+                    Jim = 1
+                End If
+                If Stk <> 25 Then
+                    If Stk <> 26 Then
+                        If StkERRate(Stk) > 1 And MSFBiasCount > 5 Then
+                            MsgBox("Stock " & StockName(Stk) & "TStep " & TStep & " may produce negative escapements. Please finish the run and look for negative escapements in the PopStat report. Do not use this run for official results!")
+                            Exit Sub
+                        End If
+                    End If
                 End If
 NextERateFish:
             Next
@@ -7832,9 +7836,9 @@ SkipFramAge:
                         If TStep = (NumSteps - 1) Then
                             '- If Time Step 3, get Cohort From Time Step 1 Age + 1
                             If MaturationRate(Stk, Age, TStep) = 1 Then
-                                BYCohort(BY, Stk, Age, PTerm, TStep) = (BYCohort(BY, Stk, Age + 1, PTerm, 1) / (1 - FramBYER(Age, Stk, Age, TStep))) / (1 - NaturalMortality(Age, TStep))
+                                BYCohort(BY, Stk, Age, PTerm, TStep) = (BYCohort(BY, Stk, Age + 1, 4, 1) / (1 - FramBYER(Age, Stk, Age, TStep))) / (1 - NaturalMortality(Age, TStep))
                             Else
-                                BYCohort(BY, Stk, Age, PTerm, TStep) = ((BYCohort(BY, Stk, Age + 1, PTerm, 1) / (1 - MaturationRate(Stk, Age, TStep))) / (1 - FramBYER(Age, Stk, Age, TStep))) / (1 - NaturalMortality(Age, TStep))
+                                BYCohort(BY, Stk, Age, PTerm, TStep) = ((BYCohort(BY, Stk, Age + 1, 4, 1) / (1 - MaturationRate(Stk, Age, TStep))) / (1 - FramBYER(Age, Stk, Age, TStep))) / (1 - NaturalMortality(Age, TStep))
                             End If
                         Else
                             '- Time Steps 1 or 2, get Cohort from Time Step + 1 Cohort, Same Age
