@@ -111,7 +111,7 @@ Partial Class FVS_NonRetentionEdit
         Me.NRTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.NRTitle.Location = New System.Drawing.Point(431, 14)
         Me.NRTitle.Name = "NRTitle"
-        Me.NRTitle.Size = New System.Drawing.Size(259, 29)
+        Me.NRTitle.Size = New System.Drawing.Size(207, 24)
         Me.NRTitle.TabIndex = 3
         Me.NRTitle.Text = "Non-Retention Inputs"
         '
@@ -122,7 +122,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(35, 726)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(93, 17)
+        Me.Label1.Size = New System.Drawing.Size(73, 13)
         Me.Label1.TabIndex = 4
         Me.Label1.Text = "Flag Values"
         '
@@ -132,7 +132,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(35, 755)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(145, 17)
+        Me.Label2.Size = New System.Drawing.Size(115, 13)
         Me.Label2.TabIndex = 5
         Me.Label2.Text = "1 = Computed CNR"
         '
@@ -142,7 +142,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(35, 784)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(171, 17)
+        Me.Label3.Size = New System.Drawing.Size(136, 13)
         Me.Label3.TabIndex = 6
         Me.Label3.Text = "2 = Ratio of CNR Days"
         '
@@ -152,7 +152,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(35, 816)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(181, 17)
+        Me.Label4.Size = New System.Drawing.Size(145, 13)
         Me.Label4.TabIndex = 7
         Me.Label4.Text = "3 = Legal/SubLegal Enc"
         '
@@ -162,7 +162,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(35, 846)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(160, 17)
+        Me.Label5.Size = New System.Drawing.Size(126, 13)
         Me.Label5.TabIndex = 8
         Me.Label5.Text = "4 = Total Encounters"
         '
@@ -173,7 +173,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(245, 726)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(106, 17)
+        Me.Label6.Size = New System.Drawing.Size(83, 13)
         Me.Label6.TabIndex = 9
         Me.Label6.Text = "Field1 Values"
         '
@@ -183,7 +183,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(245, 755)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(123, 17)
+        Me.Label7.Size = New System.Drawing.Size(92, 13)
         Me.Label7.TabIndex = 10
         Me.Label7.Text = "---- not used ---"
         '
@@ -193,7 +193,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(405, 755)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(123, 17)
+        Me.Label8.Size = New System.Drawing.Size(92, 13)
         Me.Label8.TabIndex = 11
         Me.Label8.Text = "---- not used ---"
         '
@@ -204,7 +204,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(405, 726)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(106, 17)
+        Me.Label9.Size = New System.Drawing.Size(83, 13)
         Me.Label9.TabIndex = 12
         Me.Label9.Text = "Field2 Values"
         '
@@ -215,7 +215,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(574, 726)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(106, 17)
+        Me.Label10.Size = New System.Drawing.Size(83, 13)
         Me.Label10.TabIndex = 13
         Me.Label10.Text = "Field3 Values"
         '
@@ -226,7 +226,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.Location = New System.Drawing.Point(735, 726)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(106, 17)
+        Me.Label11.Size = New System.Drawing.Size(83, 13)
         Me.Label11.TabIndex = 14
         Me.Label11.Text = "Field4 Values"
         '
@@ -236,7 +236,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(574, 816)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(123, 17)
+        Me.Label12.Size = New System.Drawing.Size(92, 13)
         Me.Label12.TabIndex = 15
         Me.Label12.Text = "---- not used ---"
         '
@@ -246,7 +246,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(735, 816)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(123, 17)
+        Me.Label13.Size = New System.Drawing.Size(92, 13)
         Me.Label13.TabIndex = 16
         Me.Label13.Text = "---- not used ---"
         '
@@ -256,7 +256,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(574, 846)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(123, 17)
+        Me.Label14.Size = New System.Drawing.Size(92, 13)
         Me.Label14.TabIndex = 17
         Me.Label14.Text = "---- not used ---"
         '
@@ -266,7 +266,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.Location = New System.Drawing.Point(735, 846)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(123, 17)
+        Me.Label15.Size = New System.Drawing.Size(92, 13)
         Me.Label15.TabIndex = 18
         Me.Label15.Text = "---- not used ---"
         '
@@ -276,7 +276,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.Location = New System.Drawing.Point(405, 846)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(123, 17)
+        Me.Label16.Size = New System.Drawing.Size(92, 13)
         Me.Label16.TabIndex = 19
         Me.Label16.Text = "---- not used ---"
         '
@@ -286,7 +286,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.Location = New System.Drawing.Point(245, 846)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(132, 17)
+        Me.Label17.Size = New System.Drawing.Size(104, 13)
         Me.Label17.TabIndex = 20
         Me.Label17.Text = "Total Encounters"
         '
@@ -296,7 +296,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label18.Location = New System.Drawing.Point(245, 816)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(135, 17)
+        Me.Label18.Size = New System.Drawing.Size(106, 13)
         Me.Label18.TabIndex = 21
         Me.Label18.Text = "Legal Encounters"
         '
@@ -306,7 +306,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label19.Location = New System.Drawing.Point(405, 816)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(163, 17)
+        Me.Label19.Size = New System.Drawing.Size(128, 13)
         Me.Label19.TabIndex = 22
         Me.Label19.Text = "SubLegal Encounters"
         '
@@ -316,7 +316,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label20.Location = New System.Drawing.Point(245, 784)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(81, 17)
+        Me.Label20.Size = New System.Drawing.Size(65, 13)
         Me.Label20.TabIndex = 23
         Me.Label20.Text = "CNR Days"
         '
@@ -326,9 +326,9 @@ Partial Class FVS_NonRetentionEdit
         Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label21.Location = New System.Drawing.Point(405, 784)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(88, 17)
+        Me.Label21.Size = New System.Drawing.Size(94, 13)
         Me.Label21.TabIndex = 24
-        Me.Label21.Text = "Open Days"
+        Me.Label21.Text = "Retention Days"
         '
         'Label22
         '
@@ -336,7 +336,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.Location = New System.Drawing.Point(574, 755)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(155, 17)
+        Me.Label22.Size = New System.Drawing.Size(123, 13)
         Me.Label22.TabIndex = 25
         Me.Label22.Text = "SubLegal Selectivity"
         '
@@ -346,7 +346,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label23.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label23.Location = New System.Drawing.Point(735, 755)
         Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(127, 17)
+        Me.Label23.Size = New System.Drawing.Size(101, 13)
         Me.Label23.TabIndex = 26
         Me.Label23.Text = "Legal Selectivity"
         '
@@ -356,7 +356,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label24.Location = New System.Drawing.Point(574, 784)
         Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(155, 17)
+        Me.Label24.Size = New System.Drawing.Size(123, 13)
         Me.Label24.TabIndex = 27
         Me.Label24.Text = "SubLegal Selectivity"
         '
@@ -366,7 +366,7 @@ Partial Class FVS_NonRetentionEdit
         Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label25.Location = New System.Drawing.Point(735, 784)
         Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(127, 17)
+        Me.Label25.Size = New System.Drawing.Size(101, 13)
         Me.Label25.TabIndex = 28
         Me.Label25.Text = "Legal Selectivity"
         '
@@ -377,7 +377,7 @@ Partial Class FVS_NonRetentionEdit
         Me.RecordSetNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetNameLabel.Location = New System.Drawing.Point(100, 916)
         Me.RecordSetNameLabel.Name = "RecordSetNameLabel"
-        Me.RecordSetNameLabel.Size = New System.Drawing.Size(140, 20)
+        Me.RecordSetNameLabel.Size = New System.Drawing.Size(121, 17)
         Me.RecordSetNameLabel.TabIndex = 32
         Me.RecordSetNameLabel.Text = "recordset name"
         '
@@ -388,7 +388,7 @@ Partial Class FVS_NonRetentionEdit
         Me.DatabaseNameLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseNameLabel.Location = New System.Drawing.Point(100, 882)
         Me.DatabaseNameLabel.Name = "DatabaseNameLabel"
-        Me.DatabaseNameLabel.Size = New System.Drawing.Size(136, 20)
+        Me.DatabaseNameLabel.Size = New System.Drawing.Size(119, 17)
         Me.DatabaseNameLabel.TabIndex = 31
         Me.DatabaseNameLabel.Text = "database name"
         '
@@ -398,7 +398,7 @@ Partial Class FVS_NonRetentionEdit
         Me.RecordSetTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RecordSetTextLabel.Location = New System.Drawing.Point(17, 916)
         Me.RecordSetTextLabel.Name = "RecordSetTextLabel"
-        Me.RecordSetTextLabel.Size = New System.Drawing.Size(84, 17)
+        Me.RecordSetTextLabel.Size = New System.Drawing.Size(67, 13)
         Me.RecordSetTextLabel.TabIndex = 30
         Me.RecordSetTextLabel.Text = "RecordSet"
         '
@@ -408,7 +408,7 @@ Partial Class FVS_NonRetentionEdit
         Me.DatabaseTextLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DatabaseTextLabel.Location = New System.Drawing.Point(17, 882)
         Me.DatabaseTextLabel.Name = "DatabaseTextLabel"
-        Me.DatabaseTextLabel.Size = New System.Drawing.Size(77, 17)
+        Me.DatabaseTextLabel.Size = New System.Drawing.Size(61, 13)
         Me.DatabaseTextLabel.TabIndex = 29
         Me.DatabaseTextLabel.Text = "Database"
         '
@@ -417,14 +417,14 @@ Partial Class FVS_NonRetentionEdit
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClipBoardCopyToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1120, 28)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1108, 27)
         Me.MenuStrip1.TabIndex = 33
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'ClipBoardCopyToolStripMenuItem
         '
         Me.ClipBoardCopyToolStripMenuItem.Name = "ClipBoardCopyToolStripMenuItem"
-        Me.ClipBoardCopyToolStripMenuItem.Size = New System.Drawing.Size(125, 24)
+        Me.ClipBoardCopyToolStripMenuItem.Size = New System.Drawing.Size(116, 23)
         Me.ClipBoardCopyToolStripMenuItem.Text = "ClipBoard Copy"
         '
         'FillNRSSButton
@@ -469,7 +469,7 @@ Partial Class FVS_NonRetentionEdit
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.AutoScroll = True
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(1120, 955)
+        Me.ClientSize = New System.Drawing.Size(1120, 845)
         Me.Controls.Add(Me.ZeroNRButton)
         Me.Controls.Add(Me.LoadNRButton)
         Me.Controls.Add(Me.FillNRSSButton)

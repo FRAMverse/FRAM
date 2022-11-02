@@ -1584,7 +1584,11 @@ NextERateFish:
             Next
       Next
         
-      Dim c1, c2, c3, c4 As Double
+        Dim c1, c2, c3, c4 As Double
+
+        If TStep = 5 Then
+            Jim = 1
+        End If
 
       '- Compute Bias Corrected Time Step ER & UnBiased Time Step ER
       For Stk% = 1 To NumStk%

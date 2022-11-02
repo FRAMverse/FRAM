@@ -453,14 +453,15 @@ Public Class FVS_FisheryScalerEdit
                   NumMSF += 1
                Else
                   GoTo NextMTStep
-               End If
-               MSFFish = CInt(FisheryScalerGrid.Item(1, NumMSF - 1).Value)
-               MSFTStep = CInt(FisheryScalerGrid.Item(2, NumMSF - 1).Value)
-               If FisheryFlag(MSFFish, MSFTStep) <> CInt(FisheryScalerGrid.Item(3, NumMSF - 1).Value) Then
-                  FisheryFlag(MSFFish, MSFTStep) = CInt(FisheryScalerGrid.Item(3, NumMSF - 1).Value)
+                    End If
+                    
+                    MSFFish = CInt(FisheryScalerGrid.Item(1, NumMSF - 1).Value)
+                    MSFTStep = CInt(FisheryScalerGrid.Item(2, NumMSF - 1).Value)
+                    If FisheryFlag(MSFFish, MSFTStep) <> CInt(FisheryScalerGrid.Item(3, NumMSF - 1).Value) Then
+                        FisheryFlag(MSFFish, MSFTStep) = CInt(FisheryScalerGrid.Item(3, NumMSF - 1).Value)
                         ChangeFishScalers = True
-               End If
-                    If Math.Round(MSFFisheryScaler(MSFFish, MSFTStep), 4, MidpointRounding.AwayFromZero) <> CDbl(FisheryScalerGrid.Item(4, NumMSF - 1).Value) Then                  
+                    End If
+                    If Math.Round(MSFFisheryScaler(MSFFish, MSFTStep), 4, MidpointRounding.AwayFromZero) <> CDbl(FisheryScalerGrid.Item(4, NumMSF - 1).Value) Then
                         MSFFisheryScaler(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(4, NumMSF - 1).Value)
                         ChangeFishScalers = True
                     End If
@@ -468,22 +469,42 @@ Public Class FVS_FisheryScalerEdit
                         ChangeFishScalers = True
                         MSFFisheryQuota(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(5, NumMSF - 1).Value)
                     End If
-        If MarkSelectiveMortRate(MSFFish, MSFTStep) <> CDbl(FisheryScalerGrid.Item(6, NumMSF - 1).Value) Then
-            MarkSelectiveMortRate(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(6, NumMSF - 1).Value)
-            ChangeFishScalers = True
-        End If
-        If MarkSelectiveMarkMisID(MSFFish, MSFTStep) <> CDbl(FisheryScalerGrid.Item(7, NumMSF - 1).Value) Then
-            MarkSelectiveMarkMisID(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(7, NumMSF - 1).Value)
-            ChangeFishScalers = True
-        End If
-        If MarkSelectiveUnMarkMisID(MSFFish, MSFTStep) <> CDbl(FisheryScalerGrid.Item(8, NumMSF - 1).Value) Then
-            MarkSelectiveUnMarkMisID(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(8, NumMSF - 1).Value)
-            ChangeFishScalers = True
-        End If
-        If MarkSelectiveIncRate(MSFFish, MSFTStep) <> CDbl(FisheryScalerGrid.Item(9, NumMSF - 1).Value) Then
-            MarkSelectiveIncRate(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(9, NumMSF - 1).Value)
-            ChangeFishScalers = True
-        End If
+                    If MarkSelectiveMortRate(MSFFish, MSFTStep) <> CDbl(FisheryScalerGrid.Item(6, NumMSF - 1).Value) Then
+                        MarkSelectiveMortRate(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(6, NumMSF - 1).Value)
+                        ChangeFishScalers = True
+                    End If
+                    If MarkSelectiveMarkMisID(MSFFish, MSFTStep) <> CDbl(FisheryScalerGrid.Item(7, NumMSF - 1).Value) Then
+                        MarkSelectiveMarkMisID(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(7, NumMSF - 1).Value)
+                        ChangeFishScalers = True
+                    End If
+                    If MarkSelectiveUnMarkMisID(MSFFish, MSFTStep) <> CDbl(FisheryScalerGrid.Item(8, NumMSF - 1).Value) Then
+                        MarkSelectiveUnMarkMisID(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(8, NumMSF - 1).Value)
+                        ChangeFishScalers = True
+                    End If
+                    If MarkSelectiveIncRate(MSFFish, MSFTStep) <> CDbl(FisheryScalerGrid.Item(9, NumMSF - 1).Value) Then
+                        MarkSelectiveIncRate(MSFFish, MSFTStep) = CDbl(FisheryScalerGrid.Item(9, NumMSF - 1).Value)
+                        ChangeFishScalers = True
+                    End If
+
+                    'create a warning message if MSF parameters are missing for fishery with MSF Quota or Scaler AHB 11_01_22
+                    If FisheryFlag(Fish, TStep) = 7 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 27 Then
+                        If MSFFisheryScaler(MSFFish, MSFTStep) <> 0 Then
+                            If MarkSelectiveMortRate(MSFFish, MSFTStep) = 0 Or MarkSelectiveMarkMisID(MSFFish, MSFTStep) = 0 Or _
+                                MarkSelectiveUnMarkMisID(MSFFish, MSFTStep) = 0 Or MarkSelectiveIncRate(MSFFish, MSFTStep) = 0 Then
+                                MsgBox("Fishery " & Fish & " TStep " & TStep & " is missing MSF parameter.")
+                            End If
+                        End If
+
+                    Else
+                        If FisheryFlag(Fish, TStep) = 8 Or FisheryFlag(Fish, TStep) = 18 Or FisheryFlag(Fish, TStep) = 28 Then
+                            If MSFFisheryQuota(MSFFish, MSFTStep) <> 0 Then
+                                If MarkSelectiveMortRate(MSFFish, MSFTStep) = 0 Or MarkSelectiveMarkMisID(MSFFish, MSFTStep) = 0 Or _
+                                    MarkSelectiveUnMarkMisID(MSFFish, MSFTStep) = 0 Or MarkSelectiveIncRate(MSFFish, MSFTStep) = 0 Then
+                                    MsgBox("Fishery " & Fish & " TStep " & TStep & " is missing MSF parameter.")
+                                End If
+                            End If
+                        End If
+                    End If
 NextMTStep:
                 Next
          Next
