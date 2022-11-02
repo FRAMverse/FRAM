@@ -397,7 +397,9 @@ Public Class FVS_RunModel
         RunTAMMIter = 0 'This Needs to be zero OR things will get goofy on sequential runs.
         'PPPPPP---(end of closing Pete 12/13 Block)------------------------------------------------------------------------
         If AnyNegativeEscapement = 1 Then
-            MsgBox("You have negative escapements. Please check the PopStat report!")
+            If msgFlag = False Then
+                MsgBox("You have negative escapements. Please check the PopStat report!")
+            End If
         End If
         AnyNegativeEscapement = 0
 

@@ -197,6 +197,8 @@ Public Module FramVar
    Public TammTransferSave As Boolean
     Public MSFBiasFlag As Boolean
     Public NoMSFBiasCalcs As Boolean
+    Public MessageFlag As Boolean = False
+    Public msgFlag As Boolean = False
    '###################################################Pete-12/17/12.
     Public ERgtrOne(,) As Boolean 'This is associated with the MSF bias correction calculations
    '###################################################Pete-12/17/12.

@@ -300,7 +300,7 @@ Module FramCalcs
         '###################################################Pete-12/17/12.
         If SpeciesName = "COHO" And MSFBiasFlag = True Then
             Dim ProbStkList As String
-            Dim msgFlag As Boolean
+
 
             For TStep As Integer = 1 To NumSteps
                 For Stk As Integer = 1 To NumStk
@@ -1424,18 +1424,15 @@ NextScalerFishery:
       Dim EncounterMort(NumStk, NumFish) As Double
       Dim PPNLandedCat(NumStk, NumFish) As Double
       Dim PPNNonRetion(NumStk, NumFish) As Double
-      Dim PPNIncidental(NumStk, NumFish) As Double
+        Dim PPNIncidental(NumStk, NumFish) As Double
+
+
 
       ''- DEBUG Code .. Header
       'PrnLine = String.Format("{0,8}", "Num Fishery TStep Num Stock-- EncMort PPNLand PPNNonR PPNIncd")
       'sw.WriteLine(PrnLine)
 
         ReDim ERgtrOne(NumSteps, NumStk)
-
-        If TammIteration = 1 And TStep = 5 And TerminalType = 1 Then
-            Jim = 1
-        End If
-
 
       '- Compute biased proportion of encounters that die, proportion landed, release morts, and incidental morts in MSF
 
@@ -1496,7 +1493,7 @@ SecondPassEntry:
       MSFtolerance = 0.0000001
       MSFBiasIter = False
 
-      '- Zero ER Arrays explicitly because I can
+        '- Zero ER Arrays explicitly 
       For Stk As Integer = 1 To NumStk
          StkERRate(Stk) = 0
          StkERRateTilde(Stk) = 0
@@ -1566,20 +1563,16 @@ SecondPassEntry:
                 '- Sum over all fisheries (Non-Selective and Selective)
                 StkERRate(Stk) += (MSFStkERRate(Stk, Fish) + NSStkERRate(Stk, Fish))
                 StkERRateTilde(Stk) += (MSFStkERRateTilde(Stk, Fish) + NSStkERRateTilde(Stk, Fish))
-                If StkERRateTilde(Stk) > 1 Then
-                    Jim = 1
-                End If
-                If Stk = 25 Then
-                    Jim = 1
-                End If
-                If Stk <> 25 Then
-                    If Stk <> 26 Then
-                        If StkERRate(Stk) > 1 And MSFBiasCount > 5 Then
+                If Stk <> 25 Or Stk <> 26 Then
+                    If StkERRate(Stk) > 1 And MSFBiasCount > 5 And Cohort(Stk, Age, TerminalType, TStep) > 0 Then
+                        If MessageFlag = False Then
                             MsgBox("Stock " & StockName(Stk) & "TStep " & TStep & " may produce negative escapements. Please finish the run and look for negative escapements in the PopStat report. Do not use this run for official results!")
-                            Exit Sub
                         End If
+                        MessageFlag = True
+                        Exit Sub
                     End If
                 End If
+
 NextERateFish:
             Next
       Next
@@ -1685,10 +1678,7 @@ NextERateFish:
                     MSFishMort(Stk, Fish) = StkMort(Stk) * MSFishWeight(Stk, Fish)
                 End If
 
-                'If Fish = 187 And NSFishMort(Stk, Fish) <> 0 Then
-
-                'End If
-                'Jim = 1
+                
 
                 If NSFishMort(Stk, Fish) = 0 Then
                     LandedCatch(Stk, Age, Fish, TStep) = 0
@@ -1803,17 +1793,16 @@ NextTolerCheck:
       SecondPass = True
 
         If MSFBiasIter = True Then
-            If MSFBiasCount = 233 Then
-                Jim = 1
-            End If
             MSFBiasCount += 1
-            If MSFBiasCount = 475 Then
-                Jim = 1
-            End If
             GoTo SecondPassEntry
         End If
 
-   End Sub
+        ' For Stk As Integer = 1 To NumStk
+        
+        'Next
+
+
+    End Sub
 
     '======================================================================================
 
