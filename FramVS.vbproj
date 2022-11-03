@@ -14,7 +14,7 @@
     <ManifestCertificateThumbprint>933D14E58FCF3627921841CC8170FEF9E7E5774D</ManifestCertificateThumbprint>
     <ManifestKeyFile>FramVS_2_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <FileUpgradeFlags>
     </FileUpgradeFlags>

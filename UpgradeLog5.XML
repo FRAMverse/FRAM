@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="FramVS">
+</Property><Property Name="Solution File" Value="C:\data\GitHub\FRAM\FramVS.sln">
+</Property><Property Name="Date" Value="Tuesday, September 13, 2022">
+</Property><Property Name="Time" Value="11:55 AM">
+</Property><Property Name="Log Number" Value="5">
+</Property></Properties><Event ErrorLevel="0" Project="FramVS" Source="FramVS.vbproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="FramVS" Source="FramVS.vbproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="" Source="FramVS.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="FramVS.sln" Description="Converted">
+</Event></UpgradeLog>
