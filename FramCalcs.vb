@@ -23,6 +23,8 @@ Module FramCalcs
       '- ReDim Calculation Arrays
       ReDim LandedCatch(NumStk, MaxAge, NumFish, NumSteps)
         ReDim NonRetention(NumStk, MaxAge, NumFish, NumSteps)
+        ReDim NonRetentionLegal(NumStk, MaxAge, NumFish, NumSteps)
+        ReDim NonRetentionSub(NumStk, MaxAge, NumFish, NumSteps)
         ReDim NRLegal(2, NumStk, MaxAge, NumFish, NumSteps)
       ReDim Shakers(NumStk, MaxAge, NumFish, NumSteps)
       ReDim DropOff(NumStk, MaxAge, NumFish, NumSteps)
@@ -1818,6 +1820,7 @@ NextTolerCheck:
         '**************************************************************************
 
         ReDim PropLegCatch(NumStk, MaxAge)
+        
         Dim CNRScale, CNREncounter As Double
         Dim LegProp, SubLegProp As Double
         If TotalLandedCatch(Fish, TStep) = 0 And (NonRetentionFlag(Fish, TStep) = 1 Or NonRetentionFlag(Fish, TStep) = 2) Then
@@ -1844,7 +1847,10 @@ NextTolerCheck:
                For Age As Integer = MinAge To MaxAge
                   NonRetention(Stk, Age, Fish, TStep) = LandedCatch(Stk, Age, Fish, TStep) * (NonRetentionInput(Fish, TStep, 1) / NonRetentionInput(Fish, TStep, 2)) * ShakerMortRate(Fish, TStep) * NonRetentionInput(Fish, TStep, 4)
                   NonRetention(Stk, Age, Fish, TStep) += Shakers(Stk, Age, Fish, TStep) * (NonRetentionInput(Fish, TStep, 1) / NonRetentionInput(Fish, TStep, 2)) * NonRetentionInput(Fish, TStep, 3)
-                  TotalNonRetention(Fish, TStep) += NonRetention(Stk, Age, Fish, TStep)
+                        TotalNonRetention(Fish, TStep) += NonRetention(Stk, Age, Fish, TStep)
+                        NonRetentionLegal(Stk, Age, Fish, TStep) = LandedCatch(Stk, Age, Fish, TStep) * (NonRetentionInput(Fish, TStep, 1) / NonRetentionInput(Fish, TStep, 2)) * ShakerMortRate(Fish, TStep) * NonRetentionInput(Fish, TStep, 4)
+                        NonRetentionSub(Stk, Age, Fish, TStep) = Shakers(Stk, Age, Fish, TStep) * (NonRetentionInput(Fish, TStep, 1) / NonRetentionInput(Fish, TStep, 2)) * NonRetentionInput(Fish, TStep, 3)
+
                Next Age
                 Next Stk
 
@@ -1859,14 +1865,18 @@ NextTolerCheck:
                   If Fish >= 36 And InStr(FisheryTitle(Fish), "Sport") > 0 Then
                      NonRetention(Stk, Age, Fish, TStep) = (LegProp * NonRetentionInput(Fish, TStep, 1) * ModelStockProportion(Fish) * (ShakerMortRate(Fish, TStep) / 2))
                             NRLegal(1, Stk, Age, Fish, TStep) = LegProp * NonRetentionInput(Fish, TStep, 1)
+                            NonRetentionLegal(Stk, Age, Fish, TStep) = (LegProp * NonRetentionInput(Fish, TStep, 1) * ModelStockProportion(Fish) * (ShakerMortRate(Fish, TStep) / 2))
+                            NonRetentionSub(Stk, Age, Fish, TStep) = Shakers(Stk, Age, Fish, TStep) * (NonRetentionInput(Fish, TStep, 1) / NonRetentionInput(Fish, TStep, 2)) * NonRetentionInput(Fish, TStep, 3)
                         Else
                             NonRetention(Stk, Age, Fish, TStep) = (LegProp * NonRetentionInput(Fish, TStep, 1) * ModelStockProportion(Fish) * ShakerMortRate(Fish, TStep))
                             NRLegal(1, Stk, Age, Fish, TStep) = LegProp * NonRetentionInput(Fish, TStep, 1)
+                            NonRetentionLegal(Stk, Age, Fish, TStep) = (LegProp * NonRetentionInput(Fish, TStep, 1) * ModelStockProportion(Fish) * ShakerMortRate(Fish, TStep))
                         End If
-                  NonRetention(Stk, Age, Fish, TStep) += (SubLegProp * NonRetentionInput(Fish, TStep, 2) * ModelStockProportion(Fish) * ShakerMortRate(Fish, TStep))
+                        NonRetention(Stk, Age, Fish, TStep) += (SubLegProp * NonRetentionInput(Fish, TStep, 2) * ModelStockProportion(Fish) * ShakerMortRate(Fish, TStep))
                         NRLegal(2, Stk, Age, Fish, TStep) = SubLegProp * NonRetentionInput(Fish, TStep, 2)
                         TotalNonRetention(Fish, TStep) += NonRetention(Stk, Age, Fish, TStep)
-               Next Age
+                        NonRetentionSub(Stk, Age, Fish, TStep) = (SubLegProp * NonRetentionInput(Fish, TStep, 2) * ModelStockProportion(Fish) * ShakerMortRate(Fish, TStep))
+                    Next Age
                 Next Stk
 
             Case 4
@@ -1921,16 +1931,19 @@ NextTolerCheck:
                   If Fish >= 36 And InStr(FisheryTitle(Fish), "Sport") > 0 Then
                             NonRetention(Stk, Age, Fish, TStep) += (CNREncStkAge(Stk, Age) * (ShakerMortRate(Fish, TStep) / 2))
                             NRLegal(1, Stk, Age, Fish, TStep) = NonRetention(Stk, Age, Fish, TStep) / (ShakerMortRate(Fish, TStep) / 2)
+
                   Else
                             NonRetention(Stk, Age, Fish, TStep) += (CNREncStkAge(Stk, Age) * ShakerMortRate(Fish, TStep))
                             NRLegal(1, Stk, Age, Fish, TStep) = NonRetention(Stk, Age, Fish, TStep) / ShakerMortRate(Fish, TStep)
                   End If
-                  PreSubCNR = NonRetention(Stk, Age, Fish, TStep)
+                        PreSubCNR = NonRetention(Stk, Age, Fish, TStep)
+                        NonRetentionLegal(Stk, Age, Fish, TStep) = NonRetention(Stk, Age, Fish, TStep)
                   '- SubLegal Size Encounters and Mortality - PFMC Mar 2006 ... Added StkHRScale
                   CNREncStkAge(Stk, Age) += (SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep))
                   CNREncounter += (SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep))
                   NonRetention(Stk, Age, Fish, TStep) += (SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep))
                         'NRLegal(1, Stk, Age, Fish, TStep) += LegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
+                        NonRetentionSub(Stk, Age, Fish, TStep) = (SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep))
                         NRLegal(2, Stk, Age, Fish, TStep) += SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep)
                         SubCNR = (SubLegalPop * BaseSubLegalRate(Stk, Age, Fish, TStep) * ShakerMortRate(Fish, TStep) * StockFishRateScalers(Stk, Fish, TStep))
                Next Age
@@ -1947,7 +1960,10 @@ NextTolerCheck:
                For Age As Integer = MinAge To MaxAge
                   If CNREncStkAge(Stk, Age) <> 0 Then
                      CNREncStkAge(Stk, Age) = CNREncStkAge(Stk, Age) * CNRScale * ModelStockProportion(Fish)
-                     NonRetention(Stk, Age, Fish, TStep) = NonRetention(Stk, Age, Fish, TStep) * CNRScale * ModelStockProportion(Fish)
+                            NonRetention(Stk, Age, Fish, TStep) = NonRetention(Stk, Age, Fish, TStep) * CNRScale * ModelStockProportion(Fish)
+                            NonRetentionLegal(Stk, Age, Fish, TStep) = NonRetentionLegal(Stk, Age, Fish, TStep) * CNRScale * ModelStockProportion(Fish)
+                            NonRetentionSub(Stk, Age, Fish, TStep) = NonRetentionSub(Stk, Age, Fish, TStep) * CNRScale * ModelStockProportion(Fish)
+
                             NRLegal(1, Stk, Age, Fish, TStep) = NRLegal(1, Stk, Age, Fish, TStep) * CNRScale
                             NRLegal(2, Stk, Age, Fish, TStep) = NRLegal(2, Stk, Age, Fish, TStep) * CNRScale
                             CNREncounter += Encounters(Stk, Age, Fish, TStep)

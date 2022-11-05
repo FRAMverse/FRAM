@@ -183,7 +183,7 @@ SortTermRun:
                 Case 18
                     Call StockImpactsPer1000(Option1, Option2, Option3, Option4, Option5, Option6)
                 Case 19
-                    Call StlNRReportMod()
+                    Call NRReportMod()
 
             End Select
         Next
@@ -4473,24 +4473,21 @@ NextRepFishery:
 
     End Sub
 
-    Sub StlNRReportMod()
+    Sub NRReportMod()
 
         If NRLegal Is Nothing Then
             MsgBox("For this report driver to work, you must run the model first.  Please run the model and try again.")
         Else
             PrnLine = "StockID" & "," & "Age" & "," & "FisheryID" & "," & "TimeStep" & "," & "LegalNR" & "," & "SublegalNR"
             rw.WriteLine(PrnLine)
-            For StkTest As Integer = 17 To 18
-                For AgeTest As Integer = MinAge To MaxAge
-                    For FishTest As Integer = 1 To NumFish
-                        For TStepTest As Integer = 2 To 4
 
-                            '- PS Sport legal size rel mort rate set now to 50% of shaker release rate (10 vs 20)
-                            If FishTest >= 36 And InStr(FisheryTitle(FishTest), "Sport") > 0 Then
-                                PrnLine = StkTest & "," & AgeTest & "," & FishTest & "," & TStepTest & "," & NRLegal(1, StkTest, AgeTest, FishTest, TStepTest) * ShakerMortRate(FishTest, TStepTest) / 2 & "," & NRLegal(2, StkTest, AgeTest, FishTest, TStepTest) * ShakerMortRate(FishTest, TStepTest)
-                                rw.WriteLine(PrnLine)
-                            Else
-                                PrnLine = StkTest & "," & AgeTest & "," & FishTest & "," & TStepTest & "," & NRLegal(1, StkTest, AgeTest, FishTest, TStepTest) * ShakerMortRate(FishTest, TStepTest) & "," & NRLegal(2, StkTest, AgeTest, FishTest, TStepTest) * ShakerMortRate(FishTest, TStepTest)
+            For Stk As Integer = 1 To NumStk
+                For Age As Integer = MinAge To MaxAge
+                    For Fish As Integer = 1 To NumFish
+                        For TStep As Integer = 2 To 4
+                            If NonRetentionLegal(Stk, Age, Fish, TStep) + NonRetentionSub(Stk, Age, Fish, TStep) <> 0 Then
+
+                                PrnLine = Stk & "," & Age & "," & Fish & "," & TStep & "," & NonRetentionLegal(Stk, Age, Fish, TStep) & "," & NonRetentionSub(Stk, Age, Fish, TStep)
                                 rw.WriteLine(PrnLine)
                             End If
                         Next

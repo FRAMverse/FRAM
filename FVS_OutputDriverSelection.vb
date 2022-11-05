@@ -93,4 +93,7 @@ Public Class FVS_OutputDriverSelection
       FVS_OutputDriver.Visible = True
    End Sub
 
+    Private Sub CheckedListBox1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckedListBox1.SelectedIndexChanged
+
+    End Sub
 End Class
