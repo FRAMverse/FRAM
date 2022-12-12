@@ -5,7 +5,7 @@ Public Class FVS_Welcome
 
    Private Sub FVS_Welcome_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        FramVersion = "2.22 Feb 25"
+        FramVersion = "2.23test"
       VersionLabel.Text = "Version " & FramVersion
       ReDim VersionNumberChanges(100)
       For Stk As Integer = 0 To 100
@@ -91,6 +91,7 @@ Public Class FVS_Welcome
         VersionNumberChanges(38) = "(2.20) see updates described in  - Proposed FRAM Changes for 2020 Pre-season Modeling - Dec 2019"
         VersionNumberChanges(39) = "(2.21) see updates described in  - Proposed FRAM Changes for 2021 Pre-season Modeling - Dec 2020"
         VersionNumberChanges(40) = "(2.22) see updates described in  - Proposed FRAM Changes for 2022 Pre-season Modeling - Dec 2021"
+        VersionNumberChanges(41) = "(2.23) see updates described in  - Proposed FRAM Changes for 2023 Pre-season Modeling - Dec 2022"
     End Sub
 
    Private Sub FVS_Continue_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles FVS_Continue.Click
