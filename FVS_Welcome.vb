@@ -5,7 +5,7 @@ Public Class FVS_Welcome
 
    Private Sub FVS_Welcome_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        FramVersion = "2.23test"
+        FramVersion = "2.23"
       VersionLabel.Text = "Version " & FramVersion
       ReDim VersionNumberChanges(100)
       For Stk As Integer = 0 To 100
@@ -173,6 +173,10 @@ Public Class FVS_Welcome
 
 
     Private Sub VersionLabel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles VersionLabel.Click
+
+    End Sub
+
+    Private Sub TextBox1_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBox1.TextChanged
 
     End Sub
 End Class

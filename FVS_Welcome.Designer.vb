@@ -98,7 +98,7 @@ Partial Class FVS_Welcome
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(416, 19)
         Me.TextBox1.TabIndex = 5
-        Me.TextBox1.Text = "User Manual: https://wdfw-fp.github.io/framvs_doc/"
+        Me.TextBox1.Text = "User Manual: https://framverse.github.io/fram_doc/"
         Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'FVS_Welcome

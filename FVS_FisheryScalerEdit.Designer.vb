@@ -22,27 +22,27 @@ Partial Class FVS_FisheryScalerEdit
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.FSDoneButton = New System.Windows.Forms.Button
-        Me.FSCancelButton = New System.Windows.Forms.Button
-        Me.FisheryScalerGrid = New System.Windows.Forms.DataGridView
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
-        Me.ClipboardCopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.LoadCatchButton = New System.Windows.Forms.Button
-        Me.LoadSheetButton = New System.Windows.Forms.Button
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.RecordSetNameLabel = New System.Windows.Forms.Label
-        Me.DatabaseNameLabel = New System.Windows.Forms.Label
-        Me.RecordSetTextLabel = New System.Windows.Forms.Label
-        Me.DatabaseTextLabel = New System.Windows.Forms.Label
+        Me.FSDoneButton = New System.Windows.Forms.Button()
+        Me.FSCancelButton = New System.Windows.Forms.Button()
+        Me.FisheryScalerGrid = New System.Windows.Forms.DataGridView()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.ClipboardCopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LoadCatchButton = New System.Windows.Forms.Button()
+        Me.LoadSheetButton = New System.Windows.Forms.Button()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.RecordSetNameLabel = New System.Windows.Forms.Label()
+        Me.DatabaseNameLabel = New System.Windows.Forms.Label()
+        Me.RecordSetTextLabel = New System.Windows.Forms.Label()
+        Me.DatabaseTextLabel = New System.Windows.Forms.Label()
         CType(Me.FisheryScalerGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -51,9 +51,9 @@ Partial Class FVS_FisheryScalerEdit
         '
         Me.FSDoneButton.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.FSDoneButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FSDoneButton.Location = New System.Drawing.Point(836, 782)
+        Me.FSDoneButton.Location = New System.Drawing.Point(669, 626)
         Me.FSDoneButton.Name = "FSDoneButton"
-        Me.FSDoneButton.Size = New System.Drawing.Size(153, 42)
+        Me.FSDoneButton.Size = New System.Drawing.Size(122, 34)
         Me.FSDoneButton.TabIndex = 0
         Me.FSDoneButton.Text = "OK - Done"
         Me.FSDoneButton.UseVisualStyleBackColor = False
@@ -62,9 +62,9 @@ Partial Class FVS_FisheryScalerEdit
         '
         Me.FSCancelButton.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.FSCancelButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FSCancelButton.Location = New System.Drawing.Point(1022, 782)
+        Me.FSCancelButton.Location = New System.Drawing.Point(818, 626)
         Me.FSCancelButton.Name = "FSCancelButton"
-        Me.FSCancelButton.Size = New System.Drawing.Size(153, 42)
+        Me.FSCancelButton.Size = New System.Drawing.Size(122, 34)
         Me.FSCancelButton.TabIndex = 1
         Me.FSCancelButton.Text = "Cancel"
         Me.FSCancelButton.UseVisualStyleBackColor = False
@@ -72,10 +72,11 @@ Partial Class FVS_FisheryScalerEdit
         'FisheryScalerGrid
         '
         Me.FisheryScalerGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.FisheryScalerGrid.Location = New System.Drawing.Point(12, 42)
+        Me.FisheryScalerGrid.Location = New System.Drawing.Point(10, 34)
         Me.FisheryScalerGrid.Name = "FisheryScalerGrid"
+        Me.FisheryScalerGrid.RowHeadersWidth = 51
         Me.FisheryScalerGrid.RowTemplate.Height = 24
-        Me.FisheryScalerGrid.Size = New System.Drawing.Size(1217, 702)
+        Me.FisheryScalerGrid.Size = New System.Drawing.Size(974, 562)
         Me.FisheryScalerGrid.TabIndex = 2
         '
         'Label1
@@ -113,7 +114,7 @@ Partial Class FVS_FisheryScalerEdit
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(202, 782)
+        Me.Label4.Location = New System.Drawing.Point(203, 782)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(140, 20)
         Me.Label4.TabIndex = 6
@@ -123,7 +124,7 @@ Partial Class FVS_FisheryScalerEdit
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(202, 808)
+        Me.Label5.Location = New System.Drawing.Point(203, 808)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(136, 20)
         Me.Label5.TabIndex = 7
@@ -131,26 +132,27 @@ Partial Class FVS_FisheryScalerEdit
         '
         'MenuStrip1
         '
+        Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClipboardCopyToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1241, 28)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1241, 30)
         Me.MenuStrip1.TabIndex = 8
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'ClipboardCopyToolStripMenuItem
         '
         Me.ClipboardCopyToolStripMenuItem.Name = "ClipboardCopyToolStripMenuItem"
-        Me.ClipboardCopyToolStripMenuItem.Size = New System.Drawing.Size(125, 24)
+        Me.ClipboardCopyToolStripMenuItem.Size = New System.Drawing.Size(127, 26)
         Me.ClipboardCopyToolStripMenuItem.Text = "Clipboard Copy"
         '
         'LoadCatchButton
         '
         Me.LoadCatchButton.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.LoadCatchButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LoadCatchButton.Location = New System.Drawing.Point(836, 840)
+        Me.LoadCatchButton.Location = New System.Drawing.Point(669, 672)
         Me.LoadCatchButton.Name = "LoadCatchButton"
-        Me.LoadCatchButton.Size = New System.Drawing.Size(153, 42)
+        Me.LoadCatchButton.Size = New System.Drawing.Size(122, 34)
         Me.LoadCatchButton.TabIndex = 9
         Me.LoadCatchButton.Text = "Import Catch"
         Me.LoadCatchButton.UseVisualStyleBackColor = False
@@ -159,9 +161,9 @@ Partial Class FVS_FisheryScalerEdit
         '
         Me.LoadSheetButton.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.LoadSheetButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LoadSheetButton.Location = New System.Drawing.Point(1022, 843)
+        Me.LoadSheetButton.Location = New System.Drawing.Point(818, 674)
         Me.LoadSheetButton.Name = "LoadSheetButton"
-        Me.LoadSheetButton.Size = New System.Drawing.Size(153, 57)
+        Me.LoadSheetButton.Size = New System.Drawing.Size(122, 46)
         Me.LoadSheetButton.TabIndex = 10
         Me.LoadSheetButton.Text = "Export to  Spreadsheet"
         Me.LoadSheetButton.UseVisualStyleBackColor = False
@@ -170,7 +172,7 @@ Partial Class FVS_FisheryScalerEdit
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(342, 782)
+        Me.Label6.Location = New System.Drawing.Point(343, 782)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(227, 20)
         Me.Label6.TabIndex = 11
@@ -180,7 +182,7 @@ Partial Class FVS_FisheryScalerEdit
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(342, 808)
+        Me.Label7.Location = New System.Drawing.Point(343, 808)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(223, 20)
         Me.Label7.TabIndex = 12
@@ -297,7 +299,7 @@ Partial Class FVS_FisheryScalerEdit
         Me.PerformLayout()
 
     End Sub
-   Friend WithEvents FSDoneButton As System.Windows.Forms.Button
+    Friend WithEvents FSDoneButton As System.Windows.Forms.Button
    Friend WithEvents FSCancelButton As System.Windows.Forms.Button
    Friend WithEvents FisheryScalerGrid As System.Windows.Forms.DataGridView
    Friend WithEvents Label1 As System.Windows.Forms.Label

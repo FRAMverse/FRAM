@@ -122,4 +122,8 @@ End Sub
     Private Sub FisheryScalerCheckBox_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FisheryScalerCheckBox.CheckedChanged
 
     End Sub
+
+    Private Sub MSFCheckBox_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MSFCheckBox.CheckedChanged
+
+    End Sub
 End Class
