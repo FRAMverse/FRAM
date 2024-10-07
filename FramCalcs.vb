@@ -1707,7 +1707,7 @@ NextERateFish:
                     '- Compute Non-Selective Landed and Non-Landed Mortality by Stock, Fishery, Time-Step
                     MSFLandedCatch(Stk, Age, Fish, TStep) = MSFishMort(Stk, Fish) * PPNLandedCat(Stk, Fish)
                     MSFNonRetention(Stk, Age, Fish, TStep) = MSFishMort(Stk, Fish) * PPNNonRetion(Stk, Fish)
-                    MSFEncounters(Stk, Age, Fish, TStep) = Cohort(Stk, Age, TerminalType, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep)
+                    MSFEncounters(Stk, Age, Fish, TStep) = StockFishRateScalers(Stk, Fish, TStep) * Cohort(Stk, Age, TerminalType, TStep) * BaseExploitationRate(Stk, Age, Fish, TStep) * MSFFisheryScaler(Fish, TStep)
                     MSFDropOff(Stk, Age, Fish, TStep) = MSFishMort(Stk, Fish) * PPNIncidental(Stk, Fish)
                     TotalMSFLanded(Fish) += MSFLandedCatch(Stk, Age, Fish, TStep)
                     TotalLandedCatch(Fish, TStep) += MSFLandedCatch(Stk, Age, Fish, TStep)
