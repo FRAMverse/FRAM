@@ -85,7 +85,7 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>fishing_water_pond_nature_wild_ocean_animal_sea_fish_icon_210753.ico</ApplicationIcon>
+    <ApplicationIcon>fish.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
@@ -632,7 +632,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fishing_water_pond_nature_wild_ocean_animal_sea_fish_icon_210753.ico" />
+    <Content Include="fish.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
