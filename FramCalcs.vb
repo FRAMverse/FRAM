@@ -9,16 +9,19 @@ Imports System.Data
 Imports System.Globalization
 
 Module FramCalcs
-   Public sw As StreamWriter
-   Public sr As StreamReader
+    Public sw As StreamWriter
+    Public sr As StreamReader
    Public PrnLine As String
    Public xlApp As Excel.Application
    Public ExcelWasNotRunning As Boolean
    Public WorkBookWasNotOpen As Boolean
    Public xlWorkBook As Microsoft.Office.Interop.Excel.Workbook
-   Public xlWorkSheet As Microsoft.Office.Interop.Excel.Worksheet
+    Public xlWorkSheet As Microsoft.Office.Interop.Excel.Worksheet
+    ' For age comp stuff
+    Public swAgeComp As StreamWriter
+    Public File_Name_AC As String
 
-   Sub RunCalcs()
+    Sub RunCalcs()
 
       '- ReDim Calculation Arrays
       ReDim LandedCatch(NumStk, MaxAge, NumFish, NumSteps)
@@ -63,8 +66,18 @@ Module FramCalcs
       sw.WriteLine(PrnLine)
       sw.WriteLine(" ")
 
-      '- Check for TAMM and BackWards FRAM Selections
-      If RunTAMMIter = 1 And SpeciesName = "COHO" Then Call ReadCohoTAMM()
+        ''############ create file to save age comp info
+        File_Name_AC = FVSdatabasepath & "\FramAgeComp.Txt"
+        If Exists(File_Name_AC) Then Delete(File_Name_AC)
+        swAgeComp = CreateText(File_Name_AC)
+        PrnLine = "Command File =" + FVSdatabasepath + "\" & RunIDNameSelect.ToString & "     " & Date.Today.ToString
+        swAgeComp.WriteLine(PrnLine)
+        swAgeComp.WriteLine(" ")
+        PrnLine = "RunID, TSTep, TammIteration, TerminalType, Fish, Stk, Age, LegalProportion, SublegalProportion, BaseLegalProportion, BaseSubLegalProportion, MeanSize, Sd"
+        swAgeComp.WriteLine(PrnLine)
+
+        '- Check for TAMM and BackWards FRAM Selections
+        If RunTAMMIter = 1 And SpeciesName = "COHO" Then Call ReadCohoTAMM()
       If RunTAMMIter = 1 And SpeciesName = "CHINOOK" Then Call ReadChinookTAMM()
       If RunBackFramFlag = 1 Then
          Call RunBackFRAM()
@@ -331,6 +344,10 @@ Module FramCalcs
         '- Close FramCheck.Txt file used for Comments & Errors
         sw.Flush()
         sw.Close()
+
+        '- closing the age comp file
+        swAgeComp.Flush()
+        swAgeComp.Close()
 
         'If AnyNegativeEscapement = 1 Then
         '   MsgBox("Negative Escapements were Detected for this Run" & vbCrLf & "Please check 'FramChk' file for Details")
@@ -985,6 +1002,9 @@ SkipTami2:
 
                             Call CompLegProp(Stk, Age, Fish, TerminalType)
 
+
+
+
                             ''- Check if New Size Limit is different from Base Period Size Limit
                             'If SpeciesName = "CHINOOK" And MinSizeLimit(Fish, TStep) <> ChinookBaseSizeLimit(Fish, TStep) Then
                             '   ChinookBaseLegProp = True
@@ -1020,7 +1040,7 @@ SkipTami2:
                             'End If
                             ''############################# END NEW CODE ############################ Pete-Jan. 2013
                             ''****************************************************************************************
-                            
+
 
                             '- Retention Fishery Scalers 
                             If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 17 Or FisheryFlag(Fish, TStep) = 18 Then
@@ -2166,67 +2186,74 @@ NextTolerCheck:
       End If
 
 
+        ' -Store legal proportion info
+        PrnLine = RunIDSelect.ToString & ", " & TStep.ToString & ", " & TammIteration.ToString & ", " &
+            TerminalType.ToString & ", " &
+            Fish.ToString & ", " & Stk.ToString & ", " & Age.ToString & ", " &
+            LegalProportion.ToString & ", " & SubLegalProportion.ToString & ", " &
+            BaseLegalProportion.ToString & ", " & BaseSubLegalProportion & ", " &
+            MeanSize.ToString & ", " & SizeStdDev.ToString
+        swAgeComp.WriteLine(PrnLine)
 
 
 
 
 
+        ''****************************************************************************************
+        ''############################# BEGIN NEW CODE ############################ Pete-Jan. 2013
+        'If SizeLimitScenario = True Then
 
-      ''****************************************************************************************
-      ''############################# BEGIN NEW CODE ############################ Pete-Jan. 2013
-      'If SizeLimitScenario = True Then
-
-      '   Select Case Fish
-      '      'Only invoke this code for PS Sport at this stage
-      '      Case 36, 42, 45, 53, 54, 56, 57, 64, 67 'Ignore 8D, 10A, and 10E (48,60,62) given assumption of zero base sublegals 
-
-
-      '         'Compute CNR Legal and Sublegal proportions based on the existing 22 inch (= 520 mm fork length) size limit
-      '         'that CNR encounters are calibrated to for Puget Sound recreational fisheries
-      '         If (520 < MeanSize - 3 * SizeStdDev) Then
-      '            CNRLegalProp = 1
-      '         End If
-      '         If (520 > MeanSize + 3 * SizeStdDev) Then
-      '            CNRLegalProp = 0
-      '         End If
-      '         If ((520 >= MeanSize - 3 * SizeStdDev) And (520 <= MeanSize + 3 * SizeStdDev)) Then
-      '            CNRLegalProp = (1 - NormlDistr(520, MeanSize, SizeStdDev))
-      '         End If
-      '         CNRSublegalProp = EncounterRateAdjustment(Age, Fish, TStep) * (1 - CNRLegalProp) 'BEWARE OF EncounterRateAdjustments...
+        '   Select Case Fish
+        '      'Only invoke this code for PS Sport at this stage
+        '      Case 36, 42, 45, 53, 54, 56, 57, 64, 67 'Ignore 8D, 10A, and 10E (48,60,62) given assumption of zero base sublegals 
 
 
-      '         If AltFlag(Fish, TStep) > 8 And AltLimitMSF(Fish, TStep) <> AltLimitNS(Fish, TStep) _
-      '            And AltLimitMSF(Fish, TStep) > 0 And AltLimitNS(Fish, TStep) > 0 Then
-      '            'Compute Legal & Sublegal Proportions under MSF size limit
-      '            If (AltLimitMSF(Fish, TStep) < MeanSize - 3 * SizeStdDev) Then
-      '               MSFLegalProp = 1
-      '            End If
-      '            If (AltLimitMSF(Fish, TStep) > MeanSize + 3 * SizeStdDev) Then
-      '               MSFLegalProp = 0
-      '            End If
-      '            If ((AltLimitMSF(Fish, TStep) >= MeanSize - 3 * SizeStdDev) And (AltLimitMSF(Fish, TStep) <= MeanSize + 3 * SizeStdDev)) Then
-      '               MSFLegalProp = (1 - NormlDistr(AltLimitMSF(Fish, TStep), MeanSize, SizeStdDev))
-      '            End If
-      '            MSFSublegalProp = EncounterRateAdjustment(Age, Fish, TStep) * (1 - MSFLegalProp) 'BEWARE OF EncounterRateAdjustments...
+        '         'Compute CNR Legal and Sublegal proportions based on the existing 22 inch (= 520 mm fork length) size limit
+        '         'that CNR encounters are calibrated to for Puget Sound recreational fisheries
+        '         If (520 < MeanSize - 3 * SizeStdDev) Then
+        '            CNRLegalProp = 1
+        '         End If
+        '         If (520 > MeanSize + 3 * SizeStdDev) Then
+        '            CNRLegalProp = 0
+        '         End If
+        '         If ((520 >= MeanSize - 3 * SizeStdDev) And (520 <= MeanSize + 3 * SizeStdDev)) Then
+        '            CNRLegalProp = (1 - NormlDistr(520, MeanSize, SizeStdDev))
+        '         End If
+        '         CNRSublegalProp = EncounterRateAdjustment(Age, Fish, TStep) * (1 - CNRLegalProp) 'BEWARE OF EncounterRateAdjustments...
 
-      '            'Compute Legal & Sublegal Proportions under NS size limit
-      '            If (AltLimitNS(Fish, TStep) < MeanSize - 3 * SizeStdDev) Then
-      '               NSLegalProp = 1
-      '            End If
-      '            If (AltLimitNS(Fish, TStep) > MeanSize + 3 * SizeStdDev) Then
-      '               NSLegalProp = 0
-      '            End If
-      '            If ((AltLimitNS(Fish, TStep) >= MeanSize - 3 * SizeStdDev) And (AltLimitNS(Fish, TStep) <= MeanSize + 3 * SizeStdDev)) Then
-      '               NSLegalProp = (1 - NormlDistr(AltLimitNS(Fish, TStep), MeanSize, SizeStdDev))
-      '            End If
-      '            NSSublegalProp = EncounterRateAdjustment(Age, Fish, TStep) * (1 - NSLegalProp) 'BEWARE OF EncounterRateAdjustments...
 
-      '         End If
-      '         MinSizeLimit(Fish, TStep) = TempMinLimit 'Restore original value to database
-      '   End Select
-      'End If
-      ''############################# END NEW CODE ############################ Pete-Jan. 2013
-      ''****************************************************************************************
+        '         If AltFlag(Fish, TStep) > 8 And AltLimitMSF(Fish, TStep) <> AltLimitNS(Fish, TStep) _
+        '            And AltLimitMSF(Fish, TStep) > 0 And AltLimitNS(Fish, TStep) > 0 Then
+        '            'Compute Legal & Sublegal Proportions under MSF size limit
+        '            If (AltLimitMSF(Fish, TStep) < MeanSize - 3 * SizeStdDev) Then
+        '               MSFLegalProp = 1
+        '            End If
+        '            If (AltLimitMSF(Fish, TStep) > MeanSize + 3 * SizeStdDev) Then
+        '               MSFLegalProp = 0
+        '            End If
+        '            If ((AltLimitMSF(Fish, TStep) >= MeanSize - 3 * SizeStdDev) And (AltLimitMSF(Fish, TStep) <= MeanSize + 3 * SizeStdDev)) Then
+        '               MSFLegalProp = (1 - NormlDistr(AltLimitMSF(Fish, TStep), MeanSize, SizeStdDev))
+        '            End If
+        '            MSFSublegalProp = EncounterRateAdjustment(Age, Fish, TStep) * (1 - MSFLegalProp) 'BEWARE OF EncounterRateAdjustments...
+
+        '            'Compute Legal & Sublegal Proportions under NS size limit
+        '            If (AltLimitNS(Fish, TStep) < MeanSize - 3 * SizeStdDev) Then
+        '               NSLegalProp = 1
+        '            End If
+        '            If (AltLimitNS(Fish, TStep) > MeanSize + 3 * SizeStdDev) Then
+        '               NSLegalProp = 0
+        '            End If
+        '            If ((AltLimitNS(Fish, TStep) >= MeanSize - 3 * SizeStdDev) And (AltLimitNS(Fish, TStep) <= MeanSize + 3 * SizeStdDev)) Then
+        '               NSLegalProp = (1 - NormlDistr(AltLimitNS(Fish, TStep), MeanSize, SizeStdDev))
+        '            End If
+        '            NSSublegalProp = EncounterRateAdjustment(Age, Fish, TStep) * (1 - NSLegalProp) 'BEWARE OF EncounterRateAdjustments...
+
+        '         End If
+        '         MinSizeLimit(Fish, TStep) = TempMinLimit 'Restore original value to database
+        '   End Select
+        'End If
+        ''############################# END NEW CODE ############################ Pete-Jan. 2013
+        ''****************************************************************************************
 
 
 
