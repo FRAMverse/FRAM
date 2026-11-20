@@ -257,10 +257,18 @@ Module FramCalcs
                 Call TammCohoProc()
             ElseIf SpeciesName = "CHINOOK" Then
                 Call TammChinookProc()
-                If TammChinookConverge = 1 Then
-                    MsgBox("Chinook TAMM Did Not Converge!" & vbCrLf & "TAMM Transfer Files not Created", MsgBoxStyle.OkOnly)
-                Else
-                    For Fish As Integer = 1 To NumFish
+                '- CBE 11/20/26:
+                '- The If / Else structure here means that if the tamm doesn't converge, there is no saving of data.
+                '- Because one solution to nonconvergence is to redo the run with the final results of the first attempt as the starting point for the second attempt,
+                '-   not saving the results of the first attempt is actually a problem.
+                '- I've instead added a non-convergence warning inside of TammChinookProc() (mirroring new TammCohoProc message)
+                '- and removed the infrastructure so that if the run didn't converge, the results are still saved (but with a warning).
+                '- All indications are that Chinook TAMM converges within 15 iterations, and we're now setting the max to 100, so this is likely
+                '- not relevant in any event.
+                '- If TammChinookConverge = 1 Then
+                '-   MsgBox("Chinook TAMM Did Not Converge!" & vbCrLf & "TAMM Transfer Files not Created", MsgBoxStyle.OkOnly)
+                '- Else
+                For Fish As Integer = 1 To NumFish
                         For TStep As Integer = 1 To NumSteps
                             If FisheryFlag(Fish, TStep) = 1 Or FisheryFlag(Fish, TStep) = 7 Then
                                 FisheryQuota(Fish, TStep) = CDbl(TotalLandedCatch(Fish, TStep) / ModelStockProportion(Fish))
@@ -279,7 +287,7 @@ Module FramCalcs
                     If FinalUpdatePass = True Or UpdateRunEncounterRateAdjustment = False Then
                         Call SaveDat()
                     End If
-                    End If
+                '- End If
             End If
         End If
 
@@ -4533,11 +4541,7 @@ SkipNoSat:
             Exit Sub
         End If
 
-        For TammIteration = 1 To 15
-
-            If TammIteration = 5 Then
-                Jim = 1
-            End If
+        For TammIteration = 1 To 100
 
             If NumStk < 50 Then
                 Call TCHNComp(TammIteration)
@@ -4564,23 +4568,39 @@ SkipNoSat:
             Next TStep
         Next TammIteration
 
+
+
+        If TammChinookConverge = 1 Then
+            MessageBox.Show("TAMM Iterations did not converge. Consider re-running. " &
+                            "FramCheck.Txt will have iteration log" & vbNewLine &
+                            "framrsquared::parse_fram_check() and associated functions can help understand FramCheck.Txt.",
+                            "Warning - failure to converge",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning)
+        End If
+
         PrnLine = "Total Number of TAMM Iterations = " & (TammIteration - 1).ToString
         sw.WriteLine(PrnLine)
 
-        If TammIteration > 15 Then    '---- Did NOT Converge .... Print Error in FRAMMENU
-            RunTAMMIter = -1
-            Exit Sub
-        Else
-            RunTAMMIter = TammIteration - 1
-            If TammTransferSave = False Then Exit Sub
-            FVS_RunModel.RunProgressLabel.Text = "Transferring Data to TAMM SpreadSheet "
-            FVS_RunModel.RunProgressLabel.Refresh()
-            If NumStk > 50 Then
-                Call TCHNSFTran()
-            Else
-                Call TCHNTran()
-            End If
+        If TammChinookConverge = 1 Then
+
         End If
+
+        '- the If statement part appears to be a relic of this being a While loop in the past?
+        '- If TammIteration > 15 Then    '---- Did NOT Converge .... Print Error in FRAMMENU
+        '-   RunTAMMIter = -1
+        '-   Exit Sub
+        '-  Else
+        RunTAMMIter = TammIteration - 1
+        If TammTransferSave = False Then Exit Sub
+        FVS_RunModel.RunProgressLabel.Text = "Transferring Data to TAMM SpreadSheet "
+        FVS_RunModel.RunProgressLabel.Refresh()
+        If NumStk > 50 Then
+            Call TCHNSFTran()
+        Else
+            Call TCHNTran()
+        End If
+        '-0 End If
 
     End Sub
 
@@ -6405,7 +6425,13 @@ NextTaaETRS:
             End If
         End If
 
-        For TammIteration = 1 To 5
+        For TammIteration = 1 To 100
+
+            TammCohoConverge = 0
+
+            '- making a copy for checking convergence
+            Dim FisheryQuotaStartloop As Double(,) = CType(FisheryQuota.Clone(), Double(,))
+
             '- Label Update
             FVS_RunModel.RunProgressLabel.Text = " TAMM Iteration = " & TammIteration.ToString & " "
             myPoint.X = (FVS_RunModel.Width - FVS_RunModel.RunProgressLabel.Width) \ 2
@@ -6471,6 +6497,38 @@ NextTaaETRS:
                         PrnLine = "TAA-ETRS-" & FisheryName(I) & I.ToString(" 000") & K.ToString(" 0") & String.Format("{0,10}", FisheryQuota(I, K).ToString("########0")) & String.Format("{0,8}", TargetLocal.ToString(" #####0"))
                         sw.WriteLine(PrnLine)
                     End If
+
+                    '- Check convergence --------------------
+
+                    '- Diagnostics for easier-to-read tests
+                    Dim TammProportion As Double = FisheryQuotaStartloop(I, K) / FisheryQuota(I, K)
+                    Dim TammDiff As Double = Abs(FisheryQuotaStartloop(I, K) - FisheryQuota(I, K))
+
+
+                    '- If Quota is 0, proportional comparison is not useful. Pretend that part is perfect.
+                    If FisheryQuota(I, K) = 0 Then
+                        TammProportion = 1.0
+                    End If
+
+                    '- for easier running in debug mode -- can remove TammConvergenceOld
+                    Dim TammCohoConvergeOld As Integer
+                    TammCohoConvergeOld = TammCohoConverge
+
+                    '- Check for proportional convergence
+                    If (TammProportion > 1.001 Or TammProportion < 0.999) Then
+                        TammCohoConverge = 1
+                    End If
+
+                    '- Check for absolute convergence
+                    If TammDiff > 2.0 Then
+                        TammCohoConverge = 1
+                    End If
+
+                    '- For easy debug mode: set conditional breakpoint here 
+                    '- with condition TammConvergence <> TammConvergenceOld. 
+                    '- Recommend Watching TammIteration, TammProportion, TammDiff, FisheryQuotaStartloop(I, K), and FisheryQuota(I, K)
+                    Jim = 1
+
                 Next I
 
 
@@ -6506,6 +6564,10 @@ NextTaaETRS:
                     Next
                 Next
             Next TStep
+
+            If TammCohoConverge = 0 Then
+                Exit For
+            End If
 
         Next TammIteration
 
@@ -6585,6 +6647,15 @@ NextTaaETRS:
         FVS_RunModel.RunProgressLabel.Refresh()
 
         If TammTransferSave = True Then Call CohoTAMMReports()
+
+        If TammCohoConverge = 1 Then
+            MessageBox.Show("TAMM Iterations did not converge. Consider re-running. " &
+                            "FramCheck.Txt will have iteration log" & vbNewLine &
+                            "framrsquared::parse_fram_check() and associated functions can help understand FramCheck.Txt.",
+                            "Warning - failure to converge",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning)
+        End If
 
     End Sub
 

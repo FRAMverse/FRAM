@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FramVS.exe" size="1098752">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="FramVS.exe" size="1099264">
       <assemblyIdentity name="FramVS" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>ZoVz9SEmBMcoM2m+gK48XbJT8AE=</dsig:DigestValue>
+        <dsig:DigestValue>aPlYjUCCSe7xdnGVA3hxNC2K7dE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>hUhBtCvaadEHIKysFiDn+UPl4Oo=</dsig:DigestValue>
+        <dsig:DigestValue>plktdOrJxnzokxs6pYC7CAXGvX4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,13 +86,13 @@
       <dsig:DigestValue>tZtQNNLuXMy1BEqJ5dyT+JP8QpM=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="FramVS.exe.config" size="1618">
+  <file name="FramVS.exe.config" size="1587">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>99VuSHbJ31xcs6J/P7Yo+dzXNVE=</dsig:DigestValue>
+      <dsig:DigestValue>V9CCqdEaI7FMjpFzZPhV9vZKAkc=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

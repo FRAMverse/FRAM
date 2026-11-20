@@ -248,8 +248,9 @@ Public Module FramVar
    Public TammPSER(,) As Double
    Public TammScaler(,) As Double
    Public TammIteration As Integer
-   Public TammChinookConverge As Integer
-   Public TotalChinEsc(,) As Double
+    Public TammChinookConverge As Integer
+    Public TammCohoConverge As Integer
+    Public TotalChinEsc(,) As Double
    Public NewStockFishRateScalers As Integer
    Public TammChinookRunFlag As Integer
    Public TamkFish() As Integer
