@@ -4571,8 +4571,8 @@ SkipNoSat:
 
 
         If TammChinookConverge = 1 Then
-            MessageBox.Show("TAMM Iterations did not converge. Consider re-running. " &
-                            "FramCheck.Txt will have iteration log" & vbNewLine &
+            MessageBox.Show("TAMM Iterations did not converge. Consider re-running. " & vbNewLine & vbNewLine &
+                            "Iteration log can be found in FramCheck.Txt." & vbNewLine &
                             "framrsquared::parse_fram_check() and associated functions can help understand FramCheck.Txt.",
                             "Warning - failure to converge",
                             MessageBoxButtons.OK,
@@ -6649,8 +6649,8 @@ NextTaaETRS:
         If TammTransferSave = True Then Call CohoTAMMReports()
 
         If TammCohoConverge = 1 Then
-            MessageBox.Show("TAMM Iterations did not converge. Consider re-running. " &
-                            "FramCheck.Txt will have iteration log" & vbNewLine &
+            MessageBox.Show("TAMM Iterations did not converge. Consider re-running. " & vbNewLine & vbNewLine &
+                            "Iteration log can be found in FramCheck.Txt." & vbNewLine &
                             "framrsquared::parse_fram_check() and associated functions can help understand FramCheck.Txt.",
                             "Warning - failure to converge",
                             MessageBoxButtons.OK,

@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Repos\\FRAM\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|c:\\repos\\fram\\framcalcs.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|solutionrelative:framcalcs.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|C:\\Repos\\FRAM\\fvs_welcome.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|solutionrelative:fvs_welcome.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
@@ -11,11 +15,7 @@
       "RelativeMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|solutionrelative:fvs_modelrunselection.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|c:\\repos\\fram\\framcalcs.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|solutionrelative:framcalcs.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|c:\\repos\\fram\\framvar.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "AbsoluteMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|C:\\Repos\\FRAM\\framvar.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|solutionrelative:framvar.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
@@ -23,7 +23,7 @@
       "RelativeMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|solutionrelative:fvs_framutils.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|c:\\repos\\fram\\fvs_framutils.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "AbsoluteMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|C:\\Repos\\FRAM\\fvs_framutils.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|solutionrelative:fvs_framutils.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
@@ -35,7 +35,7 @@
       "RelativeMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|solutionrelative:fvs_backwardsfram.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|c:\\repos\\fram\\fvs_runmodel.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "AbsoluteMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|C:\\Repos\\FRAM\\fvs_runmodel.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
       "RelativeMoniker": "D:0:0:{B19D91E4-7B4B-453E-9859-A5666F9038A3}|FramVS.vbproj|solutionrelative:fvs_runmodel.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
     },
     {
@@ -58,17 +58,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "FramCalcs.vb",
               "DocumentMoniker": "C:\\Repos\\FRAM\\FramCalcs.vb",
               "RelativeDocumentMoniker": "FramCalcs.vb",
               "ToolTip": "C:\\Repos\\FRAM\\FramCalcs.vb",
               "RelativeToolTip": "FramCalcs.vb",
-              "ViewState": "AgIAALkRAAAAAAAAAAAQwMARAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAoZAAAAAAAAAAAUwCcZAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
               "WhenOpened": "2025-02-05T17:43:58.688Z",
               "IsPinned": true,
@@ -92,8 +92,7 @@
               "RelativeToolTip": "FramVar.vb",
               "ViewState": "AgIAAN4AAAAAAAAAAAAjwPsAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-11-19T23:08:08.416Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-19T23:08:08.416Z"
             },
             {
               "$type": "Document",
@@ -105,8 +104,7 @@
               "RelativeToolTip": "FVS_BackwardsFram.vb",
               "ViewState": "AgIAAOwCAAAAAAAAAAAwwPoCAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-09-21T16:21:51.069Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-21T16:21:51.069Z"
             },
             {
               "$type": "Document",
@@ -118,8 +116,7 @@
               "RelativeToolTip": "FVS_FramUtils.vb",
               "ViewState": "AgIAAHQCAAAAAAAAAAAuwI4CAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-09-21T22:54:16.406Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-21T22:54:16.406Z"
             },
             {
               "$type": "Document",
@@ -131,8 +128,7 @@
               "RelativeToolTip": "FVS_FramUtils.Designer.vb",
               "ViewState": "AgIAACQAAAAAAAAAAAAYwCoAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-11-18T19:24:54.285Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-18T19:24:54.285Z"
             },
             {
               "$type": "Document",
@@ -143,8 +139,7 @@
               "ToolTip": "C:\\Repos\\FRAM\\FVS_BackwardsFram.vb [Design]",
               "RelativeToolTip": "FVS_BackwardsFram.vb [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-10-22T17:18:19.888Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2026-10-22T17:18:19.888Z"
             },
             {
               "$type": "Document",
@@ -155,8 +150,7 @@
               "ToolTip": "C:\\Repos\\FRAM\\FVS_RunModel.vb [Design]",
               "RelativeToolTip": "FVS_RunModel.vb [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-11-18T19:44:51.796Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2026-11-18T19:44:51.796Z"
             },
             {
               "$type": "Document",
@@ -180,8 +174,7 @@
               "RelativeToolTip": "FVS_RunModel.vb",
               "ViewState": "AgIAADsCAAAAAAAAAAAUwEkCAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-09-18T18:32:27.773Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-18T18:32:27.773Z"
             },
             {
               "$type": "Document",
@@ -197,20 +190,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "FVS_Welcome.vb",
               "DocumentMoniker": "C:\\Repos\\FRAM\\FVS_Welcome.vb",
               "RelativeDocumentMoniker": "FVS_Welcome.vb",
               "ToolTip": "C:\\Repos\\FRAM\\FVS_Welcome.vb",
               "RelativeToolTip": "FVS_Welcome.vb",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAwB0AAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAxwBcAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-09-18T18:32:26.443Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-18T18:32:26.443Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "FVS_ModelRunSelection.vb",
               "DocumentMoniker": "C:\\Repos\\FRAM\\FVS_ModelRunSelection.vb",
               "RelativeDocumentMoniker": "FVS_ModelRunSelection.vb",
@@ -218,8 +210,7 @@
               "RelativeToolTip": "FVS_ModelRunSelection.vb",
               "ViewState": "AgIAABYEAAAAAAAAAAAiwDIEAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-07-21T17:50:08.229Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-21T17:50:08.229Z"
             }
           ]
         }
